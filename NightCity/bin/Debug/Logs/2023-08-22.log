@@ -1,0 +1,29 @@
+2023-08-22 18:01:59.6077 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-22 18:01:59.7025 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-22 18:01:59.7175 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-22 18:01:59.7845 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-22 18:01:59.7845 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-22 18:01:59.7845 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-22 18:01:59.8226 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-22 18:02:00.8476 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-22 18:02:00.8935 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-22 18:02:00.9104 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-22 18:02:00.9104 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-22 18:02:00.9951 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-22 18:02:30.9117 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-22 18:02:30.9228 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-22 18:02:30.9228 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-22 18:02:30.9699 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-22 18:02:30.9699 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-22 18:02:30.9699 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-22 18:02:31.9888 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-22 18:02:32.0262 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-22 18:02:32.0262 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-22 20:02:38.8926 INFO [MqttService]:[DisconnectedAsyncTask]:disconnected from server
+2023-08-22 20:02:38.8926 INFO [MqttService]:[DisconnectedAsyncTask]:attempting to reconnect
+2023-08-22 20:18:08.5063 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-22 21:03:09.2758 INFO [MqttService]:[DisconnectedAsyncTask]:disconnected from server
+2023-08-22 21:03:09.2758 INFO [MqttService]:[DisconnectedAsyncTask]:attempting to reconnect
+2023-08-22 22:04:10.2214 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-22 23:11:10.9065 INFO [MqttService]:[DisconnectedAsyncTask]:disconnected from server
+2023-08-22 23:11:10.9065 INFO [MqttService]:[DisconnectedAsyncTask]:attempting to reconnect

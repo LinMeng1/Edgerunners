@@ -1,0 +1,210 @@
+﻿using MaterialDesignThemes.Wpf;
+using NightCity.Core.Events;
+using NightCity.Core.Models.Standard;
+using NightCity.Core.Services.Prism;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Mvvm;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Input;
+
+namespace NightCity.ViewModels
+{
+    public class MainWindowViewModel : BindableBase
+    {
+        //事件聚合器
+        private readonly IEventAggregator eventAggregator;
+        public MainWindowViewModel(IEventAggregator eventAggregator, IPropertyService propertyService)
+        {
+            this.eventAggregator = eventAggregator;
+            eventAggregator.GetEvent<MqttConnectedEvent>().Subscribe((IsConnected) =>
+            {
+                IsMqttConnected = IsConnected;
+            }, ThreadOption.UIThread);
+            eventAggregator.GetEvent<ModulesChangedEvent>().Subscribe((modules) =>
+            {
+                List<string> authorizedMod = new List<string>();
+                foreach (var authMod in AuthorizationModules)
+                {
+                    if (authMod.Icon == PackIconKind.Fingerprint)
+                        authorizedMod.Add(authMod.Name);
+                }
+                AuthorizationModules.Clear();
+                MonitorModules.Clear();
+                foreach (var module in modules)
+                {
+                    if (module.Category == "Authorization")
+                    {
+                        if (authorizedMod.Contains(module.Name))
+                            module.Icon = PackIconKind.Fingerprint;
+                        AuthorizationModules.Add(module);
+                    }
+                    else if (module.Category == "Monitor")
+                        MonitorModules.Add(module);
+                }
+            }, ThreadOption.UIThread);
+            eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Subscribe((AuthorizationInfo) =>
+            {
+                ModuleInfo module = AuthorizationModules.FirstOrDefault(it => it.Name == AuthorizationInfo.Item1);
+                if (module == null) return;
+                object authorizationInfo = propertyService.GetProperty(AuthorizationInfo.Item2);
+                if (authorizationInfo != null)
+                    module.Icon = PackIconKind.Fingerprint;
+                else
+                    module.Icon = PackIconKind.FingerprintOff;
+            }, ThreadOption.UIThread, true);
+            eventAggregator.GetEvent<MqttNoReadMessageCountChangedEvent>().Subscribe((NoReadMessageCount) =>
+            {
+                HaveNoReadMessage = NoReadMessageCount > 0;
+            }, ThreadOption.UIThread);
+            eventAggregator.GetEvent<BannerMessagesChangedEvent>().Subscribe((BannerMessages) =>
+            {
+                TopBannerMessage = BannerMessages.Item1;
+                BannerMessageCount = BannerMessages.Item2;
+            });
+            eventAggregator.GetEvent<IsConnectionFixChangedEvent>().Subscribe((IsConnectionFix) =>
+            {
+                isConnectionFix = IsConnectionFix;
+            });
+        }
+
+        #region 命令集合
+
+        #region 命令：打开模块
+        public ICommand OpenModuleCommand
+        {
+            get => new DelegateCommand<string>(OpenModule);
+        }
+        private void OpenModule(string moduleName)
+        {
+            ModuleInfo module = MonitorModules.FirstOrDefault(it => it.Name == moduleName);
+            if (module == null)
+                module = AuthorizationModules.FirstOrDefault(it => it.Name == moduleName);
+            if (module == null) return;
+            eventAggregator.GetEvent<TemplateReOpeningEvent>().Publish(moduleName);
+        }
+        #endregion
+
+        #region 命令：清除信息
+        public ICommand RemoveMessageCommand
+        {
+            get => new DelegateCommand<BannerMessage>(RemoveMessage);
+        }
+        private void RemoveMessage(BannerMessage message)
+        {
+            eventAggregator.GetEvent<BannerMessageRemovingEvent>().Publish(message);
+        }
+        #endregion
+
+        #region 命令：尝试链接模块
+        public ICommand TryLinkCommand
+        {
+            get => new DelegateCommand<object>(TryLink);
+        }
+        private void TryLink(object parameter)
+        {
+            string category = ((object[])parameter)[0]?.ToString();
+            string linkCommand = ((object[])parameter)[1]?.ToString();
+            eventAggregator.GetEvent<BannerMessageTryLinkingEvent>().Publish(new Tuple<string, string>(category, linkCommand));
+        }
+        #endregion
+
+        #endregion
+
+        #region 可视化属性集合
+
+        #region 授权模块集合
+        private ObservableCollection<ModuleInfo> authorizationModules = new ObservableCollection<ModuleInfo>();
+        public ObservableCollection<ModuleInfo> AuthorizationModules
+        {
+            get => authorizationModules;
+            set
+            {
+                SetProperty(ref authorizationModules, value);
+            }
+        }
+        #endregion
+
+        #region 监控模块集合
+        private ObservableCollection<ModuleInfo> monitorModules = new ObservableCollection<ModuleInfo>();
+        public ObservableCollection<ModuleInfo> MonitorModules
+        {
+            get => monitorModules;
+            set
+            {
+                SetProperty(ref monitorModules, value);
+            }
+        }
+        #endregion
+
+        #region 是否存在未读信息
+        private bool haveNoReadMessage;
+        public bool HaveNoReadMessage
+        {
+            get => haveNoReadMessage;
+            set
+            {
+                SetProperty(ref haveNoReadMessage, value);
+            }
+        }
+        #endregion
+
+        #region 第一置顶信息
+        private BannerMessage topBannerMessage;
+        public BannerMessage TopBannerMessage
+        {
+            get => topBannerMessage;
+            set
+            {
+                SetProperty(ref topBannerMessage, value);
+            }
+        }
+        #endregion
+
+        #region 置顶信息数量
+        private int bannerMessageCount;
+        public int BannerMessageCount
+        {
+            get => bannerMessageCount;
+            set
+            {
+                SetProperty(ref bannerMessageCount, value);
+            }
+        }
+        #endregion
+
+        #region 连接界面是否打开
+        private bool isConnectionFix;
+        private bool isConnectionOpen;
+        public bool IsConnectionOpen
+        {
+            get => isConnectionOpen;
+            set
+            {
+                if (!isConnectionFix)
+                {
+                    SetProperty(ref isConnectionOpen, value);
+                }
+            }
+        }
+        #endregion
+
+        #region Mqtt是否连接
+        private bool isMqttConnected = false;
+        public bool IsMqttConnected
+        {
+            get => isMqttConnected;
+            set
+            {
+                SetProperty(ref isMqttConnected, value);
+            }
+        }
+        #endregion
+
+        #endregion
+
+    }
+}

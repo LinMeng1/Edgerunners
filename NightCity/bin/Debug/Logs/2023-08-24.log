@@ -1,0 +1,2293 @@
+2023-08-24 00:17:28.4551 INFO [MqttService]:[DisconnectedAsyncTask]:disconnected from server
+2023-08-24 00:17:28.4551 INFO [MqttService]:[DisconnectedAsyncTask]:attempting to reconnect
+2023-08-24 01:18:02.7859 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 01:18:04.2082 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 01:18:04.5413 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 01:18:04.5423 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 01:18:04.5703 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 01:18:04.5703 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 01:18:04.5703 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 02:18:02.8897 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 02:18:03.5854 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 02:18:03.5994 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 02:20:59.1740 INFO [MqttService]:[DisconnectedAsyncTask]:disconnected from server
+2023-08-24 02:20:59.1740 INFO [MqttService]:[DisconnectedAsyncTask]:attempting to reconnect
+2023-08-24 03:18:33.2243 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 03:25:32.3162 INFO [MqttService]:[DisconnectedAsyncTask]:disconnected from server
+2023-08-24 03:25:32.3162 INFO [MqttService]:[DisconnectedAsyncTask]:attempting to reconnect
+2023-08-24 04:18:33.6306 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 06:19:03.2666 INFO [MqttService]:[DisconnectedAsyncTask]:disconnected from server
+2023-08-24 06:19:03.2666 INFO [MqttService]:[DisconnectedAsyncTask]:attempting to reconnect
+2023-08-24 07:19:03.7439 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 08:19:35.2770 INFO [MqttService]:[DisconnectedAsyncTask]:disconnected from server
+2023-08-24 08:19:35.2770 INFO [MqttService]:[DisconnectedAsyncTask]:attempting to reconnect
+2023-08-24 08:19:37.3015 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 09:11:24.2158 INFO [MqttService]:[DisconnectedAsyncTask]:disconnected from server
+2023-08-24 09:11:24.2158 INFO [MqttService]:[DisconnectedAsyncTask]:attempting to reconnect
+2023-08-24 09:11:26.2244 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 09:11:37.0839 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:11:37.0995 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:11:37.0995 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:11:37.1463 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:11:37.1463 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:11:37.1463 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:11:38.2464 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:11:38.8811 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:11:38.8811 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:12:08.9087 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:12:08.9087 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:12:08.9087 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:12:08.9399 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:12:08.9399 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:12:08.9399 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:12:09.9749 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:12:09.9906 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:12:10.0062 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:12:40.0212 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:12:40.0368 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:12:40.0368 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:12:40.0741 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:12:40.0741 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:12:40.0741 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:12:41.1142 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:12:41.1297 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:12:41.1448 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:13:11.1836 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:13:11.1836 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:13:11.1836 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:13:11.2438 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:13:11.2438 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:13:11.2438 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:13:12.2669 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:13:12.2838 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:13:12.3043 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:13:42.3114 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:13:42.3114 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:13:42.3114 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:13:42.3370 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:13:42.3370 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:13:42.3370 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:13:43.3642 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:13:43.3797 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:13:43.3954 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:14:13.4045 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:14:13.4045 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:14:13.4045 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:14:13.4302 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:14:13.4302 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:14:13.4302 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:14:14.4725 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:14:14.4896 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:14:14.4896 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:14:44.5232 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:14:44.5232 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:14:44.5232 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:14:44.5619 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:14:44.5619 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:14:44.5619 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:14:45.5885 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:14:45.6145 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:14:45.6303 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:15:15.6404 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:15:15.6404 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:15:15.6404 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:15:15.6717 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:15:15.6717 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:15:15.6717 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:15:16.6961 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:15:16.7117 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:15:16.7117 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:15:46.7207 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:15:46.7207 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:15:46.7207 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:15:46.7519 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:15:46.7519 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:15:46.7519 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:15:47.7841 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:15:47.7987 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:15:47.8143 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:16:17.8271 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:16:17.8271 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:16:17.8271 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:16:17.8814 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:16:17.8814 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:16:17.8814 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:16:18.9011 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:16:18.9265 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:16:18.9265 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:16:48.9504 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:16:48.9504 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:16:48.9504 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:16:48.9816 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:16:48.9816 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:16:48.9816 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:16:50.0172 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:16:50.0312 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:16:50.0469 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:17:20.0369 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:17:20.0430 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:17:20.0430 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:17:20.0688 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:17:20.0688 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:17:20.0688 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:17:21.0831 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:17:21.1088 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:17:21.1244 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:17:51.1276 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:17:51.1433 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:17:51.1433 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:17:51.1842 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:17:51.1842 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:17:51.1842 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:17:52.2167 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:17:52.2522 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:17:52.2623 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:18:22.2578 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:18:22.2578 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:18:22.2578 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:18:22.2934 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:18:22.2934 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:18:22.2934 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:18:23.3177 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:18:23.3487 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:18:23.3620 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:18:53.3582 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:18:53.3582 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:18:53.3582 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:18:53.3954 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:18:53.3954 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:18:53.3954 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:18:54.4255 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:18:54.4428 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:18:54.4428 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:19:24.4469 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:19:24.4585 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:19:24.4585 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:19:24.5022 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:19:24.5022 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:19:24.5022 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:19:25.5211 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:19:25.5422 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:19:25.5482 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:19:55.5647 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:19:55.5809 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:19:55.5809 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:19:55.6261 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:19:55.6261 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:19:55.6261 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:19:56.6430 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:19:56.6642 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:19:56.6882 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:20:26.6848 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:20:26.6848 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:20:26.6848 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:20:26.7322 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:20:26.7322 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:20:26.7322 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:20:27.7487 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:20:27.7684 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:20:27.7779 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:20:57.7854 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:20:57.7981 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:20:57.7981 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:20:57.8329 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:20:57.8329 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:20:57.8329 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:20:58.8608 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:20:58.8881 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:20:58.8881 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:21:28.8925 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:21:28.8925 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:21:28.9081 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:21:28.9389 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:21:28.9389 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:21:28.9389 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:21:29.9637 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:21:29.9793 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:21:29.9981 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:22:00.0131 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:22:00.0255 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:22:00.0255 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:22:00.0475 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:22:00.0475 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:22:00.0475 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:22:01.0709 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:22:01.0942 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:22:01.0942 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:22:31.1145 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:22:31.1195 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:22:31.1195 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:22:31.1455 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:22:31.1455 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:22:31.1455 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:22:32.1779 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:22:32.1873 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:22:32.1953 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:23:02.2035 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:23:02.2115 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:23:02.2115 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:23:02.2369 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:23:02.2369 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:23:02.2369 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:23:03.2608 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:23:03.2608 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:23:03.2936 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:23:33.3077 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:23:33.3077 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:23:33.3077 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:23:33.3371 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:23:33.3371 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:23:33.3371 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:23:34.3662 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:23:34.3662 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:23:34.3662 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:24:04.4054 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:24:04.4181 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:24:04.4181 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:24:04.4546 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:24:04.4546 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:24:04.4546 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:24:05.4862 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:24:05.5203 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:24:05.5283 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:24:35.5540 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:24:35.5540 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:24:35.5540 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:24:35.5856 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:24:35.5856 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:24:35.5856 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:24:36.6021 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:24:36.6021 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:24:36.6021 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:25:06.6368 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:25:06.6368 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:25:06.6557 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:25:06.6870 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:25:06.6870 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:25:06.6870 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:25:07.7255 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:25:07.7411 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:25:07.7599 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:25:54.0011 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:25:54.0823 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:25:54.1162 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:25:54.1789 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:25:54.1789 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:25:54.1789 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:25:54.1789 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 09:25:55.2116 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:25:55.2268 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:25:55.2268 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:25:55.2268 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 09:25:55.3668 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 09:26:25.2459 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:26:25.2601 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:26:25.2601 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:26:25.2948 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:26:25.2948 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:26:25.2948 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:26:26.3242 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:26:26.3539 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:26:26.3670 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:30:42.9131 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:30:42.9803 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:30:42.9803 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:30:43.0313 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:30:43.0313 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:30:43.0313 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:30:43.0559 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 09:30:44.0573 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:30:44.0799 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:30:44.0956 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:30:44.0956 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 09:30:44.1801 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 09:31:14.1056 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:31:14.1056 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:31:14.1056 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:31:14.1546 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:31:14.1546 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:31:14.1546 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:31:15.1864 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:31:15.2139 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:31:15.2139 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:31:45.2331 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:31:45.2469 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:31:45.2469 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:31:45.2837 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:31:45.2837 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:31:45.2837 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:31:46.3031 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:31:46.3374 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:31:46.3543 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 09:32:16.3754 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 09:32:16.3907 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 09:32:16.3907 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 09:32:16.4285 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 09:32:16.4285 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 09:32:16.4285 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 09:32:17.4472 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 09:32:17.4703 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 09:32:17.4703 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 10:36:28.7881 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 10:36:28.9167 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 10:36:28.9307 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 10:36:29.0154 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 10:36:29.0154 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 10:36:29.0154 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 10:36:29.0513 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 10:36:30.2711 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 10:36:30.9254 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 10:36:30.9354 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 10:36:30.9354 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 10:36:32.1128 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 10:36:47.0902 ERROR [Connection]:[AddToClusterAsync] exception:响应状态代码不指示成功: 401 (Unauthorized)。
+2023-08-24 10:37:00.9391 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 10:37:00.9391 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 10:37:00.9391 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 10:37:00.9933 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 10:37:00.9933 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 10:37:00.9933 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 10:37:02.0153 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 10:37:02.0422 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 10:37:02.0481 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 10:37:06.9404 INFO [TestEngAuthorization]:[Login]:[LoginCheck]:login success
+2023-08-24 10:37:32.0514 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 10:37:32.0514 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 10:37:32.0514 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 10:37:32.0852 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 10:37:32.0852 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 10:37:32.0852 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 10:37:33.1135 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 10:37:33.1320 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 10:37:33.1320 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 10:37:47.4859 ERROR [Connection]:[AddToClusterAsync] exception:Exception : Duplicate entry 'PF43T098-111' for key 'ipc-clusters.PRIMARY'
+2023-08-24 10:38:03.1440 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 10:38:03.1440 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 10:38:03.1440 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 10:38:03.1883 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 10:38:03.1883 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 10:38:03.1883 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 10:38:04.2106 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 10:38:04.2408 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 10:38:04.2516 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 10:51:23.1496 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 10:51:23.2943 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 10:51:23.3045 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 10:51:23.3477 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 10:51:23.3477 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 10:51:23.3477 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 10:51:23.3716 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 10:51:24.3809 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 10:51:24.4646 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 10:51:24.4646 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 10:51:24.4646 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 10:51:24.5712 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 10:51:30.7865 ERROR [Connection]:[AddToClusterAsync] exception:响应状态代码不指示成功: 401 (Unauthorized)。
+2023-08-24 10:51:36.9549 INFO [TestEngAuthorization]:[Login]:[LoginCheck]:login success
+2023-08-24 11:01:39.4730 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:01:39.5348 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:01:39.5627 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:01:39.6344 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:01:39.6344 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:01:39.6344 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:01:39.6603 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 11:01:40.7807 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:01:40.8723 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:01:40.8843 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:01:40.8843 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 11:01:40.9870 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 11:02:10.9040 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:02:10.9170 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:02:10.9170 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:02:10.9521 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:02:10.9521 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:02:10.9521 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:02:11.9726 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:02:11.9960 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:02:11.9960 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:02:42.0097 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:02:42.0097 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:02:42.0097 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:02:42.0465 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:02:42.0465 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:02:42.0465 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:02:43.0770 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:02:43.1080 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:02:43.1080 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:03:13.1281 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:03:13.1440 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:03:13.1440 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:03:13.1933 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:03:13.1933 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:03:13.1933 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:03:14.2162 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:03:14.2434 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:03:14.2533 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:03:44.2599 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:03:44.2599 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:03:44.2599 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:03:44.3138 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:03:44.3138 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:03:44.3138 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:03:45.3301 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:03:45.3660 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:03:45.3719 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:04:15.3836 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:04:15.4000 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:04:15.4009 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:04:15.4448 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:04:15.4448 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:04:15.4448 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:04:16.4747 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:04:16.5017 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:04:16.5117 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:04:46.5328 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:04:46.5328 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:04:46.5328 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:04:46.5869 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:04:46.5869 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:04:46.5869 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:04:47.6155 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:04:47.6478 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:04:47.6550 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:05:17.6838 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:05:17.6838 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:05:17.6838 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:05:17.7355 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:05:17.7355 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:05:17.7355 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:05:18.7670 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:05:18.7851 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:05:18.7934 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:07:05.6541 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:07:05.7388 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:07:05.7548 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:07:05.8010 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:07:05.8010 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:07:05.8010 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:07:05.8201 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 11:07:06.8368 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:07:06.9046 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:07:06.9046 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:07:06.9046 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 11:07:06.9973 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 11:07:23.8307 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:07:23.9153 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:07:23.9384 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:07:23.9992 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:07:23.9992 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:07:23.9992 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:07:24.0221 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 11:07:25.0365 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:07:25.0514 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:07:25.0584 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:07:25.0584 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 11:07:25.1558 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 11:07:49.0111 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:07:49.0786 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:07:49.0946 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:07:49.1405 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:07:49.1405 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:07:49.1405 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:07:49.1634 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 11:07:50.1626 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:07:50.1795 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:07:50.1865 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:07:50.1865 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 11:07:50.2722 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 11:08:00.3961 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:08:00.4647 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:08:00.4647 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:08:00.5296 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:08:00.5296 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:08:00.5296 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:08:00.5536 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 11:08:01.5602 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:08:01.5772 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:08:01.5772 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:08:01.5772 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 11:08:01.6652 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 11:08:31.6025 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:08:31.6165 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:08:31.6165 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:08:31.6578 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:08:31.6578 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:08:31.6578 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:08:32.6883 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:08:32.7186 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:08:32.7186 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:09:52.4646 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:09:52.5181 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:09:52.5317 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:09:52.5827 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:09:52.5827 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:09:52.5827 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:09:52.6116 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 11:09:53.6154 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:09:53.6921 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:09:53.7041 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:09:53.7041 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 11:09:53.7782 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 11:14:13.1573 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:14:13.3118 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:14:13.3118 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:14:13.3663 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:14:13.3663 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:14:13.3663 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:14:13.3892 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 11:14:14.3888 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:14:14.4646 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:14:14.4726 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:14:14.4726 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 11:14:14.5516 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 11:17:35.1354 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:17:35.2108 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:17:35.2268 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:17:35.2788 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:17:35.2788 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:17:35.2788 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:17:35.3037 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 11:17:36.3079 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:17:36.3786 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:17:36.3786 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:17:36.3786 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 11:17:36.4576 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 11:18:17.7202 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:18:17.7674 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:18:17.7876 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:18:17.8454 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:18:17.8454 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:18:17.8454 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:18:17.8643 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 11:18:18.8782 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:18:18.8961 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:18:18.8961 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:18:18.8961 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 11:18:18.9973 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 11:18:48.9039 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:18:48.9216 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:18:48.9216 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:18:48.9772 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:18:48.9772 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:18:48.9772 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:18:50.0064 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:18:50.0392 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:18:50.0471 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:19:20.0640 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:19:20.0795 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:19:20.0795 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:19:20.1264 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:19:20.1264 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:19:20.1264 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:19:21.1496 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:19:21.1815 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:19:21.1906 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:19:51.2081 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:19:51.2227 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:19:51.2227 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:19:51.2696 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:19:51.2696 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:19:51.2696 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:19:52.2931 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:19:52.3260 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:19:52.3350 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:20:22.3495 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:20:22.3594 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:20:22.3594 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:20:22.3978 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:20:22.3978 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:20:22.3978 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:20:23.4185 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:20:23.4456 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:20:23.4535 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:20:53.4574 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:20:53.4703 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:20:53.4703 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:20:53.5212 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:20:53.5212 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:20:53.5212 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:20:54.5527 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:20:54.5777 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:20:54.5837 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:21:24.5965 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:21:24.5965 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:21:24.5965 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:21:24.6443 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:21:24.6443 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:21:24.6443 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:21:25.6653 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:21:25.6911 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:21:25.6911 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:21:55.7167 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:21:55.7293 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:21:55.7293 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:21:55.7533 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:21:55.7533 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:21:55.7533 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:21:56.7708 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:21:56.7979 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:21:56.7979 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:22:26.8157 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:22:26.8289 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:22:26.8289 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:22:26.8678 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:22:26.8678 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:22:26.8678 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:22:27.8874 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:22:27.9089 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:22:27.9089 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:22:57.9342 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:22:57.9422 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:22:57.9422 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:22:57.9661 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:22:57.9661 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:22:57.9661 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:22:58.9794 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:22:58.9974 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:22:59.0045 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:23:29.0055 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:23:29.0055 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:23:29.0163 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:23:29.0572 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:23:29.0572 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:23:29.0572 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:23:30.0739 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:23:30.0930 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:23:30.1000 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:24:31.6354 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:24:31.7015 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:24:31.7284 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:24:31.7893 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:24:31.7893 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:24:31.7893 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:24:31.8351 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 11:24:32.8134 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:24:32.8523 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:24:32.8523 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:24:32.8603 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 11:24:32.9344 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 11:24:45.6646 ERROR [Connection]:[AddToClusterAsync] exception:响应状态代码不指示成功: 401 (Unauthorized)。
+2023-08-24 11:24:52.7650 INFO [TestEngAuthorization]:[Login]:[LoginCheck]:login success
+2023-08-24 11:25:02.8628 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:25:02.8757 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:25:02.8757 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:25:02.9093 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:25:02.9093 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:25:02.9093 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:25:03.9234 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:25:03.9464 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:25:03.9575 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:25:33.9606 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:25:33.9606 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:25:33.9606 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:25:33.9933 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:25:33.9933 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:25:33.9933 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:25:35.0134 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:25:35.0452 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:25:35.0522 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:26:05.0581 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:26:05.0711 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:26:05.0711 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:26:05.1007 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:26:05.1007 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:26:05.1007 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:26:06.1232 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:26:06.1439 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:26:06.1439 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:26:36.1560 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:26:36.1729 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:26:36.1729 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:26:36.2177 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:26:36.2177 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:26:36.2177 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:26:37.2444 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:26:37.2775 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:26:37.2884 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:27:07.2925 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:27:07.3031 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:27:07.3031 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:27:07.3490 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:27:07.3490 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:27:07.3490 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:27:08.3698 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:27:08.3955 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:27:08.3955 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:44:59.0201 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:44:59.1351 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:44:59.1510 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:44:59.1988 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:44:59.1988 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:44:59.1988 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:44:59.2536 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 11:45:00.4547 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:45:01.0993 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:45:01.1063 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:45:01.1063 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 11:45:01.2521 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 11:46:06.4689 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:46:06.5548 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:46:06.5697 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:46:06.6162 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:46:06.6162 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:46:06.6162 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:46:06.6481 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 11:46:07.6415 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:46:07.6760 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:46:07.6830 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:46:07.6830 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 11:46:07.7758 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 11:46:37.6924 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:46:37.7044 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:46:37.7044 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:46:37.7567 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:46:37.7567 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:46:37.7567 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:46:38.7874 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:46:38.8209 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:46:38.8298 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:47:08.8471 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:47:08.8575 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:47:08.8575 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:47:08.8824 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:47:08.8824 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:47:08.8824 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:47:09.9093 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:47:09.9368 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:47:09.9502 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:50:18.8079 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:50:18.8752 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:50:18.8951 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:50:18.9844 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:50:18.9844 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:50:18.9844 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:50:19.0023 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 11:50:20.0120 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:50:20.0120 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:50:20.0432 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:50:20.0432 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 11:50:20.1382 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 11:50:50.0455 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:50:50.0455 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:50:50.0455 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:50:50.0822 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:50:50.0822 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:50:50.0822 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:50:51.0971 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:50:51.1074 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:50:51.1348 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:51:21.1472 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:51:21.1575 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:51:21.1575 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:51:21.1888 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:51:21.1888 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:51:21.1888 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:51:22.2119 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:51:22.2323 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:51:22.2323 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:51:52.2578 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:51:52.2578 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:51:52.2578 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:51:52.3147 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:51:52.3147 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:51:52.3147 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:51:53.3311 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:51:53.3621 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:51:53.3722 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:52:23.3774 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:52:23.3934 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:52:23.3934 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:52:23.4340 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:52:23.4340 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:52:23.4340 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:52:24.4622 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:52:24.4834 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:52:24.4834 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:52:54.5121 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:52:54.5131 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:52:54.5131 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:52:54.5467 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:52:54.5467 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:52:54.5467 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:52:55.5697 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:52:55.5852 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:52:55.6038 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:53:25.6186 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:53:25.6313 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:53:25.6313 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:53:25.6752 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:53:25.6752 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:53:25.6752 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:53:26.7012 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:53:26.7314 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:53:26.7405 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:53:56.7602 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:53:56.7662 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:53:56.7662 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:53:56.7891 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:53:56.7891 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:53:56.7891 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:53:57.8185 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:53:57.8498 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:53:57.8578 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:54:27.8638 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:54:27.8737 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:54:27.8737 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:54:27.9146 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:54:27.9146 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:54:27.9146 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:54:28.9386 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:54:28.9623 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:54:28.9710 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:54:58.9924 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:54:58.9924 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:54:58.9924 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:54:59.0284 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:54:59.0284 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:54:59.0284 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:55:00.0468 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:55:00.0624 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:55:00.0780 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:55:30.0970 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:55:30.1086 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:55:30.1086 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:55:30.1443 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:55:30.1443 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:55:30.1443 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:55:31.1836 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:55:31.2149 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:55:31.2305 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:56:01.2309 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:56:01.2444 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:56:01.2444 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:56:01.2691 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:56:01.2691 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:56:01.2691 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:56:02.2887 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:56:02.3106 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:56:02.3113 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:56:32.3187 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:56:32.3187 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:56:32.3187 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:56:32.3732 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:56:32.3732 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:56:32.3732 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:56:33.3974 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:56:33.4292 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:56:33.4449 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:57:03.4574 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:57:03.4712 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:57:03.4712 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:57:03.5049 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:57:03.5049 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:57:03.5049 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:57:04.5423 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:57:04.5688 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:57:04.5788 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:57:34.5996 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:57:34.6102 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:57:34.6102 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:57:34.6536 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:57:34.6536 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:57:34.6536 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:57:35.6878 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:57:35.7246 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:57:35.7390 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:58:05.7681 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:58:05.7801 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:58:05.7801 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:58:05.8152 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:58:05.8152 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:58:05.8152 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:58:06.8453 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:58:06.8740 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:58:06.8740 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:58:36.8957 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:58:36.8957 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:58:36.8957 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:58:36.9471 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:58:36.9471 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:58:36.9471 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:58:37.9818 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:58:37.9973 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:58:38.0129 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:59:08.0314 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:59:08.0314 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:59:08.0314 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:59:08.0790 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:59:08.0790 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:59:08.0790 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:59:09.1218 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:59:09.1339 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:59:09.1503 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 11:59:39.1750 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 11:59:39.1750 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 11:59:39.1750 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 11:59:39.1906 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 11:59:39.1906 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 11:59:39.1906 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 11:59:40.2408 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 11:59:40.2619 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 11:59:40.2619 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:00:10.2780 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:00:10.2834 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:00:10.2834 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:00:10.3093 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:00:10.3093 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:00:10.3093 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:00:11.3233 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:00:11.3511 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:00:11.3511 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:00:41.3616 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:00:41.3750 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:00:41.3750 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:00:41.4048 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:00:41.4048 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:00:41.4048 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:00:42.4238 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:00:42.4657 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:00:42.4748 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:01:12.4875 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:01:12.5030 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:01:12.5030 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:01:12.5443 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:01:12.5443 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:01:12.5443 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:01:13.5696 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:01:13.6014 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:01:13.6014 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:01:43.6304 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:01:43.6420 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:01:43.6420 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:01:43.6916 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:01:43.6916 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:01:43.6916 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:01:44.7221 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:01:44.7479 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:01:44.7564 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:02:14.7707 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:02:14.7707 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:02:14.7707 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:02:14.8057 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:02:14.8057 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:02:14.8057 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:02:15.8517 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:02:15.8829 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:02:15.8829 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:02:45.9133 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:02:45.9243 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:02:45.9243 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:02:45.9474 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:02:45.9474 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:02:45.9474 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:02:46.9708 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:02:46.9876 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:02:46.9876 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:03:17.0032 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:03:17.0032 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:03:17.0032 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:03:17.0408 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:03:17.0408 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:03:17.0408 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:03:18.0642 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:03:18.0954 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:03:18.0954 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:03:48.1121 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:03:48.1121 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:03:48.1121 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:03:48.1373 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:03:48.1373 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:03:48.1373 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:03:49.1799 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:03:49.1955 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:03:49.1955 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:04:19.2166 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:04:19.2166 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:04:19.2166 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:04:19.2423 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:04:19.2423 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:04:19.2423 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:04:20.2614 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:04:20.2778 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:04:20.2778 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:04:50.2960 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:04:50.3090 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:04:50.3090 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:04:50.3382 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:04:50.3382 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:04:50.3382 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:04:51.3579 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:04:51.3819 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:04:51.3819 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:05:21.3984 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:05:21.3984 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:05:21.3984 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:05:21.4401 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:05:21.4401 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:05:21.4401 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:05:22.4625 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:05:22.4801 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:05:22.4801 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:05:52.4980 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:05:52.5091 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:05:52.5091 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:05:52.5378 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:05:52.5378 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:05:52.5378 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:05:53.5501 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:05:53.5657 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:05:53.5738 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:06:23.5815 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:06:23.5945 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:06:23.5945 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:06:23.6236 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:06:23.6236 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:06:23.6236 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:06:24.6464 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:06:24.6644 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:06:24.6644 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:06:54.6881 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:06:54.6982 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:06:54.6982 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:06:54.7206 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:06:54.7206 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:06:54.7206 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:06:55.7504 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:06:55.7740 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:06:55.7740 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:07:25.7849 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:07:25.7849 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:07:25.7849 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:07:25.8154 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:07:25.8154 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:07:25.8154 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:07:26.8349 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:07:26.8349 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:07:26.8551 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:07:56.8620 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:07:56.8710 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:07:56.8710 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:07:56.8943 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:07:56.8943 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:07:56.8943 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:07:57.9161 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:07:57.9390 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:07:57.9450 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:08:27.9484 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:08:27.9484 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:08:27.9484 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:08:27.9797 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:08:27.9797 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:08:27.9797 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:08:29.0010 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:08:29.0166 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:08:29.0166 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:08:59.0315 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:08:59.0315 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:08:59.0315 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:08:59.0668 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:08:59.0668 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:08:59.0668 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:09:00.0859 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:09:00.1018 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:09:00.1018 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:09:30.1141 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:09:30.1164 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:09:30.1164 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:09:30.1446 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:09:30.1446 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:09:30.1446 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:09:31.1703 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:09:31.1843 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:09:31.1843 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:10:01.1990 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:10:01.1990 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:10:01.1990 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:10:01.2265 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:10:01.2265 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:10:01.2265 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:10:02.2441 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:10:02.2597 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:10:02.2597 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:10:32.2835 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:10:32.2835 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:10:32.2835 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:10:32.3148 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:10:32.3148 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:10:32.3148 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:10:33.3426 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:10:33.3532 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:10:33.3532 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:11:03.3680 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:11:03.3680 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:11:03.3680 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:11:03.3994 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:11:03.3994 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:11:03.3994 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:11:04.4249 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:11:04.4426 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:11:04.4426 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:11:34.4543 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:11:34.4650 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:11:34.4650 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:11:34.4871 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:11:34.4871 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:11:34.4871 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:11:35.5037 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:11:35.5092 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:11:35.5224 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:12:05.5373 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:12:05.5483 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:12:05.5483 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:12:05.5853 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:12:05.5853 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:12:05.5853 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:12:06.6168 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:12:06.6479 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:12:06.6479 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:12:36.6776 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:12:36.6876 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:12:36.6876 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:12:36.7336 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:12:36.7336 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:12:36.7336 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:12:37.7649 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:12:37.7868 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:12:37.7945 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:13:07.8079 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:13:07.8079 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:13:07.8079 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:13:07.8547 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:13:07.8547 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:13:07.8547 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:13:08.8861 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:13:08.9172 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:13:08.9329 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:13:38.9637 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:13:38.9637 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:13:38.9637 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:13:39.0135 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:13:39.0135 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:13:39.0135 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:13:40.0693 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:13:40.1050 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:13:40.1050 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:14:10.1277 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:14:10.1277 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:14:10.1277 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:14:10.1761 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:14:10.1761 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:14:10.1761 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:14:11.2120 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:14:11.2386 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:14:11.2386 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:14:41.2656 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:14:41.2656 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:14:41.2656 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:14:41.3163 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:14:41.3163 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:14:41.3163 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:14:42.3630 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:14:42.3869 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:14:42.3869 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:15:12.4102 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:15:12.4102 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:15:12.4102 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:15:12.4269 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:15:12.4269 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:15:12.4269 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:15:13.4875 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:15:13.5047 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:15:13.5117 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:15:43.5285 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:15:43.5285 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:15:43.5285 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:15:43.5788 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:15:43.5788 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:15:43.5788 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:15:44.6029 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:15:44.6340 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:15:44.6497 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:16:14.6613 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:16:14.6703 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:16:14.6703 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:16:14.7146 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:16:14.7146 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:16:14.7146 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:16:15.7347 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:16:15.7552 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:16:15.7737 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:16:45.8006 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:16:45.8006 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:16:45.8006 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:16:45.8263 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:16:45.8263 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:16:45.8263 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:16:46.8526 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:16:46.8526 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:16:46.8708 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:17:16.8819 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:17:16.8948 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:17:16.8948 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:17:16.9397 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:17:16.9397 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:17:16.9397 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:17:17.9726 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:17:18.0043 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:17:18.0167 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:17:48.0249 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:17:48.0249 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:17:48.0249 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:17:48.0813 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:17:48.0813 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:17:48.0813 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:17:49.1230 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:17:49.1463 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:17:49.1592 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:18:19.1868 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:18:19.1868 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:18:19.1956 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:18:19.2369 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:18:19.2369 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:18:19.2369 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:18:20.2676 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:18:20.2842 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:18:20.3060 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:18:50.3233 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:18:50.3233 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:18:50.3233 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:18:50.3747 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:18:50.3747 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:18:50.3747 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:18:51.4186 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:18:51.4340 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:18:51.4497 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:19:21.4565 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:19:21.4716 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:19:21.4716 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:19:21.5025 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:19:21.5025 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:19:21.5025 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:19:22.5457 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:19:22.5781 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:19:22.5873 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:19:52.5973 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:19:52.6127 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:19:52.6127 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:19:52.6585 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:19:52.6585 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:19:52.6585 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:19:53.6839 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:19:53.7150 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:19:53.7150 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:20:23.7328 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:20:23.7429 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:20:23.7429 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:20:23.7816 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:20:23.7816 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:20:23.7816 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:20:24.8225 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:20:24.8528 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:20:24.8528 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:20:54.8633 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:20:54.8720 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:20:54.8720 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:20:54.9190 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:20:54.9190 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:20:54.9190 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:20:55.9553 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:20:55.9748 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:20:55.9904 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:21:26.0005 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:21:26.0122 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:21:26.0122 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:21:26.0434 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:21:26.0434 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:21:26.0434 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:21:27.0882 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:21:27.1195 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:21:27.1195 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:21:57.1482 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:21:57.1493 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:21:57.1493 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:21:57.1996 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:21:57.1996 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:21:57.1996 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:21:58.2191 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:21:58.2448 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:21:58.2604 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:22:28.2702 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:22:28.2702 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:22:28.2702 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:22:28.3157 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:22:28.3157 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:22:28.3157 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:22:29.3502 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:22:29.3916 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:22:29.3916 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:22:59.4075 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:22:59.4151 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:22:59.4151 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:22:59.4410 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:22:59.4410 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:22:59.4410 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:23:00.4562 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:23:00.4562 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:23:00.4769 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:23:30.4775 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:23:30.4775 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:23:30.4775 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:23:30.5277 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:23:30.5277 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:23:30.5277 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:23:31.5637 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:23:31.5994 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:23:31.5994 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 12:24:01.6323 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 12:24:01.6448 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 12:24:01.6448 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 12:24:01.6757 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 12:24:01.6757 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 12:24:01.6757 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 12:24:02.6976 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 12:24:02.7227 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 12:24:02.7347 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 13:29:15.2238 INFO [MqttService]:[DisconnectedAsyncTask]:disconnected from server
+2023-08-24 13:29:15.2238 INFO [MqttService]:[DisconnectedAsyncTask]:attempting to reconnect
+2023-08-24 13:29:17.2411 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 13:29:41.0859 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 13:29:41.1020 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 13:29:41.1020 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 13:29:41.1333 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 13:29:41.1333 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 13:29:41.1333 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 13:29:42.2837 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 13:29:42.9485 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 13:29:42.9485 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 13:30:12.9700 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 13:30:12.9783 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 13:30:12.9783 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 13:30:12.9964 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 13:30:12.9964 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 13:30:12.9964 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 13:30:14.0203 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 13:30:14.0425 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 13:30:14.0425 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 13:30:44.0875 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 13:30:44.1030 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 13:30:44.1030 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 13:30:44.1342 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 13:30:44.1342 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 13:30:44.1342 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 13:30:45.1674 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 13:30:45.1922 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 13:30:45.1922 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 13:31:15.2155 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 13:31:15.2155 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 13:31:15.2155 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 13:31:15.2406 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 13:31:15.2406 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 13:31:15.2406 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 13:31:16.2578 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 13:31:16.2578 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 13:31:16.2764 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 13:33:18.5417 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 13:33:18.6506 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 13:33:18.6767 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 13:33:18.7309 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 13:33:18.7309 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 13:33:18.7309 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 13:33:19.1097 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 13:33:19.7518 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 13:33:19.8415 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 13:33:19.8415 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 13:33:19.8415 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 13:33:20.3303 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 13:33:44.1818 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 13:33:44.2351 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 13:33:44.2463 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 13:33:44.2975 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 13:33:44.2975 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 13:33:44.2975 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 13:33:44.3773 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 13:33:45.3275 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 13:33:45.3434 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 13:33:45.3434 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 13:33:45.3434 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 13:33:45.7330 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 13:50:43.0808 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 13:50:43.1389 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 13:50:43.1551 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 13:50:43.2021 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 13:50:43.2021 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 13:50:43.2021 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 13:50:43.3798 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 13:50:44.2286 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 13:50:44.8305 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 13:50:44.8375 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 13:50:44.8375 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 13:50:44.9895 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 13:53:44.7266 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 13:53:44.7600 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 13:53:44.7757 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 13:53:44.8064 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 13:53:44.8064 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 13:53:44.8064 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 13:53:44.8228 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 13:53:45.8366 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 13:53:45.9159 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 13:53:45.9159 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 13:53:45.9159 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 13:53:46.0125 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 13:54:15.9389 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 13:54:15.9389 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 13:54:15.9389 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 13:54:15.9701 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 13:54:15.9701 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 13:54:15.9701 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 13:54:16.9931 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 13:54:17.0086 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 13:54:17.0241 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 13:54:47.0415 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 13:54:47.0415 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 13:54:47.0415 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 13:54:47.0742 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 13:54:47.0742 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 13:54:47.0742 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 13:54:48.0939 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 13:54:48.1240 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 13:54:48.1339 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 13:55:18.1489 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 13:55:18.1489 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 13:55:18.1489 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 13:55:18.1800 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 13:55:18.1800 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 13:55:18.1800 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 13:55:19.2029 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 13:55:19.2253 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 13:55:19.2253 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 13:56:17.9100 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 13:56:17.9981 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 13:56:18.0111 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 13:56:18.0709 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 13:56:18.0709 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 13:56:18.0709 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 13:56:18.0918 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 13:56:19.1083 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 13:56:19.1352 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 13:56:19.1352 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 13:56:19.1352 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 13:56:19.2262 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 14:03:22.4951 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 14:03:22.5420 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 14:03:22.5592 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 14:03:22.6160 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 14:03:22.6160 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 14:03:22.6160 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 14:03:22.6350 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 14:03:23.7775 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 14:03:23.8553 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 14:03:23.8553 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 14:03:23.8553 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 14:03:23.9762 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 14:03:27.5756 ERROR [Connection]:[RemoveFromClusterAsync] exception:响应状态代码不指示成功: 401 (Unauthorized)。
+2023-08-24 14:03:34.6468 INFO [TestEngAuthorization]:[Login]:[LoginCheck]:login success
+2023-08-24 14:03:53.8671 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 14:03:53.8671 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 14:03:53.8671 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 14:03:53.9099 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 14:03:53.9099 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 14:03:53.9099 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 14:03:54.9299 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 14:03:54.9459 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 14:03:54.9459 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 14:03:56.7463 ERROR [Connection]:[AddToClusterAsync] exception:Exception : Duplicate entry 'PF43T098-Test' for key 'ipc-clusters.PRIMARY'
+2023-08-24 14:04:24.9525 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 14:04:24.9605 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 14:04:24.9605 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 14:04:24.9914 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 14:04:24.9914 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 14:04:24.9914 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 14:04:26.0204 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 14:04:26.0573 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 14:04:26.0672 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 14:04:56.0714 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 14:04:56.0846 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 14:04:56.0846 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 14:04:56.1174 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 14:04:56.1174 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 14:04:56.1174 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 14:04:57.1459 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 14:04:57.1729 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 14:04:57.1818 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 14:05:27.1846 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 14:05:27.1846 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 14:05:27.1846 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 14:05:27.2155 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 14:05:27.2155 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 14:05:27.2155 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 14:05:28.2307 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 14:05:28.2584 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 14:05:28.2584 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 14:05:58.2685 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 14:05:58.2805 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 14:05:58.2805 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 14:05:58.3164 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 14:05:58.3164 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 14:05:58.3164 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 14:05:59.3358 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 14:05:59.3637 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 14:05:59.3727 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 14:06:29.3809 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 14:06:29.3888 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 14:06:29.3888 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 14:06:29.4137 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 14:06:29.4137 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 14:06:29.4137 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 14:06:30.4267 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 14:06:30.4496 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 14:06:30.4496 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 14:06:34.3964 INFO [TestEngAuthorization]:[MainViewModel]:[Logout]:logout
+2023-08-24 14:07:00.4699 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 14:07:00.4788 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 14:07:00.4788 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 14:07:00.5157 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 14:07:00.5157 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 14:07:00.5157 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 14:07:01.5388 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 14:07:01.5652 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 14:07:01.5750 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 14:07:31.6087 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 14:07:31.6210 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 14:07:31.6210 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 14:07:31.6658 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 14:07:31.6658 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 14:07:31.6658 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 14:07:32.6984 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 14:07:32.7310 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 14:07:32.7310 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 14:08:02.7517 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 14:08:02.7677 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 14:08:02.7677 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 14:08:02.7906 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 14:08:02.7906 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 14:08:02.7906 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 14:08:03.8185 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 14:08:03.8453 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 14:08:03.8541 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 14:08:33.8636 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 14:08:33.8686 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 14:08:33.8686 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 14:08:33.8935 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 14:08:33.8935 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 14:08:33.8935 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 14:08:34.9062 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 14:08:34.9241 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 14:08:34.9241 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 15:53:42.1469 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 15:53:42.2356 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 15:53:42.2725 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 15:53:42.3303 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 15:53:42.3303 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 15:53:42.3303 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 15:53:42.3801 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 15:53:43.6132 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 15:53:44.2822 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 15:53:44.2822 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 15:53:44.2822 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 15:53:44.3981 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:00:48.1893 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:00:48.2605 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:00:48.2744 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:00:48.3412 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:00:48.3412 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:00:48.3412 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:00:48.3611 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:00:49.5054 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:00:49.5702 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:00:49.5702 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:00:49.5702 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:00:49.6711 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:00:58.9217 ERROR [Connection]:[AddToClusterAsync] exception:响应状态代码不指示成功: 401 (Unauthorized)。
+2023-08-24 16:01:13.5727 INFO [TestEngAuthorization]:[Login]:[LoginCheck]:login success
+2023-08-24 16:01:19.5805 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:01:19.5805 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:01:19.5805 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:01:19.6164 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:01:19.6164 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:01:19.6164 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:01:20.6423 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:01:20.6582 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:01:20.6582 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:01:46.8448 INFO [MqttService]:[ApplicationMessageReceived]:{
+  "IsMastermind":false,
+  "Address":"NightCity",
+  "Sender":"Lucy",
+  "Content":"hello"
+}
+2023-08-24 16:01:50.6787 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:01:50.6908 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:01:50.6908 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:01:50.7336 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:01:50.7336 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:01:50.7336 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:01:51.7557 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:01:51.7929 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:01:51.7999 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:02:21.8032 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:02:21.8032 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:02:21.8032 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:02:21.8480 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:02:21.8480 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:02:21.8480 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:02:22.8723 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:02:22.9010 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:02:22.9100 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:02:26.7622 ERROR [Connection]:[AddToClusterAsync] exception:Exception : Duplicate entry 'PF43T098-111' for key 'ipc-clusters.PRIMARY'
+2023-08-24 16:02:42.0192 INFO [MqttService]:[ApplicationMessageReceived]:{
+  "IsMastermind":false,
+  "Address":"NightCity",
+  "Sender":"Lucy",
+  "Content":"hello"
+}
+2023-08-24 16:02:52.9385 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:02:52.9385 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:02:52.9385 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:02:52.9714 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:02:52.9714 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:02:52.9714 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:02:53.9985 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:02:54.0182 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:02:54.0182 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:03:24.0239 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:03:24.0329 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:03:24.0329 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:03:24.0708 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:03:24.0708 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:03:24.0708 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:03:25.0962 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:03:25.1122 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:03:25.1122 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:03:55.1259 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:03:55.1259 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:03:55.1259 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:03:55.1783 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:03:55.1783 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:03:55.1783 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:03:56.1956 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:03:56.2290 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:03:56.2290 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:04:28.3813 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:04:42.7674 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:04:42.7674 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:04:42.8064 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:04:42.8064 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:04:42.8064 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:04:43.8256 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:04:43.8435 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:04:43.8505 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:05:29.1775 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:05:29.2213 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:05:29.2413 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:05:29.2968 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:05:29.2968 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:05:29.2978 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:05:29.3177 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:05:30.3290 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:05:30.3550 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:05:30.3629 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:05:30.3629 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:05:30.4407 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:05:40.1293 INFO [MqttService]:[ApplicationMessageReceived]:{
+  "IsMastermind":false,
+  "Address":"NightCity",
+  "Sender":"Lucy",
+  "Content":"hello"
+}
+2023-08-24 16:08:15.8083 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:08:15.8492 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:08:15.8492 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:08:15.9224 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:08:15.9224 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:08:15.9234 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:08:15.9523 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:08:16.9638 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:08:17.0435 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:08:17.0495 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:08:17.0495 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:08:17.1293 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:08:22.3421 ERROR [Connection]:[AddToClusterAsync] exception:响应状态代码不指示成功: 401 (Unauthorized)。
+2023-08-24 16:08:28.5651 INFO [TestEngAuthorization]:[Login]:[LoginCheck]:login success
+2023-08-24 16:08:35.6375 ERROR [Connection]:[AddToClusterAsync] exception:Exception : Duplicate entry 'PF43T098' for key 'ipc-clusters.PRIMARY'
+2023-08-24 16:08:47.0557 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:08:47.0646 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:08:47.0646 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:08:47.0959 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:08:47.0959 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:08:47.0959 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:08:48.1142 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:08:48.1321 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:08:48.1321 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:09:18.1472 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:09:18.1472 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:09:18.1571 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:09:18.1936 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:09:18.1936 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:09:18.1936 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:09:19.2112 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:09:19.2429 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:09:19.2520 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:09:49.2740 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:09:49.2854 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:09:49.2854 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:09:49.3277 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:09:49.3277 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:09:49.3277 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:09:50.3575 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:09:50.3802 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:09:50.3802 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:11:08.3026 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:11:08.3963 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:11:08.4142 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:11:08.5069 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:11:08.5069 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:11:08.5069 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:11:08.5508 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:11:11.6863 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:11:11.7123 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:11:11.7123 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:11:11.7123 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:11:11.7921 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:11:23.8590 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:11:23.9629 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:11:23.9759 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:11:24.0297 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:11:24.0297 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:11:24.0297 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:11:24.0596 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:11:40.3550 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:11:40.3849 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:11:40.3949 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:11:40.3949 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:11:40.4770 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:11:47.5713 INFO [MqttService]:[ApplicationMessageReceived]:{
+  "IsMastermind":false,
+  "Address":"NightCity",
+  "Sender":"Lucy",
+  "Content":"hello"
+}
+2023-08-24 16:12:30.8514 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:12:30.9062 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:12:30.9301 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:12:31.0019 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:12:31.0019 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:12:31.0019 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:12:31.0348 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:12:32.0309 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:12:32.0489 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:12:32.0489 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:12:32.0489 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:12:32.1488 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:12:35.8463 INFO [MqttService]:[ApplicationMessageReceived]:{
+  "IsMastermind":false,
+  "Address":"NightCity",
+  "Sender":"Lucy",
+  "Content":"hello"
+}
+2023-08-24 16:12:53.2782 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:12:53.3467 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:12:53.3467 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:12:53.3938 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:12:53.3938 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:12:53.3938 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:12:53.4426 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:12:54.4196 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:12:54.4405 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:12:54.4405 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:12:54.4405 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:12:54.5260 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:13:01.6498 INFO [MqttService]:[ApplicationMessageReceived]:{
+  "IsMastermind":false,
+  "Address":"NightCity",
+  "Sender":"Lucy",
+  "Content":"hello"
+}
+2023-08-24 16:14:21.4365 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:14:21.4963 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:14:21.5192 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:14:21.5820 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:14:21.5820 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:14:21.5820 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:14:21.6029 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:14:22.6078 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:14:22.6287 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:14:22.6287 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:14:22.6287 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:14:22.7165 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:14:45.5312 INFO [MqttService]:[ApplicationMessageReceived]:{
+  "IsMastermind":false,
+  "Address":"NightCity",
+  "Sender":"Lucy",
+  "Content":"hello"
+}
+2023-08-24 16:15:29.2459 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:15:29.4014 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:15:29.4114 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:15:29.4732 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:15:29.4732 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:15:29.4732 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:15:29.5011 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:17:34.1376 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:17:34.1911 INFO [MqttService]:[DisconnectedAsyncTask]:disconnected from server
+2023-08-24 16:17:34.1911 INFO [MqttService]:[DisconnectedAsyncTask]:attempting to reconnect
+2023-08-24 16:17:34.1911 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:17:34.2050 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:17:34.2050 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:17:34.2892 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:17:36.2054 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:18:02.3203 INFO [MqttService]:[ApplicationMessageReceived]:{
+  "IsMastermind":false,
+  "Address":"NightCity",
+  "Sender":"Lucy",
+  "Content":"hello"
+}
+2023-08-24 16:18:04.2086 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:18:04.2086 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:18:04.2086 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:18:04.2426 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:18:04.2426 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:18:04.2426 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:18:05.2643 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:18:05.2826 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:18:05.2826 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:18:24.5269 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:18:24.5873 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:18:24.5992 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:18:24.6610 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:18:24.6610 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:18:24.6610 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:18:24.6849 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:18:28.1834 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:18:28.2073 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:18:28.2073 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:18:28.2073 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:18:28.3070 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:18:39.9185 INFO [MqttService]:[ApplicationMessageReceived]:{
+  "IsMastermind":false,
+  "Address":"NightCity",
+  "Sender":"Lucy",
+  "Content":"hello"
+}
+2023-08-24 16:18:58.2339 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:18:58.2429 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:18:58.2429 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:18:58.2905 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:18:58.2905 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:18:58.2905 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:18:59.3213 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:18:59.3488 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:18:59.3488 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:21:06.3826 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:21:06.4703 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:21:06.4703 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:21:06.5460 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:21:06.5460 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:21:06.5460 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:21:06.5739 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:21:07.5766 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:21:07.6583 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:21:07.6583 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:21:07.6583 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:21:07.7575 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:21:11.3960 INFO [MqttService]:[ApplicationMessageReceived]:{
+  "IsMastermind":false,
+  "Address":"NightCity",
+  "Sender":"Lucy",
+  "Content":"hello"
+}
+2023-08-24 16:21:18.6008 ERROR [Connection]:[RemoveFromClusterAsync] exception:响应状态代码不指示成功: 401 (Unauthorized)。
+2023-08-24 16:21:25.4085 INFO [TestEngAuthorization]:[Login]:[LoginCheck]:login success
+2023-08-24 16:21:37.6775 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:21:37.6944 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:21:37.6944 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:21:37.7461 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:21:37.7461 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:21:37.7461 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:21:38.7709 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:21:38.7888 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:21:38.7888 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:22:08.7967 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:22:08.8130 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:22:08.8140 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:22:08.8555 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:22:08.8555 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:22:08.8555 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:22:09.8850 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:22:09.9198 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:22:09.9328 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:22:16.0535 INFO [MqttService]:[ApplicationMessageReceived]:{
+  "IsMastermind":false,
+  "Address":"NightCity",
+  "Sender":"Lucy",
+  "Content":"hello"
+}
+2023-08-24 16:23:31.0862 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:23:31.1510 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:23:31.1620 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:23:31.2257 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:23:31.2257 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:23:31.2257 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:23:31.2556 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:23:32.2537 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:23:32.2906 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:23:32.2906 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:23:32.2906 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:23:32.3681 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:23:52.8191 ERROR [Connection]:[AddToClusterAsync] exception:响应状态代码不指示成功: 401 (Unauthorized)。
+2023-08-24 16:23:59.3250 INFO [TestEngAuthorization]:[Login]:[LoginCheck]:login success
+2023-08-24 16:24:02.2976 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:24:02.3085 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:24:02.3085 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:24:02.3379 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:24:02.3379 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:24:02.3379 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:24:03.3540 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:24:03.3760 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:24:03.3832 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:24:08.7611 ERROR [Connection]:[AddToClusterAsync] exception:Exception : Duplicate entry 'PF43T098-Linmeng' for key 'ipc-clusters.PRIMARY'
+2023-08-24 16:30:30.2909 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:30:30.3816 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:30:30.3965 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:30:30.4693 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:30:30.4693 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:30:30.4693 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:30:30.4932 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:30:31.6079 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:30:31.6757 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:30:31.6757 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:30:31.6757 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:30:31.7715 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:45:14.8066 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:45:14.9745 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:45:15.0054 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:45:15.0739 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:45:15.0739 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:45:15.0739 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:45:15.1018 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:45:16.2261 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:45:16.3083 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:45:16.3144 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:45:16.3144 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:45:16.4070 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:45:46.6541 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:45:46.7005 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:45:46.7185 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:45:46.7858 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:45:46.7858 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:45:46.7858 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:45:46.8027 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:45:47.8238 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:45:47.8398 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:45:47.8458 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:45:47.8458 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:45:47.9408 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:46:04.0059 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:46:04.0558 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:46:04.0697 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:46:04.1394 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:46:04.1454 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:46:04.1454 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:46:04.1763 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:46:05.1700 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:46:05.1840 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:46:05.1900 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:46:05.1900 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:46:05.2810 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:46:35.2175 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:46:35.2316 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:46:35.2316 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:46:35.2698 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:46:35.2698 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:46:35.2698 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:46:36.2924 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:46:36.3229 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:46:36.3338 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:47:06.3429 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:47:06.3551 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:47:06.3551 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:47:06.3990 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:47:06.3990 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:47:06.3990 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:47:07.4320 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:47:07.4570 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:47:07.4570 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:47:56.2646 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:47:56.3105 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:47:56.3194 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:47:56.3802 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:47:56.3802 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:47:56.3802 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:47:56.4091 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:47:57.4121 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:47:57.4499 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:47:57.4569 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:47:57.4569 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:47:57.5689 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:48:59.9605 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:49:00.1154 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:49:00.1313 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:49:00.1841 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:49:00.1841 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:49:00.1841 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:49:00.2001 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:49:01.2195 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:49:01.2543 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:49:01.2543 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:49:01.2543 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:49:01.4079 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:51:24.9815 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:51:25.0873 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:51:25.1002 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:51:25.1510 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:51:25.1510 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:51:25.1510 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:51:25.1760 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:51:26.1836 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:51:26.2644 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:51:26.2703 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:51:26.2703 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:51:26.3714 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 16:51:49.0356 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 16:51:49.1083 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 16:51:49.1156 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 16:51:49.1534 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 16:51:49.1534 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 16:51:49.1534 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 16:51:49.1933 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 16:51:50.1800 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 16:51:50.1960 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 16:51:50.1960 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 16:51:50.1960 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 16:51:50.3031 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 17:47:36.0060 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 17:47:36.1365 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 17:47:36.1654 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 17:47:36.2322 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 17:47:36.2322 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 17:47:36.2322 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 17:47:36.2940 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 17:47:37.4680 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 17:47:38.1048 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 17:47:38.1158 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 17:47:38.1158 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 17:47:39.9495 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 17:53:03.0341 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 17:53:03.1472 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 17:53:03.1611 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 17:53:03.2379 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 17:53:03.2379 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 17:53:03.2379 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 17:53:03.3366 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 17:53:04.2710 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 17:53:04.3438 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 17:53:04.3498 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 17:53:04.3498 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 17:53:04.5068 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 17:53:33.5292 INFO [MqttService]:[ApplicationMessageReceived]:{
+  "IsMastermind":true,
+  "Address":"NightCity",
+  "Sender":"Lucy",
+  "Content":"sync banner messages"
+}
+2023-08-24 17:53:34.3634 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 17:53:34.3634 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 17:53:34.3634 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 17:53:34.3973 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 17:53:34.3973 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 17:53:34.3973 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 17:53:35.4187 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 17:53:35.4339 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 17:53:35.4408 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 17:53:43.6981 INFO [MqttService]:[ApplicationMessageReceived]:{
+  "IsMastermind":true,
+  "Address":"NightCity",
+  "Sender":"Lucy",
+  "Content":"sync banner messages"
+}
+2023-08-24 17:54:05.4483 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 17:54:05.4635 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 17:54:05.4635 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 17:54:05.5024 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 17:54:05.5024 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 17:54:05.5024 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 17:54:06.5242 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 17:54:06.5532 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 17:54:06.5532 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 17:54:31.4199 INFO [MqttService]:[ApplicationMessageReceived]:{
+  "IsMastermind":true,
+  "Address":"NightCity",
+  "Sender":"Lucy",
+  "Content":"sync banner messages"
+}
+2023-08-24 17:54:32.0748 ERROR [Banner]:[SyncMessagesAsync] exception:无法在 CollectionChanged 事件过程中更改 ObservableCollection。
+2023-08-24 17:54:36.5802 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 17:54:36.5977 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 17:54:36.5977 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 17:54:36.6386 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 17:54:36.6386 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 17:54:36.6386 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 17:54:37.6565 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 17:54:37.6816 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 17:54:37.6816 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 17:55:23.2589 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 17:55:23.3049 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 17:55:23.3279 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 17:55:23.4116 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 17:55:23.4116 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 17:55:23.4116 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 17:55:23.4395 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 17:56:05.5181 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 17:56:05.6387 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 17:56:05.6537 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 17:56:05.6985 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 17:56:05.6985 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 17:56:05.6985 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 17:56:05.7215 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 17:56:24.4607 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 17:56:24.5414 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 17:56:24.5557 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 17:56:24.6066 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 17:56:24.6066 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 17:56:24.6066 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 17:56:24.6325 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 17:59:13.5262 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 17:59:13.6709 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 17:59:13.6838 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 17:59:13.7336 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 17:59:13.7336 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 17:59:13.7336 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 17:59:13.7495 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 17:59:14.7536 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 17:59:14.8362 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 17:59:14.8362 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 17:59:14.8362 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 17:59:14.9188 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 17:59:46.9227 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 17:59:47.0399 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 17:59:47.0528 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 17:59:47.1036 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 17:59:47.1036 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 17:59:47.1036 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 17:59:47.1424 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 18:02:53.2282 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 18:02:53.3426 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 18:02:53.3616 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 18:02:53.4244 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 18:02:53.4244 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 18:02:53.4244 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 18:02:53.4533 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 18:02:59.7750 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 18:03:11.3936 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 18:03:15.7978 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 18:03:15.7978 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 18:03:39.7526 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 18:03:39.8314 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 18:03:39.8453 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 18:03:39.8891 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 18:03:39.8891 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 18:03:39.8891 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 18:03:39.9131 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 18:03:40.7166 ERROR [Banner]:[SyncMessagesAsync] exception:无法在 CollectionChanged 事件过程中更改 ObservableCollection。
+2023-08-24 18:03:40.9144 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 18:03:40.9303 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 18:03:40.9303 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 18:03:40.9303 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 18:03:41.0418 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 18:07:05.2977 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 18:07:05.3495 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 18:07:05.3694 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 18:07:05.4312 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 18:07:05.4352 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 18:07:05.4352 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 18:07:05.4621 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 18:07:06.4708 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 18:07:06.5016 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 18:07:06.5147 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 18:07:06.5147 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 18:07:06.6059 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 18:07:28.2660 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 18:07:28.3451 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 18:07:28.3451 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 18:07:28.3967 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 18:07:28.3967 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 18:07:28.3967 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 18:07:28.4256 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 18:07:29.4143 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 18:07:29.4323 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 18:07:29.4403 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 18:07:29.4403 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 18:07:29.5268 INFO [BasicInfomationService]:[UploadAsync]:upload success
+2023-08-24 18:07:59.4586 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 18:07:59.4723 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 18:07:59.4723 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 18:07:59.5033 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 18:07:59.5033 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 18:07:59.5033 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 18:08:00.5281 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 18:08:00.5538 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 18:08:00.5538 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 18:08:30.5936 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 18:08:30.6096 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 18:08:30.6096 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 18:08:30.6445 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 18:08:30.6445 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 18:08:30.6445 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 18:08:31.6726 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 18:08:31.7141 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 18:08:31.7239 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 18:09:01.7333 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 18:09:01.7439 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 18:09:01.7439 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 18:09:01.7841 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 18:09:01.7841 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 18:09:01.7841 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 18:09:02.8114 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 18:09:02.8390 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 18:09:02.8513 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 18:09:32.8723 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 18:09:32.8781 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 18:09:32.8781 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 18:09:32.9216 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 18:09:32.9216 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 18:09:32.9216 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 18:09:33.9462 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 18:09:33.9954 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 18:09:34.0257 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 18:10:04.0464 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 18:10:04.0534 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 18:10:04.0534 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 18:10:04.0967 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 18:10:04.0967 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 18:10:04.0967 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 18:10:05.1197 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 18:10:05.1470 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 18:10:05.1589 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 18:10:17.9460 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 18:10:18.0147 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 18:10:18.0304 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 18:10:18.0772 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 18:10:18.0772 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 18:10:18.0772 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 18:10:18.1688 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 18:13:36.4496 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-24 18:13:36.5983 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-24 18:13:36.6168 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-24 18:13:36.6686 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-24 18:13:36.6686 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-24 18:13:36.6686 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-24 18:13:36.6895 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-24 18:13:37.6922 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-24 18:13:37.7138 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-24 18:13:37.7138 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-24 18:13:37.7138 INFO [BasicInfomationService]:[UploadAsync]:uploading basic infomation
+2023-08-24 18:13:37.8184 INFO [BasicInfomationService]:[UploadAsync]:upload success

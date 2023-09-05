@@ -1,0 +1,233 @@
+﻿<apb:AppBarWindow x:Class="NightCity.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NightCity.Views"
+        mc:Ignorable="d"
+        xmlns:apb="clr-namespace:WpfAppBar;assembly=WpfAppBar"
+        xmlns:prism="http://prismlibrary.com/"        
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:converter="clr-namespace:NightCity.Core.Converters;assembly=NightCity.Core"
+        xmlns:control="clr-namespace:NightCity.Core.Controls;assembly=NightCity.Core"
+        xmlns:converterLocal="clr-namespace:NightCity.Converters" 
+        DockedWidthOrHeight="40" MinWidth="0" MinHeight="0"        
+        AllowsTransparency="True" WindowStyle="None" Background="Transparent">
+
+    <apb:AppBarWindow.Resources>
+        <ResourceDictionary>
+            <converterLocal:MainWindowConverter x:Key="MainWindowConverter"></converterLocal:MainWindowConverter>
+            <converterLocal:BannerConverter x:Key="BannerConverter"></converterLocal:BannerConverter>
+            <converter:MultiBindingConverter x:Key="MultiBindingConverter"></converter:MultiBindingConverter>
+            <Style x:Key="Card" TargetType="materialDesign:Card">
+                <Setter Property="Padding" Value="2,0,2,0" />
+                <Setter Property="UniformCornerRadius" Value="5" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,5,5,5" />
+                <Setter Property="Height" Value="30" />
+                <Setter Property="Background" Value="White"/>
+            </Style>
+            <Style x:Key="PopupBox" TargetType="materialDesign:PopupBox">
+                <Setter Property="PopupUniformCornerRadius" Value="5" />
+                <Setter Property="StaysOpen" Value="True" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Content" Value="Content" />
+            </Style>
+            <Style x:Key="PackIcon" TargetType="materialDesign:PackIcon">
+                <Setter Property="Width" Value="26" />
+                <Setter Property="Height" Value="26" />
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+        </ResourceDictionary>
+    </apb:AppBarWindow.Resources>
+
+    <DockPanel>
+        <Grid HorizontalAlignment="Stretch" DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <materialDesign:Card Grid.Column="0" Style="{StaticResource Card}" Margin="5" control:Badge.IsShow="{Binding HaveNoReadMessage}">
+                <materialDesign:PopupBox Style="{StaticResource PopupBox}" PopupVerticalOffset="5" IsPopupOpen="{Binding IsConnectionOpen}">
+                    <materialDesign:PopupBox.ToggleContent>
+                        <materialDesign:PackIcon>
+                            <materialDesign:PackIcon.Style>
+                                <Style TargetType="materialDesign:PackIcon" BasedOn="{StaticResource PackIcon}">
+                                    <Setter Property="Kind" Value="Connection"/>
+                                    <Setter Property="Foreground" Value="#C62828"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMqttConnected}" Value="True">
+                                            <Setter Property="Kind" Value="WifiCheck"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsMqttConnected}" Value="True">
+                                            <Setter Property="Foreground" Value="#2E7D32"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </materialDesign:PackIcon.Style>
+                        </materialDesign:PackIcon>
+                    </materialDesign:PopupBox.ToggleContent>
+                    <local:Connection x:Name="Connection" Focusable="True"/>
+                </materialDesign:PopupBox>
+            </materialDesign:Card>
+            <ItemsControl Grid.Column="1" ItemsSource="{Binding AuthorizationModules}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <materialDesign:Card Grid.Column="1" Style="{StaticResource Card}"  ToolTip="{Binding Name}" Cursor="Hand">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <i:InvokeCommandAction Command="{Binding Path=DataContext.OpenModuleCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=apb:AppBarWindow}}" CommandParameter="{Binding Name}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <materialDesign:PackIcon Kind="{Binding Icon}" Style="{StaticResource PackIcon}"/>
+                        </materialDesign:Card>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <materialDesign:Card Grid.Column="2" Style="{StaticResource Card}">
+                <materialDesign:PopupBox Style="{StaticResource PopupBox}" PopupVerticalOffset="5">
+                    <materialDesign:PopupBox.ToggleContent>
+                        <materialDesign:PackIcon Kind="DesktopTowerMonitor" Style="{StaticResource PackIcon}"/>
+                    </materialDesign:PopupBox.ToggleContent>
+                    <local:Performance/>
+                </materialDesign:PopupBox>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Column="3" Margin="0,5,5,5" Padding="0,0,5,0" x:Name="Banners" Height="30">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <materialDesign:PopupBox Grid.Column="0" Style="{StaticResource PopupBox}" PopupVerticalOffset="5">
+                        <materialDesign:PopupBox.ToggleContent>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:ColorZone Mode="SecondaryDark" CornerRadius="5" Margin="5">
+                                    <TextBlock VerticalAlignment="Center" Margin="10,0,10,0">
+                                        <TextBlock.Text>
+                                            <MultiBinding Converter="{StaticResource MainWindowConverter}">
+                                                <Binding Path="BannerMessageCount"></Binding>
+                                                <MultiBinding.ConverterParameter>BannerMessageCountText</MultiBinding.ConverterParameter>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </materialDesign:ColorZone>
+                                <materialDesign:PackIcon Kind="ChevronDoubleDown" Style="{StaticResource PackIcon}"/>
+                            </StackPanel>
+                        </materialDesign:PopupBox.ToggleContent>
+                        <local:Banner Focusable="True" Width="{Binding ElementName=Banners,Path=ActualWidth}"/>
+                    </materialDesign:PopupBox>
+                    <materialDesign:ColorZone Mode="SecondaryDark" Grid.Column="1" CornerRadius="5" Margin="5,5,0,5">
+                        <Grid Margin="5" Background="Transparent">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding TopBannerMessage.Content}" Margin="10,0,10,0" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Grid.Column="1" Margin="0,0,10,0" Kind="Play" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <i:InvokeCommandAction Command="{Binding TryLinkCommand}">
+                                            <i:InvokeCommandAction.CommandParameter>
+                                                <MultiBinding Converter="{StaticResource MultiBindingConverter}">
+                                                    <Binding Path="TopBannerMessage.Category"></Binding>
+                                                    <Binding Path="TopBannerMessage.LinkCommand"></Binding>
+                                                </MultiBinding>
+                                            </i:InvokeCommandAction.CommandParameter>
+                                        </i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <materialDesign:PackIcon.Style>
+                                    <Style TargetType="materialDesign:PackIcon">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding TopBannerMessage.Category}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding TopBannerMessage.LinkCommand}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </materialDesign:PackIcon.Style>
+                            </materialDesign:PackIcon>
+                            <materialDesign:PackIcon Grid.Column="2"  Kind="Close" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <i:InvokeCommandAction Command="{Binding RemoveMessageCommand}" CommandParameter="{Binding TopBannerMessage}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <materialDesign:PackIcon.Style>
+                                    <Style TargetType="materialDesign:PackIcon">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding TopBannerMessage.Urgency}" Value="Inform">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </materialDesign:PackIcon.Style>
+                            </materialDesign:PackIcon>
+                        </Grid>
+                        <materialDesign:ColorZone.Background>
+                            <MultiBinding Converter="{StaticResource BannerConverter}">
+                                <Binding Path="TopBannerMessage.Urgency"></Binding>
+                                <Binding Path="TopBannerMessage.Priority"></Binding>
+                                <MultiBinding.ConverterParameter>MessageBackground</MultiBinding.ConverterParameter>
+                            </MultiBinding>
+                        </materialDesign:ColorZone.Background>
+                        <materialDesign:ColorZone.Foreground>
+                            <MultiBinding Converter="{StaticResource BannerConverter}">
+                                <Binding Path="TopBannerMessage.Urgency"></Binding>
+                                <Binding Path="TopBannerMessage.Priority"></Binding>
+                                <MultiBinding.ConverterParameter>MessageForeground</MultiBinding.ConverterParameter>
+                            </MultiBinding>
+                        </materialDesign:ColorZone.Foreground>
+                    </materialDesign:ColorZone>
+                </Grid>
+            </materialDesign:Card>
+            <ItemsControl Grid.Column="4" ItemsSource="{Binding MonitorModules}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <materialDesign:Card Grid.Column="1" Style="{StaticResource Card}" Cursor="Hand">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <i:InvokeCommandAction Command="{Binding Path=DataContext.OpenModuleCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=apb:AppBarWindow}}" CommandParameter="{Binding Name}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <materialDesign:PackIcon Kind="{Binding Icon}" Foreground="{Binding Foreground}" Style="{StaticResource PackIcon}"/>
+                        </materialDesign:Card>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <materialDesign:Card Grid.Column="5" Style="{StaticResource Card}">
+                <materialDesign:PopupBox Style="{StaticResource PopupBox}" PopupVerticalOffset="5">
+                    <materialDesign:PopupBox.ToggleContent>
+                        <materialDesign:PackIcon Kind="Apps" Style="{StaticResource PackIcon}"/>
+                    </materialDesign:PopupBox.ToggleContent>
+                    <local:ModuleManager/>
+                </materialDesign:PopupBox>
+            </materialDesign:Card>
+        </Grid>
+    </DockPanel>
+
+</apb:AppBarWindow>

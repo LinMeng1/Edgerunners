@@ -1,0 +1,12 @@
+D:\Project\Edgerunners\Moon.Core\bin\Release\net6.0\Moon.Core.deps.json
+D:\Project\Edgerunners\Moon.Core\bin\Release\net6.0\Moon.Core.dll
+D:\Project\Edgerunners\Moon.Core\bin\Release\net6.0\Moon.Core.pdb
+D:\Project\Edgerunners\Moon.Core\obj\Release\net6.0\Moon.Core.csproj.AssemblyReference.cache
+D:\Project\Edgerunners\Moon.Core\obj\Release\net6.0\Moon.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\Project\Edgerunners\Moon.Core\obj\Release\net6.0\Moon.Core.AssemblyInfoInputs.cache
+D:\Project\Edgerunners\Moon.Core\obj\Release\net6.0\Moon.Core.AssemblyInfo.cs
+D:\Project\Edgerunners\Moon.Core\obj\Release\net6.0\Moon.Core.csproj.CoreCompileInputs.cache
+D:\Project\Edgerunners\Moon.Core\obj\Release\net6.0\Moon.Core.dll
+D:\Project\Edgerunners\Moon.Core\obj\Release\net6.0\refint\Moon.Core.dll
+D:\Project\Edgerunners\Moon.Core\obj\Release\net6.0\Moon.Core.pdb
+D:\Project\Edgerunners\Moon.Core\obj\Release\net6.0\ref\Moon.Core.dll

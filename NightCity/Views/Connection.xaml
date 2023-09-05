@@ -1,0 +1,323 @@
+﻿<UserControl x:Class="NightCity.Views.Connection"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:converter="clr-namespace:NightCity.Core.Converters;assembly=NightCity.Core"
+             xmlns:converterLocal="clr-namespace:NightCity.Converters" 
+             xmlns:control="clr-namespace:NightCity.Core.Controls;assembly=NightCity.Core"
+             mc:Ignorable="d"           
+             Width="800" Height="500">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converterLocal:ConnectionConverter x:Key="ConnectionConverter"></converterLocal:ConnectionConverter>
+            <converter:DialogHostVisibilityConverter x:Key="DialogHostVisibilityConverter"></converter:DialogHostVisibilityConverter>
+            <Style x:Key="Card" TargetType="materialDesign:Card">
+                <Setter Property="UniformCornerRadius" Value="5" />
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="Background" Value="#EEEEEE"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <materialDesign:DialogHost IsOpen="{Binding DialogOpen}" DialogMargin="0" DialogBackground="Transparent">
+        <materialDesign:DialogHost.DialogContent>
+            <materialDesign:Card Background="Transparent" Padding="35">
+                <Border CornerRadius="8">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="20" ShadowDepth="0" Color="Black" Opacity="0.4"/>
+                    </Border.Effect>
+                    <materialDesign:Card>
+                        <StackPanel MaxWidth="600">
+                            <StackPanel Margin="16">
+                                <ProgressBar IsIndeterminate="True" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0"/>
+                                <TextBlock Text="Syncing data"></TextBlock>
+                                <StackPanel.Visibility>
+                                    <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                        <Binding Path="DialogCategory"></Binding>
+                                        <MultiBinding.ConverterParameter>Syncing</MultiBinding.ConverterParameter>
+                                    </MultiBinding>
+                                </StackPanel.Visibility>
+                            </StackPanel>
+                            <StackPanel Margin="16">
+                                <TextBlock Text="{Binding DialogMessage}" TextWrapping="Wrap"/>
+                                <Button Margin="0,8,8,0" Command="{Binding CleanMessageCommand}" Content="I Know" Style="{StaticResource MaterialDesignFlatButton}"/>
+                                <StackPanel.Visibility>
+                                    <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                        <Binding Path="DialogCategory"></Binding>
+                                        <MultiBinding.ConverterParameter>Message</MultiBinding.ConverterParameter>
+                                    </MultiBinding>
+                                </StackPanel.Visibility>
+                            </StackPanel>
+                            <StackPanel Margin="16">
+                                <TextBlock Text="Add to a cluster" />
+                                <TextBox Margin="0,8,0,0" materialDesign:HintAssist.Hint="cluster name" GotFocus="Textbox_GotFocus" Text="{Binding EditingCluster}" Style="{StaticResource MaterialDesignTextBox}" HorizontalAlignment="Stretch" />
+                                <CheckBox Content="With Category" Margin="0,10,0,0" IsThreeState="False" IsChecked="{Binding IsEditingClusterWithCategory}"/>
+                                <TextBox Margin="0,8,0,0" materialDesign:HintAssist.Hint="category" GotFocus="Textbox_GotFocus" Text="{Binding EditingClusterCategory}" HorizontalAlignment="Stretch">
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsEditingClusterWithCategory}" Value="False">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <Button Margin="0,8,8,0" Command="{Binding AddToClusterCommand}" Content="ACCEPT" Style="{StaticResource MaterialDesignFlatButton}"/>
+                                    <Button Margin="0,8,8,0" Command="{Binding CleanMessageCommand}" Content="CANCEL" Style="{StaticResource MaterialDesignFlatButton}"/>
+                                </StackPanel>
+                                <StackPanel.Visibility>
+                                    <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                        <Binding Path="DialogCategory"></Binding>
+                                        <MultiBinding.ConverterParameter>AddToCluster</MultiBinding.ConverterParameter>
+                                    </MultiBinding>
+                                </StackPanel.Visibility>
+                            </StackPanel>
+                            <StackPanel Margin="16">
+                                <TextBlock Text="{Binding DialogMessage}"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="0" Margin="0,16,0,0" Command="{Binding RemoveFromClusterCommand}" Content="ACCEPT" Style="{StaticResource MaterialDesignFlatButton}"/>
+                                    <Button Grid.Column="2" Margin="0,16,0,0" Command="{Binding CleanMessageCommand}" Content="CANCEL" Style="{StaticResource MaterialDesignFlatButton}"/>
+                                </Grid>
+                                <StackPanel.Visibility>
+                                    <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                        <Binding Path="DialogCategory"></Binding>
+                                        <MultiBinding.ConverterParameter>RemoveFromCluster</MultiBinding.ConverterParameter>
+                                    </MultiBinding>
+                                </StackPanel.Visibility>
+                            </StackPanel>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </Border>
+            </materialDesign:Card>
+        </materialDesign:DialogHost.DialogContent>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <materialDesign:Card Grid.Row="0" Style="{StaticResource Card}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}" IsChecked="{Binding IsFix}">
+                        <materialDesign:PackIcon Kind="Lock" RenderTransformOrigin=".5,.5" >
+                        </materialDesign:PackIcon>
+                        <materialDesign:ToggleButtonAssist.OnContent>
+                            <materialDesign:PackIcon Kind="Lock" />
+                        </materialDesign:ToggleButtonAssist.OnContent>
+                    </ToggleButton>
+                    <materialDesign:PackIcon Grid.Column="2" Kind="CommentPlus" Cursor="Hand" Background="Transparent" Margin="0,0,10,0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction Command="{Binding TryAddToClusterCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </materialDesign:PackIcon>
+                    <materialDesign:PackIcon Grid.Column="3" Kind="Sync" Cursor="Hand" Background="Transparent">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction Command="{Binding SyncClustersCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </materialDesign:PackIcon>
+                </Grid>
+            </materialDesign:Card>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <materialDesign:Card Grid.Row="0" Style="{StaticResource Card}">
+                    <ListView ItemsSource="{Binding TopicCollection.Topics}" SelectedItem="{Binding SelectedTopic}"  control:MouseLeftButtonDownBehavior.Command="{Binding ReadMessageCommand}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <materialDesign:PackIcon x:Name="NoClusterIcon" Grid.Column="0" Kind="Cog" Background="Transparent" Margin="0,1,5,0" ToolTip="{Binding Origin}"/>
+                                    <materialDesign:PackIcon x:Name="CategoryIcon"  Grid.Column="0" Kind="Star" Background="Transparent" Margin="0,1,5,0" ToolTip="{Binding Category}"/>
+                                    <TextBlock Text="{Binding Topic}" Grid.Column="1"/>
+                                    <Border Padding="5,0,5,0" MinWidth="20" x:Name="NoReadCount" Grid.Column="2" BorderThickness="1" Background="#B71C1C" CornerRadius="10" VerticalAlignment="Center">
+                                        <TextBlock Foreground="White" Text="{Binding NoReadMessageCount}" FontSize="11" HorizontalAlignment="Center"/>
+                                    </Border>
+                                </Grid>
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding NoReadMessageCount}" Value="0">
+                                        <Setter TargetName="NoReadCount" Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger Value="True">
+                                        <Setter TargetName="NoClusterIcon" Property="Visibility" Value="Collapsed" />
+                                        <DataTrigger.Binding>
+                                            <MultiBinding Converter="{StaticResource ConnectionConverter}">
+                                                <Binding Path="."/>
+                                                <MultiBinding.ConverterParameter>IsClusterTopic</MultiBinding.ConverterParameter>
+                                            </MultiBinding>
+                                        </DataTrigger.Binding>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Category}" Value="{x:Null}">
+                                        <Setter TargetName="CategoryIcon" Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </materialDesign:Card>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <materialDesign:Card Grid.Row="0" Style="{StaticResource Card}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Grid.Column="0" Kind="Cancel" Cursor="Hand" Background="Transparent" Foreground="#B71C1C" Margin="0,0,10,0">
+                                <materialDesign:PackIcon.Style>
+                                    <Style TargetType="materialDesign:PackIcon">
+                                        <Style.Triggers>
+                                            <DataTrigger Value="False">
+                                                <DataTrigger.Binding>
+                                                    <MultiBinding Converter="{StaticResource ConnectionConverter}">
+                                                        <Binding Path="SelectedTopic"/>
+                                                        <MultiBinding.ConverterParameter>IsClusterTopic</MultiBinding.ConverterParameter>
+                                                    </MultiBinding>
+                                                </DataTrigger.Binding>
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </materialDesign:PackIcon.Style>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <i:InvokeCommandAction Command="{Binding TryRemoveFromClusterCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </materialDesign:PackIcon>
+                            <materialDesign:PackIcon Grid.Column="2" Kind="Magnify" Margin="0,0,10,0"/>
+                            <materialDesign:PackIcon Grid.Column="3" Kind="Broom" Cursor="Hand" Background="Transparent">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <i:InvokeCommandAction Command="{Binding ClearMessageCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </materialDesign:PackIcon>
+                        </Grid>
+                    </materialDesign:Card>
+                    <materialDesign:Card Grid.Row="1" Style="{StaticResource Card}">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" x:Name="MessageScroll">
+                            <ItemsControl ItemsSource="{Binding SelectedTopic.Messages}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" x:Name="MessageBox" Margin="0,0,0,10">
+                                            <materialDesign:PackIcon x:Name="Avatar" Height="20" Width="20" Margin="10" Grid.Column="0" Kind="Account"/>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Grid.Row="0" Foreground="Gray" FlowDirection="LeftToRight">
+                                                    <TextBlock.Text>
+                                                        <MultiBinding StringFormat="{}{0}  {1:yyyy-MM-dd HH:mm}">
+                                                            <Binding Path="Sender" />
+                                                            <Binding Path="Time" />
+                                                        </MultiBinding>
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+                                                <materialDesign:Card x:Name="Content" Grid.Row="1" Style="{StaticResource Card}" Margin="0,5,50,5" Background="White" HorizontalAlignment="Left">
+                                                    <TextBox x:Name="Text" FlowDirection="LeftToRight" Background="Transparent" BorderThickness="0" IsReadOnly="True" Text="{Binding Content}" TextWrapping="Wrap" MaxWidth="500"/>
+                                                </materialDesign:Card>
+                                                <TextBlock Grid.Row="2" x:Name="Address"  FlowDirection="LeftToRight" Text="{Binding Address,StringFormat=from {0}}" Foreground="Gray"/>
+                                            </Grid>
+                                        </StackPanel>
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding Address}" Value="">
+                                                <Setter TargetName="MessageBox" Property="FlowDirection" Value="RightToLeft" />
+                                                <Setter TargetName="Content" Property="Background" Value="#C8E6C9" />
+                                                <Setter TargetName="Address" Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsMastermind}" Value="True">
+                                                <Setter TargetName="Avatar" Property="Kind" Value="Brain" />
+                                                <Setter TargetName="Content" Property="Background" Value="#01579B" />
+                                                <Setter TargetName="Text" Property="Foreground" Value="White" />
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </materialDesign:Card>
+                    <materialDesign:Card Grid.Row="2" Style="{StaticResource Card}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0">
+                                <CheckBox IsChecked="{Binding IsMastermind}" Content="As Mastermind" IsThreeState="False" HorizontalAlignment="Right"  IsEnabled="False"/>
+                            </StackPanel>
+                            <Separator Grid.Row="1" Style="{StaticResource MaterialDesignDarkSeparator}" Margin="0"/>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Column="0" Text="{Binding EditingMessage,UpdateSourceTrigger=PropertyChanged}" Margin="0,0,10,0" Height="40" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"  Style="{StaticResource MaterialDesignTextBox}" GotFocus="Textbox_GotFocus">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Key="Enter" Command="{Binding SendMessageCommand}"/>
+                                    </TextBox.InputBindings>
+                                </TextBox>
+                                <Button Grid.Column="1" Width="60" Content="Send" FontSize="10" Padding="5" Margin="5" Command="{Binding SendMessageCommand}" Cursor="Hand">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding SelectedTopic}" Value="{x:Null}">
+                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </materialDesign:Card>
+                </Grid>
+            </Grid>
+        </Grid>
+    </materialDesign:DialogHost>
+</UserControl>

@@ -1,0 +1,82 @@
+﻿<Window x:Class="TestEngAuthorization.Views.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestEngAuthorization.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        mc:Ignorable="d"
+        Height="300" Width="810" WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True" WindowStyle="None"  Background="Transparent" Topmost="True" ShowInTaskbar="False">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Purple" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml">
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <FontFamily x:Key="Poppins">pack://application:,,,/Resources/Font/Poppins-Regular.ttf#Poppins Regular</FontFamily>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <materialDesign:Card UniformCornerRadius="6" Margin="5" materialDesign:ElevationAssist.Elevation="Dp16">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Image x:Name="Backgorund" Grid.Column="0" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            <materialDesign:DialogHost Grid.Column="1" IsOpen="{Binding MainDialogOpen}" x:Name="LoginLoading">
+                <materialDesign:DialogHost.DialogContent>
+                    <StackPanel Margin="16">
+                        <ProgressBar IsIndeterminate="True" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0"/>
+                        <TextBlock Text="Logging in"></TextBlock>
+                    </StackPanel>
+                </materialDesign:DialogHost.DialogContent>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <materialDesign:PackIcon Grid.Row="0" Margin="5" Kind="Close" Height="20" Width="20" Foreground="Gray" Cursor="Hand" Background="Transparent" HorizontalAlignment="Right" MouseDown="PackIcon_MouseDown"/>
+                    <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="360">
+                        <Grid>
+                            <TextBlock Margin="10" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Text="Sign In" FontWeight="Bold" FontSize="24" FontFamily="Microsoft YaHei UI" >
+                            </TextBlock>
+                        </Grid>
+                        <TextBox Style="{StaticResource MaterialDesignOutlinedTextBox}" materialDesign:TextFieldAssist.UnderlineBrush="Black" materialDesign:TextFieldAssist.HasClearButton="True" Margin="10,0,10,0" Background="#CCFFFFFF" Foreground="Black" FontWeight="Bold" FontSize="16" Height="40" Padding="16,0,12,0" VerticalContentAlignment="Center" SelectionBrush="White" x:Name="UsernameText" CaretBrush="Black" KeyDown="UsernameText_KeyDown" />
+                        <PasswordBox Style="{StaticResource MaterialDesignOutlinedRevealPasswordBox}" materialDesign:TextFieldAssist.UnderlineBrush="Black" materialDesign:TextFieldAssist.HasClearButton="True" Background="#CCFFFFFF" Foreground="Black" FontWeight="Bold" FontSize="16" Height="40" Padding="16,0,12,0" VerticalContentAlignment="Center" SelectionBrush="White" x:Name="PasswordText" CaretBrush="Black" Margin="10,10,10,0" KeyDown="PasswordText_KeyDown" />
+                        <TextBlock Margin="10,10,10,0" Padding="5,0,5,0" x:Name="ErrorTextHint" FontSize="10" FontWeight="Bold" Foreground="#C62828"/>
+                        <Button Foreground="white" Height="38" BorderBrush="{x:Null}" Margin="10" HorizontalContentAlignment="Stretch" Click="Button_Click" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                                    <GradientStop Color="#FF350C4F" Offset="0"/>
+                                    <GradientStop Color="#FFC023DA" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="131*"/>
+                                    <ColumnDefinition Width="14*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Continue" Grid.Column="0" HorizontalAlignment="Left" Margin="123,0,0,0"/>
+                                <materialDesign:PackIcon Kind="ChevronRight" Grid.Column="2" Width="18" Height="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                    <TextBlock Grid.Row="2" Margin="5" x:Name="Foot" Text="Test Eng. Authorization"  HorizontalAlignment="Center" Foreground="Gray"/>
+                </Grid>
+            </materialDesign:DialogHost>
+        </Grid>
+    </materialDesign:Card>
+
+
+</Window>

@@ -1,0 +1,42 @@
+2023-08-11 16:12:33.0270 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-11 16:12:33.1036 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-11 16:12:33.1304 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-11 16:12:33.1981 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-11 16:12:33.1981 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-11 16:12:33.1981 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-11 16:12:33.2141 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-11 16:12:34.1126 ERROR [ModuleManager]:[SyncLocalModulesAsync] exception:未能找到路径“D:\Project\Edgerunners\NightCity\bin\Release\Modules”的一部分。
+2023-08-11 16:12:34.2257 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-11 16:12:34.2514 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-11 16:12:34.2593 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-11 16:12:56.0327 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-11 16:12:56.1006 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-11 16:12:56.1229 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-11 16:12:56.1868 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-11 16:12:56.1868 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-11 16:12:56.1868 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-11 16:12:56.2108 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-11 16:12:57.0421 ERROR [ModuleManager]:[SyncLocalModulesAsync] exception:未能找到路径“D:\Project\Edgerunners\NightCity\bin\Release\Modules”的一部分。
+2023-08-11 16:12:57.2109 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-11 16:12:57.2318 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-11 16:12:57.2318 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-11 16:13:06.9350 ERROR [ModuleManager]:[UpdateModuleAsync] exception:响应状态代码不指示成功: 401 (Unauthorized)。
+2023-08-11 16:13:27.2437 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-11 16:13:27.2437 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-11 16:13:27.2437 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-11 16:13:27.2836 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-11 16:13:27.2836 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-11 16:13:27.2836 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-11 16:13:28.3128 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-11 16:13:28.3298 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-11 16:13:28.3378 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
+2023-08-11 16:14:05.3183 INFO [BasicInfomationService]:[MonitorTask] scanning basic infomation
+2023-08-11 16:14:05.3830 INFO [BasicInfomationService]:[GetMainboard]:PF43T098
+2023-08-11 16:14:05.3949 INFO [BasicInfomationService]:[GetHostName]:LINMENG2-43T098
+2023-08-11 16:14:05.4545 INFO [BasicInfomationService]:[GetHostMac]:00D49EBAAD6A
+2023-08-11 16:14:05.4545 INFO [BasicInfomationService]:[GetHostAddress]:10.114.215.169
+2023-08-11 16:14:05.4545 INFO [BasicInfomationService]:[GetDomain]:lenovo.com
+2023-08-11 16:14:05.4953 INFO [MqttService]:[ConnectedAsyncTask]:connected to server
+2023-08-11 16:14:06.4755 INFO [BasicInfomationService]:[GetCpu]:12th Gen Intel(R) Core(TM) i7-12700H
+2023-08-11 16:14:06.5004 INFO [BasicInfomationService]:[GetDisk]:SSD 477GB
+2023-08-11 16:14:06.5004 INFO [BasicInfomationService]:[GetMemory]:2GB+2GB+2GB+2GB+2GB+2GB+2GB+2GB
