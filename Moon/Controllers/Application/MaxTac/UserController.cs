@@ -214,7 +214,6 @@ namespace Moon.Controllers.Application.MaxTac
         #endregion
 
 
-
         #region AddUser
         public class User_AddUser_Parameter
         {

@@ -8,6 +8,7 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:converter="clr-namespace:NightCity.Core.Converters;assembly=NightCity.Core"
+             xmlns:s="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"         
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -69,7 +70,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Margin="0,16,0,0" Command="{Binding UpdateContactCommand}" Content="ACCEPT" Style="{StaticResource MaterialDesignFlatButton}"/>
+                        <Button Grid.Column="0" Margin="0,16,0,0" Command="{Binding SetContactCommand}" Content="ACCEPT" Style="{StaticResource MaterialDesignFlatButton}"/>
                         <Button Grid.Column="2" Margin="0,16,0,0" Command="{Binding CancelCommand}" Content="CANCEL"  Style="{StaticResource MaterialDesignFlatButton}"/>
                     </Grid>
                     <StackPanel.Visibility>
@@ -92,7 +93,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Margin="0,16,0,0" Content="ACCEPT" Command="{Binding UpdatePasswordCommand}" Style="{StaticResource MaterialDesignFlatButton}"/>
+                        <Button Grid.Column="0" Margin="0,16,0,0" Content="ACCEPT" Command="{Binding ChangePasswordCommand}" Style="{StaticResource MaterialDesignFlatButton}"/>
                         <Button Grid.Column="3" Margin="0,16,0,0" Command="{Binding CancelCommand}" Content="CANCEL"  Style="{StaticResource MaterialDesignFlatButton}"/>
                     </Grid>
                     <StackPanel.Visibility>
@@ -128,7 +129,7 @@
                             <materialDesign:PackIcon Grid.Column="1" Kind="CloudSyncOutline" Style="{StaticResource PackIcon}" Background="#00000000">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseDown">
-                                        <i:InvokeCommandAction Command="{Binding GetUserInfoCommand}"/>
+                                        <i:InvokeCommandAction Command="{Binding SyncUserInfoCommand}"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </materialDesign:PackIcon>
@@ -198,7 +199,7 @@
                                 <materialDesign:PackIcon Grid.Column="1" Kind="Pencil" Style="{StaticResource PackIcon}" Background="#00000000">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseDown">
-                                            <i:InvokeCommandAction Command="{Binding SetContactCommand}" />
+                                            <i:InvokeCommandAction Command="{Binding TrySetContactCommand}" />
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </materialDesign:PackIcon>
@@ -227,9 +228,8 @@
                         <ColumnDefinition/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-
                     <StackPanel Grid.Column="0" Orientation="Horizontal">
-                        <Button Grid.Column="1" Foreground="white" BorderBrush="{x:Null}" Margin="5" Command="{Binding ChangePasswordCommand}">
+                        <Button Grid.Column="1" Foreground="white" BorderBrush="{x:Null}" Margin="5" Command="{Binding TryChangePasswordCommand}">
                             <Button.Background>
                                 <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
                                     <GradientStop Color="#000000" Offset="0"/>
@@ -279,7 +279,7 @@
                                 <materialDesign:PackIcon Grid.Column="1" Margin="20,0,0,0" Kind="CloudSyncOutline" Style="{StaticResource PackIcon}" Background="#00000000">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseDown">
-                                            <i:InvokeCommandAction Command="{Binding GetRolesAndAuthorizationsCommand}"/>
+                                            <i:InvokeCommandAction Command="{Binding SyncRolesAndAuthorizationsCommand}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </materialDesign:PackIcon>

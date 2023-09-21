@@ -38,32 +38,29 @@ namespace NightCity.ViewModels
             {
                 eventAggregator.GetEvent<BannerMessagesChangedEvent>().Publish(new Tuple<BannerMessage, int>(messages.FirstOrDefault(), Messages.Count));
             };
+            //监听事件 Mqtt连接/断开
+            eventAggregator.GetEvent<MqttConnectedEvent>().Subscribe(async (IsConnected) =>
+            {
+                if (IsConnected) await SyncMessagesAsync();
+            }, ThreadOption.UIThread);
+            //监听事件 Mqtt信息接收
             eventAggregator.GetEvent<MqttMessageReceivedEvent>().Subscribe(async (message) =>
             {
                 if (!message.IsMastermind) return;
                 string command = message.Content;
-                if (string.IsNullOrEmpty(command)) return;
-                if (command == "sync banner messages")
+                if (command == "system sync banner messages")
                     await SyncMessagesAsync();
             }, ThreadOption.UIThread);
+            //监听事件 横幅信息接收
             eventAggregator.GetEvent<BannerMessageRemovingEvent>().Subscribe((message) =>
             {
                 RemoveMessage(message);
             }, ThreadOption.UIThread);
+            //监听事件 横幅信息同步请求
             eventAggregator.GetEvent<BannerMessageSyncingEvent>().Subscribe(async () =>
             {
                 await SyncMessagesAsync();
             }, ThreadOption.UIThread);
-            //等待设备SN获取后
-            Task.Run(async () =>
-            {
-                object mainboard = null;
-                while (mainboard == null)
-                {
-                    mainboard = propertyService.GetProperty("Mainboard");
-                }
-                await SyncMessagesAsync();
-            });
         }
 
         /// <summary>
@@ -82,28 +79,28 @@ namespace NightCity.ViewModels
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
                 List<Banner_GetMessages_Result> messages = JsonConvert.DeserializeObject<List<Banner_GetMessages_Result>>(result.Content.ToString());
+                List<Banner_GetMessages_Result> sorted = messages.OrderBy(it => it.Urgency == "Inform").ThenBy(it => it.Urgency == "Plan").ThenBy(it => it.Urgency == "Execute").ThenByDescending(it => it.Priority).ThenByDescending(it => it.CreateTime).ToList();
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    Messages.Clear();
-                });
-                List<Banner_GetMessages_Result> sorted = messages.OrderBy(it => it.Urgency == "Inform").ThenBy(it => it.Urgency == "Plan").ThenBy(it => it.Urgency == "Execute").ThenByDescending(it => it.Priority).ThenByDescending(it => it.CreateTime).ToList();
-                foreach (var message in sorted)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
+                    lock (Messages)
                     {
-                        Messages.Add(new BannerMessage()
+                        Messages.Clear();
+                        foreach (var message in sorted)
                         {
-                            Id = message.Id,
-                            Urgency = message.Urgency,
-                            Priority = message.Priority,
-                            Category = message.Category,
-                            Content = message.Content,
-                            LinkCommand = message.LinkCommand,
-                            LinkInfomation = message.LinkInfomation,
-                            CreateTime = message.CreateTime,
-                        });
-                    });
-                }
+                            Messages.Add(new BannerMessage()
+                            {
+                                Id = message.Id,
+                                Urgency = message.Urgency,
+                                Priority = message.Priority,
+                                Category = message.Category,
+                                Content = message.Content,
+                                LinkCommand = message.LinkCommand,
+                                LinkInfomation = message.LinkInfomation,
+                                CreateTime = message.CreateTime,
+                            });
+                        }
+                    }                       
+                });                             
                 DialogOpen = false;
             }
             catch (Exception e)

@@ -51,7 +51,7 @@ namespace NightCity.Core.Services
         public async Task AddTopic(string topic, string category = null)
         {
             try
-            {
+            {               
                 var distTopic = TopicCollection.Topics.FirstOrDefault(it => it.Topic == topic && it.Category == category);
                 if (distTopic != null) return;
                 while (!mqttClient.IsConnected)
@@ -78,13 +78,23 @@ namespace NightCity.Core.Services
         }
         public async Task RemoveAllClusterTopic()
         {
-            for (int i = TopicCollection.Topics.Count - 1; i >= 0; i--)
+            try
             {
-                var topic = TopicCollection.Topics[i];
-                if (topic.Origin != null) continue;
-                TopicCollection.Topics.Remove(topic);
-                await mqttClient.UnsubscribeAsync($"NightCity/{topic.Topic}");
+                for (int i = TopicCollection.Topics.Count - 1; i >= 0; i--)
+                {
+                    var topic = TopicCollection.Topics[i];
+                    if (topic.Origin != null) continue;
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        TopicCollection.Topics.Remove(topic);
+                    });                  
+                    await mqttClient.UnsubscribeAsync($"NightCity/{topic.Topic}");
+                }
             }
+            catch (Exception e)
+            {
+                Global.Log($"[MqttService]:[RemoveAllClusterTopic]:{e.Message}", true);
+            }            
         }
         public void ClearTopic(string topic)
         {

@@ -7,5 +7,6 @@ namespace Moon.Controllers.Application.NightCity.Modules
     [ApiController]
     public class OnCallController : ControllerBase
     {
+
     }
 }

@@ -11,6 +11,7 @@ namespace OnCall
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();
             regionManager.RegisterViewWithRegion("OnCallRegion", typeof(Main));
+            regionManager.RegisterViewWithRegion("OnCallRegionShortcut",typeof(Shortcut));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

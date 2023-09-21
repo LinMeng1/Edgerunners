@@ -31,7 +31,6 @@ D:\Project\Edgerunners\ModHub\bin\Debug\NLog.xml
 D:\Project\Edgerunners\ModHub\bin\Debug\MQTTnet.xml
 D:\Project\Edgerunners\ModHub\bin\Debug\Renci.SshNet.xml
 D:\Project\Edgerunners\ModHub\obj\Debug\ModHub.csproj.AssemblyReference.cache
-D:\Project\Edgerunners\ModHub\obj\Debug\ModHub.csproj.SuggestedBindingRedirects.cache
 D:\Project\Edgerunners\ModHub\obj\Debug\Views\MainWindow.g.cs
 D:\Project\Edgerunners\ModHub\obj\Debug\Views\Template.g.cs
 D:\Project\Edgerunners\ModHub\obj\Debug\App.g.cs

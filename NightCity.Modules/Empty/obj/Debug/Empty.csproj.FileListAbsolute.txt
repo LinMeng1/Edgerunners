@@ -1,14 +1,5 @@
 D:\Project\Edgerunners\NightCity.Modules\Empty\bin\Debug\Empty.dll
 D:\Project\Edgerunners\NightCity.Modules\Empty\bin\Debug\Empty.pdb
-D:\Project\Edgerunners\NightCity.Modules\Empty\bin\Debug\Microsoft.Xaml.Behaviors.dll
-D:\Project\Edgerunners\NightCity.Modules\Empty\bin\Debug\Prism.dll
-D:\Project\Edgerunners\NightCity.Modules\Empty\bin\Debug\Prism.Wpf.dll
-D:\Project\Edgerunners\NightCity.Modules\Empty\bin\Debug\Microsoft.Xaml.Behaviors.pdb
-D:\Project\Edgerunners\NightCity.Modules\Empty\bin\Debug\Microsoft.Xaml.Behaviors.xml
-D:\Project\Edgerunners\NightCity.Modules\Empty\bin\Debug\Prism.pdb
-D:\Project\Edgerunners\NightCity.Modules\Empty\bin\Debug\Prism.xml
-D:\Project\Edgerunners\NightCity.Modules\Empty\bin\Debug\Prism.Wpf.pdb
-D:\Project\Edgerunners\NightCity.Modules\Empty\bin\Debug\Prism.Wpf.xml
 D:\Project\Edgerunners\NightCity.Modules\Empty\obj\Debug\Empty.csproj.AssemblyReference.cache
 D:\Project\Edgerunners\NightCity.Modules\Empty\obj\Debug\Views\Main.g.cs
 D:\Project\Edgerunners\NightCity.Modules\Empty\obj\Debug\Empty_MarkupCompile.cache
@@ -18,6 +9,5 @@ D:\Project\Edgerunners\NightCity.Modules\Empty\obj\Debug\Empty.g.resources
 D:\Project\Edgerunners\NightCity.Modules\Empty\obj\Debug\Empty.Properties.Resources.resources
 D:\Project\Edgerunners\NightCity.Modules\Empty\obj\Debug\Empty.csproj.GenerateResource.cache
 D:\Project\Edgerunners\NightCity.Modules\Empty\obj\Debug\Empty.csproj.CoreCompileInputs.cache
-D:\Project\Edgerunners\NightCity.Modules\Empty\obj\Debug\Empty.csproj.CopyComplete
 D:\Project\Edgerunners\NightCity.Modules\Empty\obj\Debug\Empty.dll
 D:\Project\Edgerunners\NightCity.Modules\Empty\obj\Debug\Empty.pdb

@@ -7,13 +7,11 @@
              xmlns:prism="http://prismlibrary.com/"         
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:converter="clr-namespace:Lock.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <converter:EnabledTextConverter x:Key="EnabledTextConverter"></converter:EnabledTextConverter>
             <Style x:Key="Card" TargetType="materialDesign:Card">
                 <Setter Property="UniformCornerRadius" Value="5" />
                 <Setter Property="Padding" Value="5"/>
@@ -58,18 +56,18 @@
                     <materialDesign:PackIcon Grid.Column="0" Kind="MonitorDashboard"/>
                     <TextBlock Grid.Column="1" Text="Task Manager" Margin="10,0,0,0"/>
                     <TextBlock Grid.Column="3" FontWeight="Bold">
-                        <TextBlock.Foreground>
-                            <MultiBinding Converter="{StaticResource EnabledTextConverter}">
-                                <Binding Path="TaskManagerEnabled"></Binding>
-                                <MultiBinding.ConverterParameter>Foreground</MultiBinding.ConverterParameter>
-                            </MultiBinding>
-                        </TextBlock.Foreground>
-                        <TextBlock.Text>
-                            <MultiBinding Converter="{StaticResource EnabledTextConverter}">
-                                <Binding Path="TaskManagerEnabled"></Binding>
-                                <MultiBinding.ConverterParameter>Text</MultiBinding.ConverterParameter>
-                            </MultiBinding>
-                        </TextBlock.Text>
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="#D32F2F"/>
+                                <Setter Property="Text" Value="Disabled"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding TaskManagerEnabled}" Value="True">
+                                        <Setter Property="Foreground" Value="#388E3C"/>
+                                        <Setter Property="Text" Value="Enabled"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
                     </TextBlock>
                 </Grid>
             </materialDesign:Card>
@@ -85,18 +83,18 @@
                         <materialDesign:PackIcon Grid.Column="0" Kind="FolderOpen"/>
                         <TextBlock Grid.Column="1" Text="Explorer (partial)" Margin="10,0,0,0"/>
                         <TextBlock Grid.Column="3" FontWeight="Bold">
-                            <TextBlock.Foreground>
-                                <MultiBinding Converter="{StaticResource EnabledTextConverter}">
-                                    <Binding Path="ExplorerEnabled"></Binding>
-                                    <MultiBinding.ConverterParameter>Foreground</MultiBinding.ConverterParameter>
-                                </MultiBinding>
-                            </TextBlock.Foreground>
-                            <TextBlock.Text>
-                                <MultiBinding Converter="{StaticResource EnabledTextConverter}">
-                                    <Binding Path="ExplorerEnabled"></Binding>
-                                    <MultiBinding.ConverterParameter>Text</MultiBinding.ConverterParameter>
-                                </MultiBinding>
-                            </TextBlock.Text>
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="#D32F2F"/>
+                                    <Setter Property="Text" Value="Disabled"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ExplorerEnabled}" Value="True">
+                                            <Setter Property="Foreground" Value="#388E3C"/>
+                                            <Setter Property="Text" Value="Enabled"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
                         </TextBlock>
                     </Grid>
                     <StackPanel Margin="20,5,0,0">

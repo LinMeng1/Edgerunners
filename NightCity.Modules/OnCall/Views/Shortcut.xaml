@@ -1,0 +1,183 @@
+﻿<UserControl x:Class="OnCall.Views.Shortcut"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"          
+             xmlns:local="clr-namespace:OnCall.Views"
+             mc:Ignorable="d" 
+             xmlns:prism="http://prismlibrary.com/"         
+             prism:ViewModelLocator.AutoWireViewModel="True"   
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:converter="clr-namespace:NightCity.Core.Converters;assembly=NightCity.Core"
+             Width="400">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Purple" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml">
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <FontFamily x:Key="Poppins">pack://application:,,,/Resources/Font/Poppins-Regular.ttf#Poppins Regular</FontFamily>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="Card" TargetType="materialDesign:Card">
+                <Setter Property="UniformCornerRadius" Value="5" />
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="Background" Value="#EEEEEE"/>
+            </Style>
+            <converter:DialogHostVisibilityConverter x:Key="DialogHostVisibilityConverter"></converter:DialogHostVisibilityConverter>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <materialDesign:DialogHost IsOpen="{Binding DialogOpen}" DialogMargin="0" DialogBackground="Transparent">
+        <materialDesign:DialogHost.DialogContent>
+            <materialDesign:Card Background="Transparent" Padding="35">
+                <Border CornerRadius="8">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="20" ShadowDepth="0" Color="Black" Opacity="0.4"/>
+                    </Border.Effect>
+                    <materialDesign:Card>
+                        <StackPanel MaxWidth="600">
+                            <StackPanel Margin="16">
+                                <ProgressBar IsIndeterminate="True" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0"/>
+                                <TextBlock Text="Syncing data"></TextBlock>
+                                <StackPanel.Visibility>
+                                    <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                        <Binding Path="DialogCategory"></Binding>
+                                        <MultiBinding.ConverterParameter>Syncing</MultiBinding.ConverterParameter>
+                                    </MultiBinding>
+                                </StackPanel.Visibility>
+                            </StackPanel>
+                            <StackPanel Margin="16">
+                                <TextBlock Text="{Binding DialogMessage}" TextWrapping="Wrap"/>
+                                <Button Margin="0,8,8,0" Command="{Binding CleanMessageCommand}" Content="I Know" Style="{StaticResource MaterialDesignFlatButton}"/>
+                                <StackPanel.Visibility>
+                                    <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                        <Binding Path="DialogCategory"></Binding>
+                                        <MultiBinding.ConverterParameter>Message</MultiBinding.ConverterParameter>
+                                    </MultiBinding>
+                                </StackPanel.Visibility>
+                            </StackPanel>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </Border>
+            </materialDesign:Card>
+        </materialDesign:DialogHost.DialogContent>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Margin="5" Height="24" materialDesign:ButtonAssist.CornerRadius="5" Style="{StaticResource MaterialDesignRaisedButton}" Background="#B71C1C">
+                <TextBlock Text="Test Issue Report" FontSize="11"/>
+            </Button>
+            <materialDesign:PackIcon Grid.Row="1" Kind="Sync" Cursor="Hand" Background="Transparent" Margin="0,0,10,0" HorizontalAlignment="Right">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <i:InvokeCommandAction Command="{Binding SyncOwnerCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </materialDesign:PackIcon>
+            <Grid Grid.Row="2" Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <materialDesign:PackIcon  Grid.Column="0" Kind="AccountCircle" Height="100" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <ItemsControl Grid.Column="1" Margin="5,0,5,0" >
+                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon  Grid.Column="0" Kind="AccountStar" FontSize="10" />
+                        <TextBlock Grid.Column="1" Margin="5,0,0,0" Text="{Binding Owner}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon  Grid.Column="0" Kind="CellphoneBasic" FontSize="10" />
+                        <TextBlock Grid.Column="1" Margin="5,0,0,0" Text="{Binding Contact}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon  Grid.Column="0" Kind="SitemapOutline" FontSize="10" />
+                        <TextBlock Grid.Column="1" Margin="5,0,0,0" Text="{Binding Organization}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon  Grid.Column="0" Kind="AccountNetwork" FontSize="10" />
+                        <TextBlock Grid.Column="1" Margin="5,0,0,0" Text="{Binding Leader}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon  Grid.Column="0" Kind="CellphoneBasic" FontSize="10" />
+                        <TextBlock Grid.Column="1" Margin="5,0,0,0" Text="{Binding LeaderContact}"/>
+                    </Grid>
+                </ItemsControl>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Owner}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+            </Grid>
+            <Grid Grid.Row="2" Margin="0,10,0,20">
+                <TextBlock Text="This PC has no assigned owner yet" HorizontalAlignment="Center"/>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Owner}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+            </Grid>
+            <materialDesign:Card Grid.Row="3" Padding="2" FontSize="11">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock TextWrapping="Wrap" Text="Alternative：["/>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding AlternativeClusterCategory}"/>
+                    <TextBlock TextWrapping="Wrap" Text="/"/>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding AlternativeCluster}"/>
+                    <TextBlock TextWrapping="Wrap" Text="] "/>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding AlternativeOwner}"/>
+                    <TextBlock TextWrapping="Wrap" Text="："/>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding AlternativeContact}"/>
+                </StackPanel>
+                <materialDesign:Card.Style>
+                    <Style TargetType="materialDesign:Card" BasedOn="{StaticResource Card}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding AlternativeOwner}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </materialDesign:Card.Style>
+            </materialDesign:Card>
+        </Grid>
+    </materialDesign:DialogHost>
+
+</UserControl>

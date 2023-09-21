@@ -94,6 +94,7 @@
     <Compile Include="Interfaces\IAuthorizable.cs" />
     <Compile Include="Models\Account_GetRolesAndAuthorizations_Result.cs" />
     <Compile Include="Models\Banner_GetMessages_Result.cs" />
+    <Compile Include="Models\Connection_GetClusterOwners_Result.cs" />
     <Compile Include="Models\Connection_GetClusters_Result.cs" />
     <Compile Include="Models\ModuleManager_GetAllModules_Result.cs" />
     <Compile Include="Models\ModuleManager_GetModules_Result.cs" />

@@ -1,6 +1,8 @@
-﻿using NightCity.Core.Models.Standard;
+﻿using NightCity.Core.Models;
+using NightCity.Core.Models.Standard;
 using Prism.Events;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace NightCity.Core.Events
@@ -18,4 +20,5 @@ namespace NightCity.Core.Events
     public class TemplateReOpeningEvent : PubSubEvent<string> { }
     public class AuthorizationInfoChangedEvent : PubSubEvent<Tuple<string, string>> { }
     public class IsConnectionFixChangedEvent : PubSubEvent<bool> { }
+    public class ClustersSyncedEvent : PubSubEvent<List<Connection_GetClusters_Result>> { }   
 }

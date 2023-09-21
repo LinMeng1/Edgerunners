@@ -161,7 +161,9 @@
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
                                     <materialDesign:PackIcon x:Name="NoClusterIcon" Grid.Column="0" Kind="Cog" Background="Transparent" Margin="0,1,5,0" ToolTip="{Binding Origin}"/>
-                                    <materialDesign:PackIcon x:Name="CategoryIcon"  Grid.Column="0" Kind="Star" Background="Transparent" Margin="0,1,5,0" ToolTip="{Binding Category}"/>
+                                    <materialDesign:ColorZone x:Name="Category" Margin="0,2,5,2"  CornerRadius="5" Mode="SecondaryMid">
+                                        <TextBlock Margin="8,0,8,0" VerticalAlignment="Center" FontSize="11" Text="{Binding Category}" />
+                                    </materialDesign:ColorZone>
                                     <TextBlock Text="{Binding Topic}" Grid.Column="1"/>
                                     <Border Padding="5,0,5,0" MinWidth="20" x:Name="NoReadCount" Grid.Column="2" BorderThickness="1" Background="#B71C1C" CornerRadius="10" VerticalAlignment="Center">
                                         <TextBlock Foreground="White" Text="{Binding NoReadMessageCount}" FontSize="11" HorizontalAlignment="Center"/>
@@ -181,7 +183,7 @@
                                         </DataTrigger.Binding>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Category}" Value="{x:Null}">
-                                        <Setter TargetName="CategoryIcon" Property="Visibility" Value="Collapsed" />
+                                        <Setter TargetName="Category" Property="Visibility" Value="Collapsed" />
                                     </DataTrigger>
                                 </DataTemplate.Triggers>
                             </DataTemplate>

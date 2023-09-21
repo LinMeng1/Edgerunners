@@ -22,9 +22,7 @@ namespace Moon.Controllers.Basic
         public ControllersResult GetToken([FromBody] Authorize_GetToken_Parameter parameter)
         {
             ControllersResult result = new();
-
             string token = string.Empty;
-
             try
             {
                 string username = parameter.Username;
@@ -49,12 +47,21 @@ namespace Moon.Controllers.Basic
 
 
 
+
         #region GetToken
         public class Authorize_GetToken_Parameter
         {
             public string Username { get; set; }
             public string Password { get; set; }
         }
+        #endregion
+
+        #region GetOfficeToken
+        public class Authorize_GetOfficeToken_Parameter
+        {
+            public string Mainboard { get; set; }
+        }
+
         #endregion
     }
 }

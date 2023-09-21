@@ -9,7 +9,11 @@
         mc:Ignorable="d"       
         Title="MainWindow" Height="200" Width="300">
     <Grid>
-        <Button Content="Import" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="109" Command="{Binding ImportModuleCommand}"/>
-
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Button Content="Import" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="109" Command="{Binding ImportModuleCommand}"/>
+        <Button Content="Import Shortcut" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="109" Command="{Binding ImportShortcutModuleCommand}"/>
     </Grid>
 </Window>

@@ -8,11 +8,13 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:converter="clr-namespace:NightCity.Core.Converters;assembly=NightCity.Core"
              mc:Ignorable="d" 
              Width="900" Height="400">
 
     <UserControl.Resources>
         <ResourceDictionary>
+            <converter:DialogHostVisibilityConverter x:Key="DialogHostVisibilityConverter"></converter:DialogHostVisibilityConverter>
             <Style x:Key="Card" TargetType="materialDesign:Card">
                 <Setter Property="UniformCornerRadius" Value="5" />
                 <Setter Property="Padding" Value="5"/>
@@ -28,148 +30,175 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="100"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <materialDesign:ColorZone Grid.Row="0" Margin="5" Mode="SecondaryDark" Height="70" CornerRadius="5">
-                    <TextBlock Text="Statistics" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </materialDesign:ColorZone>
-                <materialDesign:Card Grid.Row="1" Style="{StaticResource Card}">
-                    <ItemsControl>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <materialDesign:PackIcon Kind="DeveloperBoard" Style="{StaticResource PackIcon}"/>
-                            <StackPanel Grid.Column="1" Margin="8,0,0,2">
-                                <TextBlock Text="{Binding Mainboard}" Margin="0,2,0,0"/>
+    <materialDesign:DialogHost IsOpen="{Binding DialogOpen}">
+        <materialDesign:DialogHost.DialogContent>
+            <StackPanel>
+                <StackPanel Margin="16">
+                    <ProgressBar IsIndeterminate="True" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0"/>
+                    <TextBlock Text="Syncing data"></TextBlock>
+                    <StackPanel.Visibility>
+                        <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                            <Binding Path="DialogCategory"></Binding>
+                            <MultiBinding.ConverterParameter>Syncing</MultiBinding.ConverterParameter>
+                        </MultiBinding>
+                    </StackPanel.Visibility>
+                </StackPanel>
+                <StackPanel Margin="16">
+                    <TextBlock Text="{Binding DialogMessage}"/>
+                    <Button Margin="0,8,8,0" Command="{Binding CleanMessageCommand}" Content="I Know" Style="{StaticResource MaterialDesignFlatButton}"/>
+                    <StackPanel.Visibility>
+                        <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                            <Binding Path="DialogCategory"></Binding>
+                            <MultiBinding.ConverterParameter>Message</MultiBinding.ConverterParameter>
+                        </MultiBinding>
+                    </StackPanel.Visibility>
+                </StackPanel>
+            </StackPanel>
+        </materialDesign:DialogHost.DialogContent>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <materialDesign:ColorZone Grid.Row="0" Margin="5" Mode="SecondaryDark" Height="70" CornerRadius="5">
+                        <TextBlock Text="Statistics" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </materialDesign:ColorZone>
+                    <materialDesign:Card Grid.Row="1" Style="{StaticResource Card}">
+                        <ItemsControl>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <materialDesign:PackIcon Kind="DeveloperBoard" Style="{StaticResource PackIcon}"/>
+                                <StackPanel Grid.Column="1" Margin="8,0,0,2">
+                                    <TextBlock Text="{Binding Mainboard}" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <materialDesign:PackIcon Kind="Monitor" Style="{StaticResource PackIcon}"/>
+                                <StackPanel Grid.Column="1" Margin="8,0,0,2">
+                                    <TextBlock Text="{Binding HostName}" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <materialDesign:PackIcon Kind="Ethernet" Style="{StaticResource PackIcon}"/>
+                                <StackPanel Grid.Column="1" Margin="8,0,0,2">
+                                    <TextBlock Text="{Binding HostMac}" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <materialDesign:PackIcon Kind="IpNetworkOutline" Style="{StaticResource PackIcon}"/>
+                                <StackPanel Grid.Column="1" Margin="8,0,0,2">
+                                    <TextBlock Text="{Binding HostAddress}" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <materialDesign:PackIcon Kind="Domain" Style="{StaticResource PackIcon}"/>
+                                <StackPanel Grid.Column="1" Margin="8,0,0,2">
+                                    <TextBlock Text="{Binding Domain}" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <materialDesign:PackIcon Kind="Cpu64Bit" Style="{StaticResource PackIcon}"/>
+                                <StackPanel Grid.Column="1" Margin="8,0,0,2">
+                                    <TextBlock Text="{Binding Cpu}" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <materialDesign:PackIcon Kind="Harddisk" Style="{StaticResource PackIcon}"/>
+                                <StackPanel Grid.Column="1" Margin="8,0,0,2">
+                                    <TextBlock Text="{Binding Disk}" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <materialDesign:PackIcon Kind="Memory" Style="{StaticResource PackIcon}"/>
+                                <StackPanel Grid.Column="1" Margin="8,0,0,2">
+                                    <TextBlock Text="{Binding Memory}" Margin="0,2,0,0"/>
+                                </StackPanel>
+                            </Grid>
+                            <StackPanel Margin="8,0,0,2" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="CloudUploadOutline" Style="{StaticResource PackIcon}" Cursor="Hand" Background="Transparent">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseDown">
+                                            <i:InvokeCommandAction Command="{Binding UploadBasicInfoCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </materialDesign:PackIcon>
+                                <TextBlock Text="Last Upload" Foreground="#BDBDBD" Margin="5,0,0,0"/>
+                                <TextBlock Text="{Binding LastUploadTime,StringFormat={}{0:yyyy-MM-dd HH:mm}}" Margin="10,0,0,0" Foreground="#BDBDBD"/>
                             </StackPanel>
-                        </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <materialDesign:PackIcon Kind="Monitor" Style="{StaticResource PackIcon}"/>
-                            <StackPanel Grid.Column="1" Margin="8,0,0,2">
-                                <TextBlock Text="{Binding HostName}" Margin="0,2,0,0"/>
-                            </StackPanel>
-                        </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <materialDesign:PackIcon Kind="Ethernet" Style="{StaticResource PackIcon}"/>
-                            <StackPanel Grid.Column="1" Margin="8,0,0,2">
-                                <TextBlock Text="{Binding HostMac}" Margin="0,2,0,0"/>
-                            </StackPanel>
-                        </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <materialDesign:PackIcon Kind="IpNetworkOutline" Style="{StaticResource PackIcon}"/>
-                            <StackPanel Grid.Column="1" Margin="8,0,0,2">
-                                <TextBlock Text="{Binding HostAddress}" Margin="0,2,0,0"/>
-                            </StackPanel>
-                        </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <materialDesign:PackIcon Kind="Domain" Style="{StaticResource PackIcon}"/>
-                            <StackPanel Grid.Column="1" Margin="8,0,0,2">
-                                <TextBlock Text="{Binding Domain}" Margin="0,2,0,0"/>
-                            </StackPanel>
-                        </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <materialDesign:PackIcon Kind="Cpu64Bit" Style="{StaticResource PackIcon}"/>
-                            <StackPanel Grid.Column="1" Margin="8,0,0,2">
-                                <TextBlock Text="{Binding Cpu}" Margin="0,2,0,0"/>
-                            </StackPanel>
-                        </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <materialDesign:PackIcon Kind="Harddisk" Style="{StaticResource PackIcon}"/>
-                            <StackPanel Grid.Column="1" Margin="8,0,0,2">
-                                <TextBlock Text="{Binding Disk}" Margin="0,2,0,0"/>
-                            </StackPanel>
-                        </Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <materialDesign:PackIcon Kind="Memory" Style="{StaticResource PackIcon}"/>
-                            <StackPanel Grid.Column="1" Margin="8,0,0,2">
-                                <TextBlock Text="{Binding Memory}" Margin="0,2,0,0"/>
-                            </StackPanel>
-                        </Grid>
-                        <StackPanel Margin="8,0,0,2" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="CloudUploadOutline" Style="{StaticResource PackIcon}" Cursor="Hand" Background="Transparent">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseDown">
-                                        <i:InvokeCommandAction Command="{Binding UploadBasicInfomationCommand}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </materialDesign:PackIcon>
-                            <TextBlock Text="Last Upload" Foreground="#BDBDBD" Margin="5,0,0,0"/>
-                            <TextBlock Text="{Binding LastUploadTime,StringFormat={}{0:yyyy-MM-dd HH:mm}}" Margin="10,0,0,0" Foreground="#BDBDBD"/>
-                        </StackPanel>
-                    </ItemsControl>
-                </materialDesign:Card>
+                        </ItemsControl>
+                    </materialDesign:Card>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+                    <materialDesign:ColorZone Grid.Row="0" Margin="5" Mode="Dark" CornerRadius="5" VerticalAlignment="Stretch">
+                        <TextBlock Text="Process" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </materialDesign:ColorZone>
+                    <materialDesign:ColorZone Grid.Row="1" Margin="5" Mode="PrimaryDark" Height="90" CornerRadius="5">
+                        <TextBlock Text="Network" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </materialDesign:ColorZone>
+                </Grid>
             </Grid>
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="100"/>
-                </Grid.RowDefinitions>
-                <materialDesign:ColorZone Grid.Row="0" Margin="5" Mode="Dark" CornerRadius="5" VerticalAlignment="Stretch">
-                    <TextBlock Text="Process" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <materialDesign:ColorZone Grid.Column="0" Margin="5" Mode="PrimaryMid" CornerRadius="5" VerticalAlignment="Stretch">
+                    <TextBlock Text="Usage Rate" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </materialDesign:ColorZone>
-                <materialDesign:ColorZone Grid.Row="1" Margin="5" Mode="PrimaryDark" Height="90" CornerRadius="5">
-                    <TextBlock Text="Network" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <materialDesign:ColorZone Grid.Column="1" Margin="5" Mode="Inverted" CornerRadius="5" VerticalAlignment="Stretch">
+                    <TextBlock Text="Usage Rate" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </materialDesign:ColorZone>
+                <materialDesign:ColorZone Grid.Column="2" Margin="5" CornerRadius="5" Background="#FF1D7342" VerticalAlignment="Stretch">
+                    <TextBlock Text="Usage Rate" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </materialDesign:ColorZone>
             </Grid>
         </Grid>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="200"/>
-            </Grid.ColumnDefinitions>
-            <materialDesign:ColorZone Grid.Column="0" Margin="5" Mode="PrimaryMid" CornerRadius="5" VerticalAlignment="Stretch">
-                <TextBlock Text="Usage Rate" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </materialDesign:ColorZone>
-            <materialDesign:ColorZone Grid.Column="1" Margin="5" Mode="Inverted" CornerRadius="5" VerticalAlignment="Stretch">
-                <TextBlock Text="Usage Rate" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </materialDesign:ColorZone>
-            <materialDesign:ColorZone Grid.Column="2" Margin="5" CornerRadius="5" Background="#FF1D7342" VerticalAlignment="Stretch">
-                <TextBlock Text="Usage Rate" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </materialDesign:ColorZone>
-        </Grid>
-    </Grid>
+    </materialDesign:DialogHost>
+
 </UserControl>

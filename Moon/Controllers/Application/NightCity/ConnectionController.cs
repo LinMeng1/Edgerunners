@@ -63,7 +63,7 @@ namespace Moon.Controllers.Application.NightCity
                     bool illegal = wildcard.Any(wildcard => parameter.Cluster.Contains(wildcard));
                     if (illegal)
                         throw new Exception("Cluster contains illegal character");
-                }        
+                }
                 string employeeID = Request.HttpContext.User.Claims.FirstOrDefault(it => it.Type == "EmployeeID").Value;
                 IPCClusters clusters = new()
                 {
@@ -106,6 +106,41 @@ namespace Moon.Controllers.Application.NightCity
         }
         #endregion
 
+        #region 获取集群负责人
+        [HttpPost]
+        public ControllersResult GetClusterOwner([FromBody] Connection_GetClusterOwners_Parameter parameter)
+        {
+            ControllersResult result = new();
+            try
+            {
+                Connection_GetClusterOwners_Result clusterOwner = new Connection_GetClusterOwners_Result();
+                Users user = Database.Edgerunners.Queryable<IPCClusters_Owners, Users>((i, u) => i.Owner == u.EmployeeId && i.Cluster == parameter.Cluster && i.Category == parameter.Category).Select((i, u) => u).First();
+                if (user == null) throw new Exception("Cant find cluster owner");
+                clusterOwner.Owner = user.Name;
+                clusterOwner.Contact = user.Contact;
+                Organizations org = Database.Edgerunners.Queryable<Organizations>().First(it => it.Id == user.Organization);
+                if (org != null)
+                {
+                    clusterOwner.Organization = org.Name;
+                    Users userLeader = Database.Edgerunners.Queryable<Users>().First(it => it.EmployeeId == org.Owner);
+                    if (userLeader != null)
+                    {
+                        clusterOwner.Leader = userLeader.Name;
+                        clusterOwner.LeaderContact = userLeader.Contact;
+                    }
+                }
+                result.Content = clusterOwner;
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
+
         #region GetClusters
         public class Connection_GetClusters_Parameter
         {
@@ -132,6 +167,22 @@ namespace Moon.Controllers.Application.NightCity
         {
             public string Mainboard { get; set; }
             public string Cluster { get; set; }
+        }
+        #endregion
+
+        #region GetClusterOwner
+        public class Connection_GetClusterOwners_Parameter
+        {
+            public string Cluster { get; set; }
+            public string Category { get; set; }
+        }
+        public class Connection_GetClusterOwners_Result
+        {
+            public string Owner { get; set; }
+            public string? Contact { get; set; }
+            public string? Organization { get; set; }
+            public string? Leader { get; set; }
+            public string? LeaderContact { get; set; }
         }
         #endregion
 

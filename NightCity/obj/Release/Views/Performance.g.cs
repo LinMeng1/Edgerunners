@@ -17,6 +17,8 @@ using Microsoft.Xaml.Behaviors.Core;
 using Microsoft.Xaml.Behaviors.Input;
 using Microsoft.Xaml.Behaviors.Layout;
 using Microsoft.Xaml.Behaviors.Media;
+using NightCity.Converters;
+using NightCity.Core.Converters;
 using NightCity.Views;
 using Prism.DryIoc;
 using Prism.Interactivity;

@@ -173,6 +173,14 @@ namespace Moon.Controllers.Basic
         }
         #endregion
 
+        #region SetOfficeComputer
+        public class Account_SetOfficeComputer_Parameter
+        {
+            public string Mainboard { get; set; }
+            public bool State { get; set; }
+        }
+        #endregion
+
         #region GetUserInformation
         public class Account_GetUserInformation_Result
         {

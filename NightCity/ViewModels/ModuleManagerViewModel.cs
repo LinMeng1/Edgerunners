@@ -55,6 +55,15 @@ namespace NightCity.ViewModels
             propertyService.SetProperty("ModuleWindows", windows);
             sftpService = new SftpService("10.114.113.101", 2022, "NightCity", "nightcity");
             httpService = new HttpService();
+            //监听事件 Mqtt连接/断开
+            eventAggregator.GetEvent<MqttConnectedEvent>().Subscribe(async (IsConnected) =>
+            {
+                if (IsConnected)
+                {
+                    await SyncInstalledModulesAsync();
+                    await SyncBrowseModulesAsync();
+                }
+            }, ThreadOption.UIThread);
             //监听事件 活动窗口关闭
             eventAggregator.GetEvent<TemplateClosingEvent>().Subscribe((module) =>
             {
@@ -66,13 +75,12 @@ namespace NightCity.ViewModels
             {
                 await LaunchModuleAsync(moduleName);
             }, ThreadOption.UIThread, true);
-            //监听事件 Mqtt信息接受
+            //监听事件 Mqtt信息接收
             eventAggregator.GetEvent<MqttMessageReceivedEvent>().Subscribe(async (message) =>
             {
                 if (!message.IsMastermind) return;
                 string command = message.Content;
-                if (string.IsNullOrEmpty(command)) return;
-                if (command == "sync modules")
+                if (command == "system sync modules")
                     await SyncInstalledModulesAsync();
             }, ThreadOption.UIThread);
             //监听事件 权限信息变更
@@ -85,19 +93,6 @@ namespace NightCity.ViewModels
             eventAggregator.GetEvent<BannerMessageTryLinkingEvent>().Subscribe((linkInfo) =>
             {
                 Link(linkInfo.Item1, linkInfo.Item2);
-            });
-            //等待设备SN获取后
-            Task.Run(async () =>
-            {
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                object mainboard = null;
-                while (mainboard == null)
-                {
-                    mainboard = propertyService.GetProperty("Mainboard");
-                }
-                await SyncInstalledModulesAsync(mainboard.ToString());
-                await SyncBrowseModulesAsync();
             });
         }
 
@@ -121,26 +116,26 @@ namespace NightCity.ViewModels
                 List<ModuleManager_GetModules_Result> mods = JsonConvert.DeserializeObject<List<ModuleManager_GetModules_Result>>(result.Content.ToString());
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    InstalledModules.Clear();
-                });
-                foreach (var mod in mods)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
+                    lock (InstalledModules)
                     {
-                        InstalledModules.Add(new ModuleInfo()
+                        InstalledModules.Clear();
+                        foreach (var mod in mods)
                         {
-                            Name = mod.Name,
-                            Category = mod.Category,
-                            Icon = mod.Category == "Authorization" ? (PackIconKind)Enum.Parse(typeof(PackIconKind), "FingerprintOff") : (PackIconKind)Enum.Parse(typeof(PackIconKind), mod.Icon),
-                            Author = mod.Author,
-                            AuthorItCode = mod.AuthorItCode,
-                            IsOfficial = mod.IsOfficial,
-                            Description = mod.Description,
-                            Manifest = mod.Manifest,
-                            Version = mod.Version,
-                        });
-                    });
-                }
+                            InstalledModules.Add(new ModuleInfo()
+                            {
+                                Name = mod.Name,
+                                Category = mod.Category,
+                                Icon = mod.Category == "Authorization" ? (PackIconKind)Enum.Parse(typeof(PackIconKind), "FingerprintOff") : (PackIconKind)Enum.Parse(typeof(PackIconKind), mod.Icon),
+                                Author = mod.Author,
+                                AuthorItCode = mod.AuthorItCode,
+                                IsOfficial = mod.IsOfficial,
+                                Description = mod.Description,
+                                Manifest = mod.Manifest,
+                                Version = mod.Version,
+                            });
+                        }
+                    }
+                });
                 eventAggregator.GetEvent<ModulesChangedEvent>().Publish(InstalledModules);
                 if (InstalledModules.Count == 0)
                     TabSelectedIndex = 1;
@@ -174,24 +169,24 @@ namespace NightCity.ViewModels
                 List<ModuleManager_GetAllModules_Result> mods = JsonConvert.DeserializeObject<List<ModuleManager_GetAllModules_Result>>(result.Content.ToString());
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    BrowseModules.Clear();
-                });
-                foreach (var mod in mods)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
+                    lock (BrowseModules)
                     {
-                        BrowseModules.Add(new ModuleInfo()
+                        BrowseModules.Clear();
+                        foreach (var mod in mods)
                         {
-                            Name = mod.Name,
-                            Category = mod.Category,
-                            Icon = mod.Category == "Authorization" ? (PackIconKind)Enum.Parse(typeof(PackIconKind), "FingerprintOff") : (PackIconKind)Enum.Parse(typeof(PackIconKind), mod.Icon),
-                            Author = mod.Author,
-                            AuthorItCode = mod.AuthorItCode,
-                            IsOfficial = mod.IsOfficial,
-                            Description = mod.Description,
-                        });
-                    });
-                }
+                            BrowseModules.Add(new ModuleInfo()
+                            {
+                                Name = mod.Name,
+                                Category = mod.Category,
+                                Icon = mod.Category == "Authorization" ? (PackIconKind)Enum.Parse(typeof(PackIconKind), "FingerprintOff") : (PackIconKind)Enum.Parse(typeof(PackIconKind), mod.Icon),
+                                Author = mod.Author,
+                                AuthorItCode = mod.AuthorItCode,
+                                IsOfficial = mod.IsOfficial,
+                                Description = mod.Description,
+                            });
+                        }
+                    }                  
+                });
                 if (BrowseSelectedModule != null && BrowseSelectedModule.Name != null)
                     BrowseSelectedModule = BrowseModules.FirstOrDefault(it => it.Name == BrowseSelectedModule.Name);
                 DialogOpen = false;
@@ -237,11 +232,11 @@ namespace NightCity.ViewModels
                     {
                         if (!Directory.Exists($"{directory}/{mod.Name}/{mod.Version}") || mod.Manifest == null)
                         {
-                            sftpService.PullFiles($"/{mod.Name}/{mod.Version}", $"{directory}/{mod.Name}/{mod.Version}");
+                            sftpService.PullFiles($"/NightCity.Modules/{mod.Name}/{mod.Version}", $"{directory}/{mod.Name}/{mod.Version}");
                             continue;
                         }
                         JToken mainfest = JToken.Parse(mod.Manifest);
-                        SyncFiles(mainfest, $"/{mod.Name}/{mod.Version}", string.Empty, $"{directory}/{mod.Name}/{mod.Version}");
+                        SyncFiles(mainfest, $"/NightCity.Modules/{mod.Name}/{mod.Version}", string.Empty, $"{directory}/{mod.Name}/{mod.Version}");
                     }
                 });
                 DialogOpen = false;
@@ -535,6 +530,7 @@ namespace NightCity.ViewModels
                 });
             });
         }
+
         /// <summary>
         /// 发布链接命令
         /// </summary>
@@ -556,7 +552,7 @@ namespace NightCity.ViewModels
                 return;
             }
             windows.TryGetValue(category, out Template currentWindow);
-            if(currentWindow == null)
+            if (currentWindow == null)
             {
                 Template template = new Template(regionManager, moduleCatalog, mod, LoadedModules);
                 windows.AddOrUpdate(mod.Name, template, (xkey, xvalue) => template);

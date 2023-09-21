@@ -10,6 +10,7 @@ using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -38,8 +39,7 @@ namespace NightCity.ViewModels
             {
                 if (!message.IsMastermind) return;
                 string command = message.Content;
-                if (string.IsNullOrEmpty(command)) return;
-                if (command == "sync clusters")
+                if (command == "system sync clusters")
                     await SyncClustersAsync();
             }, ThreadOption.UIThread);
             //监听事件 权限信息变更
@@ -55,6 +55,7 @@ namespace NightCity.ViewModels
                 while (mainboard == null)
                 {
                     mainboard = propertyService.GetProperty("Mainboard");
+                    await Task.Delay(internalDelay);
                 }
                 mqttService = new MqttService(mainboard.ToString(), "10.114.113.101", 1883);
                 mqttService.ConnectionChanged += (IsConnected) =>
@@ -70,7 +71,6 @@ namespace NightCity.ViewModels
                     eventAggregator.GetEvent<MqttNoReadMessageCountChangedEvent>().Publish(noReadMessageCount);
                 };
                 TopicCollection = mqttService.TopicCollection;
-                await SyncClustersAsync();
             });
         }
 
@@ -89,19 +89,21 @@ namespace NightCity.ViewModels
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/connection/GetClusters", new { Mainboard = mainboard }));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
-                List<Connection_GetClusters_Result> clusters = JsonConvert.DeserializeObject<List<Connection_GetClusters_Result>>(result.Content.ToString());
+                List<Connection_GetClusters_Result> clusters = JsonConvert.DeserializeObject<List<Connection_GetClusters_Result>>(result.Content.ToString());               
                 await mqttService.RemoveAllClusterTopic();
                 foreach (var cluster in clusters)
                 {
                     await mqttService.AddTopic(cluster.Cluster, cluster.Category);
                 }
                 DialogOpen = false;
+                eventAggregator.GetEvent<ClustersSyncedEvent>().Publish(clusters);
             }
             catch (Exception e)
             {
                 Global.Log($"[Connection]:[SyncClustersAsync] exception:{e.Message}", true);
                 DialogMessage = e.Message;
                 DialogCategory = "Message";
+                eventAggregator.GetEvent<ClustersSyncedEvent>().Publish(null);
             }
         }
 
@@ -296,9 +298,10 @@ namespace NightCity.ViewModels
             set
             {
                 SetProperty(ref isConnected, value);
-                Task.Run(() =>
+                Task.Run(async () =>
                 {
                     eventAggregator.GetEvent<MqttConnectedEvent>().Publish(value);
+                    await SyncClustersAsync();
                 });
             }
         }

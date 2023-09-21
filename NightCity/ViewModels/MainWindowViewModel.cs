@@ -20,10 +20,12 @@ namespace NightCity.ViewModels
         public MainWindowViewModel(IEventAggregator eventAggregator, IPropertyService propertyService)
         {
             this.eventAggregator = eventAggregator;
+            //监听事件 Mqtt连接/断开
             eventAggregator.GetEvent<MqttConnectedEvent>().Subscribe((IsConnected) =>
             {
                 IsMqttConnected = IsConnected;
             }, ThreadOption.UIThread);
+            //监听事件 模块列表改变
             eventAggregator.GetEvent<ModulesChangedEvent>().Subscribe((modules) =>
             {
                 List<string> authorizedMod = new List<string>();
@@ -46,6 +48,7 @@ namespace NightCity.ViewModels
                         MonitorModules.Add(module);
                 }
             }, ThreadOption.UIThread);
+            //监听事件 权限信息变更
             eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Subscribe((AuthorizationInfo) =>
             {
                 ModuleInfo module = AuthorizationModules.FirstOrDefault(it => it.Name == AuthorizationInfo.Item1);
@@ -56,15 +59,19 @@ namespace NightCity.ViewModels
                 else
                     module.Icon = PackIconKind.FingerprintOff;
             }, ThreadOption.UIThread, true);
+            //监听事件 Mqtt未读数量改变
             eventAggregator.GetEvent<MqttNoReadMessageCountChangedEvent>().Subscribe((NoReadMessageCount) =>
             {
                 HaveNoReadMessage = NoReadMessageCount > 0;
             }, ThreadOption.UIThread);
+            //监听事件 横幅信息改变
             eventAggregator.GetEvent<BannerMessagesChangedEvent>().Subscribe((BannerMessages) =>
             {
                 TopBannerMessage = BannerMessages.Item1;
                 BannerMessageCount = BannerMessages.Item2;
+                Syncing = false;          
             });
+            //监听事件 固定/接触固定连接界面
             eventAggregator.GetEvent<IsConnectionFixChangedEvent>().Subscribe((IsConnectionFix) =>
             {
                 isConnectionFix = IsConnectionFix;
@@ -73,12 +80,12 @@ namespace NightCity.ViewModels
 
         #region 命令集合
 
-        #region 命令：打开模块
-        public ICommand OpenModuleCommand
+        #region 命令：启动模块
+        public ICommand LaunchModuleCommand
         {
-            get => new DelegateCommand<string>(OpenModule);
+            get => new DelegateCommand<string>(LaunchModule);
         }
-        private void OpenModule(string moduleName)
+        private void LaunchModule(string moduleName)
         {
             ModuleInfo module = MonitorModules.FirstOrDefault(it => it.Name == moduleName);
             if (module == null)
@@ -96,6 +103,7 @@ namespace NightCity.ViewModels
         private void RemoveMessage(BannerMessage message)
         {
             eventAggregator.GetEvent<BannerMessageRemovingEvent>().Publish(message);
+            Syncing = true;
         }
         #endregion
 
@@ -200,6 +208,18 @@ namespace NightCity.ViewModels
             set
             {
                 SetProperty(ref isMqttConnected, value);
+            }
+        }
+        #endregion
+
+        #region 对话框打开状态
+        private bool syncing = false;
+        public bool Syncing
+        {
+            get => syncing;
+            set
+            {
+                SetProperty(ref syncing, value);
             }
         }
         #endregion

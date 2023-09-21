@@ -26,7 +26,7 @@ namespace Moon.Controllers.Application.NightCity
             ControllersResult result = new();
             try
             {
-                List<ModuleManager_GetModules_Result> mods = Database.Edgerunners.Queryable<IPCs_Modules, Modules, Users, Modules_Versions>((im, m, u, mv) => im.ModuleId == m.Id && im.IPCMainboard == parameter.Mainboard && m.Author == u.EmployeeId && mv.ModuleId == im.ModuleId && mv.Version == im.ModuleVersion).Select((im, m, u, mv) => new ModuleManager_GetModules_Result()
+                List<ModuleManager_GetModules_Result> mods = Database.Edgerunners.Queryable<IPCs_Modules, Core.Models.Edgerunners.Modules, Users, Modules_Versions>((im, m, u, mv) => im.ModuleId == m.Id && im.IPCMainboard == parameter.Mainboard && m.Author == u.EmployeeId && mv.ModuleId == im.ModuleId && mv.Version == im.ModuleVersion).Select((im, m, u, mv) => new ModuleManager_GetModules_Result()
                 {
                     Id = m.Id,
                     Name = m.Name,
@@ -58,7 +58,7 @@ namespace Moon.Controllers.Application.NightCity
             ControllersResult result = new();
             try
             {
-                List<ModuleManager_GetModuleVersions_Result> versions = Database.Edgerunners.Queryable<Modules, Modules_Versions>((m, mv) => m.Name == parameter.Module && m.Id == mv.ModuleId).Select((m, mv) => new ModuleManager_GetModuleVersions_Result
+                List<ModuleManager_GetModuleVersions_Result> versions = Database.Edgerunners.Queryable<Core.Models.Edgerunners.Modules, Modules_Versions>((m, mv) => m.Name == parameter.Module && m.Id == mv.ModuleId).Select((m, mv) => new ModuleManager_GetModuleVersions_Result
                 {
                     Version = mv.Version,
                     ReleaseNotes = mv.ReleaseNotes,
@@ -102,7 +102,7 @@ namespace Moon.Controllers.Application.NightCity
             ControllersResult result = new();
             try
             {
-                Modules mod = Database.Edgerunners.Queryable<Modules, Modules_Versions>((m, mv) => m.Id == mv.ModuleId && m.Name == parameter.ModuleName && mv.Version == parameter.ModuleVersion).First();
+                Core.Models.Edgerunners.Modules mod = Database.Edgerunners.Queryable<Core.Models.Edgerunners.Modules, Modules_Versions>((m, mv) => m.Id == mv.ModuleId && m.Name == parameter.ModuleName && mv.Version == parameter.ModuleVersion).First();
                 if (mod == null)
                     throw new Exception($"Cant find module: {parameter.ModuleName} with version: {parameter.ModuleVersion}");
                 IPCs_Modules ipcs_mods = new()
@@ -130,7 +130,7 @@ namespace Moon.Controllers.Application.NightCity
             ControllersResult result = new();
             try
             {
-                Modules mod = Database.Edgerunners.Queryable<Modules, Modules_Versions>((m, mv) => m.Category == "Authorization" && m.Id == mv.ModuleId && m.Name == parameter.ModuleName && mv.Version == parameter.ModuleVersion).First();
+                Core.Models.Edgerunners.Modules mod = Database.Edgerunners.Queryable<Core.Models.Edgerunners.Modules, Modules_Versions>((m, mv) => m.Category == "Authorization" && m.Id == mv.ModuleId && m.Name == parameter.ModuleName && mv.Version == parameter.ModuleVersion).First();
                 if (mod == null)
                     throw new Exception($"Cant find authorize module: {parameter.ModuleName} with version: {parameter.ModuleVersion}");
                 IPCs_Modules ipcs_mods = new()
@@ -158,7 +158,7 @@ namespace Moon.Controllers.Application.NightCity
             ControllersResult result = new();
             try
             {
-                List<ModuleManager_GetAllModules_Result> mods = Database.Edgerunners.Queryable<Modules, Users>((m, u) => m.Author == u.EmployeeId).Select((m, u) => new ModuleManager_GetAllModules_Result()
+                List<ModuleManager_GetAllModules_Result> mods = Database.Edgerunners.Queryable<Core.Models.Edgerunners.Modules, Users>((m, u) => m.Author == u.EmployeeId).Select((m, u) => new ModuleManager_GetAllModules_Result()
                 {
                     Id = m.Id,
                     Name = m.Name,
@@ -192,7 +192,7 @@ namespace Moon.Controllers.Application.NightCity
             ControllersResult result = new();
             try
             {
-                Modules mod = Database.Edgerunners.Queryable<Modules>().First(it => it.Name == parameter.ModuleName);
+                Core.Models.Edgerunners.Modules mod = Database.Edgerunners.Queryable<Core.Models.Edgerunners.Modules>().First(it => it.Name == parameter.ModuleName);
                 if (mod == null)
                     throw new Exception($"Cant find module: {parameter.ModuleName}");
                 Database.Edgerunners.Deleteable<IPCs_Modules>().Where(it => it.IPCMainboard == parameter.Mainboard && it.ModuleId == mod.Id).ExecuteCommand();

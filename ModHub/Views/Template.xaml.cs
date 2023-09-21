@@ -24,7 +24,7 @@ namespace ModHub.Views
     /// </summary>
     public partial class Template : Window
     {
-        public Template(IRegionManager manager, DynamicDirectoryModuleCatalog moduleCatalog, string path)
+        public Template(IRegionManager manager, DynamicDirectoryModuleCatalog moduleCatalog, string path, bool shortcut = false)
         {
             bool loadResult = false;
             InitializeComponent();
@@ -48,15 +48,19 @@ namespace ModHub.Views
             }
             if (loadResult)
             {
-                manager.Regions.Remove($"{name}Region");
-                RegionManager.SetRegionName(TemplateRegion, $"{name}Region");
-                RegionManager.SetRegionManager(TemplateRegion, manager);
+                if (shortcut)
+                {
+                    manager.Regions.Remove($"{name}RegionShortcut");
+                    RegionManager.SetRegionName(TemplateRegion, $"{name}RegionShortcut");
+                    RegionManager.SetRegionManager(TemplateRegion, manager);
+                }
+                else
+                {
+                    manager.Regions.Remove($"{name}Region");
+                    RegionManager.SetRegionName(TemplateRegion, $"{name}Region");
+                    RegionManager.SetRegionManager(TemplateRegion, manager);
+                }              
             }
-        }
-
-        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            throw new NotImplementedException();
         }
     }
 }

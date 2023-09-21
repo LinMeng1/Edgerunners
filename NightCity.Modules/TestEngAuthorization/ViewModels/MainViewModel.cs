@@ -20,37 +20,162 @@ namespace TestEngAuthorization.ViewModels
 {
     public class MainViewModel : BindableBase, IDisposable, IAuthorizable
     {
-        private int internalDelay = 1000;
-        private IEventAggregator e;
+        //内置延迟
+        private readonly int internalDelay = 500;
+        //事件聚合器
+        private IEventAggregator eventAggregator;
+        //属性服务
         private IPropertyService propertyService;
+        //Http服务
         private HttpService httpService;
-        public MainViewModel(IEventAggregator e, IPropertyService propertyService)
+        public MainViewModel(IEventAggregator eventAggregator, IPropertyService propertyService)
         {
-            this.e = e;
+            //依赖注入及初始化
+            this.eventAggregator = eventAggregator;
             this.propertyService = propertyService;
             httpService = new HttpService();
+            //获取Token
             object TestEngAuthorizationInfo = propertyService.GetProperty("TestEngAuthorizationInfo");
             if (TestEngAuthorizationInfo == null)
             {
-                Login login = new Login(e, propertyService);
+                Login login = new Login(eventAggregator, propertyService);
                 var result = login.ShowDialog();
                 if (result != true)
                 {
-                    e.GetEvent<TemplateClosingEvent>().Publish("TestEngAuthorization");
+                    eventAggregator.GetEvent<TemplateClosingEvent>().Publish("TestEngAuthorization");
                     return;
                 }
                 else
                     Token = propertyService.GetProperty("TestEngAuthorizationInfo").ToString();
             }
             else
-            {
                 Token = TestEngAuthorizationInfo.ToString();
-            }
-            GetUserInfo();
-            GetRolesAndAuthorizations();
+            Task.Run(async () =>
+            {
+                await SyncUserInfoAsync();
+                await SyncRolesAndAuthorizationsAsync();
+            });
         }
 
-        #region Command
+        /// <summary>
+        /// 同步用户信息
+        /// </summary>
+        /// <returns></returns>
+        private async Task SyncUserInfoAsync()
+        {
+            try
+            {
+                DialogOpen = true;
+                DialogCategory = "Syncing";
+                await Task.Delay(internalDelay);
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/basic/account/GetUserInformation"));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                Account_GetUserInformation_Result content = JsonConvert.DeserializeObject<Account_GetUserInformation_Result>(result.Content.ToString());
+                EmployeeId = content.EmployeeId;
+                ItCode = content.ItCode;
+                Name = content.Name;
+                Position = content.Position;
+                Email = content.Email;
+                Contact = content.Contact;
+                Organization = content.Organization;
+                DialogOpen = false;
+            }
+            catch (Exception ex)
+            {
+                Global.Log($"[TestEngAuthorization]:[MainViewModel]:[GetUserInfoAsync]:exception:{ex.Message}", true);
+                DialogMessage = ex.Message;
+                DialogCategory = "Message";
+            }
+        }
+
+        /// <summary>
+        /// 同步角色和权限信息
+        /// </summary>
+        /// <returns></returns>
+        private async Task SyncRolesAndAuthorizationsAsync()
+        {
+            try
+            {
+                DialogOpen = true;
+                DialogCategory = "Syncing";
+                await Task.Delay(internalDelay);
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/basic/account/GetRolesAndAuthorizations"));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                List<Account_GetRolesAndAuthorizations_Result> content = JsonConvert.DeserializeObject<List<Account_GetRolesAndAuthorizations_Result>>(result.Content.ToString());
+                Roles = content;
+                DialogOpen = false;
+            }
+            catch (Exception ex)
+            {
+                Global.Log($"[TestEngAuthorization]:[MainViewModel]:[SyncRolesAndAuthorizationsAsync]:exception:{ex.Message}", true);
+                DialogMessage = ex.Message;
+                DialogCategory = "Message";
+            }
+        }
+
+        /// <summary>
+        /// 设置联系方式
+        /// </summary>
+        /// <returns></returns>
+        private async Task SetContactAsync()
+        {
+            try
+            {
+                DialogCategory = "Syncing";
+                DialogOpen = true;
+                await Task.Delay(internalDelay);
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/basic/account/SetContact", new { Contact = EditingContact }));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                DialogOpen = false;
+                Contact = EditingContact;
+            }
+            catch (Exception ex)
+            {
+                Global.Log($"[TestEngAuthorization]:[MainViewModel]:[SetContactAsync]:exception:{ex.Message}", true);
+                DialogMessage = ex.Message;
+                DialogCategory = "Message";
+            }
+        }
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <returns></returns>
+        private async Task ChangePasswordAsync()
+        {
+            try
+            {
+                if (EditingNewPassword != EditingNewPasswordAgain)
+                    throw new Exception("Your new and confirm password are different. Please enter your password again");
+                if (EditingNewPassword == EditingOldPassword)
+                    throw new Exception("Your old and new password are the same. Please enter your password again");
+                DialogCategory = "Syncing";
+                DialogOpen = true;
+                await Task.Delay(internalDelay);
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/basic/account/SetPassword", new { OldPassword = EditingOldPassword, NewPassword = EditingNewPassword }));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                else
+                {
+                    DialogMessage = "The password has been changed, please log in again";
+                    DialogCategory = "Message";
+                    DialogCategoryCallback = "Logout";
+                }
+            }
+            catch (Exception ex)
+            {
+                Global.Log($"[TestEngAuthorization]:[MainViewModel]:[ChangePasswordAsync]:exception:{ex.Message}", true);
+                DialogMessage = ex.Message;
+                DialogCategory = "Message";
+            }
+        }
+
+        #region 命令集合
+
+        #region 命令：退出登录
         public ICommand LogoutCommand
         {
             get => new DelegateCommand(Disauthorize);
@@ -60,97 +185,68 @@ namespace TestEngAuthorization.ViewModels
             propertyService.SetProperty("TestEngAuthorizationInfo", null);
             propertyService.SetProperty("DisplayName", null);
             Global.Log($"[TestEngAuthorization]:[MainViewModel]:[Logout]:logout");
-            e.GetEvent<AuthorizationInfoChangedEvent>().Publish(new Tuple<string, string>("TestEngAuthorization", "TestEngAuthorizationInfo"));
-            e.GetEvent<TemplateClosingEvent>().Publish("TestEngAuthorization");
-        }     
-        public ICommand GetUserInfoCommand
-        {
-            get => new DelegateCommand(GetUserInfo);
+            eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Publish(new Tuple<string, string>("TestEngAuthorization", "TestEngAuthorizationInfo"));
+            eventAggregator.GetEvent<TemplateClosingEvent>().Publish("TestEngAuthorization");
         }
-        public void GetUserInfo()
+        #endregion
+
+        #region 命令：同步用户信息
+        public ICommand SyncUserInfoCommand
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    DialogOpen = true;
-                    DialogCategory = "Syncing";
-                    Thread.Sleep(internalDelay);
-                    ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/basic/account/GetUserInformation"));
-                    if (!result.Result)
-                        throw new Exception(result.ErrorMessage);
-                    Account_GetUserInformation_Result content = JsonConvert.DeserializeObject<Account_GetUserInformation_Result>(result.Content.ToString());
-                    EmployeeId = content.EmployeeId;
-                    ItCode = content.ItCode;
-                    Name = content.Name;
-                    Position = content.Position;
-                    Email = content.Email;
-                    Contact = content.Contact;
-                    Organization = content.Organization;
-                    DialogOpen = false;
-                }
-                catch (Exception ex)
-                {
-                    Global.Log($"[TestEngAuthorization]:[MainViewModel]:[GetUserInfo]:exception:{ex.Message}", true);
-                    DialogMessage = ex.Message;
-                    DialogCategory = "Message";
-                }
-            });
+            get => new DelegateCommand(SyncUserInfo);
+        }
+        private async void SyncUserInfo()
+        {
+            await SyncUserInfoAsync();
         }
 
-        public ICommand SetContactCommand
+        #endregion
+
+        #region 命令：同步角色和权限信息
+        public ICommand SyncRolesAndAuthorizationsCommand
         {
-            get => new DelegateCommand(SetContact);
+            get => new DelegateCommand(SyncRolesAndAuthorizations);
         }
-        public void SetContact()
+        private async void SyncRolesAndAuthorizations()
+        {
+            await SyncRolesAndAuthorizationsAsync();
+        }
+        #endregion
+
+        #region 命令：设置联系方式询问
+        public ICommand TrySetContactCommand
+        {
+            get => new DelegateCommand(TrySetContact);
+        }
+        private void TrySetContact()
         {
             DialogCategory = "Editing Contact";
             DialogCategoryCallback = "Editing Contact";
             DialogOpen = true;
             EditingContact = Contact;
         }
+        #endregion
 
-        public ICommand UpdateContactCommand
+        #region 命令：设置联系方式
+        public ICommand SetContactCommand
         {
-            get => new DelegateCommand(UpdateContact);
+            get => new DelegateCommand(SetContact);
         }
-        public void UpdateContact()
+        private async void SetContact()
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    DialogCategory = "Syncing";
-                    DialogOpen = true;
-                    Thread.Sleep(internalDelay);
-                    ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/basic/account/SetContact", new { Contact = EditingContact }));
-                    if (!result.Result)
-                        throw new Exception(result.ErrorMessage);
-                    DialogOpen = false;
-                    Contact = EditingContact;
-                }
-                catch (Exception ex)
-                {
-                    Global.Log($"[TestEngAuthorization]:[MainViewModel]:[UpdateContact]:exception:{ex.Message}", true);
-                    DialogMessage = ex.Message;
-                    DialogCategory = "Message";
-                }
-            });
+            await SetContactAsync();
         }
+        #endregion
 
+        #region 命令：清除信息框
         public ICommand CleanMessageCommand
         {
             get => new DelegateCommand(CleanMessage);
         }
-        public void CleanMessage()
+        private void CleanMessage()
         {
             if (DialogCategoryCallback == "Logout")
-            {
-                propertyService.SetProperty("TestEngAuthorizationInfo", null);
-                Global.Log($"[TestEngAuthorization]:[MainViewModel]:[Logout]:logout");
-                e.GetEvent<AuthorizationInfoChangedEvent>().Publish(new Tuple<string, string>("TestEngAuthorization", "TestEngAuthorizationInfo"));
-                e.GetEvent<TemplateReOpeningEvent>().Publish("TestEngAuthorization");
-            }
+                Disauthorize();
             else if (DialogCategoryCallback == null)
             {
                 DialogOpen = false;
@@ -160,41 +256,14 @@ namespace TestEngAuthorization.ViewModels
                 DialogCategory = DialogCategoryCallback;
             DialogMessage = string.Empty;
         }
+        #endregion
 
-        public ICommand GetRolesAndAuthorizationsCommand
+        #region 命令：修改密码询问
+        public ICommand TryChangePasswordCommand
         {
-            get => new DelegateCommand(GetRolesAndAuthorizations);
+            get => new DelegateCommand(TryChangePassword);
         }
-        public void GetRolesAndAuthorizations()
-        {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    DialogOpen = true;
-                    DialogCategory = "Syncing";
-                    Thread.Sleep(internalDelay);
-                    ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/basic/account/GetRolesAndAuthorizations"));
-                    if (!result.Result)
-                        throw new Exception(result.ErrorMessage);
-                    List<Account_GetRolesAndAuthorizations_Result> content = JsonConvert.DeserializeObject<List<Account_GetRolesAndAuthorizations_Result>>(result.Content.ToString());
-                    Roles = content;
-                    DialogOpen = false;
-                }
-                catch (Exception ex)
-                {
-                    Global.Log($"[TestEngAuthorization]:[MainViewModel]:[GetRolesAndAuthorizations]:exception:{ex.Message}", true);
-                    DialogMessage = ex.Message;
-                    DialogCategory = "Message";
-                }
-            });
-        }
-
-        public ICommand ChangePasswordCommand
-        {
-            get => new DelegateCommand(ChangePassword);
-        }
-        public void ChangePassword()
+        private void TryChangePassword()
         {
             DialogCategory = "Change Password";
             DialogCategoryCallback = "Change Password";
@@ -203,43 +272,20 @@ namespace TestEngAuthorization.ViewModels
             EditingNewPassword = string.Empty;
             EditingNewPasswordAgain = string.Empty;
         }
+        #endregion
 
-        public ICommand UpdatePasswordCommand
+        #region 命令：修改密码
+        public ICommand ChangePasswordCommand
         {
-            get => new DelegateCommand(UpdatePassword);
+            get => new DelegateCommand(ChangePassword);
         }
-        public void UpdatePassword()
+        public async void ChangePassword()
         {
-            Task.Run(async () =>
-            {
-                try
-                {
-                    if (EditingNewPassword != EditingNewPasswordAgain)
-                        throw new Exception("Your new and confirm password are different. Please enter your password again");
-                    if (EditingNewPassword == EditingOldPassword)
-                        throw new Exception("Your old and new password are the same. Please enter your password again");
-                    DialogCategory = "Syncing";
-                    DialogOpen = true;
-                    Thread.Sleep(internalDelay);
-                    ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/basic/account/SetPassword", new { OldPassword = EditingOldPassword, NewPassword = EditingNewPassword }));
-                    if (!result.Result)
-                        throw new Exception(result.ErrorMessage);
-                    else
-                    {
-                        DialogMessage = "The password has been changed, please log in again";
-                        DialogCategory = "Message";
-                        DialogCategoryCallback = "Logout";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Global.Log($"[TestEngAuthorization]:[MainViewModel]:[UpdateContact]:exception:{ex.Message}", true);
-                    DialogMessage = ex.Message;
-                    DialogCategory = "Message";
-                }
-            });
+            await ChangePasswordAsync();
         }
+        #endregion
 
+        #region 命令：取消操作
         public ICommand CancelCommand
         {
             get => new DelegateCommand(Cancel);
@@ -251,7 +297,9 @@ namespace TestEngAuthorization.ViewModels
         }
         #endregion
 
-        #region Properties
+        #endregion
+
+        #region 可视化属性集合
 
         #region Token
         private string token;
@@ -264,6 +312,7 @@ namespace TestEngAuthorization.ViewModels
                 httpService.AddToken(value);
             }
         }
+
         #endregion
 
         #region EmployeeId
@@ -276,7 +325,7 @@ namespace TestEngAuthorization.ViewModels
                 SetProperty(ref employeeId, value);
             }
         }
-        #endregion       
+        #endregion
 
         #region Name
         private string name;
@@ -461,8 +510,8 @@ namespace TestEngAuthorization.ViewModels
         #endregion
 
         public void Dispose()
-        {        
-            e = null;
+        {
+            eventAggregator = null;
             propertyService = null;
             httpService = null;
         }
