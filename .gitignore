@@ -1,0 +1,14 @@
+﻿################################################################################
+# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
+################################################################################
+
+
+/ModHub/bin/Debug
+/Moon/bin
+/Moon.Core/bin
+/NightCity/bin/x64
+/NightCity.Core/bin
+/NightCity.Modules/Empty/bin/Debug
+/NightCity.Modules/Lock/bin/Debug
+/NightCity.Modules/OnCall/bin
+/NightCity.Modules/TestEngAuthorization/bin/Debug
