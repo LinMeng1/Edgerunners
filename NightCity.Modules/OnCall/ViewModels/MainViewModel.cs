@@ -1,13 +1,20 @@
 ﻿using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
+using NightCity.Core;
 using NightCity.Core.Events;
 using NightCity.Core.Services;
 using NightCity.Core.Services.Prism;
+using OnCall.Views;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
+using System.Collections.Generic;
+using System.Reflection.Emit;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -18,11 +25,13 @@ namespace OnCall.ViewModels
         //内置延迟
         private readonly int internalDelay = 500;
         //事件聚合器
-        private readonly IEventAggregator eventAggregator;
+        private IEventAggregator eventAggregator;
         //属性服务
-        private readonly IPropertyService propertyService;
+        private IPropertyService propertyService;
         //Http服务
-        private readonly HttpService httpService;
+        private HttpService httpService;
+        //监听token列表
+        List<SubscriptionToken> eventTokens = new List<SubscriptionToken>();
         public MainViewModel(IEventAggregator eventAggregator, IPropertyService propertyService)
         {
             //依赖注入及初始化
@@ -30,11 +39,18 @@ namespace OnCall.ViewModels
             this.propertyService = propertyService;
             httpService = new HttpService();
             //监听事件 链接命令发布
-            eventAggregator.GetEvent<BannerMessageLinkingEvent>().Subscribe(message =>
+            eventTokens.Add(eventAggregator.GetEvent<BannerMessageLinkingEvent>().Subscribe(async message =>
             {
-                Console.WriteLine(message);
-                //对命令进行判断
-            }, ThreadOption.UIThread);
+                string pattern = @"module on-call handle issue ([\s\S]*?)";
+                Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+                Match m = regex.Match(message);
+                if (m.Success)
+                    await HandleReportAsync(m.Groups[1].Value);
+            }, ThreadOption.UIThread, true));
+
+            //DialogOpen = true;
+            //View = "Workshop";
+            //eventAggregator.GetEvent<TemplateShowingEvent>().Publish("OnCall");
 
             #region P1
             SeriesCollection1 = new SeriesCollection
@@ -196,6 +212,27 @@ namespace OnCall.ViewModels
 
         }
 
+        private async Task HandleReportAsync(string reportId)
+        {
+            try
+            {
+                View = "Workshop";
+                DialogOpen = true;
+                DialogCategory = "Syncing";
+                await Task.Delay(internalDelay);
+
+                eventAggregator.GetEvent<ErrorMessageShowingEvent>().Publish(new Tuple<string, string>("throw exception testing", "OnCall"));
+
+                DialogOpen = false;
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[Shortcut]:[CheckIssueStateAsync] exception:{e.Message}", true);
+                DialogMessage = e.Message;
+                DialogCategory = "Message";
+            }
+        }
+
         #region 命令集合
 
         #region 命令：同步横幅信息
@@ -236,7 +273,41 @@ namespace OnCall.ViewModels
         }
         #endregion
 
+        #region 对话框打开状态
+        private bool dialogOpen = false;
+        public bool DialogOpen
+        {
+            get => dialogOpen;
+            set
+            {
+                SetProperty(ref dialogOpen, value);
+            }
+        }
+        #endregion
 
+        #region 对话框类型
+        private string dialogCategory = "Syncing";
+        public string DialogCategory
+        {
+            get => dialogCategory;
+            set
+            {
+                SetProperty(ref dialogCategory, value);
+            }
+        }
+        #endregion
+
+        #region 对话框通用信息
+        private string dialogMessage = string.Empty;
+        public string DialogMessage
+        {
+            get => dialogMessage;
+            set
+            {
+                SetProperty(ref dialogMessage, value);
+            }
+        }
+        #endregion
 
         #endregion
 
@@ -284,7 +355,13 @@ namespace OnCall.ViewModels
         #endregion
         public void Dispose()
         {
-
+            foreach (var eventToken in eventTokens)
+            {
+                eventAggregator.GetEvent<BannerMessageLinkingEvent>().Unsubscribe(eventToken);
+            }
+            eventAggregator = null;
+            propertyService = null;
+            httpService = null;
         }
     }
 }

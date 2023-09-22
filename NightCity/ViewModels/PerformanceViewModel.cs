@@ -101,6 +101,7 @@ namespace NightCity.ViewModels
             set
             {
                 SetProperty(ref hostName, value);
+                propertyService.SetProperty("HostName", value);
             }
         }
         #endregion

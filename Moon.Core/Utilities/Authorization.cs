@@ -23,6 +23,7 @@
             Application_NightCity_ModuleManager_UninstallModule,
             Application_NightCity_Connection_SetCluster,
             Application_NightCity_Connection_RemoveCluster,
+            Application_NightCity_Modules_OnCall_HandleRepair,
         }
         #endregion
     }

@@ -24,19 +24,36 @@ namespace OnCall.ViewModels
         private readonly int internalDelay = 500;
         //事件聚合器
         private readonly IEventAggregator eventAggregator;
+        //属性服务
+        private readonly IPropertyService propertyService;
         //Http服务
         private readonly HttpService httpService;
-        public ShortcutViewModel(IEventAggregator eventAggregator)
+        //集群缓存
+        private List<Connection_GetClusters_Result> clustersCache = new List<Connection_GetClusters_Result>();
+        public ShortcutViewModel(IEventAggregator eventAggregator, IPropertyService propertyService)
         {
             //依赖注入及初始化
             this.eventAggregator = eventAggregator;
+            this.propertyService = propertyService;
             httpService = new HttpService();
             //监听事件 集群信息同步完成
             eventAggregator.GetEvent<ClustersSyncedEvent>().Subscribe(async (clusters) =>
             {
                 if (clusters != null)
+                {
+                    clustersCache = clusters;
                     await SyncOwnerAsync(clusters);
+                }
+
             }, ThreadOption.UIThread);
+            //监听事件 Mqtt信息接收
+            eventAggregator.GetEvent<MqttMessageReceivedEvent>().Subscribe(async (message) =>
+            {
+                if (!message.IsMastermind) return;
+                string command = message.Content;
+                if (command == "module on-call sync owner")
+                    await SyncOwnerAsync(clustersCache);
+            }, ThreadOption.UIThread, true);
             SyncOwner();
         }
 
@@ -71,6 +88,7 @@ namespace OnCall.ViewModels
                 }
                 if (clusterOwnerLocation != null)
                 {
+                    ownerEmployeeId = clusterOwnerLocation.OwnerEmployeeId;
                     Owner = clusterOwnerLocation.Owner;
                     Contact = clusterOwnerLocation.Contact;
                     Organization = clusterOwnerLocation.Organization;
@@ -86,6 +104,7 @@ namespace OnCall.ViewModels
                 }
                 else if (clusterOwnerProduct != null)
                 {
+                    ownerEmployeeId = clusterOwnerProduct.OwnerEmployeeId;
                     Owner = clusterOwnerProduct.Owner;
                     Contact = clusterOwnerProduct.Contact;
                     Organization = clusterOwnerProduct.Organization;
@@ -93,11 +112,38 @@ namespace OnCall.ViewModels
                     LeaderContact = clusterOwnerProduct.LeaderContact;
                 }
                 DialogOpen = false;
-                var xx = AlternativeOwner;
             }
             catch (Exception e)
             {
                 Global.Log($"[OnCall]:[Shortcut]:[SyncOwnerAsync] exception:{e.Message}", true);
+                DialogMessage = e.Message;
+                DialogCategory = "Message";
+            }
+        }
+
+        private async Task CallRepairAsync()
+        {
+            try
+            {
+                await SyncOwnerAsync(clustersCache);
+                DialogOpen = true;
+                DialogCategory = "Syncing";
+                await Task.Delay(internalDelay);              
+                object mainboard = propertyService.GetProperty("Mainboard") ?? throw new Exception("Mainboard is null");
+                object hostname = propertyService.GetProperty("HostName") ?? throw new Exception("HostName is null");
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/CallRepair", new { Mainboard = mainboard.ToString(), HostName = hostname.ToString(), Owner, OwnerEmployeeId = ownerEmployeeId }));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                eventAggregator.GetEvent<MqttMessageReceivedEvent>().Publish(new MqttMessage()
+                {
+                    IsMastermind = true,
+                    Content = "system sync banner messages"
+                });
+                DialogOpen = false;
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[Shortcut]:[CallRepairAsync] exception:{e.Message}", true);
                 DialogMessage = e.Message;
                 DialogCategory = "Message";
             }
@@ -144,11 +190,23 @@ namespace OnCall.ViewModels
         }
         #endregion
 
+        #region 命令：异常报修
+        public ICommand CallRepairCommand
+        {
+            get => new DelegateCommand(CallRepair);
+        }
+        public async void CallRepair()
+        {
+            await CallRepairAsync();
+        }
+        #endregion
+
         #endregion
 
         #region 可视化属性集合
 
         #region 负责人
+        private string ownerEmployeeId;
         private string owner;
         public string Owner
         {

@@ -56,9 +56,9 @@ namespace NightCity.ViewModels
             sftpService = new SftpService("10.114.113.101", 2022, "NightCity", "nightcity");
             httpService = new HttpService();
             //监听事件 Mqtt连接/断开
-            eventAggregator.GetEvent<MqttConnectedEvent>().Subscribe(async (IsConnected) =>
+            eventAggregator.GetEvent<MqttConnectedEvent>().Subscribe(async (isConnected) =>
             {
-                if (IsConnected)
+                if (isConnected)
                 {
                     await SyncInstalledModulesAsync();
                     await SyncBrowseModulesAsync();
@@ -70,11 +70,16 @@ namespace NightCity.ViewModels
                 windows.TryGetValue(module, out Template currentWindow);
                 currentWindow?.Close();
             }, ThreadOption.UIThread, true);
-            //监听事件 活动窗口打开
+            //监听事件 活动窗口重新打开
             eventAggregator.GetEvent<TemplateReOpeningEvent>().Subscribe(async (moduleName) =>
             {
                 await LaunchModuleAsync(moduleName);
             }, ThreadOption.UIThread, true);
+            //监听事件 活动窗口显示
+            eventAggregator.GetEvent<TemplateShowingEvent>().Subscribe(async (moduleName) =>
+            {
+                await LaunchModuleAsync(moduleName, true);
+            });
             //监听事件 Mqtt信息接收
             eventAggregator.GetEvent<MqttMessageReceivedEvent>().Subscribe(async (message) =>
             {
@@ -93,6 +98,12 @@ namespace NightCity.ViewModels
             eventAggregator.GetEvent<BannerMessageTryLinkingEvent>().Subscribe((linkInfo) =>
             {
                 Link(linkInfo.Item1, linkInfo.Item2);
+            }, ThreadOption.UIThread);
+            //监听事件 错误信息抛出
+            eventAggregator.GetEvent<ErrorMessageShowingEvent>().Subscribe((errorMessage) =>
+            {
+                Views.MessageBox mb = new Views.MessageBox(errorMessage.Item1, $"Error from {errorMessage.Item2}", MessageBoxButton.OK, MessageBoxImage.Error);
+                mb.ShowDialog();
             });
         }
 
@@ -185,7 +196,7 @@ namespace NightCity.ViewModels
                                 Description = mod.Description,
                             });
                         }
-                    }                  
+                    }
                 });
                 if (BrowseSelectedModule != null && BrowseSelectedModule.Name != null)
                     BrowseSelectedModule = BrowseModules.FirstOrDefault(it => it.Name == BrowseSelectedModule.Name);
@@ -408,8 +419,9 @@ namespace NightCity.ViewModels
                             windows.TryGetValue(mod.Name, out Template currentWindow);
                             if (currentWindow == null)
                             {
-                                Template template = new Template(regionManager, moduleCatalog, mod, LoadedModules);
-                                windows.AddOrUpdate(mod.Name, template, (xkey, xvalue) => template);
+                                Template template = new Template(regionManager, moduleCatalog, mod, LoadedModules, out bool loadResult);
+                                if (loadResult)
+                                    windows.AddOrUpdate(mod.Name, template, (xkey, xvalue) => template);
                             }
                         });
                     }
@@ -513,7 +525,7 @@ namespace NightCity.ViewModels
         /// 启动模块
         /// </summary>
         /// <param name="module"></param>
-        private async Task LaunchModuleAsync(string moduleName)
+        private async Task LaunchModuleAsync(string moduleName, bool showing = false)
         {
             await Task.Run(() =>
             {
@@ -522,11 +534,16 @@ namespace NightCity.ViewModels
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     windows.TryGetValue(moduleName, out Template currentWindow);
-                    currentWindow?.Dispose();
-                    currentWindow?.Close();
-                    Template template = new Template(regionManager, moduleCatalog, module, LoadedModules);
-                    windows.AddOrUpdate(moduleName, template, (xkey, xvalue) => template);
-                    template.Show();
+                    if (showing)
+                        currentWindow?.Show();
+                    else
+                    {
+                        currentWindow?.Dispose();
+                        currentWindow?.Close();
+                        Template template = new Template(regionManager, moduleCatalog, module, LoadedModules, out bool loadResult);
+                        windows.AddOrUpdate(moduleName, template, (xkey, xvalue) => template);
+                        template.Show();
+                    }
                 });
             });
         }
@@ -554,8 +571,14 @@ namespace NightCity.ViewModels
             windows.TryGetValue(category, out Template currentWindow);
             if (currentWindow == null)
             {
-                Template template = new Template(regionManager, moduleCatalog, mod, LoadedModules);
-                windows.AddOrUpdate(mod.Name, template, (xkey, xvalue) => template);
+                Template template = new Template(regionManager, moduleCatalog, mod, LoadedModules, out bool loadResult);
+                if (loadResult)
+                    windows.AddOrUpdate(mod.Name, template, (xkey, xvalue) => template);
+                else
+                {
+                    Views.MessageBox mb = new Views.MessageBox($"Load module({mod.Name}) maybe fail, You should wait for the module to load or start the module yourself ", "Warn", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    mb.ShowDialog();
+                }
             }
             eventAggregator.GetEvent<BannerMessageLinkingEvent>().Publish(linkCommand);
         }

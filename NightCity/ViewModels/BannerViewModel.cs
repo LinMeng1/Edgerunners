@@ -39,9 +39,9 @@ namespace NightCity.ViewModels
                 eventAggregator.GetEvent<BannerMessagesChangedEvent>().Publish(new Tuple<BannerMessage, int>(messages.FirstOrDefault(), Messages.Count));
             };
             //监听事件 Mqtt连接/断开
-            eventAggregator.GetEvent<MqttConnectedEvent>().Subscribe(async (IsConnected) =>
+            eventAggregator.GetEvent<MqttConnectedEvent>().Subscribe(async (isConnected) =>
             {
-                if (IsConnected) await SyncMessagesAsync();
+                if (isConnected) await SyncMessagesAsync();
             }, ThreadOption.UIThread);
             //监听事件 Mqtt信息接收
             eventAggregator.GetEvent<MqttMessageReceivedEvent>().Subscribe(async (message) =>

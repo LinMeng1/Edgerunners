@@ -38,7 +38,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <materialDesign:DialogHost IsOpen="{Binding DialogOpen}">
+    <materialDesign:DialogHost IsOpen="{Binding DialogOpen}" Style="{StaticResource MaterialDesignEmbeddedDialogHost}">
         <materialDesign:DialogHost.DialogContent>
             <StackPanel>
                 <StackPanel Margin="16">

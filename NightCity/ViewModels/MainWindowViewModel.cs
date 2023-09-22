@@ -21,9 +21,9 @@ namespace NightCity.ViewModels
         {
             this.eventAggregator = eventAggregator;
             //监听事件 Mqtt连接/断开
-            eventAggregator.GetEvent<MqttConnectedEvent>().Subscribe((IsConnected) =>
+            eventAggregator.GetEvent<MqttConnectedEvent>().Subscribe((isConnected) =>
             {
-                IsMqttConnected = IsConnected;
+                IsMqttConnected = isConnected;
             }, ThreadOption.UIThread);
             //监听事件 模块列表改变
             eventAggregator.GetEvent<ModulesChangedEvent>().Subscribe((modules) =>
@@ -49,33 +49,33 @@ namespace NightCity.ViewModels
                 }
             }, ThreadOption.UIThread);
             //监听事件 权限信息变更
-            eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Subscribe((AuthorizationInfo) =>
+            eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Subscribe((authorizationInfo) =>
             {
-                ModuleInfo module = AuthorizationModules.FirstOrDefault(it => it.Name == AuthorizationInfo.Item1);
+                ModuleInfo module = AuthorizationModules.FirstOrDefault(it => it.Name == authorizationInfo.Item1);
                 if (module == null) return;
-                object authorizationInfo = propertyService.GetProperty(AuthorizationInfo.Item2);
-                if (authorizationInfo != null)
+                object authorizationInfoItem = propertyService.GetProperty(authorizationInfo.Item2);
+                if (authorizationInfoItem != null)
                     module.Icon = PackIconKind.Fingerprint;
                 else
                     module.Icon = PackIconKind.FingerprintOff;
             }, ThreadOption.UIThread, true);
             //监听事件 Mqtt未读数量改变
-            eventAggregator.GetEvent<MqttNoReadMessageCountChangedEvent>().Subscribe((NoReadMessageCount) =>
+            eventAggregator.GetEvent<MqttNoReadMessageCountChangedEvent>().Subscribe((noReadMessageCount) =>
             {
-                HaveNoReadMessage = NoReadMessageCount > 0;
+                HaveNoReadMessage = noReadMessageCount > 0;
             }, ThreadOption.UIThread);
             //监听事件 横幅信息改变
-            eventAggregator.GetEvent<BannerMessagesChangedEvent>().Subscribe((BannerMessages) =>
+            eventAggregator.GetEvent<BannerMessagesChangedEvent>().Subscribe((bannerMessages) =>
             {
-                TopBannerMessage = BannerMessages.Item1;
-                BannerMessageCount = BannerMessages.Item2;
+                TopBannerMessage = bannerMessages.Item1;
+                BannerMessageCount = bannerMessages.Item2;
                 Syncing = false;          
-            });
+            },ThreadOption.UIThread);
             //监听事件 固定/接触固定连接界面
-            eventAggregator.GetEvent<IsConnectionFixChangedEvent>().Subscribe((IsConnectionFix) =>
+            eventAggregator.GetEvent<IsConnectionFixChangedEvent>().Subscribe((isConnectionFix) =>
             {
-                isConnectionFix = IsConnectionFix;
-            });
+                this.isConnectionFix = isConnectionFix;
+            }, ThreadOption.UIThread);
         }
 
         #region 命令集合
@@ -212,7 +212,7 @@ namespace NightCity.ViewModels
         }
         #endregion
 
-        #region 对话框打开状态
+        #region 是否正在同步
         private bool syncing = false;
         public bool Syncing
         {

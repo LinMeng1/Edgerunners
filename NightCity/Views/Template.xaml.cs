@@ -19,10 +19,11 @@ namespace NightCity.Views
     {
         object currentModel;
         ModuleInfo module;
-        public Template(IRegionManager manager, DynamicDirectoryModuleCatalog moduleCatalog, ModuleInfo module, ObservableCollection<ModuleInfo> loadedMod)
+        public Template(IRegionManager manager, DynamicDirectoryModuleCatalog moduleCatalog, ModuleInfo module, ObservableCollection<ModuleInfo> loadedMod, out bool loadResult)
         {
+
             this.module = module;
-            bool loadResult = false;
+            loadResult = false;
             if (module.Category == "Authorization")
                 WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();

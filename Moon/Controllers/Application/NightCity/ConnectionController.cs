@@ -72,7 +72,7 @@ namespace Moon.Controllers.Application.NightCity
                     Cluster = parameter.Cluster,
                     Creator = employeeID
                 };
-                Database.Edgerunners.Insertable(clusters).IgnoreColumns(it => new { it.CreateTime }).ExecuteCommand();
+                Database.Edgerunners.Insertable(clusters).IgnoreColumns("CreateTime").ExecuteCommand();
                 result.Result = true;
             }
             catch (Exception e)
@@ -116,6 +116,7 @@ namespace Moon.Controllers.Application.NightCity
                 Connection_GetClusterOwners_Result clusterOwner = new Connection_GetClusterOwners_Result();
                 Users user = Database.Edgerunners.Queryable<IPCClusters_Owners, Users>((i, u) => i.Owner == u.EmployeeId && i.Cluster == parameter.Cluster && i.Category == parameter.Category).Select((i, u) => u).First();
                 if (user == null) throw new Exception("Cant find cluster owner");
+                clusterOwner.OwnerEmployeeId = user.EmployeeId;
                 clusterOwner.Owner = user.Name;
                 clusterOwner.Contact = user.Contact;
                 Organizations org = Database.Edgerunners.Queryable<Organizations>().First(it => it.Id == user.Organization);
@@ -178,6 +179,7 @@ namespace Moon.Controllers.Application.NightCity
         }
         public class Connection_GetClusterOwners_Result
         {
+            public string OwnerEmployeeId { get; set; }
             public string Owner { get; set; }
             public string? Contact { get; set; }
             public string? Organization { get; set; }

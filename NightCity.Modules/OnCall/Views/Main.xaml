@@ -9,6 +9,7 @@
              xmlns:prism="http://prismlibrary.com/"         
              prism:ViewModelLocator.AutoWireViewModel="True"   
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:converter="clr-namespace:NightCity.Core.Converters;assembly=NightCity.Core"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -28,242 +29,272 @@
                 <Setter Property="Margin" Value="5" />
                 <Setter Property="Background" Value="#EEEEEE"/>
             </Style>
+            <converter:DialogHostVisibilityConverter x:Key="DialogHostVisibilityConverter"></converter:DialogHostVisibilityConverter>
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <materialDesign:Card Grid.Row="0" Style="{StaticResource Card}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding View}" FontWeight="Bold"/>
-                <materialDesign:PackIcon Grid.Column="2" Kind="ChartBarStacked" Cursor="Hand">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseDown">
-                            <i:InvokeCommandAction Command="{Binding SwitchViewCommand}" CommandParameter="Dashboard"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                    <materialDesign:PackIcon.Style>
-                        <Style TargetType="materialDesign:PackIcon">
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding View}" Value="Dashboard">
-                                    <Setter Property="Background" Value="Black"/>
-                                    <Setter Property="Foreground" Value="White"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </materialDesign:PackIcon.Style>
-                </materialDesign:PackIcon>
-                <Separator Grid.Column="3" BorderBrush="Gray" Margin="5,0,5,0" BorderThickness="1">
-                    <Separator.LayoutTransform>
-                        <RotateTransform Angle="90"/>
-                    </Separator.LayoutTransform>
-                </Separator>
-                <materialDesign:PackIcon Grid.Column="4" Kind="GestureDoubleTap" Cursor="Hand">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseDown">
-                            <i:InvokeCommandAction Command="{Binding SwitchViewCommand}" CommandParameter="Workshop"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                    <materialDesign:PackIcon.Style>
-                        <Style TargetType="materialDesign:PackIcon">
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding View}" Value="Workshop">
-                                    <Setter Property="Background" Value="Black"/>
-                                    <Setter Property="Foreground" Value="White"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </materialDesign:PackIcon.Style>
-                </materialDesign:PackIcon>
-            </Grid>
-        </materialDesign:Card>
-
-        <Grid Grid.Row="1">
+    <materialDesign:DialogHost IsOpen="{Binding DialogOpen}" Style="{StaticResource MaterialDesignEmbeddedDialogHost}">
+        <materialDesign:DialogHost.DialogContent>
+            <Border CornerRadius="8">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="20" ShadowDepth="0" Color="Black" Opacity="0.4"/>
+                </Border.Effect>
+                <materialDesign:Card>
+                    <StackPanel MaxWidth="600">
+                        <StackPanel Margin="16">
+                            <ProgressBar IsIndeterminate="True" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0"/>
+                            <TextBlock Text="Syncing data"></TextBlock>
+                            <StackPanel.Visibility>
+                                <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                    <Binding Path="DialogCategory"></Binding>
+                                    <MultiBinding.ConverterParameter>Syncing</MultiBinding.ConverterParameter>
+                                </MultiBinding>
+                            </StackPanel.Visibility>
+                        </StackPanel>
+                        <StackPanel Margin="16">
+                            <TextBlock Text="{Binding DialogMessage}" TextWrapping="Wrap"/>
+                            <Button Margin="0,8,8,0" Command="{Binding CleanMessageCommand}" Content="I Know" Style="{StaticResource MaterialDesignFlatButton}"/>
+                            <StackPanel.Visibility>
+                                <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                    <Binding Path="DialogCategory"></Binding>
+                                    <MultiBinding.ConverterParameter>Message</MultiBinding.ConverterParameter>
+                                </MultiBinding>
+                            </StackPanel.Visibility>
+                        </StackPanel>
+                    </StackPanel>
+                </materialDesign:Card>
+            </Border>
+        </materialDesign:DialogHost.DialogContent>
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <materialDesign:Card Grid.Column="0" Style="{StaticResource Card}" Padding="5">
-                    <Grid>
+            <materialDesign:Card Grid.Row="0" Style="{StaticResource Card}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{Binding View}" FontWeight="Bold"/>
+                    <materialDesign:PackIcon Grid.Column="2" Kind="ChartBarStacked" Cursor="Hand">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction Command="{Binding SwitchViewCommand}" CommandParameter="Dashboard"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <materialDesign:PackIcon.Style>
+                            <Style TargetType="materialDesign:PackIcon">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding View}" Value="Dashboard">
+                                        <Setter Property="Background" Value="Black"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </materialDesign:PackIcon.Style>
+                    </materialDesign:PackIcon>
+                    <Separator Grid.Column="3" BorderBrush="Gray" Margin="5,0,5,0" BorderThickness="1">
+                        <Separator.LayoutTransform>
+                            <RotateTransform Angle="90"/>
+                        </Separator.LayoutTransform>
+                    </Separator>
+                    <materialDesign:PackIcon Grid.Column="4" Kind="GestureDoubleTap" Cursor="Hand">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction Command="{Binding SwitchViewCommand}" CommandParameter="Workshop"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <materialDesign:PackIcon.Style>
+                            <Style TargetType="materialDesign:PackIcon">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding View}" Value="Workshop">
+                                        <Setter Property="Background" Value="Black"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </materialDesign:PackIcon.Style>
+                    </materialDesign:PackIcon>
+                </Grid>
+            </materialDesign:Card>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <materialDesign:Card Grid.Column="0" Style="{StaticResource Card}" Padding="5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="Total" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="10" Foreground="Gray"/>
+                            <Grid Grid.Row="1" Margin="0,5,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="71" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16"/>
+                                <materialDesign:PackIcon Grid.Column="2" Kind="CommentText" Foreground="#1976D2" Height="25" Width="25"/>
+                            </Grid>
+                        </Grid>
+                    </materialDesign:Card>
+                    <materialDesign:Card Grid.Column="1" Style="{StaticResource Card}" Padding="5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="Solved" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="10" Foreground="Gray"/>
+                            <Grid Grid.Row="1" Margin="0,5,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="59" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16"/>
+                                <materialDesign:PackIcon Grid.Column="2" Kind="CommentCheck" Foreground="#2E7D32" Height="25" Width="25"/>
+                            </Grid>
+                        </Grid>
+                    </materialDesign:Card>
+                    <materialDesign:Card Grid.Column="2" Style="{StaticResource Card}" Padding="5">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="Pending" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="10" Foreground="Gray"/>
+                            <Grid Grid.Row="1" Margin="0,5,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="12" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16"/>
+                                <materialDesign:PackIcon Grid.Column="2" Kind="CommentQuestion" Foreground="#D84315" Height="25" Width="25"/>
+                            </Grid>
+                        </Grid>
+                    </materialDesign:Card>
+                    <materialDesign:Card Grid.Column="3" Style="{StaticResource Card}">
+                        <materialDesign:PackIcon Kind="Cog"  Grid.Column="3" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </materialDesign:Card>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Text="Total" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="10" Foreground="Gray"/>
-                        <Grid Grid.Row="1" Margin="0,5,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="71" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16"/>
-                            <materialDesign:PackIcon Grid.Column="2" Kind="CommentText" Foreground="#1976D2" Height="25" Width="25"/>
-                        </Grid>
+                        <!--异常来源-->
+                        <materialDesign:Card Grid.Row="0" Style="{StaticResource Card}" Padding="0">
+                            <lvc:CartesianChart Margin="10" Series="{Binding SeriesCollection2}" LegendLocation="Left" Hoverable="False" DataTooltip="{x:Null}">
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis Title="Salesman" Labels="{Binding Labels2}"></lvc:Axis>
+                                </lvc:CartesianChart.AxisX>
+                                <lvc:CartesianChart.AxisY>
+                                    <lvc:Axis Title="Sold Apps" LabelFormatter="{Binding Formatter2}"></lvc:Axis>
+                                </lvc:CartesianChart.AxisY>
+                            </lvc:CartesianChart>
+                        </materialDesign:Card>
+                        <!--异常分布 by 线体/产品-->
+                        <materialDesign:Card Grid.Row="1" Style="{StaticResource Card}" Padding="0">
+                            <lvc:CartesianChart Margin="10" Series="{Binding SeriesCollection1}"  LegendLocation="Left" DataTooltip="{x:Null}" Hoverable="False">
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis Title="Year" LabelFormatter="{Binding XFormatter1}"></lvc:Axis>
+                                </lvc:CartesianChart.AxisX>
+                                <lvc:CartesianChart.AxisY>
+                                    <lvc:Axis Title="Population" LabelFormatter="{Binding YFormatter1}"></lvc:Axis>
+                                </lvc:CartesianChart.AxisY>
+                            </lvc:CartesianChart>
+                        </materialDesign:Card>
                     </Grid>
-                </materialDesign:Card>
-                <materialDesign:Card Grid.Column="1" Style="{StaticResource Card}" Padding="5">
-                    <Grid>
+                    <Grid Grid.Column="1">
+                        <!--Top异常 by 大类-->
+                        <materialDesign:Card Style="{StaticResource Card}" Padding="0">
+                            <lvc:PieChart Margin="10" LegendLocation="Bottom" DataTooltip="{x:Null}" Hoverable="False">
+                                <lvc:PieChart.Series>
+                                    <lvc:PieSeries Title="Maria" Values="3" DataLabels="True"
+                               LabelPoint="{Binding PointLabel4}"/>
+                                    <lvc:PieSeries Title="Charles" Values="4" DataLabels="True" 
+                               LabelPoint="{Binding PointLabel4}"/>
+                                    <lvc:PieSeries Title="Frida" Values="6" DataLabels="True" 
+                               LabelPoint="{Binding PointLabel4}"/>
+                                    <lvc:PieSeries Title="Frederic" Values="2" DataLabels="True" 
+                               LabelPoint="{Binding PointLabel4}"/>
+                                </lvc:PieChart.Series>
+                            </lvc:PieChart>
+                        </materialDesign:Card>
+                    </Grid>
+                    <Grid Grid.Column="2">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Text="Solved" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="10" Foreground="Gray"/>
-                        <Grid Grid.Row="1" Margin="0,5,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="59" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16"/>
-                            <materialDesign:PackIcon Grid.Column="2" Kind="CommentCheck" Foreground="#2E7D32" Height="25" Width="25"/>
-                        </Grid>
+                        <!--异常处理时长 by 总/责任人-->
+                        <materialDesign:Card Grid.Row="0" Style="{StaticResource Card}" Padding="0">
+                            <lvc:CartesianChart Margin="10" Series="{Binding SeriesCollection5}" DataTooltip="{x:Null}" Hoverable="False">
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis Labels="{Binding Labels5}"/>
+                                </lvc:CartesianChart.AxisX>
+                            </lvc:CartesianChart>
+                        </materialDesign:Card>
+                        <!--历史对比-->
+                        <materialDesign:Card Grid.Row="1" Style="{StaticResource Card}" Padding="0">
+                            <lvc:CartesianChart Margin="10" Series="{Binding SeriesCollection3}" LegendLocation="Right" DataTooltip="{x:Null}" Hoverable="False">
+                                <lvc:CartesianChart.AxisY>
+                                    <lvc:Axis Title="Sales" LabelFormatter="{Binding YFormatter3}"></lvc:Axis>
+                                </lvc:CartesianChart.AxisY>
+                                <lvc:CartesianChart.AxisX>
+                                    <lvc:Axis Title="Month" Labels="{Binding Labels3}"></lvc:Axis>
+                                </lvc:CartesianChart.AxisX>
+                            </lvc:CartesianChart>
+                        </materialDesign:Card>
                     </Grid>
-                </materialDesign:Card>
-                <materialDesign:Card Grid.Column="2" Style="{StaticResource Card}" Padding="5">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" Text="Pending" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="10" Foreground="Gray"/>
-                        <Grid Grid.Row="1" Margin="0,5,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="12" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16"/>
-                            <materialDesign:PackIcon Grid.Column="2" Kind="CommentQuestion" Foreground="#D84315" Height="25" Width="25"/>
-                        </Grid>
-                    </Grid>
-                </materialDesign:Card>
-                <materialDesign:Card Grid.Column="3" Style="{StaticResource Card}">
-                    <materialDesign:PackIcon Kind="Cog"  Grid.Column="3" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </materialDesign:Card>
+                </Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding View}" Value="Dashboard">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
             </Grid>
             <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <!--异常来源-->
-                    <materialDesign:Card Grid.Row="0" Style="{StaticResource Card}" Padding="0">
-                        <lvc:CartesianChart Margin="10" Series="{Binding SeriesCollection2}" LegendLocation="Left" Hoverable="False" DataTooltip="{x:Null}">
-                            <lvc:CartesianChart.AxisX>
-                                <lvc:Axis Title="Salesman" Labels="{Binding Labels2}"></lvc:Axis>
-                            </lvc:CartesianChart.AxisX>
-                            <lvc:CartesianChart.AxisY>
-                                <lvc:Axis Title="Sold Apps" LabelFormatter="{Binding Formatter2}"></lvc:Axis>
-                            </lvc:CartesianChart.AxisY>
-                        </lvc:CartesianChart>
-                    </materialDesign:Card>
-                    <!--异常分布 by 线体/产品-->
-                    <materialDesign:Card Grid.Row="1" Style="{StaticResource Card}" Padding="0">
-                        <lvc:CartesianChart Margin="10" Series="{Binding SeriesCollection1}"  LegendLocation="Left" DataTooltip="{x:Null}" Hoverable="False">
-                            <lvc:CartesianChart.AxisX>
-                                <lvc:Axis Title="Year" LabelFormatter="{Binding XFormatter1}"></lvc:Axis>
-                            </lvc:CartesianChart.AxisX>
-                            <lvc:CartesianChart.AxisY>
-                                <lvc:Axis Title="Population" LabelFormatter="{Binding YFormatter1}"></lvc:Axis>
-                            </lvc:CartesianChart.AxisY>
-                        </lvc:CartesianChart>
-                    </materialDesign:Card>
-                </Grid>
-                <Grid Grid.Column="1">
-                    <!--Top异常 by 大类-->
-                    <materialDesign:Card Style="{StaticResource Card}" Padding="0">
-                        <lvc:PieChart Margin="10" LegendLocation="Bottom" DataTooltip="{x:Null}" Hoverable="False">
-                            <lvc:PieChart.Series>
-                                <lvc:PieSeries Title="Maria" Values="3" DataLabels="True"
-                               LabelPoint="{Binding PointLabel4}"/>
-                                <lvc:PieSeries Title="Charles" Values="4" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel4}"/>
-                                <lvc:PieSeries Title="Frida" Values="6" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel4}"/>
-                                <lvc:PieSeries Title="Frederic" Values="2" DataLabels="True" 
-                               LabelPoint="{Binding PointLabel4}"/>
-                            </lvc:PieChart.Series>
-                        </lvc:PieChart>
-                    </materialDesign:Card>
-                </Grid>
-                <Grid Grid.Column="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <!--异常处理时长 by 总/责任人-->
-                    <materialDesign:Card Grid.Row="0" Style="{StaticResource Card}" Padding="0">
-                        <lvc:CartesianChart Margin="10" Series="{Binding SeriesCollection5}" DataTooltip="{x:Null}" Hoverable="False">
-                            <lvc:CartesianChart.AxisX>
-                                <lvc:Axis Labels="{Binding Labels5}"/>
-                            </lvc:CartesianChart.AxisX>
-                        </lvc:CartesianChart>
-                    </materialDesign:Card>
-                    <!--历史对比-->
-                    <materialDesign:Card Grid.Row="1" Style="{StaticResource Card}" Padding="0">
-                        <lvc:CartesianChart Margin="10" Series="{Binding SeriesCollection3}" LegendLocation="Right" DataTooltip="{x:Null}" Hoverable="False">
-                            <lvc:CartesianChart.AxisY>
-                                <lvc:Axis Title="Sales" LabelFormatter="{Binding YFormatter3}"></lvc:Axis>
-                            </lvc:CartesianChart.AxisY>
-                            <lvc:CartesianChart.AxisX>
-                                <lvc:Axis Title="Month" Labels="{Binding Labels3}"></lvc:Axis>
-                            </lvc:CartesianChart.AxisX>
-                        </lvc:CartesianChart>
-                    </materialDesign:Card>
-                </Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding View}" Value="Workshop">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
             </Grid>
-            <Grid.Style>
-                <Style TargetType="Grid">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding View}" Value="Dashboard">
-                            <Setter Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Style>
         </Grid>
+    </materialDesign:DialogHost>
 
-        <Grid Grid.Row="1">
-            
-            <Grid.Style>
-                <Style TargetType="Grid">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding View}" Value="Workshop">
-                            <Setter Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Style>
-        </Grid>
-        
-    </Grid>
-    
+
 </UserControl>

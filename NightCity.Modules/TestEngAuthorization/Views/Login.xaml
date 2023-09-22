@@ -33,7 +33,7 @@
             
             <Image x:Name="Backgorund" Grid.Column="0" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-            <materialDesign:DialogHost Grid.Column="1" IsOpen="{Binding MainDialogOpen}" x:Name="LoginLoading">
+            <materialDesign:DialogHost Grid.Column="1" x:Name="LoginLoading" Style="{StaticResource MaterialDesignEmbeddedDialogHost}">
                 <materialDesign:DialogHost.DialogContent>
                     <StackPanel Margin="16">
                         <ProgressBar IsIndeterminate="True" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0"/>

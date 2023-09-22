@@ -30,30 +30,40 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <materialDesign:DialogHost IsOpen="{Binding DialogOpen}">
+    <!--DialogMargin="0" DialogBackground="Transparent"-->
+    <materialDesign:DialogHost IsOpen="{Binding DialogOpen}"  Style="{StaticResource MaterialDesignEmbeddedDialogHost}">
         <materialDesign:DialogHost.DialogContent>
-            <StackPanel>
-                <StackPanel Margin="16">
-                    <ProgressBar IsIndeterminate="True" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0"/>
-                    <TextBlock Text="Syncing data"></TextBlock>
-                    <StackPanel.Visibility>
-                        <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
-                            <Binding Path="DialogCategory"></Binding>
-                            <MultiBinding.ConverterParameter>Syncing</MultiBinding.ConverterParameter>
-                        </MultiBinding>
-                    </StackPanel.Visibility>
-                </StackPanel>
-                <StackPanel Margin="16">
-                    <TextBlock Text="{Binding DialogMessage}"/>
-                    <Button Margin="0,8,8,0" Command="{Binding CleanMessageCommand}" Content="I Know" Style="{StaticResource MaterialDesignFlatButton}"/>
-                    <StackPanel.Visibility>
-                        <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
-                            <Binding Path="DialogCategory"></Binding>
-                            <MultiBinding.ConverterParameter>Message</MultiBinding.ConverterParameter>
-                        </MultiBinding>
-                    </StackPanel.Visibility>
-                </StackPanel>
-            </StackPanel>
+            <!--<materialDesign:Card Background="Transparent" Padding="35">-->
+                <Border CornerRadius="8">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="20" ShadowDepth="0" Color="Black" Opacity="0.4"/>
+                    </Border.Effect>
+                    <materialDesign:Card>
+                        <StackPanel MaxWidth="600">
+                            <StackPanel Margin="16">
+                                <ProgressBar IsIndeterminate="True" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0"/>
+                                <TextBlock Text="Syncing data"></TextBlock>
+                                <StackPanel.Visibility>
+                                    <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                        <Binding Path="DialogCategory"></Binding>
+                                        <MultiBinding.ConverterParameter>Syncing</MultiBinding.ConverterParameter>
+                                    </MultiBinding>
+                                </StackPanel.Visibility>
+                            </StackPanel>
+                            <StackPanel Margin="16">
+                                <TextBlock Text="{Binding DialogMessage}"/>
+                                <Button Margin="0,8,8,0" Command="{Binding CleanMessageCommand}" Content="I Know" Style="{StaticResource MaterialDesignFlatButton}"/>
+                                <StackPanel.Visibility>
+                                    <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                        <Binding Path="DialogCategory"></Binding>
+                                        <MultiBinding.ConverterParameter>Message</MultiBinding.ConverterParameter>
+                                    </MultiBinding>
+                                </StackPanel.Visibility>
+                            </StackPanel>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </Border>
+            <!--</materialDesign:Card>-->
         </materialDesign:DialogHost.DialogContent>
         <Grid>
             <Grid.RowDefinitions>

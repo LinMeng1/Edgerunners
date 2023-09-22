@@ -33,7 +33,7 @@ namespace Moon.Controllers.Application.NightCity
                     Disk = parameter.Disk,
                     Memory = parameter.Memory,
                 };
-                Database.Edgerunners.Insertable(history).IgnoreColumns(it => new { it.Id, it.UploadTime }).ExecuteCommand();
+                Database.Edgerunners.Insertable(history).IgnoreColumns("UploadTime").ExecuteCommand();
                 result.Result = true;
             }
             catch (Exception e)

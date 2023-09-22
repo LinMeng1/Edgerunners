@@ -137,12 +137,14 @@
                         <materialDesign:ColorZone Mode="SecondaryDark" CornerRadius="5" Margin="5,5,5,5">
                             <Grid Margin="5" Background="Transparent">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding TopBannerMessage.Content}" Margin="10,0,10,0" VerticalAlignment="Center"/>
-                                <materialDesign:PackIcon Grid.Column="1" Margin="0,0,10,0" Kind="Play" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
+                                <TextBlock Grid.Column="0" Text="{Binding TopBannerMessage.Category}" Margin="10,0,10,0" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" Text="{Binding TopBannerMessage.Content}" Margin="10,0,10,0" VerticalAlignment="Center"/>
+                                <materialDesign:PackIcon Grid.Column="2" Margin="0,0,10,0" Kind="Play" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseDown">
                                             <i:InvokeCommandAction Command="{Binding TryLinkCommand}">
@@ -169,7 +171,7 @@
                                         </Style>
                                     </materialDesign:PackIcon.Style>
                                 </materialDesign:PackIcon>
-                                <materialDesign:PackIcon Grid.Column="2"  Kind="Close" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
+                                <materialDesign:PackIcon Grid.Column="3"  Kind="Close" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseDown">
                                             <i:InvokeCommandAction Command="{Binding RemoveMessageCommand}" CommandParameter="{Binding TopBannerMessage}"/>

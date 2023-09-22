@@ -26,12 +26,12 @@ namespace TestEngAuthorization.Views
     public partial class Login : Window
     {
         private HttpService httpService;
-        IEventAggregator e;
+        IEventAggregator eventAggregator;
         IPropertyService propertyService;
-        public Login(IEventAggregator e, IPropertyService propertyService)
+        public Login(IEventAggregator eventAggregator, IPropertyService propertyService)
         {
             InitializeComponent();
-            this.e = e;
+            this.eventAggregator = eventAggregator;
             this.propertyService = propertyService;
             httpService = new HttpService();
             Bitmap background = Properties.Resources.background;
@@ -84,7 +84,7 @@ namespace TestEngAuthorization.Views
                         Authorize_GetToken_Result content = JsonConvert.DeserializeObject<Authorize_GetToken_Result>(result.Content.ToString());
                         propertyService.SetProperty("TestEngAuthorizationInfo", content.Token);
                         propertyService.SetProperty("DisplayName", content.Name);
-                        e.GetEvent<AuthorizationInfoChangedEvent>().Publish(new Tuple<string, string>("TestEngAuthorization", "TestEngAuthorizationInfo"));
+                        eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Publish(new Tuple<string, string>("TestEngAuthorization", "TestEngAuthorizationInfo"));
                         DialogResult = true;
                         Close();
                     }

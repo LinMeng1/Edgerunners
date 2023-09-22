@@ -32,81 +32,79 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <materialDesign:DialogHost IsOpen="{Binding DialogOpen}" DialogMargin="0" DialogBackground="Transparent">
+    <materialDesign:DialogHost IsOpen="{Binding DialogOpen}" Style="{StaticResource MaterialDesignEmbeddedDialogHost}">
         <materialDesign:DialogHost.DialogContent>
-            <materialDesign:Card Background="Transparent" Padding="35">
-                <Border CornerRadius="8">
-                    <Border.Effect>
-                        <DropShadowEffect BlurRadius="20" ShadowDepth="0" Color="Black" Opacity="0.4"/>
-                    </Border.Effect>
-                    <materialDesign:Card>
-                        <StackPanel MaxWidth="600">
-                            <StackPanel Margin="16">
-                                <ProgressBar IsIndeterminate="True" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0"/>
-                                <TextBlock Text="Syncing data"></TextBlock>
-                                <StackPanel.Visibility>
-                                    <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
-                                        <Binding Path="DialogCategory"></Binding>
-                                        <MultiBinding.ConverterParameter>Syncing</MultiBinding.ConverterParameter>
-                                    </MultiBinding>
-                                </StackPanel.Visibility>
-                            </StackPanel>
-                            <StackPanel Margin="16">
-                                <TextBlock Text="{Binding DialogMessage}" TextWrapping="Wrap"/>
-                                <Button Margin="0,8,8,0" Command="{Binding CleanMessageCommand}" Content="I Know" Style="{StaticResource MaterialDesignFlatButton}"/>
-                                <StackPanel.Visibility>
-                                    <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
-                                        <Binding Path="DialogCategory"></Binding>
-                                        <MultiBinding.ConverterParameter>Message</MultiBinding.ConverterParameter>
-                                    </MultiBinding>
-                                </StackPanel.Visibility>
-                            </StackPanel>
-                            <StackPanel Margin="16">
-                                <TextBlock Text="{Binding DialogMessage}"/>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Button Grid.Column="0" Margin="0,16,0,0" Command="{Binding UninstallModuleCommand}" Content="ACCEPT" Style="{StaticResource MaterialDesignFlatButton}"/>
-                                    <Button Grid.Column="2" Margin="0,16,0,0" Command="{Binding CleanMessageCommand}" Content="CANCEL" Style="{StaticResource MaterialDesignFlatButton}"/>
-                                </Grid>
-                                <StackPanel.Visibility>
-                                    <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
-                                        <Binding Path="DialogCategory"></Binding>
-                                        <MultiBinding.ConverterParameter>Uninstall</MultiBinding.ConverterParameter>
-                                    </MultiBinding>
-                                </StackPanel.Visibility>
-                            </StackPanel>
-                            <StackPanel Margin="16">
-                                <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="260">
-                                    <TextBlock Text="{Binding InstalledSelectedModuleSelectedVersion.Manifest}" TextWrapping="Wrap"/>
-                                </ScrollViewer>
-                                <Button Margin="0,8,8,0" Command="{Binding ClearMessageAndCopyManifestCommand}" CommandParameter="Installed" Content="Got It and Copy to Clipboard" Style="{StaticResource MaterialDesignFlatButton}"/>
-                                <StackPanel.Visibility>
-                                    <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
-                                        <Binding Path="DialogCategory"></Binding>
-                                        <MultiBinding.ConverterParameter>Manifest Installed</MultiBinding.ConverterParameter>
-                                    </MultiBinding>
-                                </StackPanel.Visibility>
-                            </StackPanel>
-                            <StackPanel Margin="16">
-                                <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="260">
-                                    <TextBlock Text="{Binding BrowseSelectedModuleSelectedVersion.Manifest}" TextWrapping="Wrap"/>
-                                </ScrollViewer>
-                                <Button Margin="0,8,8,0" Command="{Binding ClearMessageAndCopyManifestCommand}" CommandParameter="Browse" Content="Got It and Copy to Clipboard" Style="{StaticResource MaterialDesignFlatButton}"/>
-                                <StackPanel.Visibility>
-                                    <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
-                                        <Binding Path="DialogCategory"></Binding>
-                                        <MultiBinding.ConverterParameter>Manifest Browse</MultiBinding.ConverterParameter>
-                                    </MultiBinding>
-                                </StackPanel.Visibility>
-                            </StackPanel>
+            <Border CornerRadius="8">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="20" ShadowDepth="0" Color="Black" Opacity="0.4"/>
+                </Border.Effect>
+                <materialDesign:Card>
+                    <StackPanel MaxWidth="600">
+                        <StackPanel Margin="16">
+                            <ProgressBar IsIndeterminate="True" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0"/>
+                            <TextBlock Text="Syncing data"></TextBlock>
+                            <StackPanel.Visibility>
+                                <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                    <Binding Path="DialogCategory"></Binding>
+                                    <MultiBinding.ConverterParameter>Syncing</MultiBinding.ConverterParameter>
+                                </MultiBinding>
+                            </StackPanel.Visibility>
                         </StackPanel>
-                    </materialDesign:Card>
-                </Border>
-            </materialDesign:Card>
+                        <StackPanel Margin="16">
+                            <TextBlock Text="{Binding DialogMessage}" TextWrapping="Wrap"/>
+                            <Button Margin="0,8,8,0" Command="{Binding CleanMessageCommand}" Content="I Know" Style="{StaticResource MaterialDesignFlatButton}"/>
+                            <StackPanel.Visibility>
+                                <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                    <Binding Path="DialogCategory"></Binding>
+                                    <MultiBinding.ConverterParameter>Message</MultiBinding.ConverterParameter>
+                                </MultiBinding>
+                            </StackPanel.Visibility>
+                        </StackPanel>
+                        <StackPanel Margin="16">
+                            <TextBlock Text="{Binding DialogMessage}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Margin="0,16,0,0" Command="{Binding UninstallModuleCommand}" Content="ACCEPT" Style="{StaticResource MaterialDesignFlatButton}"/>
+                                <Button Grid.Column="2" Margin="0,16,0,0" Command="{Binding CleanMessageCommand}" Content="CANCEL" Style="{StaticResource MaterialDesignFlatButton}"/>
+                            </Grid>
+                            <StackPanel.Visibility>
+                                <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                    <Binding Path="DialogCategory"></Binding>
+                                    <MultiBinding.ConverterParameter>Uninstall</MultiBinding.ConverterParameter>
+                                </MultiBinding>
+                            </StackPanel.Visibility>
+                        </StackPanel>
+                        <StackPanel Margin="16">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="260">
+                                <TextBlock Text="{Binding InstalledSelectedModuleSelectedVersion.Manifest}" TextWrapping="Wrap"/>
+                            </ScrollViewer>
+                            <Button Margin="0,8,8,0" Command="{Binding ClearMessageAndCopyManifestCommand}" CommandParameter="Installed" Content="Got It and Copy to Clipboard" Style="{StaticResource MaterialDesignFlatButton}"/>
+                            <StackPanel.Visibility>
+                                <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                    <Binding Path="DialogCategory"></Binding>
+                                    <MultiBinding.ConverterParameter>Manifest Installed</MultiBinding.ConverterParameter>
+                                </MultiBinding>
+                            </StackPanel.Visibility>
+                        </StackPanel>
+                        <StackPanel Margin="16">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="260">
+                                <TextBlock Text="{Binding BrowseSelectedModuleSelectedVersion.Manifest}" TextWrapping="Wrap"/>
+                            </ScrollViewer>
+                            <Button Margin="0,8,8,0" Command="{Binding ClearMessageAndCopyManifestCommand}" CommandParameter="Browse" Content="Got It and Copy to Clipboard" Style="{StaticResource MaterialDesignFlatButton}"/>
+                            <StackPanel.Visibility>
+                                <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                    <Binding Path="DialogCategory"></Binding>
+                                    <MultiBinding.ConverterParameter>Manifest Browse</MultiBinding.ConverterParameter>
+                                </MultiBinding>
+                            </StackPanel.Visibility>
+                        </StackPanel>
+                    </StackPanel>
+                </materialDesign:Card>
+            </Border>
         </materialDesign:DialogHost.DialogContent>
         <Grid>
             <TabControl Margin="10" SelectedIndex="{Binding TabSelectedIndex}">

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 
-1-953212685
+2-880695255
 
-7-1646901295
+9-320896496
 26-1121796649
-Views\Main.xaml;
+Views\Main.xaml;Views\Shortcut.xaml;
 
-False
+True
 

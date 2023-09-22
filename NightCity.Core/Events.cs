@@ -18,7 +18,9 @@ namespace NightCity.Core.Events
     public class ModulesChangedEvent : PubSubEvent<ObservableCollection<ModuleInfo>> { }
     public class TemplateClosingEvent : PubSubEvent<string> { }
     public class TemplateReOpeningEvent : PubSubEvent<string> { }
+    public class TemplateShowingEvent : PubSubEvent<string> { }
     public class AuthorizationInfoChangedEvent : PubSubEvent<Tuple<string, string>> { }
     public class IsConnectionFixChangedEvent : PubSubEvent<bool> { }
-    public class ClustersSyncedEvent : PubSubEvent<List<Connection_GetClusters_Result>> { }   
+    public class ClustersSyncedEvent : PubSubEvent<List<Connection_GetClusters_Result>> { }
+    public class ErrorMessageShowingEvent:PubSubEvent<Tuple<string, string>> { }
 }

@@ -77,7 +77,7 @@ namespace Moon.Controllers.Application.MaxTac
                     };
                     roles_Authorizations.Add(roles_Authorization);
                 }
-                Database.Edgerunners.Insertable(roles_Authorizations).IgnoreColumns(it => it.CreateTime).ExecuteCommand();
+                Database.Edgerunners.Insertable(roles_Authorizations).IgnoreColumns("CreateTime").ExecuteCommand();
                 result.Result = true;
             }
             catch (Exception e)
@@ -109,7 +109,7 @@ namespace Moon.Controllers.Application.MaxTac
                     RoleId = role.Id,
                     AuthorizationEnum = parameter.AuthorizationEnum,
                 };
-                Database.Edgerunners.Insertable(roles_Authorizations).IgnoreColumns(it => it.CreateTime).ExecuteCommand();
+                Database.Edgerunners.Insertable(roles_Authorizations).IgnoreColumns("CreateTime").ExecuteCommand();
                 result.Result = true;
             }
             catch (Exception e)

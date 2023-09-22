@@ -69,7 +69,7 @@ namespace Moon.Controllers.Application.NightCity
                     LinkCommand = parameter.LinkCommand,
                     LinkInformation = parameter.LinkInfomation,
                 };
-                Database.Edgerunners.Insertable(banners).IgnoreColumns(it => new { it.CreateTime }).ExecuteCommand();
+                Database.Edgerunners.Insertable(banners).IgnoreColumns("CreateTime").ExecuteCommand();
                 result.Result = true;
             }
             catch (Exception e)
