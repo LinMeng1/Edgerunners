@@ -9,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using NightCity.Core.Services.Prism;
 using System;
 using System.Reflection;
+using NightCity.Core;
 
 namespace ModHub
 {

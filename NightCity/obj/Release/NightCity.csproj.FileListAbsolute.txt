@@ -33,7 +33,6 @@ D:\Project\Edgerunners\NightCity\bin\Release\NLog.xml
 D:\Project\Edgerunners\NightCity\bin\Release\MQTTnet.xml
 D:\Project\Edgerunners\NightCity\bin\Release\Renci.SshNet.xml
 D:\Project\Edgerunners\NightCity\obj\Release\NightCity.csproj.AssemblyReference.cache
-D:\Project\Edgerunners\NightCity\obj\Release\NightCity.csproj.SuggestedBindingRedirects.cache
 D:\Project\Edgerunners\NightCity\obj\Release\Resources\DefaultSettingsDictionary.baml
 D:\Project\Edgerunners\NightCity\obj\Release\Views\Template.baml
 D:\Project\Edgerunners\NightCity\obj\Release\Views\Connection.g.cs
@@ -57,3 +56,7 @@ D:\Project\Edgerunners\NightCity\obj\Release\NightCity.csproj.CoreCompileInputs.
 D:\Project\Edgerunners\NightCity\obj\Release\NightCity.csproj.CopyComplete
 D:\Project\Edgerunners\NightCity\obj\Release\NightCity.exe
 D:\Project\Edgerunners\NightCity\obj\Release\NightCity.pdb
+D:\Project\Edgerunners\NightCity\obj\Release\Views\Banner.g.cs
+D:\Project\Edgerunners\NightCity\obj\Release\Views\MessageBox.g.cs
+D:\Project\Edgerunners\NightCity\obj\Release\Views\Banner.baml
+D:\Project\Edgerunners\NightCity\obj\Release\Views\MessageBox.baml

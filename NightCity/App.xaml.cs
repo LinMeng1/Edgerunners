@@ -8,6 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Windows;
 using NightCity.Core.Services.Prism;
+using NightCity.Core;
 
 namespace NightCity
 {

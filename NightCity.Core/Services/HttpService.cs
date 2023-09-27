@@ -15,7 +15,8 @@ namespace NightCity.Core.Services
         public void AddToken(string token)
         {
             httpClient.DefaultRequestHeaders.Remove("Authorization");
-            httpClient.DefaultRequestHeaders.Add("Authorization", $"bearer {token}");
+            if (token != null)
+                httpClient.DefaultRequestHeaders.Add("Authorization", $"bearer {token}");
         }
         public async Task<string> Get(string url)
         {

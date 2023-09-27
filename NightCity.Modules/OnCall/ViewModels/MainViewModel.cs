@@ -1,20 +1,19 @@
 ﻿using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
+using Newtonsoft.Json;
 using NightCity.Core;
 using NightCity.Core.Events;
+using NightCity.Core.Models.Standard;
 using NightCity.Core.Services;
 using NightCity.Core.Services.Prism;
-using OnCall.Views;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
-using System.Reflection.Emit;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -33,24 +32,36 @@ namespace OnCall.ViewModels
         //监听token列表
         List<SubscriptionToken> eventTokens = new List<SubscriptionToken>();
         public MainViewModel(IEventAggregator eventAggregator, IPropertyService propertyService)
-        {
+        {         
             //依赖注入及初始化
             this.eventAggregator = eventAggregator;
             this.propertyService = propertyService;
             httpService = new HttpService();
+            //监听事件 权限信息变更
+            eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Subscribe((authorizationInfo) =>
+            {
+                object token = propertyService.GetProperty(authorizationInfo.Item2);
+                httpService.AddToken(token?.ToString());
+            }, ThreadOption.UIThread, true);
             //监听事件 链接命令发布
             eventTokens.Add(eventAggregator.GetEvent<BannerMessageLinkingEvent>().Subscribe(async message =>
             {
-                string pattern = @"module on-call handle issue ([\s\S]*?)";
-                Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
-                Match m = regex.Match(message);
-                if (m.Success)
-                    await HandleReportAsync(m.Groups[1].Value);
+                string patternResponse = @"module on-call response issue ([a-z0-9-]*)";
+                string patternSolve = @"module on-call solve issue ([a-z0-9-]*)";
+                Regex regexResponse = new Regex(patternResponse, RegexOptions.IgnoreCase);
+                Regex regexSolve = new Regex(patternSolve, RegexOptions.IgnoreCase);
+                Match mResponse = regexResponse.Match(message);
+                Match mSolve = regexSolve.Match(message);
+                if (mResponse.Success)
+                    await ResponseReportAsync(mResponse.Groups[1].Value);
+                else if (mSolve.Success)
+                {
+                    View = "Workshop";
+                    SolvedReportId = mSolve.Groups[1].Value;
+                    eventAggregator.GetEvent<TemplateShowingEvent>().Publish("OnCall");
+                    TrySolveReport();
+                }
             }, ThreadOption.UIThread, true));
-
-            //DialogOpen = true;
-            //View = "Workshop";
-            //eventAggregator.GetEvent<TemplateShowingEvent>().Publish("OnCall");
 
             #region P1
             SeriesCollection1 = new SeriesCollection
@@ -212,7 +223,12 @@ namespace OnCall.ViewModels
 
         }
 
-        private async Task HandleReportAsync(string reportId)
+        /// <summary>
+        /// 异常接单
+        /// </summary>
+        /// <param name="reportId"></param>
+        /// <returns></returns>
+        private async Task ResponseReportAsync(string reportId)
         {
             try
             {
@@ -220,14 +236,45 @@ namespace OnCall.ViewModels
                 DialogOpen = true;
                 DialogCategory = "Syncing";
                 await Task.Delay(internalDelay);
-
-                eventAggregator.GetEvent<ErrorMessageShowingEvent>().Publish(new Tuple<string, string>("throw exception testing", "OnCall"));
-
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleRepair", new { ReportId = reportId }));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                eventAggregator.GetEvent<BannerMessageSyncingEvent>().Publish();
                 DialogOpen = false;
             }
             catch (Exception e)
             {
-                Global.Log($"[OnCall]:[Shortcut]:[CheckIssueStateAsync] exception:{e.Message}", true);
+                eventAggregator.GetEvent<ErrorMessageShowingEvent>().Publish(new Tuple<string, string>(e.Message, "OnCall"));
+                Global.Log($"[OnCall]:[MainViewModel]:[CheckIssueStateAsync] exception:{e.Message}", true);
+                DialogOpen = false;
+            }
+        }
+
+        /// <summary>
+        /// 异常解决
+        /// </summary>
+        /// <param name="reportId"></param>
+        /// <param name="product"></param>
+        /// <param name="process"></param>
+        /// <param name="failureCategory"></param>
+        /// <param name="failureReason"></param>
+        /// <param name="solution"></param>
+        /// <returns></returns>
+        private async Task SolveReportAsync(string reportId, string product, string process, string failureCategory, string failureReason, string solution)
+        {
+            try
+            {
+                DialogOpen = true;
+                DialogCategory = "Syncing";
+                await Task.Delay(internalDelay);
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleRepair", new { ReportId = reportId, Product = product, Process = process, FailureCategory = failureCategory, FailureReason = failureReason, Solution = solution }));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                DialogOpen = false;
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[SolveReportAsync]:exception:{e.Message}", true);
                 DialogMessage = e.Message;
                 DialogCategory = "Message";
             }
@@ -257,6 +304,40 @@ namespace OnCall.ViewModels
         }
         #endregion
 
+        #region 命令：异常解决回执询问
+        public ICommand TrySolveReportCommand
+        {
+            get => new DelegateCommand(TrySolveReport);
+        }
+        private void TrySolveReport()
+        {
+            DialogCategory = "Solve Report";
+            DialogOpen = true;
+        }
+        #endregion
+
+        #region 命令：异常解决
+        public ICommand SolveReportCommand
+        {
+            get => new DelegateCommand(SolveReport);
+        }
+        private async void SolveReport()
+        {
+            await SolveReportAsync(SolvedReportId, SolvedProduct, SolvedProcess, SolvedFailureCategory, SolvedFailureReason, SolvedSolution);
+        }
+        #endregion
+
+        #region 命令：取消操作
+        public ICommand CancelCommand
+        {
+            get => new DelegateCommand(Cancel);
+        }
+        public void Cancel()
+        {
+            DialogOpen = false;
+        }
+        #endregion
+
         #endregion
 
         #region 可视化属性集合
@@ -269,6 +350,90 @@ namespace OnCall.ViewModels
             set
             {
                 SetProperty(ref view, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：单号
+        private string solvedReportId;
+        public string SolvedReportId
+        {
+            get => solvedReportId;
+            set
+            {
+                SetProperty(ref solvedReportId, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：产品
+        private string solvedProduct;
+        public string SolvedProduct
+        {
+            get => solvedProduct;
+            set
+            {
+                SetProperty(ref solvedProduct, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：流程
+        private string solvedProcess;
+        public string SolvedProcess
+        {
+            get => solvedProcess;
+            set
+            {
+                SetProperty(ref solvedProcess, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：故障类型
+        private string solvedFailureCategory;
+        public string SolvedFailureCategory
+        {
+            get => solvedFailureCategory;
+            set
+            {
+                SetProperty(ref solvedFailureCategory, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：故障原因
+        private string solvedFailureReason;
+        public string SolvedFailureReason
+        {
+            get => solvedFailureReason;
+            set
+            {
+                SetProperty(ref solvedFailureReason, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：解决方案
+        private string solvedSolution;
+        public string SolvedSolution
+        {
+            get => solvedSolution;
+            set
+            {
+                SetProperty(ref solvedSolution, value);
+            }
+        }
+        #endregion
+
+        #region 故障类型列表
+        private string failureCategoryList;
+        public string FailureCategoryList
+        {
+            get => failureCategoryList;
+            set
+            {
+                SetProperty(ref failureCategoryList, value);
             }
         }
         #endregion

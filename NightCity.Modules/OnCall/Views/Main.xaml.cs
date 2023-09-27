@@ -9,10 +9,7 @@ namespace OnCall.Views
     public partial class Main : UserControl
     {
         public Main()
-        {
-            //var x = Environment.CurrentDirectory;
-            //Environment.CurrentDirectory = "D:\\Project\\Edgerunners\\NightCity.Modules\\OnCall";
-            //var y = Environment.CurrentDirectory;
+        {          
             InitializeComponent();
         }
     }

@@ -1,4 +1,5 @@
-﻿using NightCity.Core.Interfaces;
+﻿using NightCity.Core;
+using NightCity.Core.Interfaces;
 using NightCity.Core.Models.Standard;
 using Prism.Regions;
 using System;
@@ -56,9 +57,8 @@ namespace NightCity.Views
             }
             if (loadResult)
             {
-                Content.HorizontalAlignment = HorizontalAlignment.Stretch;
-                Content.VerticalAlignment = VerticalAlignment.Stretch;
                 ErrorRegion.Visibility = Visibility.Collapsed;
+                TemplateRegion.Visibility = Visibility.Visible;
                 manager.Regions.Remove($"{module.Name}Region");
                 RegionManager.SetRegionName(TemplateRegion, $"{module.Name}Region");
                 RegionManager.SetRegionManager(TemplateRegion, manager);

@@ -45,7 +45,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
                     Priority = 80,
                     Category = "OnCall",
                     Content = $"An issue has been found on this site. Please ask a test technician to handle it. Owner is {parameter.Owner ?? "Nobody"}",
-                    LinkCommand = $"module on-call handle issue {id}",
+                    LinkCommand = $"module on-call response issue {id}",
                     LinkInformation = id,
                 };
                 Database.Edgerunners.Insertable(banner).IgnoreColumns("CreateTime").ExecuteCommand();
@@ -82,20 +82,94 @@ namespace Moon.Controllers.Application.NightCity.Modules
                         report.Responser = employeeID;
                         report.State = "responsed";
                         Database.Edgerunners.Updateable(report).UpdateColumns("ResponseTime", "Responser", "State").ExecuteCommand();
-                        Database.Edgerunners.Updateable<IPCBanners>().SetColumns(it => it.Content == $"{user.Name} is handling the issue").Where(it => it.Id == parameter.ReportId).ExecuteCommand();
+                        Database.Edgerunners.Updateable<IPCBanners>().SetColumns("Priority", 45).SetColumns("Content", $"{user.Name} is handling the issue").SetColumns("LinkCommand", $"module on-call solve issue {report.Id}").Where(it => it.Id == parameter.ReportId).ExecuteCommand();
                         break;
                     case "responsed":
-                        throw new Exception($"Unexpected issue report state:{report.State}");
+                        report.SolveTime = DateTime.Now;
+                        report.Solver = employeeID;
+                        report.State = "solved";
+                        report.Product = parameter.Product;
+                        report.Process = parameter.Process;
+                        report.FailureCategory = parameter.FailureCategory;
+                        report.FailureReason = parameter.FailureReason;
+                        report.Solution = parameter.Solution;
+                        Database.Edgerunners.Updateable(report).UpdateColumns("SolveTime", "Solver", "State", "Product", "Process", "FailureCategory", "FailureReason", "Solution").ExecuteCommand();
+                        Database.Edgerunners.Deleteable<IPCBanners>().Where(it => it.Id == parameter.ReportId).ExecuteCommand();
                         break;
                     case "solved":
-                        throw new Exception($"Unexpected issue report state:{report.State}");
-                        break;
+                        throw new Exception($"This issue has been solved, please refresh the banner message");
                     case "aborted":
-                        throw new Exception($"Unexpected issue report state:{report.State}");
-                        break;
+                        throw new Exception($"This issue has been aborted, please refresh the banner message");
                     default:
                         throw new Exception($"Unexpected issue report state:{report.State}");
                 }
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
+
+        #region 查询当前报修
+        [HttpPost]
+        public ControllersResult GetRepairs([FromBody] OnCall_GetRepairs_Parameter parameter)
+        {
+            ControllersResult result = new();
+            try
+            {
+                List<OnCall_GetRepairs_Result2> localRepairs = new();
+                List<OnCall_GetRepairs_Result> clusterRepairs = new();
+                List<IPCClusters> clusters = Database.Edgerunners.Queryable<IPCClusters>().Where(it => it.Mainboard == parameter.Mainboard && it.Category != null).ToList();
+                foreach (IPCClusters cluster in clusters)
+                {
+                    OnCall_GetRepairs_Result clusterRepair = new();
+                    clusterRepair.ClusterCategory = cluster.Category;
+                    clusterRepair.Cluster = cluster.Cluster;
+                    clusterRepair.Repairs = new List<OnCall_GetRepairs_Result2>();
+                    List<string> mainboards = Database.Edgerunners.Queryable<IPCClusters>().Where(it => it.Category == cluster.Category && it.Cluster == cluster.Cluster).Select(it => it.Mainboard).ToList();
+                    List<IPCIssueReports> repairs = Database.Edgerunners.Queryable<IPCIssueReports>().Where(it => it.State != "solved" && it.State != "aborted" && mainboards.Any(s => s == it.Mainboard)).ToList();
+                    foreach (IPCIssueReports repair in repairs)
+                    {
+                        if (repair.Mainboard == parameter.Mainboard && localRepairs.FirstOrDefault(it => it.Id == repair.Id) == null)
+                        {
+                            localRepairs.Add(new()
+                            {
+                                Id = repair.Id,
+                                Mainboard = repair.Mainboard,
+                                HostName = repair.HostName,
+                                State = repair.State,
+                            });
+                        }
+                        clusterRepair.Repairs.Add(new()
+                        {
+                            Id = repair.Id,
+                            Mainboard = repair.Mainboard,
+                            HostName = repair.HostName,
+                            State = repair.State,
+                        });
+                    }
+                    clusterRepairs.Add(clusterRepair);
+                }
+                OnCall_GetRepairs_Result? locationRepairs = clusterRepairs.FirstOrDefault(it => it.ClusterCategory == "Location");
+                OnCall_GetRepairs_Result? productRepairs = clusterRepairs.FirstOrDefault(it => it.ClusterCategory == "Product");
+                if (productRepairs != null && locationRepairs != null)
+                {
+                    foreach (var repair in locationRepairs.Repairs)
+                    {
+                        var sameRepair = productRepairs.Repairs.FirstOrDefault(it => it.Id == repair.Id);
+                        if (sameRepair != null)
+                            productRepairs.Repairs.Remove(sameRepair);
+                    }
+                }
+                result.Content = new
+                {
+                    localRepairs,
+                    clusterRepairs
+                };
                 result.Result = true;
             }
             catch (Exception e)
@@ -121,6 +195,31 @@ namespace Moon.Controllers.Application.NightCity.Modules
         public class OnCall_HandleRepair_Parameter
         {
             public string ReportId { get; set; }
+            public string? Product { get; set; }
+            public string? Process { get; set; }
+            public string? FailureCategory { get; set; }
+            public string? FailureReason { get; set; }
+            public string? Solution { get; set; }
+        }
+        #endregion
+
+        #region GetRepairs
+        public class OnCall_GetRepairs_Parameter
+        {
+            public string Mainboard { get; set; }
+        }
+        public class OnCall_GetRepairs_Result
+        {
+            public string Cluster { get; set; }
+            public string ClusterCategory { get; set; }
+            public List<OnCall_GetRepairs_Result2> Repairs { get; set; }
+        }
+        public class OnCall_GetRepairs_Result2
+        {
+            public string Id { get; set; }
+            public string Mainboard { get; set; }
+            public string HostName { get; set; }
+            public string State { get; set; }
         }
         #endregion
     }

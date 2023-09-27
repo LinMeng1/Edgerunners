@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using ModHub.Views;
+using NightCity.Core;
 using NightCity.Core.Events;
 using Prism.Commands;
 using Prism.Events;

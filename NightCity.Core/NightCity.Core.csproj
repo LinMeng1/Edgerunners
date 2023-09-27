@@ -89,6 +89,7 @@
     <Compile Include="Converters\ObjectIsNullToVisibilityConverter.cs" />
     <Compile Include="Converters\DialogHostVisibilityConverter.cs" />
     <Compile Include="Converters\WrapTextConverter.cs" />
+    <Compile Include="DynamicDirectoryModuleCatalog.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Interfaces\IAuthorizable.cs" />

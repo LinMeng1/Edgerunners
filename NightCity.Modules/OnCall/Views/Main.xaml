@@ -29,39 +29,151 @@
                 <Setter Property="Margin" Value="5" />
                 <Setter Property="Background" Value="#EEEEEE"/>
             </Style>
+            <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+                <Setter Property="Foreground" Value="#8C8C8C" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Width" Value="8" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Grid x:Name="GridRoot" Width="8" Background="{TemplateBinding Background}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.00001*" />
+                                </Grid.RowDefinitions>
+                                <Track x:Name="PART_Track" Grid.Row="0" IsDirectionReversed="true" Focusable="false">
+                                    <Track.Thumb>
+                                        <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" Style="{DynamicResource ScrollThumbs}" />
+                                    </Track.Thumb>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton x:Name="PageUp" Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="false" />
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton x:Name="PageDown" Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="false" />
+                                    </Track.DecreaseRepeatButton>
+                                </Track>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger SourceName="Thumb" Property="IsMouseOver" Value="true">
+                                    <Setter Value="{DynamicResource ButtonSelectBrush}" TargetName="Thumb" Property="Background" />
+                                </Trigger>
+                                <Trigger SourceName="Thumb" Property="IsDragging" Value="true">
+                                    <Setter Value="{DynamicResource DarkBrush}" TargetName="Thumb" Property="Background" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed" />
+                                </Trigger>
+                                <Trigger Property="Orientation" Value="Horizontal">
+                                    <Setter TargetName="GridRoot" Property="LayoutTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="-90" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="-90" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Width" Value="Auto" />
+                                    <Setter Property="Height" Value="8" />
+                                    <Setter TargetName="Thumb" Property="Tag" Value="Horizontal" />
+                                    <Setter TargetName="PageDown" Property="Command" Value="ScrollBar.PageLeftCommand" />
+                                    <Setter TargetName="PageUp" Property="Command" Value="ScrollBar.PageRightCommand" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <converter:DialogHostVisibilityConverter x:Key="DialogHostVisibilityConverter"></converter:DialogHostVisibilityConverter>
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <materialDesign:DialogHost IsOpen="{Binding DialogOpen}" Style="{StaticResource MaterialDesignEmbeddedDialogHost}">
+    <materialDesign:DialogHost IsOpen="{Binding DialogOpen}" Style="{StaticResource MaterialDesignEmbeddedDialogHost}" >
         <materialDesign:DialogHost.DialogContent>
             <Border CornerRadius="8">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="20" ShadowDepth="0" Color="Black" Opacity="0.4"/>
                 </Border.Effect>
-                <materialDesign:Card>
-                    <StackPanel MaxWidth="600">
-                        <StackPanel Margin="16">
-                            <ProgressBar IsIndeterminate="True" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0"/>
-                            <TextBlock Text="Syncing data"></TextBlock>
-                            <StackPanel.Visibility>
-                                <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
-                                    <Binding Path="DialogCategory"></Binding>
-                                    <MultiBinding.ConverterParameter>Syncing</MultiBinding.ConverterParameter>
-                                </MultiBinding>
-                            </StackPanel.Visibility>
+                <materialDesign:Card Padding="0,5,0,5">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel MaxWidth="600">
+                            <StackPanel Margin="16">
+                                <ProgressBar IsIndeterminate="True" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0"/>
+                                <TextBlock Text="Syncing data"></TextBlock>
+                                <StackPanel.Visibility>
+                                    <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                        <Binding Path="DialogCategory"></Binding>
+                                        <MultiBinding.ConverterParameter>Syncing</MultiBinding.ConverterParameter>
+                                    </MultiBinding>
+                                </StackPanel.Visibility>
+                            </StackPanel>
+                            <StackPanel Margin="16">
+                                <TextBlock Text="{Binding DialogMessage}" TextWrapping="Wrap"/>
+                                <Button Margin="0,8,8,0" Command="{Binding CancelCommand}" Content="I Know" Style="{StaticResource MaterialDesignFlatButton}"/>
+                                <StackPanel.Visibility>
+                                    <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                        <Binding Path="DialogCategory"></Binding>
+                                        <MultiBinding.ConverterParameter>Message</MultiBinding.ConverterParameter>
+                                    </MultiBinding>
+                                </StackPanel.Visibility>
+                            </StackPanel>
+                            <StackPanel Margin="10,5,10,5">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="Solved issue report feedback form" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center"/>
+                                    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="3">
+                                        <TextBlock Text="Report id:" FontSize="13" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding SolvedReportId}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="3">
+                                        <TextBlock Text="Product:" FontSize="13" VerticalAlignment="Center"/>
+                                        <TextBox MinWidth="200" Text="{Binding SolvedProduct}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="3">
+                                        <TextBlock Text="Process:" FontSize="13" VerticalAlignment="Center"/>
+                                        <TextBox MinWidth="200" Text="{Binding SolvedProcess}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="3">
+                                        <TextBlock Text="Failure Category:" FontSize="13" VerticalAlignment="Center"/>
+                                        <TextBox MinWidth="200" Text="{Binding SolvedFailureCategory}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="5" Margin="5">
+                                        <TextBlock Text="Failure Reason" FontSize="13"/>
+                                        <TextBox Text="{Binding SolvedFailureReason}" Height="75" VerticalAlignment="Top" AcceptsReturn="True" Style="{StaticResource MaterialDesignOutlinedTextBox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="6" Margin="3">
+                                        <TextBlock Text="Solution" FontSize="13"/>
+                                        <TextBox Text="{Binding SolvedSolution}" Height="75" VerticalAlignment="Top" AcceptsReturn="True" Style="{StaticResource MaterialDesignOutlinedTextBox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                                    </StackPanel>
+                                    <Grid Grid.Row="7">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="0" Margin="0,3,0,0" Content="ACCEPT" Command="{Binding SolveReportCommand}" Style="{StaticResource MaterialDesignFlatButton}" Cursor="Hand"/>
+                                        <Button Grid.Column="3" Margin="0,3,0,0" Command="{Binding CancelCommand}" Content="CANCEL"  Style="{StaticResource MaterialDesignFlatButton}"/>
+                                    </Grid>
+                                </Grid>
+                                <StackPanel.Visibility>
+                                    <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                                        <Binding Path="DialogCategory"></Binding>
+                                        <MultiBinding.ConverterParameter>Solve Report</MultiBinding.ConverterParameter>
+                                    </MultiBinding>
+                                </StackPanel.Visibility>
+                            </StackPanel>
                         </StackPanel>
-                        <StackPanel Margin="16">
-                            <TextBlock Text="{Binding DialogMessage}" TextWrapping="Wrap"/>
-                            <Button Margin="0,8,8,0" Command="{Binding CleanMessageCommand}" Content="I Know" Style="{StaticResource MaterialDesignFlatButton}"/>
-                            <StackPanel.Visibility>
-                                <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
-                                    <Binding Path="DialogCategory"></Binding>
-                                    <MultiBinding.ConverterParameter>Message</MultiBinding.ConverterParameter>
-                                </MultiBinding>
-                            </StackPanel.Visibility>
-                        </StackPanel>
-                    </StackPanel>
+                    </ScrollViewer>
                 </materialDesign:Card>
             </Border>
         </materialDesign:DialogHost.DialogContent>
@@ -282,6 +394,27 @@
                 </Grid.Style>
             </Grid>
             <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <materialDesign:Card Grid.Row="0" Style="{StaticResource Card}">
+                        <TextBlock Text="当前站点单据" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </materialDesign:Card>
+                    <materialDesign:Card Grid.Row="1" Style="{StaticResource Card}">
+                        <TextBlock Text="当前管辖单据" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </materialDesign:Card>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <materialDesign:Card Grid.Row="1" Style="{StaticResource Card}">
+                        <TextBlock Text="历史单据" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </materialDesign:Card>
+                </Grid>
                 <Grid.Style>
                     <Style TargetType="Grid">
                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -295,6 +428,5 @@
             </Grid>
         </Grid>
     </materialDesign:DialogHost>
-
 
 </UserControl>

@@ -424,3 +424,57 @@
 2023-09-19 17:08:04.5935 Info Configuration initialized.
 2023-09-19 17:08:04.6065 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.2.1914. Product version: 5.2.2+51cc02a2dd780a9a01eb6747de52071d78e2f506. GlobalAssemblyCache: False
 2023-09-19 17:08:04.6065 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 17:33:24.9425 Info Message Template Auto Format enabled
+2023-09-26 17:33:25.0167 Info Registered target NLog.Targets.DatabaseTarget(Name=database)
+2023-09-26 17:33:25.0345 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 17:33:25.1881 Info Configuration initialized.
+2023-09-26 17:33:25.2024 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.2.1914. Product version: 5.2.2+51cc02a2dd780a9a01eb6747de52071d78e2f506. GlobalAssemblyCache: False
+2023-09-26 17:33:25.2024 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 17:38:34.4005 Info Message Template Auto Format enabled
+2023-09-26 17:38:34.4801 Info Registered target NLog.Targets.DatabaseTarget(Name=database)
+2023-09-26 17:38:34.5052 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 17:38:34.5795 Info Configuration initialized.
+2023-09-26 17:38:34.5889 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.2.1914. Product version: 5.2.2+51cc02a2dd780a9a01eb6747de52071d78e2f506. GlobalAssemblyCache: False
+2023-09-26 17:38:34.5889 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 17:40:17.6042 Info Message Template Auto Format enabled
+2023-09-26 17:40:17.7071 Info Registered target NLog.Targets.DatabaseTarget(Name=database)
+2023-09-26 17:40:17.7333 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 17:40:17.8251 Info Configuration initialized.
+2023-09-26 17:40:17.8381 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.2.1914. Product version: 5.2.2+51cc02a2dd780a9a01eb6747de52071d78e2f506. GlobalAssemblyCache: False
+2023-09-26 17:40:17.8381 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 17:46:59.0418 Info Message Template Auto Format enabled
+2023-09-26 17:46:59.1304 Info Registered target NLog.Targets.DatabaseTarget(Name=database)
+2023-09-26 17:46:59.1615 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 17:46:59.2601 Info Configuration initialized.
+2023-09-26 17:46:59.2712 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.2.1914. Product version: 5.2.2+51cc02a2dd780a9a01eb6747de52071d78e2f506. GlobalAssemblyCache: False
+2023-09-26 17:46:59.2712 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 17:48:24.5403 Info Message Template Auto Format enabled
+2023-09-26 17:48:24.6489 Info Registered target NLog.Targets.DatabaseTarget(Name=database)
+2023-09-26 17:48:24.6807 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 17:48:24.7775 Info Configuration initialized.
+2023-09-26 17:48:24.7889 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.2.1914. Product version: 5.2.2+51cc02a2dd780a9a01eb6747de52071d78e2f506. GlobalAssemblyCache: False
+2023-09-26 17:48:24.7889 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 17:50:39.9086 Info Message Template Auto Format enabled
+2023-09-26 17:50:39.9756 Info Registered target NLog.Targets.DatabaseTarget(Name=database)
+2023-09-26 17:50:39.9949 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 17:50:40.0673 Info Configuration initialized.
+2023-09-26 17:50:40.0673 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.2.1914. Product version: 5.2.2+51cc02a2dd780a9a01eb6747de52071d78e2f506. GlobalAssemblyCache: False
+2023-09-26 17:50:40.0780 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 17:51:22.5193 Info Message Template Auto Format enabled
+2023-09-26 17:51:22.6017 Info Registered target NLog.Targets.DatabaseTarget(Name=database)
+2023-09-26 17:51:22.6241 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 17:51:22.7069 Info Configuration initialized.
+2023-09-26 17:51:22.7196 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.2.1914. Product version: 5.2.2+51cc02a2dd780a9a01eb6747de52071d78e2f506. GlobalAssemblyCache: False
+2023-09-26 17:51:22.7196 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 17:52:27.4924 Info Message Template Auto Format enabled
+2023-09-26 17:52:27.5549 Info Registered target NLog.Targets.DatabaseTarget(Name=database)
+2023-09-26 17:52:27.5730 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 17:52:27.6381 Info Configuration initialized.
+2023-09-26 17:52:27.6480 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.2.1914. Product version: 5.2.2+51cc02a2dd780a9a01eb6747de52071d78e2f506. GlobalAssemblyCache: False
+2023-09-26 17:52:27.6480 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 18:01:02.7357 Info Message Template Auto Format enabled
+2023-09-26 18:01:02.8031 Info Registered target NLog.Targets.DatabaseTarget(Name=database)
+2023-09-26 18:01:02.8237 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config
+2023-09-26 18:01:02.8941 Info Configuration initialized.
+2023-09-26 18:01:02.8941 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.2.1914. Product version: 5.2.2+51cc02a2dd780a9a01eb6747de52071d78e2f506. GlobalAssemblyCache: False
+2023-09-26 18:01:02.8941 Info Validating config: TargetNames=database, ConfigItems=29, FilePath=D:\Project\Edgerunners\Moon\bin\Debug\net6.0\NLog.config

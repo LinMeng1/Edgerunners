@@ -12,22 +12,7 @@
 using MaterialDesignThemes.Wpf;
 using MaterialDesignThemes.Wpf.Converters;
 using MaterialDesignThemes.Wpf.Transitions;
-using Microsoft.Xaml.Behaviors;
-using Microsoft.Xaml.Behaviors.Core;
-using Microsoft.Xaml.Behaviors.Input;
-using Microsoft.Xaml.Behaviors.Layout;
-using Microsoft.Xaml.Behaviors.Media;
-using NightCity.Converters;
-using NightCity.Core.Controls;
-using NightCity.Core.Converters;
 using NightCity.Views;
-using Prism.DryIoc;
-using Prism.Interactivity;
-using Prism.Ioc;
-using Prism.Mvvm;
-using Prism.Regions;
-using Prism.Regions.Behaviors;
-using Prism.Services.Dialogs;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -48,7 +33,6 @@ using System.Windows.Media.TextFormatting;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Shell;
-using WpfAppBar;
 
 
 namespace NightCity.Views {

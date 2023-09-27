@@ -6,9 +6,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Policy;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
-namespace ModHub
+namespace NightCity.Core
 {
     public class DynamicDirectoryModuleCatalog : ModuleCatalog
     {
@@ -21,7 +23,7 @@ namespace ModHub
         }
         protected override void InnerLoad()
         {
-
+            //LoadModuleCatalog(ModulePath);
         }
         public void LoadModuleCatalog(string path, bool isFile = false)
         {
@@ -84,12 +86,13 @@ namespace ModHub
             if (_context == null)
                 return;
             IModuleManager manager = (IModuleManager)Prism.Ioc.ContainerLocator.Container.Resolve(typeof(IModuleManager));
+
             _context.Send(new SendOrPostCallback(delegate (object state)
             {
                 foreach (var module in modules)
-                {          
+                {
                     manager.LoadModule(module.ModuleName);
-                }   
+                }
             }), null);
         }
         protected virtual AppDomain BuildChildDomain(AppDomain parentDomain)

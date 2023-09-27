@@ -1,4 +1,5 @@
-﻿using Prism.Regions;
+﻿using NightCity.Core;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.IO;

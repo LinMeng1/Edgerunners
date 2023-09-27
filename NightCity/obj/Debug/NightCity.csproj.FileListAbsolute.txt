@@ -1,8 +1,10 @@
 D:\Project\Edgerunners\NightCity\obj\Debug\NightCity.csproj.AssemblyReference.cache
-D:\Project\Edgerunners\NightCity\obj\Debug\NightCity.csproj.SuggestedBindingRedirects.cache
 D:\Project\Edgerunners\NightCity\obj\Debug\Resources\DefaultSettingsDictionary.baml
 D:\Project\Edgerunners\NightCity\obj\Debug\Views\Template.baml
+D:\Project\Edgerunners\NightCity\obj\Debug\Views\Banner.g.cs
+D:\Project\Edgerunners\NightCity\obj\Debug\Views\Connection.g.cs
 D:\Project\Edgerunners\NightCity\obj\Debug\Views\MainWindow.g.cs
+D:\Project\Edgerunners\NightCity\obj\Debug\Views\MessageBox.g.cs
 D:\Project\Edgerunners\NightCity\obj\Debug\Views\ModuleManager.g.cs
 D:\Project\Edgerunners\NightCity\obj\Debug\Views\Performance.g.cs
 D:\Project\Edgerunners\NightCity\obj\Debug\Views\Template.g.cs
@@ -15,6 +17,7 @@ D:\Project\Edgerunners\NightCity\bin\Debug\NightCity.exe.config
 D:\Project\Edgerunners\NightCity\bin\Debug\NightCity.exe
 D:\Project\Edgerunners\NightCity\bin\Debug\NightCity.pdb
 D:\Project\Edgerunners\NightCity\bin\Debug\DryIoc.dll
+D:\Project\Edgerunners\NightCity\bin\Debug\Itp.WpfAppBar.dll
 D:\Project\Edgerunners\NightCity\bin\Debug\MaterialDesignColors.dll
 D:\Project\Edgerunners\NightCity\bin\Debug\MaterialDesignThemes.Wpf.dll
 D:\Project\Edgerunners\NightCity\bin\Debug\Microsoft.Xaml.Behaviors.dll
@@ -23,7 +26,7 @@ D:\Project\Edgerunners\NightCity\bin\Debug\NightCity.Core.dll
 D:\Project\Edgerunners\NightCity\bin\Debug\Prism.dll
 D:\Project\Edgerunners\NightCity\bin\Debug\Prism.DryIoc.Wpf.dll
 D:\Project\Edgerunners\NightCity\bin\Debug\Prism.Wpf.dll
-D:\Project\Edgerunners\NightCity\bin\Debug\WpfAppBar.dll
+D:\Project\Edgerunners\NightCity\bin\Debug\WindowsBase.dll
 D:\Project\Edgerunners\NightCity\bin\Debug\NLog.dll
 D:\Project\Edgerunners\NightCity\bin\Debug\MQTTnet.dll
 D:\Project\Edgerunners\NightCity\bin\Debug\Renci.SshNet.dll
@@ -44,10 +47,11 @@ D:\Project\Edgerunners\NightCity\bin\Debug\Prism.Wpf.xml
 D:\Project\Edgerunners\NightCity\bin\Debug\NLog.xml
 D:\Project\Edgerunners\NightCity\bin\Debug\MQTTnet.xml
 D:\Project\Edgerunners\NightCity\bin\Debug\Renci.SshNet.xml
-D:\Project\Edgerunners\NightCity\obj\Debug\Views\Connection.g.cs
 D:\Project\Edgerunners\NightCity\obj\Debug\App.baml
+D:\Project\Edgerunners\NightCity\obj\Debug\Views\Banner.baml
 D:\Project\Edgerunners\NightCity\obj\Debug\Views\Connection.baml
 D:\Project\Edgerunners\NightCity\obj\Debug\Views\MainWindow.baml
+D:\Project\Edgerunners\NightCity\obj\Debug\Views\MessageBox.baml
 D:\Project\Edgerunners\NightCity\obj\Debug\Views\ModuleManager.baml
 D:\Project\Edgerunners\NightCity\obj\Debug\Views\Performance.baml
 D:\Project\Edgerunners\NightCity\obj\Debug\NightCity.g.resources
@@ -57,7 +61,3 @@ D:\Project\Edgerunners\NightCity\obj\Debug\NightCity.csproj.CoreCompileInputs.ca
 D:\Project\Edgerunners\NightCity\obj\Debug\NightCity.csproj.CopyComplete
 D:\Project\Edgerunners\NightCity\obj\Debug\NightCity.exe
 D:\Project\Edgerunners\NightCity\obj\Debug\NightCity.pdb
-D:\Project\Edgerunners\NightCity\obj\Debug\Views\Banner.g.cs
-D:\Project\Edgerunners\NightCity\obj\Debug\Views\Banner.baml
-D:\Project\Edgerunners\NightCity\obj\Debug\Views\MessageBox.g.cs
-D:\Project\Edgerunners\NightCity\obj\Debug\Views\MessageBox.baml
