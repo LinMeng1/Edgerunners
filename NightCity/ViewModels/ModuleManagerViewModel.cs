@@ -151,8 +151,8 @@ namespace NightCity.ViewModels
                 if (InstalledModules.Count == 0)
                     TabSelectedIndex = 1;
                 await SyncLocalModulesAsync();
-                await OpenModuleSilentlyAsync();
                 await DisposeExpireModuleAsync();
+                await OpenModuleSilentlyAsync();
                 DialogOpen = false;
             }
             catch (Exception e)
@@ -453,6 +453,7 @@ namespace NightCity.ViewModels
                                 window.Value?.Disauthorize();
                                 window.Value?.Dispose();
                                 window.Value?.Close();
+                                windows.TryRemove(window.Key,out Template template);
                             });
                         }
                     }

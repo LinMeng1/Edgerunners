@@ -4,6 +4,7 @@ using LiveCharts.Wpf;
 using Newtonsoft.Json;
 using NightCity.Core;
 using NightCity.Core.Events;
+using NightCity.Core.Models;
 using NightCity.Core.Models.Standard;
 using NightCity.Core.Services;
 using NightCity.Core.Services.Prism;
@@ -12,8 +13,11 @@ using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Reflection.Emit;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -32,17 +36,17 @@ namespace OnCall.ViewModels
         //监听token列表
         List<SubscriptionToken> eventTokens = new List<SubscriptionToken>();
         public MainViewModel(IEventAggregator eventAggregator, IPropertyService propertyService)
-        {         
+        {
             //依赖注入及初始化
             this.eventAggregator = eventAggregator;
             this.propertyService = propertyService;
             httpService = new HttpService();
             //监听事件 权限信息变更
-            eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Subscribe((authorizationInfo) =>
+            eventTokens.Add(eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Subscribe((authorizationInfo) =>
             {
                 object token = propertyService.GetProperty(authorizationInfo.Item2);
                 httpService.AddToken(token?.ToString());
-            }, ThreadOption.UIThread, true);
+            }, ThreadOption.UIThread, true));
             //监听事件 链接命令发布
             eventTokens.Add(eventAggregator.GetEvent<BannerMessageLinkingEvent>().Subscribe(async message =>
             {
@@ -224,6 +228,34 @@ namespace OnCall.ViewModels
         }
 
         /// <summary>
+        /// 同步进行中的异常报告
+        /// </summary>
+        /// <returns></returns>
+        private async Task SyncOpenReportsAsync()
+        {
+            try
+            {
+                DialogOpen = true;
+                DialogCategory = "Syncing";
+                await Task.Delay(internalDelay);
+                object mainboard = propertyService.GetProperty("Mainboard") ?? throw new Exception("Mainboard is null");
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/GetOpenReports", new { Mainboard = mainboard.ToString() }));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                OnCall_GetOpenReports_Result reports = JsonConvert.DeserializeObject<OnCall_GetOpenReports_Result>(result.Content.ToString());
+                LocalOpenReportList = reports.LocalRepairs;
+                ClusterOpenReportList = reports.ClusterRepairs;
+                DialogOpen = false;
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[SyncOpenReportsAsync]:exception:{e.Message}", true);
+                DialogMessage = e.Message;
+                DialogCategory = "Message";
+            }
+        }
+
+        /// <summary>
         /// 异常接单
         /// </summary>
         /// <param name="reportId"></param>
@@ -267,7 +299,7 @@ namespace OnCall.ViewModels
                 DialogOpen = true;
                 DialogCategory = "Syncing";
                 await Task.Delay(internalDelay);
-                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleRepair", new { ReportId = reportId, Product = product, Process = process, FailureCategory = failureCategory, FailureReason = failureReason, Solution = solution }));
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, Product = product, Process = process, FailureCategory = failureCategory, FailureReason = failureReason, Solution = solution }));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
                 DialogOpen = false;
@@ -290,6 +322,17 @@ namespace OnCall.ViewModels
         private void SyncBannerMessages()
         {
             eventAggregator.GetEvent<BannerMessageSyncingEvent>().Publish();
+        }
+        #endregion
+
+        #region 命令：同步进行中的异常报告
+        public ICommand SyncOpenReportsCommand
+        {
+            get => new DelegateCommand(SyncOpenReports);
+        }
+        private async void SyncOpenReports()
+        {
+            await SyncOpenReportsAsync();
         }
         #endregion
 
@@ -434,6 +477,30 @@ namespace OnCall.ViewModels
             set
             {
                 SetProperty(ref failureCategoryList, value);
+            }
+        }
+        #endregion
+
+        #region 本站点进行中异常报告列表
+        private List<OnCall_GetOpenReports_Result2> localOpenReportList;
+        public List<OnCall_GetOpenReports_Result2> LocalOpenReportList
+        {
+            get => localOpenReportList;
+            set
+            {
+                SetProperty(ref localOpenReportList, value);
+            }
+        }
+        #endregion
+
+        #region 同辖站点进行中异常报告列表
+        private List<OnCall_GetOpenReports_Result1> clusterOpenReportList;
+        public List<OnCall_GetOpenReports_Result1> ClusterOpenReportList
+        {
+            get => clusterOpenReportList;
+            set
+            {
+                SetProperty(ref clusterOpenReportList, value);
             }
         }
         #endregion

@@ -21,7 +21,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
 
         #region 异常报修
         [HttpPost]
-        public ControllersResult CallRepair([FromBody] OnCall_CallRepair_Parameter parameter)
+        public ControllersResult CallReport([FromBody] OnCall_CallReport_Parameter parameter)
         {
             ControllersResult result = new();
             try
@@ -63,9 +63,9 @@ namespace Moon.Controllers.Application.NightCity.Modules
         #region 处理报修
         [Authorize]
         [PasswordCheck]
-        [AuthorizeCheck(Authorization.AuthorizationEnum.Application_NightCity_Modules_OnCall_HandleRepair)]
+        [AuthorizeCheck(Authorization.AuthorizationEnum.Application_NightCity_Modules_OnCall_HandleReport)]
         [HttpPost]
-        public ControllersResult HandleRepair([FromBody] OnCall_HandleRepair_Parameter parameter)
+        public ControllersResult HandleReport([FromBody] OnCall_HandleReport_Parameter parameter)
         {
             ControllersResult result = new();
             try
@@ -116,33 +116,37 @@ namespace Moon.Controllers.Application.NightCity.Modules
 
         #region 查询当前报修
         [HttpPost]
-        public ControllersResult GetRepairs([FromBody] OnCall_GetRepairs_Parameter parameter)
+        public ControllersResult GetOpenReports([FromBody] OnCall_GetOpenReports_Parameter parameter)
         {
             ControllersResult result = new();
             try
             {
-                List<OnCall_GetRepairs_Result2> localRepairs = new();
-                List<OnCall_GetRepairs_Result> clusterRepairs = new();
+                List<OnCall_GetOpenReports_Result2> localRepairs = new();
+                List<OnCall_GetOpenReports_Result1> clusterRepairs = new();
                 List<IPCClusters> clusters = Database.Edgerunners.Queryable<IPCClusters>().Where(it => it.Mainboard == parameter.Mainboard && it.Category != null).ToList();
                 foreach (IPCClusters cluster in clusters)
                 {
-                    OnCall_GetRepairs_Result clusterRepair = new();
-                    clusterRepair.ClusterCategory = cluster.Category;
-                    clusterRepair.Cluster = cluster.Cluster;
-                    clusterRepair.Repairs = new List<OnCall_GetRepairs_Result2>();
+                    OnCall_GetOpenReports_Result1 clusterRepair = new()
+                    {
+                        ClusterCategory = cluster.Category,
+                        Cluster = cluster.Cluster,
+                        Repairs = new List<OnCall_GetOpenReports_Result2>()
+                    };
                     List<string> mainboards = Database.Edgerunners.Queryable<IPCClusters>().Where(it => it.Category == cluster.Category && it.Cluster == cluster.Cluster).Select(it => it.Mainboard).ToList();
                     List<IPCIssueReports> repairs = Database.Edgerunners.Queryable<IPCIssueReports>().Where(it => it.State != "solved" && it.State != "aborted" && mainboards.Any(s => s == it.Mainboard)).ToList();
                     foreach (IPCIssueReports repair in repairs)
                     {
-                        if (repair.Mainboard == parameter.Mainboard && localRepairs.FirstOrDefault(it => it.Id == repair.Id) == null)
+                        if (repair.Mainboard == parameter.Mainboard)
                         {
-                            localRepairs.Add(new()
-                            {
-                                Id = repair.Id,
-                                Mainboard = repair.Mainboard,
-                                HostName = repair.HostName,
-                                State = repair.State,
-                            });
+                            if (localRepairs.FirstOrDefault(it => it.Id == repair.Id) == null)
+                                localRepairs.Add(new()
+                                {
+                                    Id = repair.Id,
+                                    Mainboard = repair.Mainboard,
+                                    HostName = repair.HostName,
+                                    State = repair.State,
+                                });
+                            continue;
                         }
                         clusterRepair.Repairs.Add(new()
                         {
@@ -154,8 +158,8 @@ namespace Moon.Controllers.Application.NightCity.Modules
                     }
                     clusterRepairs.Add(clusterRepair);
                 }
-                OnCall_GetRepairs_Result? locationRepairs = clusterRepairs.FirstOrDefault(it => it.ClusterCategory == "Location");
-                OnCall_GetRepairs_Result? productRepairs = clusterRepairs.FirstOrDefault(it => it.ClusterCategory == "Product");
+                OnCall_GetOpenReports_Result1? locationRepairs = clusterRepairs.FirstOrDefault(it => it.ClusterCategory == "Location");
+                OnCall_GetOpenReports_Result1? productRepairs = clusterRepairs.FirstOrDefault(it => it.ClusterCategory == "Product");
                 if (productRepairs != null && locationRepairs != null)
                 {
                     foreach (var repair in locationRepairs.Repairs)
@@ -165,10 +169,10 @@ namespace Moon.Controllers.Application.NightCity.Modules
                             productRepairs.Repairs.Remove(sameRepair);
                     }
                 }
-                result.Content = new
+                result.Content = new OnCall_GetOpenReports_Result()
                 {
-                    localRepairs,
-                    clusterRepairs
+                    LocalRepairs = localRepairs,
+                    ClusterRepairs = clusterRepairs,
                 };
                 result.Result = true;
             }
@@ -181,8 +185,8 @@ namespace Moon.Controllers.Application.NightCity.Modules
         }
         #endregion
 
-        #region CallRepair
-        public class OnCall_CallRepair_Parameter
+        #region CallReport
+        public class OnCall_CallReport_Parameter
         {
             public string Mainboard { get; set; }
             public string HostName { get; set; }
@@ -191,8 +195,8 @@ namespace Moon.Controllers.Application.NightCity.Modules
         }
         #endregion
 
-        #region HandleRepair
-        public class OnCall_HandleRepair_Parameter
+        #region HandleReport
+        public class OnCall_HandleReport_Parameter
         {
             public string ReportId { get; set; }
             public string? Product { get; set; }
@@ -203,18 +207,23 @@ namespace Moon.Controllers.Application.NightCity.Modules
         }
         #endregion
 
-        #region GetRepairs
-        public class OnCall_GetRepairs_Parameter
+        #region GetOpenReports
+        public class OnCall_GetOpenReports_Parameter
         {
             public string Mainboard { get; set; }
         }
-        public class OnCall_GetRepairs_Result
+        public class OnCall_GetOpenReports_Result
+        {
+            public List<OnCall_GetOpenReports_Result2> LocalRepairs { get; set; }
+            public List<OnCall_GetOpenReports_Result1> ClusterRepairs { get; set; }
+        }
+        public class OnCall_GetOpenReports_Result1
         {
             public string Cluster { get; set; }
             public string ClusterCategory { get; set; }
-            public List<OnCall_GetRepairs_Result2> Repairs { get; set; }
+            public List<OnCall_GetOpenReports_Result2> Repairs { get; set; }
         }
-        public class OnCall_GetRepairs_Result2
+        public class OnCall_GetOpenReports_Result2
         {
             public string Id { get; set; }
             public string Mainboard { get; set; }

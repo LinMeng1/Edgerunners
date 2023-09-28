@@ -11,23 +11,26 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace OnCall.ViewModels
 {
-    public class ShortcutViewModel : BindableBase
+    public class ShortcutViewModel : BindableBase, IDisposable
     {
         //内置延迟
         private readonly int internalDelay = 500;
         //事件聚合器
-        private readonly IEventAggregator eventAggregator;
+        private IEventAggregator eventAggregator;
         //属性服务
-        private readonly IPropertyService propertyService;
+        private IPropertyService propertyService;
         //Http服务
-        private readonly HttpService httpService;
+        private HttpService httpService;
         //集群缓存
         private List<Connection_GetClusters_Result> clustersCache = new List<Connection_GetClusters_Result>();
+        //监听token列表
+        List<SubscriptionToken> eventTokens = new List<SubscriptionToken>();
         public ShortcutViewModel(IEventAggregator eventAggregator, IPropertyService propertyService)
         {
             //依赖注入及初始化
@@ -35,7 +38,7 @@ namespace OnCall.ViewModels
             this.propertyService = propertyService;
             httpService = new HttpService();
             //监听事件 集群信息同步完成
-            eventAggregator.GetEvent<ClustersSyncedEvent>().Subscribe(async (clusters) =>
+            eventTokens.Add(eventAggregator.GetEvent<ClustersSyncedEvent>().Subscribe(async (clusters) =>
             {
                 if (clusters != null)
                 {
@@ -43,15 +46,15 @@ namespace OnCall.ViewModels
                     await SyncOwnerAsync(clusters);
                 }
 
-            }, ThreadOption.UIThread);
+            }, ThreadOption.UIThread));
             //监听事件 Mqtt信息接收
-            eventAggregator.GetEvent<MqttMessageReceivedEvent>().Subscribe(async (message) =>
+            eventTokens.Add(eventAggregator.GetEvent<MqttMessageReceivedEvent>().Subscribe(async (message) =>
             {
                 if (!message.IsMastermind) return;
                 string command = message.Content;
                 if (command == "module on-call sync owner")
                     await SyncOwnerAsync(clustersCache);
-            }, ThreadOption.UIThread, true);
+            }, ThreadOption.UIThread, true));
             SyncOwner();
         }
 
@@ -67,7 +70,6 @@ namespace OnCall.ViewModels
                 DialogOpen = true;
                 DialogCategory = "Syncing";
                 await Task.Delay(internalDelay);
-                //集群类型优先级 Location > Product
                 Connection_GetClusters_Result clusterLocation = clusters.FirstOrDefault(it => it.Category == "Location");
                 Connection_GetClusterOwners_Result clusterOwnerLocation = null;
                 if (clusterLocation != null)
@@ -126,7 +128,7 @@ namespace OnCall.ViewModels
                 await SyncOwnerAsync(clustersCache);
                 DialogOpen = true;
                 DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);              
+                await Task.Delay(internalDelay);
                 object mainboard = propertyService.GetProperty("Mainboard") ?? throw new Exception("Mainboard is null");
                 object hostname = propertyService.GetProperty("HostName") ?? throw new Exception("HostName is null");
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/CallRepair", new { Mainboard = mainboard.ToString(), HostName = hostname.ToString(), Owner, OwnerEmployeeId = ownerEmployeeId }));
@@ -350,5 +352,16 @@ namespace OnCall.ViewModels
         #endregion
 
         #endregion
+
+        public void Dispose()
+        {
+            foreach (var eventToken in eventTokens)
+            {
+                eventAggregator.GetEvent<BannerMessageLinkingEvent>().Unsubscribe(eventToken);
+            }
+            eventAggregator = null;
+            propertyService = null;
+            httpService = null;
+        }
     }
 }
