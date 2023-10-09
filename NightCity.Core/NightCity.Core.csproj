@@ -95,8 +95,8 @@
     <Compile Include="Interfaces\IAuthorizable.cs" />
     <Compile Include="Models\Account_GetRolesAndAuthorizations_Result.cs" />
     <Compile Include="Models\Banner_GetMessages_Result.cs" />
-    <Compile Include="Models\Connection_GetClusterOwners_Result.cs" />
     <Compile Include="Models\Connection_GetClusters_Result.cs" />
+    <Compile Include="Models\Connection_GetJurisdictionalClusterOwner_Result.cs" />
     <Compile Include="Models\ModuleManager_GetAllModules_Result.cs" />
     <Compile Include="Models\ModuleManager_GetModules_Result.cs" />
     <Compile Include="Models\ModuleManager_GetModuleVersions_Result.cs" />
@@ -106,6 +106,7 @@
     <Compile Include="Models\Performance_UploadBasicInformation_Parameter.cs" />
     <Compile Include="Models\Authorize_GetToken_Result.cs" />
     <Compile Include="Models\Account_GetUserInformation_Result.cs" />
+    <Compile Include="Models\Product_GetProductList_Result.cs" />
     <Compile Include="Models\Standard\BannerMessage.cs" />
     <Compile Include="Models\Standard\ModuleVersionInfo.cs" />
     <Compile Include="Models\Standard\MqttMessage.cs" />

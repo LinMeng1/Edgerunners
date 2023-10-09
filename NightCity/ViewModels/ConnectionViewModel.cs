@@ -12,7 +12,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
+using System.Xml.Linq;
 
 namespace NightCity.ViewModels
 {
@@ -34,6 +36,17 @@ namespace NightCity.ViewModels
             this.eventAggregator = eventAggregator;
             this.propertyService = propertyService;
             httpService = new HttpService();
+            //监听事件 同辖信息发送
+            eventAggregator.GetEvent<MqttMessageSendingEvent>().Subscribe(async (message) =>
+            {
+                if (mqttService != null)
+                {
+                    foreach (string topic in message.Item1)
+                    {
+                        await mqttService.Publish(message.Item2.IsMastermind, topic, message.Item2.Sender, message.Item2.Content);
+                    }
+                }
+            }, ThreadOption.UIThread);
             //监听事件 Mqtt信息接受
             eventAggregator.GetEvent<MqttMessageReceivedEvent>().Subscribe(async (message) =>
             {
@@ -89,7 +102,7 @@ namespace NightCity.ViewModels
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/connection/GetClusters", new { Mainboard = mainboard }));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
-                List<Connection_GetClusters_Result> clusters = JsonConvert.DeserializeObject<List<Connection_GetClusters_Result>>(result.Content.ToString());               
+                List<Connection_GetClusters_Result> clusters = JsonConvert.DeserializeObject<List<Connection_GetClusters_Result>>(result.Content.ToString());
                 await mqttService.RemoveAllClusterTopic();
                 foreach (var cluster in clusters)
                 {

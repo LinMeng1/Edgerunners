@@ -12,5 +12,7 @@ namespace NightCity.Core.Models
         public string Mainboard { get; set; }
         public string HostName { get; set; }
         public string State { get; set; }
+        public DateTime TriggerTime { get; set; }
+        public DateTime? ResponseTime { get; set; }
     }
 }

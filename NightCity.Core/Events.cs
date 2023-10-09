@@ -10,6 +10,7 @@ namespace NightCity.Core.Events
     public class MqttConnectedEvent : PubSubEvent<bool> { }
     public class MqttMessageReceivedEvent : PubSubEvent<MqttMessage> { }
     public class MqttNoReadMessageCountChangedEvent : PubSubEvent<int> { }
+    public class MqttMessageSendingEvent : PubSubEvent<Tuple<List<string>, MqttMessage>> { }
     public class BannerMessagesChangedEvent : PubSubEvent<Tuple<BannerMessage, int>> { }
     public class BannerMessageRemovingEvent : PubSubEvent<BannerMessage> { }
     public class BannerMessageTryLinkingEvent : PubSubEvent<Tuple<string, string>> { }
@@ -22,5 +23,5 @@ namespace NightCity.Core.Events
     public class AuthorizationInfoChangedEvent : PubSubEvent<Tuple<string, string>> { }
     public class IsConnectionFixChangedEvent : PubSubEvent<bool> { }
     public class ClustersSyncedEvent : PubSubEvent<List<Connection_GetClusters_Result>> { }
-    public class ErrorMessageShowingEvent:PubSubEvent<Tuple<string, string>> { }
+    public class ErrorMessageShowingEvent : PubSubEvent<Tuple<string, string>> { }
 }

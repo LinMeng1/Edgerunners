@@ -154,27 +154,6 @@
                     </Style>
                 </Grid.Style>
             </Grid>
-            <materialDesign:Card Grid.Row="3" Padding="2" FontSize="11">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock TextWrapping="Wrap" Text="Alternative：["/>
-                    <TextBlock TextWrapping="Wrap" Text="{Binding AlternativeClusterCategory}"/>
-                    <TextBlock TextWrapping="Wrap" Text="/"/>
-                    <TextBlock TextWrapping="Wrap" Text="{Binding AlternativeCluster}"/>
-                    <TextBlock TextWrapping="Wrap" Text="] "/>
-                    <TextBlock TextWrapping="Wrap" Text="{Binding AlternativeOwner}"/>
-                    <TextBlock TextWrapping="Wrap" Text="："/>
-                    <TextBlock TextWrapping="Wrap" Text="{Binding AlternativeContact}"/>
-                </StackPanel>
-                <materialDesign:Card.Style>
-                    <Style TargetType="materialDesign:Card" BasedOn="{StaticResource Card}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding AlternativeOwner}" Value="{x:Null}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </materialDesign:Card.Style>
-            </materialDesign:Card>
         </Grid>
     </materialDesign:DialogHost>
 

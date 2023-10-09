@@ -43,7 +43,7 @@ namespace OnCall.ViewModels
                 if (clusters != null)
                 {
                     clustersCache = clusters;
-                    await SyncOwnerAsync(clusters);
+                    await SyncJurisdictionalClusterOwnerAsync();
                 }
 
             }, ThreadOption.UIThread));
@@ -53,7 +53,7 @@ namespace OnCall.ViewModels
                 if (!message.IsMastermind) return;
                 string command = message.Content;
                 if (command == "module on-call sync owner")
-                    await SyncOwnerAsync(clustersCache);
+                    await SyncJurisdictionalClusterOwnerAsync();
             }, ThreadOption.UIThread, true));
             SyncOwner();
         }
@@ -63,53 +63,26 @@ namespace OnCall.ViewModels
         /// </summary>
         /// <param name="clusters"></param>
         /// <returns></returns>
-        private async Task SyncOwnerAsync(List<Connection_GetClusters_Result> clusters)
+        private async Task SyncJurisdictionalClusterOwnerAsync()
         {
             try
             {
                 DialogOpen = true;
                 DialogCategory = "Syncing";
                 await Task.Delay(internalDelay);
-                Connection_GetClusters_Result clusterLocation = clusters.FirstOrDefault(it => it.Category == "Location");
-                Connection_GetClusterOwners_Result clusterOwnerLocation = null;
-                if (clusterLocation != null)
+                object mainboard = propertyService.GetProperty("Mainboard") ?? throw new Exception("Mainboard is null");
+                ControllersResult resultLocation = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/connection/GetJurisdictionalClusterOwner", new { Mainboard = mainboard.ToString() }));
+                Connection_GetJurisdictionalClusterOwner_Result jurisdictionalClusterOwner = null;
+                if (resultLocation.Result)
+                    jurisdictionalClusterOwner = JsonConvert.DeserializeObject<Connection_GetJurisdictionalClusterOwner_Result>(resultLocation.Content.ToString());
+                if (jurisdictionalClusterOwner != null)
                 {
-                    ControllersResult resultLocation = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/connection/GetClusterOwner", new { clusterLocation.Cluster, clusterLocation.Category }));
-                    if (resultLocation.Result)
-                        clusterOwnerLocation = JsonConvert.DeserializeObject<Connection_GetClusterOwners_Result>(resultLocation.Content.ToString());
-                }
-                Connection_GetClusters_Result clusterProduct = clusters.FirstOrDefault(it => it.Category == "Product");
-                Connection_GetClusterOwners_Result clusterOwnerProduct = null;
-                if (clusterProduct != null)
-                {
-                    ControllersResult resultProduct = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/connection/GetClusterOwner", new { clusterProduct.Cluster, clusterProduct.Category }));
-                    if (resultProduct.Result)
-                        clusterOwnerProduct = JsonConvert.DeserializeObject<Connection_GetClusterOwners_Result>(resultProduct.Content.ToString());
-                }
-                if (clusterOwnerLocation != null)
-                {
-                    ownerEmployeeId = clusterOwnerLocation.OwnerEmployeeId;
-                    Owner = clusterOwnerLocation.Owner;
-                    Contact = clusterOwnerLocation.Contact;
-                    Organization = clusterOwnerLocation.Organization;
-                    Leader = clusterOwnerLocation.Leader;
-                    LeaderContact = clusterOwnerLocation.LeaderContact;
-                    if (clusterOwnerProduct != null && clusterOwnerProduct.Owner != Owner)
-                    {
-                        AlternativeCluster = clusterProduct.Cluster;
-                        AlternativeClusterCategory = clusterProduct.Category;
-                        AlternativeOwner = clusterOwnerProduct.Owner;
-                        AlternativeContact = clusterOwnerProduct.Contact;
-                    }
-                }
-                else if (clusterOwnerProduct != null)
-                {
-                    ownerEmployeeId = clusterOwnerProduct.OwnerEmployeeId;
-                    Owner = clusterOwnerProduct.Owner;
-                    Contact = clusterOwnerProduct.Contact;
-                    Organization = clusterOwnerProduct.Organization;
-                    Leader = clusterOwnerProduct.Leader;
-                    LeaderContact = clusterOwnerProduct.LeaderContact;
+                    ownerEmployeeId = jurisdictionalClusterOwner.OwnerEmployeeId;
+                    Owner = jurisdictionalClusterOwner.Owner;
+                    Contact = jurisdictionalClusterOwner.Contact;
+                    Organization = jurisdictionalClusterOwner.Organization;
+                    Leader = jurisdictionalClusterOwner.Leader;
+                    LeaderContact = jurisdictionalClusterOwner.LeaderContact;
                 }
                 DialogOpen = false;
             }
@@ -121,24 +94,29 @@ namespace OnCall.ViewModels
             }
         }
 
+        /// <summary>
+        /// 异常报修
+        /// </summary>
+        /// <returns></returns>
         private async Task CallRepairAsync()
         {
             try
             {
-                await SyncOwnerAsync(clustersCache);
+                await SyncJurisdictionalClusterOwnerAsync();
                 DialogOpen = true;
                 DialogCategory = "Syncing";
                 await Task.Delay(internalDelay);
                 object mainboard = propertyService.GetProperty("Mainboard") ?? throw new Exception("Mainboard is null");
                 object hostname = propertyService.GetProperty("HostName") ?? throw new Exception("HostName is null");
-                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/CallRepair", new { Mainboard = mainboard.ToString(), HostName = hostname.ToString(), Owner, OwnerEmployeeId = ownerEmployeeId }));
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/CallReport", new { Mainboard = mainboard.ToString(), HostName = hostname.ToString() }));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
-                eventAggregator.GetEvent<MqttMessageReceivedEvent>().Publish(new MqttMessage()
+                List<string> jurisdictionalClusterOwner = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
+                eventAggregator.GetEvent<MqttMessageSendingEvent>().Publish(new Tuple<List<string>, MqttMessage>(jurisdictionalClusterOwner, new MqttMessage()
                 {
                     IsMastermind = true,
                     Content = "system sync banner messages"
-                });
+                }));
                 DialogOpen = false;
             }
             catch (Exception e)
@@ -165,10 +143,6 @@ namespace OnCall.ViewModels
             Organization = null;
             Leader = null;
             LeaderContact = null;
-            AlternativeCluster = null;
-            AlternativeClusterCategory = null;
-            AlternativeOwner = null;
-            AlternativeContact = null;
             eventAggregator.GetEvent<MqttMessageReceivedEvent>().Publish(new MqttMessage()
             {
                 IsMastermind = true,
@@ -267,54 +241,6 @@ namespace OnCall.ViewModels
 
         #endregion
 
-        #region 备选集群类型
-        private string alternativeClusterCategory;
-        public string AlternativeClusterCategory
-        {
-            get => alternativeClusterCategory;
-            set
-            {
-                SetProperty(ref alternativeClusterCategory, value);
-            }
-        }
-        #endregion
-
-        #region 备选集群
-        private string alternativeCluster;
-        public string AlternativeCluster
-        {
-            get => alternativeCluster;
-            set
-            {
-                SetProperty(ref alternativeCluster, value);
-            }
-        }
-        #endregion
-
-        #region 备选负责人
-        private string alternativeOwner;
-        public string AlternativeOwner
-        {
-            get => alternativeOwner;
-            set
-            {
-                SetProperty(ref alternativeOwner, value);
-            }
-        }
-        #endregion
-
-        #region 备选负责人联系方式
-        private string alternativeContact;
-        public string AlternativeContact
-        {
-            get => alternativeContact;
-            set
-            {
-                SetProperty(ref alternativeContact, value);
-            }
-        }
-        #endregion
-
         #region 对话框打开状态
         private bool dialogOpen = false;
         public bool DialogOpen
@@ -357,7 +283,7 @@ namespace OnCall.ViewModels
         {
             foreach (var eventToken in eventTokens)
             {
-                eventAggregator.GetEvent<BannerMessageLinkingEvent>().Unsubscribe(eventToken);
+                eventToken.Dispose();
             }
             eventAggregator = null;
             propertyService = null;

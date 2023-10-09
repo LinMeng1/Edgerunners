@@ -73,12 +73,12 @@ namespace NightCity.ViewModels
             //监听事件 活动窗口重新打开
             eventAggregator.GetEvent<TemplateReOpeningEvent>().Subscribe(async (moduleName) =>
             {
-                await LaunchModuleAsync(moduleName);
+                await LaunchModuleAsyncBack(moduleName);
             }, ThreadOption.UIThread, true);
             //监听事件 活动窗口显示
             eventAggregator.GetEvent<TemplateShowingEvent>().Subscribe(async (moduleName) =>
             {
-                await LaunchModuleAsync(moduleName, true);
+                await LaunchModuleAsyncBack(moduleName, true);
             });
             //监听事件 Mqtt信息接收
             eventAggregator.GetEvent<MqttMessageReceivedEvent>().Subscribe(async (message) =>
@@ -151,8 +151,8 @@ namespace NightCity.ViewModels
                 if (InstalledModules.Count == 0)
                     TabSelectedIndex = 1;
                 await SyncLocalModulesAsync();
-                await DisposeExpireModuleAsync();
-                await OpenModuleSilentlyAsync();
+                await DisposeExpireModuleAsyncBack();
+                await OpenModuleAsyncBack();
                 DialogOpen = false;
             }
             catch (Exception e)
@@ -405,7 +405,7 @@ namespace NightCity.ViewModels
         /// 类型为Monitor的需要默认开启
         /// </summary>
         /// <returns></returns>
-        private async Task OpenModuleSilentlyAsync()
+        private async Task OpenModuleAsyncBack()
         {
             try
             {
@@ -438,7 +438,7 @@ namespace NightCity.ViewModels
         /// 当同步或同步操作导致活动模块处于合法已安装模块列表外时，处理之
         /// </summary>
         /// <returns></returns>
-        private async Task DisposeExpireModuleAsync()
+        private async Task DisposeExpireModuleAsyncBack()
         {
             try
             {
@@ -526,7 +526,7 @@ namespace NightCity.ViewModels
         /// 启动模块
         /// </summary>
         /// <param name="module"></param>
-        private async Task LaunchModuleAsync(string moduleName, bool showing = false)
+        private async Task LaunchModuleAsyncBack(string moduleName, bool showing = false)
         {
             await Task.Run(() =>
             {
@@ -640,7 +640,7 @@ namespace NightCity.ViewModels
         }
         private async void LaunchModule(string moduleName)
         {
-            await LaunchModuleAsync(moduleName);
+            await LaunchModuleAsyncBack(moduleName);
         }
         #endregion
 

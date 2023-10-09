@@ -106,31 +106,31 @@ namespace Moon.Controllers.Application.NightCity
         }
         #endregion
 
-        #region 获取集群负责人
+        #region 获取管辖权集群负责人
         [HttpPost]
-        public ControllersResult GetClusterOwner([FromBody] Connection_GetClusterOwners_Parameter parameter)
+        public ControllersResult GetJurisdictionalClusterOwner([FromBody] Connection_GetJurisdictionalClusterOwner_Parameter parameter)
         {
             ControllersResult result = new();
             try
             {
-                Connection_GetClusterOwners_Result clusterOwner = new Connection_GetClusterOwners_Result();
-                Users user = Database.Edgerunners.Queryable<IPCClusters_Owners, Users>((i, u) => i.Owner == u.EmployeeId && i.Cluster == parameter.Cluster && i.Category == parameter.Category).Select((i, u) => u).First();
+                Connection_GetJurisdictionalClusterOwner_Result jurisdictionalClusterOwner = new Connection_GetJurisdictionalClusterOwner_Result();
+                Users user = Database.Edgerunners.Queryable<IPCs_JurisdictionalClusters, Users>((i, u) => i.Owner == u.EmployeeId && i.Mainboard == parameter.Mainboard).Select((i, u) => u).First();
                 if (user == null) throw new Exception("Cant find cluster owner");
-                clusterOwner.OwnerEmployeeId = user.EmployeeId;
-                clusterOwner.Owner = user.Name;
-                clusterOwner.Contact = user.Contact;
+                jurisdictionalClusterOwner.OwnerEmployeeId = user.EmployeeId;
+                jurisdictionalClusterOwner.Owner = user.Name;
+                jurisdictionalClusterOwner.Contact = user.Contact;
                 Organizations org = Database.Edgerunners.Queryable<Organizations>().First(it => it.Id == user.Organization);
                 if (org != null)
                 {
-                    clusterOwner.Organization = org.Name;
+                    jurisdictionalClusterOwner.Organization = org.Name;
                     Users userLeader = Database.Edgerunners.Queryable<Users>().First(it => it.EmployeeId == org.Owner);
                     if (userLeader != null)
                     {
-                        clusterOwner.Leader = userLeader.Name;
-                        clusterOwner.LeaderContact = userLeader.Contact;
+                        jurisdictionalClusterOwner.Leader = userLeader.Name;
+                        jurisdictionalClusterOwner.LeaderContact = userLeader.Contact;
                     }
                 }
-                result.Content = clusterOwner;
+                result.Content = jurisdictionalClusterOwner;
                 result.Result = true;
             }
             catch (Exception e)
@@ -171,13 +171,12 @@ namespace Moon.Controllers.Application.NightCity
         }
         #endregion
 
-        #region GetClusterOwner
-        public class Connection_GetClusterOwners_Parameter
+        #region GetJurisdictionalClusterOwner
+        public class Connection_GetJurisdictionalClusterOwner_Parameter
         {
-            public string Cluster { get; set; }
-            public string Category { get; set; }
+            public string Mainboard { get; set; }
         }
-        public class Connection_GetClusterOwners_Result
+        public class Connection_GetJurisdictionalClusterOwner_Result
         {
             public string OwnerEmployeeId { get; set; }
             public string Owner { get; set; }

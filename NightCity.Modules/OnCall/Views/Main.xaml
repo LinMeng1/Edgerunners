@@ -9,6 +9,7 @@
              xmlns:prism="http://prismlibrary.com/"         
              prism:ViewModelLocator.AutoWireViewModel="True"   
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:converterLocal="clr-namespace:OnCall.Converters" 
              xmlns:converter="clr-namespace:NightCity.Core.Converters;assembly=NightCity.Core"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -85,6 +86,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <converterLocal:FillSolvedFieldConverter x:Key="FillSolvedFieldConverter"></converterLocal:FillSolvedFieldConverter>
             <converter:DialogHostVisibilityConverter x:Key="DialogHostVisibilityConverter"></converter:DialogHostVisibilityConverter>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -137,23 +139,119 @@
                                     </StackPanel>
                                     <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="3">
                                         <TextBlock Text="Product:" FontSize="13" VerticalAlignment="Center"/>
-                                        <TextBox MinWidth="200" Text="{Binding SolvedProduct}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                        <ComboBox MinWidth="150" ItemsSource="{Binding ProductList}" SelectedItem="{Binding SolvedProduct}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                        <Grid Margin="10,0,0,0" Background="#FFECB3">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="0" FontSize="10" Margin="5,2,5,0">Possible options</TextBlock>
+                                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5,0,5,2">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <materialDesign:PackIcon Kind="MathLog" Height="10" Width="10" VerticalAlignment="Center" Margin="0,0,1,0"/>
+                                                    <TextBlock TextDecorations="Underline" FontSize="10" Foreground="#2A1EB1" Cursor="Hand" Margin="0,0,5,0" Text="{Binding SolveProductFromFile}">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="MouseDown">
+                                                                <i:InvokeCommandAction Command="{Binding FillSolvedFieldCommand}" CommandParameter="SolveProductFromFile"/>
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </TextBlock>
+                                                    <StackPanel.Visibility>
+                                                        <MultiBinding Converter="{StaticResource FillSolvedFieldConverter}">
+                                                            <Binding Path="SolveProductFromFile"></Binding>
+                                                            <MultiBinding.ConverterParameter>Label</MultiBinding.ConverterParameter>
+                                                        </MultiBinding>
+                                                    </StackPanel.Visibility>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <materialDesign:PackIcon Kind="Broadcast" Height="10" Width="10" VerticalAlignment="Center" Margin="0,0,1,0"/>
+                                                    <TextBlock TextDecorations="Underline" FontSize="10" Foreground="#2A1EB1" Cursor="Hand" Text="{Binding SolveProductFromCluster}">
+                                                        <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="MouseDown">
+                                                            <i:InvokeCommandAction Command="{Binding FillSolvedFieldCommand}" CommandParameter="SolveProductFromCluster"/>
+                                                        </i:EventTrigger>
+                                                     </i:Interaction.Triggers>
+                                                    </TextBlock>
+                                                    <StackPanel.Visibility>
+                                                        <MultiBinding Converter="{StaticResource FillSolvedFieldConverter}">
+                                                            <Binding Path="SolveProductFromCluster"></Binding>
+                                                            <MultiBinding.ConverterParameter>Label</MultiBinding.ConverterParameter>
+                                                        </MultiBinding>
+                                                    </StackPanel.Visibility>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <Grid.Visibility>
+                                                <MultiBinding Converter="{StaticResource FillSolvedFieldConverter}">
+                                                    <Binding Path="SolveProductFromCluster"></Binding>
+                                                    <Binding Path="SolveProductFromFile"></Binding>
+                                                    <MultiBinding.ConverterParameter>Collection</MultiBinding.ConverterParameter>
+                                                </MultiBinding>
+                                            </Grid.Visibility>
+                                        </Grid>
                                     </StackPanel>
                                     <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="3">
                                         <TextBlock Text="Process:" FontSize="13" VerticalAlignment="Center"/>
-                                        <TextBox MinWidth="200" Text="{Binding SolvedProcess}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                        <TextBox MinWidth="150" Text="{Binding SolvedProcess}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                        <Grid Margin="10,0,0,0" Background="#FFECB3">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="0" FontSize="10" Margin="5,2,5,0">Possible options</TextBlock>
+                                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5,0,5,2">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <materialDesign:PackIcon Kind="MathLog" Height="10" Width="10" VerticalAlignment="Center" Margin="0,0,1,0"/>
+                                                    <TextBlock TextDecorations="Underline" FontSize="10" Foreground="#2A1EB1" Cursor="Hand" Margin="0,0,5,0" Text="{Binding SolveProcessFromFile}">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="MouseDown">
+                                                                <i:InvokeCommandAction Command="{Binding FillSolvedFieldCommand}" CommandParameter="SolveProcessFromFile"/>
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </TextBlock>
+                                                    <StackPanel.Visibility>
+                                                        <MultiBinding Converter="{StaticResource FillSolvedFieldConverter}">
+                                                            <Binding Path="SolveProcessFromFile"></Binding>
+                                                            <MultiBinding.ConverterParameter>Label</MultiBinding.ConverterParameter>
+                                                        </MultiBinding>
+                                                    </StackPanel.Visibility>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <materialDesign:PackIcon Kind="Broadcast" Height="10" Width="10" VerticalAlignment="Center" Margin="0,0,1,0"/>
+                                                    <TextBlock TextDecorations="Underline" FontSize="10" Foreground="#2A1EB1" Cursor="Hand" Text="{Binding SolveProcessFromCluster}">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="MouseDown">
+                                                                <i:InvokeCommandAction Command="{Binding FillSolvedFieldCommand}" CommandParameter="SolveProcessFromCluster"/>
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </TextBlock>
+                                                    <StackPanel.Visibility>
+                                                        <MultiBinding Converter="{StaticResource FillSolvedFieldConverter}">
+                                                            <Binding Path="SolveProcessFromCluster"></Binding>
+                                                            <MultiBinding.ConverterParameter>Label</MultiBinding.ConverterParameter>
+                                                        </MultiBinding>
+                                                    </StackPanel.Visibility>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <Grid.Visibility>
+                                                <MultiBinding Converter="{StaticResource FillSolvedFieldConverter}">
+                                                    <Binding Path="SolveProcessFromCluster"></Binding>
+                                                    <Binding Path="SolveProcessFromFile"></Binding>
+                                                    <MultiBinding.ConverterParameter>Collection</MultiBinding.ConverterParameter>
+                                                </MultiBinding>
+                                            </Grid.Visibility>
+                                        </Grid>
                                     </StackPanel>
                                     <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="3">
                                         <TextBlock Text="Failure Category:" FontSize="13" VerticalAlignment="Center"/>
-                                        <TextBox MinWidth="200" Text="{Binding SolvedFailureCategory}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                        <TextBox MinWidth="150" Text="{Binding SolvedFailureCategory}" Margin="10,0,0,0" VerticalAlignment="Center"/>
                                     </StackPanel>
                                     <StackPanel Grid.Row="5" Margin="5">
                                         <TextBlock Text="Failure Reason" FontSize="13"/>
-                                        <TextBox Text="{Binding SolvedFailureReason}" Height="75" VerticalAlignment="Top" AcceptsReturn="True" Style="{StaticResource MaterialDesignOutlinedTextBox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                                        <TextBox Padding="5" Text="{Binding SolvedFailureReason}" Height="75" VerticalAlignment="Top" AcceptsReturn="True" Style="{StaticResource MaterialDesignOutlinedTextBox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
                                     </StackPanel>
                                     <StackPanel Grid.Row="6" Margin="3">
                                         <TextBlock Text="Solution" FontSize="13"/>
-                                        <TextBox Text="{Binding SolvedSolution}" Height="75" VerticalAlignment="Top" AcceptsReturn="True" Style="{StaticResource MaterialDesignOutlinedTextBox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                                        <TextBox Padding="5" Text="{Binding SolvedSolution}" Height="75" VerticalAlignment="Top" AcceptsReturn="True" Style="{StaticResource MaterialDesignOutlinedTextBox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
                                     </StackPanel>
                                     <Grid Grid.Row="7">
                                         <Grid.ColumnDefinitions>
@@ -400,8 +498,8 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="2*"/>
                     </Grid.RowDefinitions>
                     <materialDesign:Card Grid.Row="0" Style="{StaticResource Card}">
                         <Grid>
@@ -415,7 +513,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="Local open reports"/>
+                                <TextBlock Text="Local opening reports"/>
                                 <materialDesign:PackIcon Grid.Column="2" Kind="Sync" Cursor="Hand" Background="Transparent" HorizontalAlignment="Right">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseDown">
@@ -433,22 +531,39 @@
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="auto"/>
                                                         <ColumnDefinition/>
+                                                        <ColumnDefinition Width="100"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <materialDesign:PackIcon Grid.Column="0" Kind="BellAlert" Foreground="#D32F2F" VerticalAlignment="Center" Height="25" Width="25" Margin="10,0,10,0"/>
+                                                    <materialDesign:PackIcon Grid.Column="0" x:Name="Icon" Kind="BellAlert" Foreground="#D32F2F" VerticalAlignment="Center" Height="25" Width="25" Margin="0,0,10,0"/>
                                                     <Grid Grid.Column="1">
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition/>
                                                             <RowDefinition/>
                                                         </Grid.RowDefinitions>
-                                                        <TextBlock Grid.Row="0" Text="{Binding Mainboard}" FontSize="10"/>
-                                                        <TextBlock Grid.Row="1" Text="{Binding HostName}" FontSize="10"/>
+                                                        <TextBlock Grid.Row="0" Text="{Binding Mainboard}" FontSize="10" HorizontalAlignment="Left"/>
+                                                        <TextBlock Grid.Row="1" Text="{Binding HostName}" FontSize="10"  HorizontalAlignment="Left"/>
                                                     </Grid>
+                                                    <Grid Grid.Column="2">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition/>
+                                                            <RowDefinition/>
+                                                        </Grid.RowDefinitions>
+                                                        <TextBlock Grid.Row="0" Text="{Binding TriggerTime,StringFormat={}{0:yyyy-MM-dd HH:mm}}" FontSize="10" HorizontalAlignment="Left"/>
+                                                        <TextBlock Grid.Row="1" Text="{Binding ResponseTime,StringFormat={}{0:yyyy-MM-dd HH:mm}}" FontSize="10" HorizontalAlignment="Left"/>
+                                                    </Grid>
+                                                    <Button Grid.Column="2" x:Name="HandleButton" Height="25" Visibility="Collapsed" Command="{Binding Path=DataContext.HandleReportCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" CommandParameter="{Binding .}">
+                                                        <TextBlock Text="Handle" FontSize="10"/>
+                                                    </Button>
                                                 </Grid>
                                             </Border>
                                             <DataTemplate.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="True">
                                                     <Setter TargetName="Border" Property="Background" Value="#E0E0E0" />
+                                                    <Setter TargetName="HandleButton" Property="Visibility" Value="Visible" />
                                                 </Trigger>
+                                                <DataTrigger Binding="{Binding State}" Value="responsed">
+                                                    <Setter TargetName="Icon" Property="Kind" Value="BellCheck"/>
+                                                    <Setter TargetName="Icon" Property="Foreground" Value="#F57C00"/>
+                                                </DataTrigger>
                                             </DataTemplate.Triggers>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
@@ -457,7 +572,76 @@
                         </Grid>
                     </materialDesign:Card>
                     <materialDesign:Card Grid.Row="1" Style="{StaticResource Card}">
-                        <TextBlock Text="当前管辖单据" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="Same cluster reports"/>
+                            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,10,0,0">
+                                <ItemsControl ItemsSource="{Binding ClusterOpenReportList}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Expander HorizontalAlignment="Stretch" materialDesign:ExpanderAssist.HeaderBackground="#E0E0E0" materialDesign:ExpanderAssist.HorizontalHeaderPadding="5" Background="Transparent" IsExpanded="True">
+                                                <Expander.Header>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="auto"/>
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <materialDesign:ColorZone Grid.Column="0" Mode="SecondaryDark" CornerRadius="2" Margin="0,0,5,0" VerticalAlignment="Center">
+                                                            <TextBlock Text="{Binding ClusterCategory}" FontSize="10" Margin="10,0,10,0"/>
+                                                        </materialDesign:ColorZone>
+                                                        <TextBlock Grid.Column="1" Text="{Binding Cluster}" VerticalAlignment="Center"/>
+                                                    </Grid>
+                                                </Expander.Header>
+                                                <ItemsControl ItemsSource="{Binding Repairs}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Border x:Name="Border" Padding="2,2,8,2" Cursor="Hand" CornerRadius="5">
+                                                                <Grid>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="auto"/>
+                                                                        <ColumnDefinition/>
+                                                                        <ColumnDefinition Width="100"/>
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <materialDesign:PackIcon Grid.Column="0" x:Name="Icon" Kind="BellAlert" Foreground="#D32F2F" VerticalAlignment="Center" Height="25" Width="25" Margin="0,0,10,0"/>
+                                                                    <Grid Grid.Column="1">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition/>
+                                                                            <RowDefinition/>
+                                                                        </Grid.RowDefinitions>
+                                                                        <TextBlock Grid.Row="0" Text="{Binding Mainboard}" FontSize="10" HorizontalAlignment="Left"/>
+                                                                        <TextBlock Grid.Row="1" Text="{Binding HostName}" FontSize="10"  HorizontalAlignment="Left"/>
+                                                                    </Grid>
+                                                                    <Grid Grid.Column="2">
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition/>
+                                                                            <RowDefinition/>
+                                                                        </Grid.RowDefinitions>
+                                                                        <TextBlock Grid.Row="0" Text="{Binding TriggerTime,StringFormat={}{0:yyyy-MM-dd HH:mm}}" FontSize="10" HorizontalAlignment="Left"/>
+                                                                        <TextBlock Grid.Row="1" Text="{Binding ResponseTime,StringFormat={}{0:yyyy-MM-dd HH:mm}}" FontSize="10" HorizontalAlignment="Left"/>
+                                                                    </Grid>
+                                                                </Grid>
+                                                            </Border>
+                                                            <DataTemplate.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter TargetName="Border" Property="Background" Value="#E0E0E0" />
+                                                                </Trigger>
+                                                                <DataTrigger Binding="{Binding State}" Value="responsed">
+                                                                    <Setter TargetName="Icon" Property="Kind" Value="BellCheck"/>
+                                                                    <Setter TargetName="Icon" Property="Foreground" Value="#F57C00"/>
+                                                                </DataTrigger>
+                                                            </DataTemplate.Triggers>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </Expander>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Grid>
                     </materialDesign:Card>
                 </Grid>
                 <Grid Grid.Column="1">

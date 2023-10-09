@@ -9,6 +9,7 @@ D:\Project\Edgerunners\NightCity.Modules\OnCall\bin\Debug\LiveCharts.Wpf.xml
 D:\Project\Edgerunners\NightCity.Modules\OnCall\obj\Debug\OnCall.csproj.AssemblyReference.cache
 D:\Project\Edgerunners\NightCity.Modules\OnCall\obj\Debug\Views\Main.g.cs
 D:\Project\Edgerunners\NightCity.Modules\OnCall\obj\Debug\Views\Shortcut.g.cs
+D:\Project\Edgerunners\NightCity.Modules\OnCall\obj\Debug\GeneratedInternalTypeHelper.g.cs
 D:\Project\Edgerunners\NightCity.Modules\OnCall\obj\Debug\OnCall_MarkupCompile.cache
 D:\Project\Edgerunners\NightCity.Modules\OnCall\obj\Debug\OnCall_MarkupCompile.lref
 D:\Project\Edgerunners\NightCity.Modules\OnCall\obj\Debug\Views\Main.baml

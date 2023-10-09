@@ -2,6 +2,7 @@
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NightCity.Core;
 using NightCity.Core.Events;
 using NightCity.Core.Models;
@@ -14,6 +15,7 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reflection.Emit;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -41,6 +43,8 @@ namespace OnCall.ViewModels
             this.eventAggregator = eventAggregator;
             this.propertyService = propertyService;
             httpService = new HttpService();
+            //获取Token   
+            httpService.AddToken(propertyService.GetProperty("TestEngAuthorizationInfo")?.ToString());
             //监听事件 权限信息变更
             eventTokens.Add(eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Subscribe((authorizationInfo) =>
             {
@@ -50,6 +54,14 @@ namespace OnCall.ViewModels
             //监听事件 链接命令发布
             eventTokens.Add(eventAggregator.GetEvent<BannerMessageLinkingEvent>().Subscribe(async message =>
             {
+                string patternSync = "module on-call sync issue";
+                if (message == patternSync)
+                {
+                    View = "Workshop";
+                    eventAggregator.GetEvent<TemplateShowingEvent>().Publish("OnCall");
+                    await SyncOpenReportsAsync();
+                    return;
+                }
                 string patternResponse = @"module on-call response issue ([a-z0-9-]*)";
                 string patternSolve = @"module on-call solve issue ([a-z0-9-]*)";
                 Regex regexResponse = new Regex(patternResponse, RegexOptions.IgnoreCase);
@@ -57,7 +69,7 @@ namespace OnCall.ViewModels
                 Match mResponse = regexResponse.Match(message);
                 Match mSolve = regexSolve.Match(message);
                 if (mResponse.Success)
-                    await ResponseReportAsync(mResponse.Groups[1].Value);
+                    await ResponseReportAsync(mResponse.Groups[1].Value, true);
                 else if (mSolve.Success)
                 {
                     View = "Workshop";
@@ -66,6 +78,7 @@ namespace OnCall.ViewModels
                     TrySolveReport();
                 }
             }, ThreadOption.UIThread, true));
+            SyncOpenReports();
 
             #region P1
             SeriesCollection1 = new SeriesCollection
@@ -260,7 +273,7 @@ namespace OnCall.ViewModels
         /// </summary>
         /// <param name="reportId"></param>
         /// <returns></returns>
-        private async Task ResponseReportAsync(string reportId)
+        private async Task ResponseReportAsync(string reportId, bool messagebox = false)
         {
             try
             {
@@ -268,17 +281,31 @@ namespace OnCall.ViewModels
                 DialogOpen = true;
                 DialogCategory = "Syncing";
                 await Task.Delay(internalDelay);
-                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleRepair", new { ReportId = reportId }));
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, }));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
-                eventAggregator.GetEvent<BannerMessageSyncingEvent>().Publish();
+                List<string> jurisdictionalClusterOwner = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
+                eventAggregator.GetEvent<MqttMessageSendingEvent>().Publish(new Tuple<List<string>, MqttMessage>(jurisdictionalClusterOwner, new MqttMessage()
+                {
+                    IsMastermind = true,
+                    Content = "system sync banner messages"
+                }));
+                await SyncOpenReportsAsync();
                 DialogOpen = false;
             }
             catch (Exception e)
             {
-                eventAggregator.GetEvent<ErrorMessageShowingEvent>().Publish(new Tuple<string, string>(e.Message, "OnCall"));
                 Global.Log($"[OnCall]:[MainViewModel]:[CheckIssueStateAsync] exception:{e.Message}", true);
-                DialogOpen = false;
+                if (messagebox)
+                {
+                    eventAggregator.GetEvent<ErrorMessageShowingEvent>().Publish(new Tuple<string, string>(e.Message, "OnCall"));
+                    DialogOpen = false;
+                }
+                else
+                {
+                    DialogMessage = e.Message;
+                    DialogCategory = "Message";
+                }
             }
         }
 
@@ -299,9 +326,22 @@ namespace OnCall.ViewModels
                 DialogOpen = true;
                 DialogCategory = "Syncing";
                 await Task.Delay(internalDelay);
+                if (product == null || product == string.Empty)
+                    throw new Exception("Product is empty");
+                if (process == null || process == string.Empty)
+                    throw new Exception("Process is empty");
+                if (failureCategory == null || failureCategory == string.Empty)
+                    throw new Exception("FailureCategory is empty");
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, Product = product, Process = process, FailureCategory = failureCategory, FailureReason = failureReason, Solution = solution }));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
+                List<string> jurisdictionalClusterOwner = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
+                eventAggregator.GetEvent<MqttMessageSendingEvent>().Publish(new Tuple<List<string>, MqttMessage>(jurisdictionalClusterOwner, new MqttMessage()
+                {
+                    IsMastermind = true,
+                    Content = "system sync banner messages"
+                }));
+                await SyncOpenReportsAsync();
                 DialogOpen = false;
             }
             catch (Exception e)
@@ -309,6 +349,74 @@ namespace OnCall.ViewModels
                 Global.Log($"[OnCall]:[MainViewModel]:[SolveReportAsync]:exception:{e.Message}", true);
                 DialogMessage = e.Message;
                 DialogCategory = "Message";
+            }
+        }
+
+        /// <summary>
+        /// 查询产品列表
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetProductListAsyncBack()
+        {
+            try
+            {
+                await Task.Delay(internalDelay);
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/application/night-city/modules/product/GetProductList"));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                List<Product_GetProductList_Result> list = JsonConvert.DeserializeObject<List<Product_GetProductList_Result>>(result.Content.ToString());
+                ProductList = list.Select(it => it.InternalName).ToList();
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[GetProductListAsyncBack]:exception:{e.Message}", true);
+            }
+        }
+
+        /// <summary>
+        /// 查询集群
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetClustersAsyncBack()
+        {
+            try
+            {
+                await Task.Delay(internalDelay);
+                object mainboard = propertyService.GetProperty("Mainboard") ?? throw new Exception("Mainboard is null");
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/connection/GetClusters", new { Mainboard = mainboard.ToString() }));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                List<Connection_GetClusters_Result> list = JsonConvert.DeserializeObject<List<Connection_GetClusters_Result>>(result.Content.ToString());
+                foreach (var cluster in list)
+                {
+                    if (cluster.Category == "Product")
+                        SolveProductFromCluster = cluster.Cluster;
+                    if (cluster.Category == "Process")
+                        SolveProcessFromCluster = cluster.Cluster;
+                }
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[GetClustersAsyncBack]:exception:{e.Message}", true);
+            }
+        }
+
+        /// <summary>
+        /// 获取Nextest测试Log
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetNextestLogAsyncBack()
+        {
+            try
+            {
+                await Task.Run(() =>
+                {
+
+                });
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[GetNextestLogAsyncBack]:exception:{e.Message}", true);
             }
         }
 
@@ -347,15 +455,42 @@ namespace OnCall.ViewModels
         }
         #endregion
 
+        #region 命令：异常接单或填写解决回执
+        public ICommand HandleReportCommand
+        {
+            get => new DelegateCommand<OnCall_GetOpenReports_Result2>(HandleReport);
+        }
+        private async void HandleReport(OnCall_GetOpenReports_Result2 report)
+        {
+            if (report.State == "triggered")
+                await ResponseReportAsync(report.Id);
+            else if (report.State == "responsed")
+            {
+                SolvedReportId = report.Id;
+                TrySolveReport();
+            }
+        }
+
+        #endregion
+
         #region 命令：异常解决回执询问
         public ICommand TrySolveReportCommand
         {
             get => new DelegateCommand(TrySolveReport);
         }
-        private void TrySolveReport()
+        private async void TrySolveReport()
         {
-            DialogCategory = "Solve Report";
+            SolvedProduct = null;
+            SolvedProcess = string.Empty;
+            SolvedFailureCategory = string.Empty;
+            SolvedFailureReason = string.Empty;
+            SolvedSolution = string.Empty;
             DialogOpen = true;
+            DialogCategory = "Syncing";
+            await GetProductListAsyncBack();
+            await GetClustersAsyncBack();
+            await GetNextestLogAsyncBack();
+            DialogCategory = "Solve Report";
         }
         #endregion
 
@@ -378,6 +513,33 @@ namespace OnCall.ViewModels
         public void Cancel()
         {
             DialogOpen = false;
+        }
+        #endregion
+
+        #region 命令：填充异常解决回执
+        public ICommand FillSolvedFieldCommand
+        {
+            get => new DelegateCommand<string>(FillSolvedField);
+        }
+        public void FillSolvedField(string field)
+        {
+            switch (field)
+            {
+                case "SolveProductFromFile":
+                    SolvedProduct = SolveProductFromFile;
+                    break;
+                case "SolveProductFromCluster":
+                    SolvedProduct = SolveProductFromCluster;
+                    break;
+                case "SolveProcessFromFile":
+                    SolvedProcess = SolveProcessFromFile;
+                    break;
+                case "SolveProcessFromCluster":
+                    SolvedProcess = SolveProcessFromCluster;
+                    break;
+                default:
+                    break;
+            }
         }
         #endregion
 
@@ -417,6 +579,54 @@ namespace OnCall.ViewModels
             set
             {
                 SetProperty(ref solvedProduct, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：可能的产品 来源：文件
+        private string solveProductFromFile;
+        public string SolveProductFromFile
+        {
+            get => solveProductFromFile;
+            set
+            {
+                SetProperty(ref solveProductFromFile, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：可能的产品 来源：集群
+        private string solveProductFromCluster;
+        public string SolveProductFromCluster
+        {
+            get => solveProductFromCluster;
+            set
+            {
+                SetProperty(ref solveProductFromCluster, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：可能的流程 来源：文件
+        private string solveProcessFromFile;
+        public string SolveProcessFromFile
+        {
+            get => solveProcessFromFile;
+            set
+            {
+                SetProperty(ref solveProcessFromFile, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：可能的流程 来源：集群
+        private string solveProcessFromCluster;
+        public string SolveProcessFromCluster
+        {
+            get => solveProcessFromCluster;
+            set
+            {
+                SetProperty(ref solveProcessFromCluster, value);
             }
         }
         #endregion
@@ -465,6 +675,18 @@ namespace OnCall.ViewModels
             set
             {
                 SetProperty(ref solvedSolution, value);
+            }
+        }
+        #endregion
+
+        #region 产品列表
+        private List<string> productList;
+        public List<string> ProductList
+        {
+            get => productList;
+            set
+            {
+                SetProperty(ref productList, value);
             }
         }
         #endregion
@@ -589,7 +811,7 @@ namespace OnCall.ViewModels
         {
             foreach (var eventToken in eventTokens)
             {
-                eventAggregator.GetEvent<BannerMessageLinkingEvent>().Unsubscribe(eventToken);
+                eventToken.Dispose();
             }
             eventAggregator = null;
             propertyService = null;

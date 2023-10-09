@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Dm.Config;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moon.Attributes;
@@ -29,26 +30,64 @@ namespace Moon.Controllers.Application.NightCity.Modules
                 string id = Guid.NewGuid().ToString();
                 int inProgressCount = Database.Edgerunners.Queryable<IPCIssueReports>().Where(it => it.Mainboard == parameter.Mainboard && it.State != "solved" && it.State != "aborted").Count();
                 if (inProgressCount > 0) throw new Exception("Please do not report for repair repeatedly");
-                IPCIssueReports report = new()
+                List<OnCall_CallRepor_Middleware> jurisdictionalClusters = Database.Edgerunners.Queryable<IPCs_JurisdictionalClusters>().RightJoin<IPCs_JurisdictionalClusters>((i, i2) => i.Owner == i2.Owner).Where((i, i2) => i.Mainboard == parameter.Mainboard).LeftJoin<Users>((i, i2, u) => i2.Owner == u.EmployeeId).Select((i, i2, u) => new OnCall_CallRepor_Middleware()
                 {
-                    Id = id,
-                    Mainboard = parameter.Mainboard,
-                    HostName = parameter.HostName,
-                    InitialOwner = parameter.OwnerEmployeeId,
-                };
-                Database.Edgerunners.Insertable(report).InsertColumns("Id", "Mainboard", "HostName", "InitialOwner").ExecuteCommand();
-                IPCBanners banner = new()
+                    Mainboard = i2.Mainboard,
+                    Category = i2.Category,
+                    Cluster = i2.Cluster,
+                    Owner = i2.Owner,
+                    OwnerName = u.Name
+                }).ToList();
+                int index = 0;
+                List<IPCBanners> banners = new();
+                List<string> syncClusters = new();
+                foreach (var cluster in jurisdictionalClusters)
                 {
-                    Id = id,
-                    Mainboard = parameter.Mainboard,
-                    Urgency = "Execute",
-                    Priority = 80,
-                    Category = "OnCall",
-                    Content = $"An issue has been found on this site. Please ask a test technician to handle it. Owner is {parameter.Owner ?? "Nobody"}",
-                    LinkCommand = $"module on-call response issue {id}",
-                    LinkInformation = id,
-                };
-                Database.Edgerunners.Insertable(banner).IgnoreColumns("CreateTime").ExecuteCommand();
+                    string syncCluster = $"{cluster.Category}/{cluster.Cluster}";
+                    if (!syncClusters.Contains(syncCluster))
+                        syncClusters.Add(syncCluster);
+                    if (cluster.Mainboard == parameter.Mainboard)
+                    {
+                        IPCIssueReports report = new()
+                        {
+                            Id = id,
+                            Mainboard = parameter.Mainboard,
+                            HostName = parameter.HostName,
+                            InitialOwner = cluster.Owner,
+                        };
+                        IPCBanners banner = new()
+                        {
+                            Id = id,
+                            Mainboard = parameter.Mainboard,
+                            Urgency = "Execute",
+                            Priority = 80,
+                            Category = "OnCall",
+                            Content = $"An issue has been found on this site. Please ask a test technician to handle it. Owner is {cluster.OwnerName ?? "Nobody"}",
+                            LinkCommand = $"module on-call response issue {id}",
+                            LinkInformation = id,
+                        };
+                        Database.Edgerunners.Insertable(report).InsertColumns("Id", "Mainboard", "HostName", "InitialOwner").ExecuteCommand();
+                        banners.Add(banner);
+                    }
+                    else
+                    {
+                        index++;
+                        IPCBanners banner = new()
+                        {
+                            Id = $"{id}-{index}",
+                            Mainboard = cluster.Mainboard,
+                            Urgency = "Plan",
+                            Priority = 80,
+                            Category = "OnCall",
+                            Content = $"An opening issue report has been found on site:{parameter.HostName}. Owner is {cluster.OwnerName ?? "Nobody"}",
+                            LinkCommand = "module on-call sync issue",
+                            LinkInformation = id,
+                        };
+                        banners.Add(banner);
+                    }
+                }
+                Database.Edgerunners.Insertable(banners).IgnoreColumns("CreateTime").ExecuteCommand();
+                result.Content = syncClusters;
                 result.Result = true;
             }
             catch (Exception e)
@@ -71,10 +110,8 @@ namespace Moon.Controllers.Application.NightCity.Modules
             try
             {
                 string employeeID = Request.HttpContext.User.Claims.FirstOrDefault(it => it.Type == "EmployeeID").Value;
-                Users user = Database.Edgerunners.Queryable<Users>().First(it => it.EmployeeId == employeeID);
-                if (user == null) throw new Exception($"Invalid employeeId ({employeeID}) , please re login");
-                IPCIssueReports report = Database.Edgerunners.Queryable<IPCIssueReports>().First(it => it.Id == parameter.ReportId);
-                if (report == null) throw new Exception($"Cant find issue report (id：{parameter.ReportId})");
+                Users user = Database.Edgerunners.Queryable<Users>().First(it => it.EmployeeId == employeeID) ?? throw new Exception($"Invalid employeeId ({employeeID}) , please re login");
+                IPCIssueReports report = Database.Edgerunners.Queryable<IPCIssueReports>().First(it => it.Id == parameter.ReportId) ?? throw new Exception($"Cant find issue report (id：{parameter.ReportId})");
                 switch (report.State)
                 {
                     case "triggered":
@@ -83,6 +120,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
                         report.State = "responsed";
                         Database.Edgerunners.Updateable(report).UpdateColumns("ResponseTime", "Responser", "State").ExecuteCommand();
                         Database.Edgerunners.Updateable<IPCBanners>().SetColumns("Priority", 45).SetColumns("Content", $"{user.Name} is handling the issue").SetColumns("LinkCommand", $"module on-call solve issue {report.Id}").Where(it => it.Id == parameter.ReportId).ExecuteCommand();
+                        Database.Edgerunners.Updateable<IPCBanners>().SetColumns("Priority", 15).SetColumns("Content", $"An opening issue report has been found on site:{report.HostName}. {user.Name} is handling the issue").Where(it => it.Id != parameter.ReportId && it.LinkInformation == parameter.ReportId).ExecuteCommand();
                         break;
                     case "responsed":
                         report.SolveTime = DateTime.Now;
@@ -94,7 +132,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
                         report.FailureReason = parameter.FailureReason;
                         report.Solution = parameter.Solution;
                         Database.Edgerunners.Updateable(report).UpdateColumns("SolveTime", "Solver", "State", "Product", "Process", "FailureCategory", "FailureReason", "Solution").ExecuteCommand();
-                        Database.Edgerunners.Deleteable<IPCBanners>().Where(it => it.Id == parameter.ReportId).ExecuteCommand();
+                        Database.Edgerunners.Deleteable<IPCBanners>().Where(it => it.LinkInformation == parameter.ReportId).ExecuteCommand();
                         break;
                     case "solved":
                         throw new Exception($"This issue has been solved, please refresh the banner message");
@@ -103,6 +141,22 @@ namespace Moon.Controllers.Application.NightCity.Modules
                     default:
                         throw new Exception($"Unexpected issue report state:{report.State}");
                 }
+                List<OnCall_CallRepor_Middleware> jurisdictionalClusters = Database.Edgerunners.Queryable<IPCs_JurisdictionalClusters>().RightJoin<IPCs_JurisdictionalClusters>((i, i2) => i.Owner == i2.Owner).Where((i, i2) => i.Mainboard == report.Mainboard).LeftJoin<Users>((i, i2, u) => i2.Owner == u.EmployeeId).Select((i, i2, u) => new OnCall_CallRepor_Middleware()
+                {
+                    Mainboard = i2.Mainboard,
+                    Category = i2.Category,
+                    Cluster = i2.Cluster,
+                    Owner = i2.Owner,
+                    OwnerName = u.Name
+                }).ToList();
+                List<string> syncClusters = new();
+                foreach (var cluster in jurisdictionalClusters)
+                {
+                    string syncCluster = $"{cluster.Category}/{cluster.Cluster}";
+                    if (!syncClusters.Contains(syncCluster))
+                        syncClusters.Add(syncCluster);
+                }
+                result.Content = syncClusters;
                 result.Result = true;
             }
             catch (Exception e)
@@ -145,6 +199,8 @@ namespace Moon.Controllers.Application.NightCity.Modules
                                     Mainboard = repair.Mainboard,
                                     HostName = repair.HostName,
                                     State = repair.State,
+                                    TriggerTime = repair.TriggerTime,
+                                    ResponseTime = repair.ResponseTime,
                                 });
                             continue;
                         }
@@ -154,6 +210,8 @@ namespace Moon.Controllers.Application.NightCity.Modules
                             Mainboard = repair.Mainboard,
                             HostName = repair.HostName,
                             State = repair.State,
+                            TriggerTime = repair.TriggerTime,
+                            ResponseTime = repair.ResponseTime,
                         });
                     }
                     clusterRepairs.Add(clusterRepair);
@@ -169,6 +227,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
                             productRepairs.Repairs.Remove(sameRepair);
                     }
                 }
+                clusterRepairs = clusterRepairs.Where(it => it.Repairs.Count > 0).ToList();
                 result.Content = new OnCall_GetOpenReports_Result()
                 {
                     LocalRepairs = localRepairs,
@@ -190,9 +249,11 @@ namespace Moon.Controllers.Application.NightCity.Modules
         {
             public string Mainboard { get; set; }
             public string HostName { get; set; }
-            public string? Owner { get; set; }
-            public string? OwnerEmployeeId { get; set; }
         }
+        public class OnCall_CallRepor_Middleware : IPCs_JurisdictionalClusters
+        {
+            public string OwnerName { get; set; }
+        }      
         #endregion
 
         #region HandleReport
@@ -229,7 +290,10 @@ namespace Moon.Controllers.Application.NightCity.Modules
             public string Mainboard { get; set; }
             public string HostName { get; set; }
             public string State { get; set; }
+            public DateTime TriggerTime { get; set; }
+            public DateTime? ResponseTime { get; set; }
         }
         #endregion
+
     }
 }
