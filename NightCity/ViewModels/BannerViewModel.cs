@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -51,6 +52,12 @@ namespace NightCity.ViewModels
                 if (command == "system sync banner messages")
                     await SyncMessagesAsync();
             }, ThreadOption.UIThread);
+            //监听事件 权限信息变更
+            eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Subscribe((authorizationInfo) =>
+            {
+                object token = propertyService.GetProperty(authorizationInfo.Item2);
+                httpService.AddToken(token?.ToString());
+            }, ThreadOption.UIThread, true);
             //监听事件 横幅信息接收
             eventAggregator.GetEvent<BannerMessageRemovingEvent>().Subscribe((message) =>
             {
@@ -99,13 +106,43 @@ namespace NightCity.ViewModels
                                 CreateTime = message.CreateTime,
                             });
                         }
-                    }                       
-                });                             
+                    }
+                });
                 DialogOpen = false;
             }
             catch (Exception e)
             {
                 Global.Log($"[Banner]:[SyncMessagesAsync] exception:{e.Message}", true);
+                DialogMessage = e.Message;
+                DialogCategory = "Message";
+            }
+        }
+
+        /// <summary>
+        /// 同步同辖管理集群消息
+        /// </summary>
+        /// <returns></returns>
+        private async Task SyncJurisdictionalClustersMessageAsync()
+        {
+            try
+            {
+                DialogOpen = true;
+                DialogCategory = "Syncing";
+                await Task.Delay(internalDelay);
+                string mainboard = propertyService.GetProperty("Mainboard").ToString();
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/connection/GetJurisdictionalClusterOwnersClusters", new { Mainboard = mainboard }));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                List<string> jurisdictionalClusters = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
+                eventAggregator.GetEvent<MqttMessageSendingEvent>().Publish(new Tuple<List<string>, MqttMessage>(jurisdictionalClusters, new MqttMessage()
+                {
+                    IsMastermind = true,
+                    Content = "system sync banner messages"
+                }));
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[Banner]:[SyncJurisdictionalClustersMessageAsync] exception:{e.Message}", true);
                 DialogMessage = e.Message;
                 DialogCategory = "Message";
             }
@@ -148,6 +185,17 @@ namespace NightCity.ViewModels
         private async void SyncMessages()
         {
             await SyncMessagesAsync();
+        }
+        #endregion
+
+        #region 命令：同步同辖消息
+        public ICommand SyncJurisdictionalClustersMessageCommand
+        {
+            get => new DelegateCommand(SyncJurisdictionalClustersMessage);
+        }
+        private async void SyncJurisdictionalClustersMessage()
+        {
+            await SyncJurisdictionalClustersMessageAsync();
         }
         #endregion
 

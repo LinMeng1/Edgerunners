@@ -28,7 +28,7 @@ namespace Moon.Controllers.Application.NightCity
             ControllersResult result = new();
             try
             {
-                List<Banner_GetMessages_Result> messages = Database.Edgerunners.Queryable<IPCBanners>().Where(it => it.Mainboard == parameter.Mainboard).Select(it => new Banner_GetMessages_Result()
+                List<Banner_GetMessages_Result> messages = Database.Edgerunners.Queryable<IPCBanners>().Where(it => it.Mainboard == parameter.Mainboard).OrderBy(it => it.CreateTime, SqlSugar.OrderByType.Desc).Select(it => new Banner_GetMessages_Result()
                 {
                     Id = it.Id,
                     Urgency = it.Urgency,

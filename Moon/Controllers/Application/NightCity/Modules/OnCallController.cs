@@ -29,7 +29,8 @@ namespace Moon.Controllers.Application.NightCity.Modules
             {
                 string id = Guid.NewGuid().ToString();
                 int inProgressCount = Database.Edgerunners.Queryable<IPCIssueReports>().Where(it => it.Mainboard == parameter.Mainboard && it.State != "solved" && it.State != "aborted").Count();
-                if (inProgressCount > 0) throw new Exception("Please do not report for repair repeatedly");
+                if (inProgressCount > 0 && parameter.ExternalId == null && parameter.ExternalSystem == null) throw new Exception("Please do not report for repair repeatedly");
+                string externalStr = parameter.ExternalSystem == null ? string.Empty : $"[External:{parameter.ExternalSystem}] ";
                 List<OnCall_CallRepor_Middleware> jurisdictionalClusters = Database.Edgerunners.Queryable<IPCs_JurisdictionalClusters>().RightJoin<IPCs_JurisdictionalClusters>((i, i2) => i.Owner == i2.Owner).Where((i, i2) => i.Mainboard == parameter.Mainboard).LeftJoin<Users>((i, i2, u) => i2.Owner == u.EmployeeId).Select((i, i2, u) => new OnCall_CallRepor_Middleware()
                 {
                     Mainboard = i2.Mainboard,
@@ -54,6 +55,8 @@ namespace Moon.Controllers.Application.NightCity.Modules
                             Mainboard = parameter.Mainboard,
                             HostName = parameter.HostName,
                             InitialOwner = cluster.Owner,
+                            ExternalSystem = parameter.ExternalSystem,
+                            ExternalId = parameter.ExternalId,
                         };
                         IPCBanners banner = new()
                         {
@@ -62,11 +65,11 @@ namespace Moon.Controllers.Application.NightCity.Modules
                             Urgency = "Execute",
                             Priority = 80,
                             Category = "OnCall",
-                            Content = $"An issue has been found on this site. Please ask a test technician to handle it. Owner is {cluster.OwnerName ?? "Nobody"}",
+                            Content = $"{externalStr}An issue has been found on this site. Please ask a test technician to handle it. Owner is {cluster.OwnerName ?? "Nobody"}",
                             LinkCommand = $"module on-call response issue {id}",
                             LinkInformation = id,
                         };
-                        Database.Edgerunners.Insertable(report).InsertColumns("Id", "Mainboard", "HostName", "InitialOwner").ExecuteCommand();
+                        Database.Edgerunners.Insertable(report).InsertColumns("Id", "Mainboard", "HostName", "InitialOwner", "ExternalSystem", "ExternalId").ExecuteCommand();
                         banners.Add(banner);
                     }
                     else
@@ -79,7 +82,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
                             Urgency = "Plan",
                             Priority = 80,
                             Category = "OnCall",
-                            Content = $"An opening issue report has been found on site:{parameter.HostName}. Owner is {cluster.OwnerName ?? "Nobody"}",
+                            Content = $"{externalStr}An opening issue report has been found on site:{parameter.HostName}. Owner is {cluster.OwnerName ?? "Nobody"}",
                             LinkCommand = "module on-call sync issue",
                             LinkInformation = id,
                         };
@@ -112,6 +115,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
                 string employeeID = Request.HttpContext.User.Claims.FirstOrDefault(it => it.Type == "EmployeeID").Value;
                 Users user = Database.Edgerunners.Queryable<Users>().First(it => it.EmployeeId == employeeID) ?? throw new Exception($"Invalid employeeId ({employeeID}) , please re login");
                 IPCIssueReports report = Database.Edgerunners.Queryable<IPCIssueReports>().First(it => it.Id == parameter.ReportId) ?? throw new Exception($"Cant find issue report (id：{parameter.ReportId})");
+                string externalStr = report.ExternalSystem == null ? string.Empty : $"[External:{report.ExternalSystem}] ";
                 switch (report.State)
                 {
                     case "triggered":
@@ -119,18 +123,26 @@ namespace Moon.Controllers.Application.NightCity.Modules
                         report.Responser = employeeID;
                         report.State = "responsed";
                         Database.Edgerunners.Updateable(report).UpdateColumns("ResponseTime", "Responser", "State").ExecuteCommand();
-                        Database.Edgerunners.Updateable<IPCBanners>().SetColumns("Priority", 45).SetColumns("Content", $"{user.Name} is handling the issue").SetColumns("LinkCommand", $"module on-call solve issue {report.Id}").Where(it => it.Id == parameter.ReportId).ExecuteCommand();
-                        Database.Edgerunners.Updateable<IPCBanners>().SetColumns("Priority", 15).SetColumns("Content", $"An opening issue report has been found on site:{report.HostName}. {user.Name} is handling the issue").Where(it => it.Id != parameter.ReportId && it.LinkInformation == parameter.ReportId).ExecuteCommand();
+                        Database.Edgerunners.Updateable<IPCBanners>().SetColumns("Priority", 45).SetColumns("Content", $"{externalStr}{user.Name} is handling the issue").SetColumns("LinkCommand", $"module on-call solve issue {report.Id}").Where(it => it.Id == parameter.ReportId).ExecuteCommand();
+                        Database.Edgerunners.Updateable<IPCBanners>().SetColumns("Priority", 15).SetColumns("Content", $"{externalStr}An opening issue report has been found on site:{report.HostName}. {user.Name} is handling the issue").Where(it => it.Id != parameter.ReportId && it.LinkInformation == parameter.ReportId).ExecuteCommand();
                         break;
                     case "responsed":
                         report.SolveTime = DateTime.Now;
                         report.Solver = employeeID;
-                        report.State = "solved";
-                        report.Product = parameter.Product;
-                        report.Process = parameter.Process;
-                        report.FailureCategory = parameter.FailureCategory;
-                        report.FailureReason = parameter.FailureReason;
-                        report.Solution = parameter.Solution;
+                        if (parameter.AbortReason == null)
+                        {
+                            report.State = "solved";
+                            report.Product = parameter.Product;
+                            report.Process = parameter.Process;
+                            report.FailureCategory = parameter.FailureCategory;
+                            report.FailureReason = parameter.FailureReason;
+                            report.Solution = parameter.Solution;
+                        }
+                        else
+                        {
+                            report.State = "aborted";
+                            report.Solution = parameter.AbortReason;
+                        }           
                         Database.Edgerunners.Updateable(report).UpdateColumns("SolveTime", "Solver", "State", "Product", "Process", "FailureCategory", "FailureReason", "Solution").ExecuteCommand();
                         Database.Edgerunners.Deleteable<IPCBanners>().Where(it => it.LinkInformation == parameter.ReportId).ExecuteCommand();
                         break;
@@ -168,7 +180,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
         }
         #endregion
 
-        #region 查询当前报修
+        #region 查询相关当前报修
         [HttpPost]
         public ControllersResult GetOpenReports([FromBody] OnCall_GetOpenReports_Parameter parameter)
         {
@@ -244,16 +256,67 @@ namespace Moon.Controllers.Application.NightCity.Modules
         }
         #endregion
 
+        #region 查询所有报修
+        [HttpGet]
+        public ControllersResult GetAllReports()
+        {
+            ControllersResult result = new();
+            try
+            {
+                List<OnCall_GetAllReports_Result> reports = Database.Edgerunners.Queryable<IPCIssueReports>().OrderBy(it => it.TriggerTime, SqlSugar.OrderByType.Desc).Take(100)
+                      .LeftJoin<Users>((i, u) => i.InitialOwner == u.EmployeeId)
+                      .LeftJoin<Users>((i, u, u2) => i.TransferOwner == u2.EmployeeId)
+                      .LeftJoin<Users>((i, u, u2, u3) => i.Responser == u3.EmployeeId)
+                      .LeftJoin<Users>((i, u, u2, u3, u4) => i.Solver == u4.EmployeeId)
+                      .Select((i, u, u2, u3, u4) => new OnCall_GetAllReports_Result()
+                      {
+                          Id = i.Id,
+                          Mainboard = i.Mainboard,
+                          HostName = i.HostName,
+                          TriggerTime = i.TriggerTime,
+                          InitialOwner = i.InitialOwner,
+                          InitialOwnerName = u.Name,
+                          TransferOwner = i.TransferOwner,
+                          TransferOwnerName = u2.Name,
+                          ResponseTime = i.ResponseTime,
+                          Responser = i.Responser,
+                          ResponserName = u3.Name,
+                          SolveTime = i.SolveTime,
+                          Solver = i.Solver,
+                          SolverName = u4.Name,
+                          State = i.State,
+                          Product = i.Product,
+                          Process = i.Process,
+                          FailureCategory = i.FailureCategory,
+                          FailureReason = i.FailureReason,
+                          Solution = i.Solution,
+                          ExternalSystem = i.ExternalSystem,
+                          ExternalId = i.ExternalId,
+                      }).ToList();
+                result.Content = reports;
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
+
         #region CallReport
         public class OnCall_CallReport_Parameter
         {
             public string Mainboard { get; set; }
             public string HostName { get; set; }
+            public string? ExternalSystem { get; set; }
+            public string? ExternalId { get; set; }
         }
         public class OnCall_CallRepor_Middleware : IPCs_JurisdictionalClusters
         {
             public string OwnerName { get; set; }
-        }      
+        }
         #endregion
 
         #region HandleReport
@@ -265,6 +328,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
             public string? FailureCategory { get; set; }
             public string? FailureReason { get; set; }
             public string? Solution { get; set; }
+            public string? AbortReason { get; set; }
         }
         #endregion
 
@@ -292,6 +356,16 @@ namespace Moon.Controllers.Application.NightCity.Modules
             public string State { get; set; }
             public DateTime TriggerTime { get; set; }
             public DateTime? ResponseTime { get; set; }
+        }
+        #endregion
+
+        #region GetAllReports
+        public class OnCall_GetAllReports_Result : IPCIssueReports
+        {
+            public string? InitialOwnerName { get; set; }
+            public string? TransferOwnerName { get; set; }
+            public string? ResponserName { get; set; }
+            public string? SolverName { get; set; }
         }
         #endregion
 

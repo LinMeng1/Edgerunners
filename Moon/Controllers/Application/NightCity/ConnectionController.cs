@@ -5,6 +5,7 @@ using Moon.Core.Standard;
 using Microsoft.AspNetCore.Authorization;
 using Moon.Attributes;
 using Moon.Core.Utilities;
+using System;
 
 namespace Moon.Controllers.Application.NightCity
 {
@@ -142,6 +143,34 @@ namespace Moon.Controllers.Application.NightCity
         }
         #endregion
 
+        #region 获取管辖集群负责人管辖集群
+        [Authorize]
+        [HttpPost]
+        public ControllersResult GetJurisdictionalClusterOwnersClusters([FromBody] Connection_GetJurisdictionalClusterOwnersClusters_Parameter parameter)
+        {
+            ControllersResult result = new();
+            try
+            {
+                List<IPCs_JurisdictionalClusters> jurisdictionalClusters = Database.Edgerunners.Queryable<IPCs_JurisdictionalClusters>().RightJoin<IPCs_JurisdictionalClusters>((i, i2) => i.Owner == i2.Owner).Where((i, i2) => i.Mainboard == parameter.Mainboard).Select((i, i2) => i2).ToList();
+                List<string> syncClusters = new();
+                foreach (var cluster in jurisdictionalClusters)
+                {
+                    string syncCluster = $"{cluster.Category}/{cluster.Cluster}";
+                    if (!syncClusters.Contains(syncCluster))
+                        syncClusters.Add(syncCluster);
+                }
+                result.Content = syncClusters;
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
+
         #region GetClusters
         public class Connection_GetClusters_Parameter
         {
@@ -184,6 +213,13 @@ namespace Moon.Controllers.Application.NightCity
             public string? Organization { get; set; }
             public string? Leader { get; set; }
             public string? LeaderContact { get; set; }
+        }
+        #endregion
+
+        #region GetJurisdictionalClusterOwnersClusters
+        public class Connection_GetJurisdictionalClusterOwnersClusters_Parameter
+        {
+            public string Mainboard { get; set; }
         }
         #endregion
 

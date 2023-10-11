@@ -77,7 +77,6 @@ namespace OnCall.ViewModels
                     jurisdictionalClusterOwner = JsonConvert.DeserializeObject<Connection_GetJurisdictionalClusterOwner_Result>(resultLocation.Content.ToString());
                 if (jurisdictionalClusterOwner != null)
                 {
-                    ownerEmployeeId = jurisdictionalClusterOwner.OwnerEmployeeId;
                     Owner = jurisdictionalClusterOwner.Owner;
                     Contact = jurisdictionalClusterOwner.Contact;
                     Organization = jurisdictionalClusterOwner.Organization;
@@ -180,7 +179,6 @@ namespace OnCall.ViewModels
         #region 可视化属性集合
 
         #region 负责人
-        private string ownerEmployeeId;
         private string owner;
         public string Owner
         {

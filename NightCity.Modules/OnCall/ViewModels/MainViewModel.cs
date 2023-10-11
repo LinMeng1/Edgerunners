@@ -2,24 +2,22 @@
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NightCity.Core;
 using NightCity.Core.Events;
 using NightCity.Core.Models;
 using NightCity.Core.Models.Standard;
 using NightCity.Core.Services;
 using NightCity.Core.Services.Prism;
+using OnCall.Models;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -79,6 +77,7 @@ namespace OnCall.ViewModels
                 }
             }, ThreadOption.UIThread, true));
             SyncOpenReports();
+            GetAllReports();
 
             #region P1
             SeriesCollection1 = new SeriesCollection
@@ -255,7 +254,7 @@ namespace OnCall.ViewModels
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/GetOpenReports", new { Mainboard = mainboard.ToString() }));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
-                OnCall_GetOpenReports_Result reports = JsonConvert.DeserializeObject<OnCall_GetOpenReports_Result>(result.Content.ToString());
+                GetOpenReports reports = JsonConvert.DeserializeObject<GetOpenReports>(result.Content.ToString());
                 LocalOpenReportList = reports.LocalRepairs;
                 ClusterOpenReportList = reports.ClusterRepairs;
                 DialogOpen = false;
@@ -263,6 +262,60 @@ namespace OnCall.ViewModels
             catch (Exception e)
             {
                 Global.Log($"[OnCall]:[MainViewModel]:[SyncOpenReportsAsync]:exception:{e.Message}", true);
+                DialogMessage = e.Message;
+                DialogCategory = "Message";
+            }
+        }
+
+        /// <summary>
+        /// 查询所有异常报告
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetAllReportsAsync()
+        {
+            try
+            {
+                DialogOpen = true;
+                DialogCategory = "Syncing";
+                await Task.Delay(internalDelay);
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/application/night-city/modules/on-call/GetAllReports"));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                List<GetAllReports_C1> reports = JsonConvert.DeserializeObject<List<GetAllReports_C1>>(result.Content.ToString());
+                foreach (var report in reports)
+                {
+                    switch (report.State)
+                    {
+                        case "triggered":
+                            report.DisplayName = report.InitialOwnerName;
+                            report.TimeCost = $">{Math.Round((DateTime.Now - report.TriggerTime).TotalHours),1}H";
+                            break;
+                        case "responsed":
+                            report.DisplayName = report.ResponserName;
+                            report.TimeCost = $">{Math.Round((DateTime.Now - report.TriggerTime).TotalHours, 1)}H";
+                            break;
+                        case "solved":
+                            report.DisplayName = report.SolverName;
+                            report.DisplayDescription = report.FailureCategory;
+                            if (report.SolveTime != null)
+                                report.TimeCost = $"{Math.Round(((TimeSpan)(report.SolveTime - report.TriggerTime)).TotalHours, 1)}H";
+                            break;
+                        case "aborted":
+                            report.DisplayName = report.SolverName;
+                            report.DisplayDescription = report.Solution;
+                            if (report.SolveTime != null)
+                                report.TimeCost = $"{Math.Round(((TimeSpan)(report.SolveTime - report.TriggerTime)).TotalHours, 1)}H";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                AllReportList = reports;
+                DialogOpen = false;
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[SyncHistoricalReportsAsync]:exception:{e.Message}", true);
                 DialogMessage = e.Message;
                 DialogCategory = "Message";
             }
@@ -291,6 +344,7 @@ namespace OnCall.ViewModels
                     Content = "system sync banner messages"
                 }));
                 await SyncOpenReportsAsync();
+                await GetAllReportsAsync();
                 DialogOpen = false;
             }
             catch (Exception e)
@@ -335,18 +389,47 @@ namespace OnCall.ViewModels
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, Product = product, Process = process, FailureCategory = failureCategory, FailureReason = failureReason, Solution = solution }));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
-                List<string> jurisdictionalClusterOwner = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
-                eventAggregator.GetEvent<MqttMessageSendingEvent>().Publish(new Tuple<List<string>, MqttMessage>(jurisdictionalClusterOwner, new MqttMessage()
+                List<string> jurisdictionalClusters = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
+                eventAggregator.GetEvent<MqttMessageSendingEvent>().Publish(new Tuple<List<string>, MqttMessage>(jurisdictionalClusters, new MqttMessage()
                 {
                     IsMastermind = true,
                     Content = "system sync banner messages"
                 }));
                 await SyncOpenReportsAsync();
+                await GetAllReportsAsync();
                 DialogOpen = false;
             }
             catch (Exception e)
             {
                 Global.Log($"[OnCall]:[MainViewModel]:[SolveReportAsync]:exception:{e.Message}", true);
+                DialogMessage = e.Message;
+                DialogCategory = "Message";
+            }
+        }
+
+        private async Task MisReportAsync(string reportId)
+        {
+            try
+            {
+                DialogOpen = true;
+                DialogCategory = "Syncing";
+                await Task.Delay(internalDelay);
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, AbortReason="MisReport" }));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                List<string> jurisdictionalClusters = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
+                eventAggregator.GetEvent<MqttMessageSendingEvent>().Publish(new Tuple<List<string>, MqttMessage>(jurisdictionalClusters, new MqttMessage()
+                {
+                    IsMastermind = true,
+                    Content = "system sync banner messages"
+                }));
+                await SyncOpenReportsAsync();
+                await GetAllReportsAsync();
+                DialogOpen = false;
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[MisReportAsync]:exception:{e.Message}", true);
                 DialogMessage = e.Message;
                 DialogCategory = "Message";
             }
@@ -444,6 +527,17 @@ namespace OnCall.ViewModels
         }
         #endregion
 
+        #region 命令：同步历史报告
+        public ICommand GetAllReportsCommand
+        {
+            get => new DelegateCommand(GetAllReports);
+        }
+        private async void GetAllReports()
+        {
+            await GetAllReportsAsync();
+        }
+        #endregion
+
         #region 命令：切换视图
         public ICommand SwitchViewCommand
         {
@@ -458,9 +552,9 @@ namespace OnCall.ViewModels
         #region 命令：异常接单或填写解决回执
         public ICommand HandleReportCommand
         {
-            get => new DelegateCommand<OnCall_GetOpenReports_Result2>(HandleReport);
+            get => new DelegateCommand<GetOpenReports_L2>(HandleReport);
         }
-        private async void HandleReport(OnCall_GetOpenReports_Result2 report)
+        private async void HandleReport(GetOpenReports_L2 report)
         {
             if (report.State == "triggered")
                 await ResponseReportAsync(report.Id);
@@ -502,6 +596,17 @@ namespace OnCall.ViewModels
         private async void SolveReport()
         {
             await SolveReportAsync(SolvedReportId, SolvedProduct, SolvedProcess, SolvedFailureCategory, SolvedFailureReason, SolvedSolution);
+        }
+        #endregion
+
+        #region 命令：异常误报
+        public ICommand MisReportCommand
+        {
+            get => new DelegateCommand(MisReport);
+        }
+        private async void MisReport()
+        {
+            await MisReportAsync(SolvedReportId);
         }
         #endregion
 
@@ -704,8 +809,8 @@ namespace OnCall.ViewModels
         #endregion
 
         #region 本站点进行中异常报告列表
-        private List<OnCall_GetOpenReports_Result2> localOpenReportList;
-        public List<OnCall_GetOpenReports_Result2> LocalOpenReportList
+        private List<GetOpenReports_L2> localOpenReportList;
+        public List<GetOpenReports_L2> LocalOpenReportList
         {
             get => localOpenReportList;
             set
@@ -716,13 +821,25 @@ namespace OnCall.ViewModels
         #endregion
 
         #region 同辖站点进行中异常报告列表
-        private List<OnCall_GetOpenReports_Result1> clusterOpenReportList;
-        public List<OnCall_GetOpenReports_Result1> ClusterOpenReportList
+        private List<GetOpenReports_L1> clusterOpenReportList;
+        public List<GetOpenReports_L1> ClusterOpenReportList
         {
             get => clusterOpenReportList;
             set
             {
                 SetProperty(ref clusterOpenReportList, value);
+            }
+        }
+        #endregion
+
+        #region 所有异常报告列表
+        private List<GetAllReports_C1> allReportList;
+        public List<GetAllReports_C1> AllReportList
+        {
+            get => allReportList;
+            set
+            {
+                SetProperty(ref allReportList, value);
             }
         }
         #endregion
@@ -807,6 +924,7 @@ namespace OnCall.ViewModels
             }
         }
         #endregion
+
         public void Dispose()
         {
             foreach (var eventToken in eventTokens)

@@ -66,13 +66,22 @@
             </Grid.ColumnDefinitions>
 
             <materialDesign:Card Grid.Column="0" Style="{StaticResource Card}">
-                <materialDesign:PackIcon Kind="Sync" Cursor="Hand" Background="Transparent">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseDown">
-                            <i:InvokeCommandAction Command="{Binding SyncMessagesCommand}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </materialDesign:PackIcon>
+                <StackPanel>
+                    <materialDesign:PackIcon Kind="Sync" Cursor="Hand" Background="Transparent">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction Command="{Binding SyncMessagesCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </materialDesign:PackIcon>
+                    <materialDesign:PackIcon Kind="SourceBranchSync" Cursor="Hand" Background="Transparent" Margin="0,10,0,0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction Command="{Binding SyncJurisdictionalClustersMessageCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </materialDesign:PackIcon>
+                </StackPanel>
             </materialDesign:Card>
 
             <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto" Margin="5">

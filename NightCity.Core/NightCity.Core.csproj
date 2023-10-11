@@ -100,9 +100,6 @@
     <Compile Include="Models\ModuleManager_GetAllModules_Result.cs" />
     <Compile Include="Models\ModuleManager_GetModules_Result.cs" />
     <Compile Include="Models\ModuleManager_GetModuleVersions_Result.cs" />
-    <Compile Include="Models\OnCall_GetOpenReports_Result.cs" />
-    <Compile Include="Models\OnCall_GetOpenReports_Result1.cs" />
-    <Compile Include="Models\OnCall_GetOpenReports_Result2.cs" />
     <Compile Include="Models\Performance_UploadBasicInformation_Parameter.cs" />
     <Compile Include="Models\Authorize_GetToken_Result.cs" />
     <Compile Include="Models\Account_GetUserInformation_Result.cs" />
