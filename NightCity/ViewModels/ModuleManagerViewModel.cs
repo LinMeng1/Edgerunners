@@ -486,7 +486,7 @@ namespace NightCity.ViewModels
                 {
                     if (File.Exists($"{distDirectory}{relativeDirectory}/{file.Name}"))
                     {
-                        FileStream fsLocal = new FileStream($"{distDirectory}/{file.Name}", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                        FileStream fsLocal = new FileStream($"{distDirectory}{relativeDirectory}/{file.Name}", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                         byte[] hashLocal = new MD5CryptoServiceProvider().ComputeHash(fsLocal);
                         fsLocal.Close();
                         string hashLocalStr = BitConverter.ToString(hashLocal).Replace("-", string.Empty);

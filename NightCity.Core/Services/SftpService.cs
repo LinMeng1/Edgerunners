@@ -18,28 +18,39 @@ namespace NightCity.Core.Services
             this.username = username;
             this.password = password;
         }
-        public void PullFiles(string source, string dest)
+        public void PullFiles(string source, string dest, SftpClient sftp = null)
         {
             try
             {
-                using (var sftp = new SftpClient(host, port, username, password))
+                if (sftp == null)
                 {
+                    sftp = new SftpClient(host, port, username, password);
                     sftp.Connect();
+                }                 
+                using (sftp)
+                {                    
                     var files = sftp.ListDirectory(source);
                     foreach (var file in files)
                     {
-                        string name = file.Name;
-                        if (!file.Name.StartsWith("."))
+                        if (file.IsDirectory && file.GroupCanWrite)
+                            PullFiles(file.FullName, $@"{dest}\{file.Name}", sftp);
+                        else
                         {
-                            if (!Directory.Exists(dest))
-                                Directory.CreateDirectory(dest);
-                            using (Stream stream = File.Create($"{dest}/{name}"))
+                            string name = file.Name;
+                            if (!file.Name.StartsWith("."))
                             {
-                                sftp.DownloadFile($"{source}/{name}", stream);
+                                if (!Directory.Exists(dest))
+                                    Directory.CreateDirectory(dest);
+                                using (Stream stream = File.Create($"{dest}/{name}"))
+                                {
+                                    sftp.DownloadFile($"{source}/{name}", stream);
+                                }
                             }
                         }
                     }
                 }
+                sftp.Disconnect();
+                sftp.Dispose();
             }
             catch (Exception e)
             {

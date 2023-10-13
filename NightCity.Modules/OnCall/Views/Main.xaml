@@ -262,9 +262,7 @@
                                             <ColumnDefinition Width="auto"/>
                                         </Grid.ColumnDefinitions>
                                         <Button Grid.Column="0" Margin="0,3,0,0" Content="ACCEPT" Command="{Binding SolveReportCommand}" Style="{StaticResource MaterialDesignFlatButton}"/>
-
                                         <Button Grid.Column="2" Margin="0,3,0,0" Content="MISREPORT" Command="{Binding MisReportCommand}" Style="{StaticResource MaterialDesignFlatButton}" Foreground="Gray" Cursor="Hand"/>
-
                                         <Button Grid.Column="4" Margin="0,3,0,0" Command="{Binding CancelCommand}" Content="CANCEL"  Style="{StaticResource MaterialDesignFlatButton}"/>
                                     </Grid>
                                 </Grid>
@@ -752,6 +750,7 @@
                                                         <Setter TargetName="Icon" Property="Kind" Value="CloseOctagon"/>
                                                         <Setter TargetName="Icon" Property="Foreground" Value="#757575"/>
                                                         <Setter TargetName="OwnerIcon" Property="Kind" Value="AccountCheck"/>
+                                                        <Setter TargetName="ProductAndProcessArea" Property="Visibility" Value="Hidden"/>
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding ExternalSystem}" Value="{x:Null}">
                                                         <Setter TargetName="ExternalIcon" Property="Visibility" Value="Hidden"/>
