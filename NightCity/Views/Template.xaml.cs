@@ -19,7 +19,7 @@ namespace NightCity.Views
     public partial class Template
     {
         object currentModel;
-        ModuleInfo module;
+        public ModuleInfo module;
         public Template(IRegionManager manager, DynamicDirectoryModuleCatalog moduleCatalog, ModuleInfo module, ObservableCollection<ModuleInfo> loadedMod, out bool loadResult)
         {
 

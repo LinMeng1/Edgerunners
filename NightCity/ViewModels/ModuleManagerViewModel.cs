@@ -52,7 +52,7 @@ namespace NightCity.ViewModels
             this.regionManager = regionManager;
             this.moduleCatalog = (DynamicDirectoryModuleCatalog)moduleCatalog;
             this.propertyService = propertyService;
-            propertyService.SetProperty("ModuleWindows", windows);
+            //propertyService.SetProperty("ModuleWindows", windows);
             sftpService = new SftpService("10.114.113.101", 2022, "NightCity", "nightcity");
             httpService = new HttpService();
             //监听事件 Mqtt连接/断开
@@ -151,6 +151,8 @@ namespace NightCity.ViewModels
                 if (InstalledModules.Count == 0)
                     TabSelectedIndex = 1;
                 await SyncLocalModulesAsync();
+                if (InstalledSelectedModule != null)
+                    await SyncModuleVersionsAsync(InstalledSelectedModule.Name, "Installed");
                 await DisposeExpireModuleAsyncBack();
                 await OpenModuleAsyncBack();
                 DialogOpen = false;
@@ -446,14 +448,14 @@ namespace NightCity.ViewModels
                 {
                     foreach (var window in windows)
                     {
-                        if (InstalledModules.FirstOrDefault(it => it.Name == window.Key) == null)
+                        if (InstalledModules.FirstOrDefault(it => it.Name == window.Key && it.Version == window.Value.module.Version) == null)
                         {
                             Application.Current.Dispatcher.Invoke(() =>
                             {
                                 window.Value?.Disauthorize();
                                 window.Value?.Dispose();
                                 window.Value?.Close();
-                                windows.TryRemove(window.Key,out Template template);
+                                windows.TryRemove(window.Key, out Template template);
                             });
                         }
                     }
