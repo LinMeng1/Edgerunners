@@ -452,6 +452,11 @@ namespace NightCity.ViewModels
                         {
                             Application.Current.Dispatcher.Invoke(() =>
                             {
+                                if (window.Value.IsActive)
+                                {
+                                    Views.MessageBox mb = new Views.MessageBox($"Module:{window.Value.module.Name} with version:{window.Value.module.Version} error detected, will close the module window", $"Module error detected", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    mb.ShowDialog();
+                                }
                                 window.Value?.Disauthorize();
                                 window.Value?.Dispose();
                                 window.Value?.Close();
