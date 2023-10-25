@@ -25,8 +25,6 @@ namespace OnCall.ViewModels
 {
     public class MainViewModel : BindableBase, IDisposable
     {
-        //内置延迟
-        private readonly int internalDelay = 500;
         //事件聚合器
         private IEventAggregator eventAggregator;
         //属性服务
@@ -247,9 +245,9 @@ namespace OnCall.ViewModels
         {
             try
             {
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 object mainboard = propertyService.GetProperty("Mainboard") ?? throw new Exception("Mainboard is null");
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/GetOpenReports", new { Mainboard = mainboard.ToString() }));
                 if (!result.Result)
@@ -257,13 +255,13 @@ namespace OnCall.ViewModels
                 GetOpenReports reports = JsonConvert.DeserializeObject<GetOpenReports>(result.Content.ToString());
                 LocalOpenReportList = reports.LocalRepairs;
                 ClusterOpenReportList = reports.ClusterRepairs;
-                DialogOpen = false;
+                MessageHost.Hide();
             }
             catch (Exception e)
             {
                 Global.Log($"[OnCall]:[MainViewModel]:[SyncOpenReportsAsync]:exception:{e.Message}", true);
-                DialogMessage = e.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -275,9 +273,9 @@ namespace OnCall.ViewModels
         {
             try
             {
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/application/night-city/modules/on-call/GetAllReports"));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
@@ -311,13 +309,13 @@ namespace OnCall.ViewModels
                     }
                 }
                 AllReportList = reports;
-                DialogOpen = false;
+                MessageHost.Hide();
             }
             catch (Exception e)
             {
                 Global.Log($"[OnCall]:[MainViewModel]:[SyncHistoricalReportsAsync]:exception:{e.Message}", true);
-                DialogMessage = e.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -331,9 +329,9 @@ namespace OnCall.ViewModels
             try
             {
                 View = "Workshop";
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, }));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
@@ -345,7 +343,7 @@ namespace OnCall.ViewModels
                 }));
                 await SyncOpenReportsAsync();
                 await GetAllReportsAsync();
-                DialogOpen = false;
+                MessageHost.Hide();
             }
             catch (Exception e)
             {
@@ -353,12 +351,12 @@ namespace OnCall.ViewModels
                 if (messagebox)
                 {
                     eventAggregator.GetEvent<ErrorMessageShowingEvent>().Publish(new Tuple<string, string>(e.Message, "OnCall"));
-                    DialogOpen = false;
+                    MessageHost.Hide();
                 }
                 else
                 {
-                    DialogMessage = e.Message;
-                    DialogCategory = "Message";
+                    MessageHost.DialogMessage = e.Message;
+                    MessageHost.DialogCategory = "Message";
                 }
             }
         }
@@ -377,9 +375,9 @@ namespace OnCall.ViewModels
         {
             try
             {
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 if (product == null || product == string.Empty)
                     throw new Exception("Product is empty");
                 if (process == null || process == string.Empty)
@@ -397,13 +395,13 @@ namespace OnCall.ViewModels
                 }));
                 await SyncOpenReportsAsync();
                 await GetAllReportsAsync();
-                DialogOpen = false;
+                MessageHost.Hide();
             }
             catch (Exception e)
             {
                 Global.Log($"[OnCall]:[MainViewModel]:[SolveReportAsync]:exception:{e.Message}", true);
-                DialogMessage = e.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -411,10 +409,10 @@ namespace OnCall.ViewModels
         {
             try
             {
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
-                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, AbortReason="MisReport" }));
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, AbortReason = "MisReport" }));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
                 List<string> jurisdictionalClusters = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
@@ -425,13 +423,13 @@ namespace OnCall.ViewModels
                 }));
                 await SyncOpenReportsAsync();
                 await GetAllReportsAsync();
-                DialogOpen = false;
+                MessageHost.Hide();
             }
             catch (Exception e)
             {
                 Global.Log($"[OnCall]:[MainViewModel]:[MisReportAsync]:exception:{e.Message}", true);
-                DialogMessage = e.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -443,7 +441,7 @@ namespace OnCall.ViewModels
         {
             try
             {
-                await Task.Delay(internalDelay);
+                await Task.Delay(MessageHost.InternalDelay);
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/application/night-city/modules/product/GetProductList"));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
@@ -464,7 +462,7 @@ namespace OnCall.ViewModels
         {
             try
             {
-                await Task.Delay(internalDelay);
+                await Task.Delay(MessageHost.InternalDelay);
                 object mainboard = propertyService.GetProperty("Mainboard") ?? throw new Exception("Mainboard is null");
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/connection/GetClusters", new { Mainboard = mainboard.ToString() }));
                 if (!result.Result)
@@ -579,12 +577,12 @@ namespace OnCall.ViewModels
             SolvedFailureCategory = string.Empty;
             SolvedFailureReason = string.Empty;
             SolvedSolution = string.Empty;
-            DialogOpen = true;
-            DialogCategory = "Syncing";
+            MessageHost.Show();
+            MessageHost.DialogCategory = "Syncing";
             await GetProductListAsyncBack();
             await GetClustersAsyncBack();
             await GetNextestLogAsyncBack();
-            DialogCategory = "Solve Report";
+            MessageHost.DialogCategory = "Solve Report";
         }
         #endregion
 
@@ -617,7 +615,7 @@ namespace OnCall.ViewModels
         }
         public void Cancel()
         {
-            DialogOpen = false;
+            MessageHost.Hide();
         }
         #endregion
 
@@ -844,38 +842,14 @@ namespace OnCall.ViewModels
         }
         #endregion
 
-        #region 对话框打开状态
-        private bool dialogOpen = false;
-        public bool DialogOpen
+        #region 对话框设置
+        private DialogSetting messageHost = new DialogSetting();
+        public DialogSetting MessageHost
         {
-            get => dialogOpen;
+            get => messageHost;
             set
             {
-                SetProperty(ref dialogOpen, value);
-            }
-        }
-        #endregion
-
-        #region 对话框类型
-        private string dialogCategory = "Syncing";
-        public string DialogCategory
-        {
-            get => dialogCategory;
-            set
-            {
-                SetProperty(ref dialogCategory, value);
-            }
-        }
-        #endregion
-
-        #region 对话框通用信息
-        private string dialogMessage = string.Empty;
-        public string DialogMessage
-        {
-            get => dialogMessage;
-            set
-            {
-                SetProperty(ref dialogMessage, value);
+                SetProperty(ref messageHost, value);
             }
         }
         #endregion

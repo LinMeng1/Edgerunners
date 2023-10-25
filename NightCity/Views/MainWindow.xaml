@@ -104,7 +104,7 @@
                     <materialDesign:PopupBox.ToggleContent>
                         <materialDesign:PackIcon Kind="DesktopTowerMonitor" Style="{StaticResource PackIcon}"/>
                     </materialDesign:PopupBox.ToggleContent>
-                    <local:Performance/>
+                    <local:Performance />
                 </materialDesign:PopupBox>
             </materialDesign:Card>
             <materialDesign:Card Grid.Column="3" Margin="0,5,5,5" x:Name="Banners" Height="30">

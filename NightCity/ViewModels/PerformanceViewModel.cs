@@ -1,4 +1,5 @@
-﻿using NightCity.Core.Services;
+﻿using NightCity.Core.Models.Standard;
+using NightCity.Core.Services;
 using NightCity.Core.Services.Prism;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -67,11 +68,11 @@ namespace NightCity.ViewModels
         }
         private async void UploadBasicInfoAsync()
         {
-            DialogOpen = true;
-            DialogCategory = "Syncing";
+            MessageHost.Show();
+            MessageHost.DialogCategory = "Syncing";
             await Task.Delay(internalDelay);
             await basicInfomationService.UploadAsync();
-            DialogOpen = false;
+            MessageHost.Hide();
 
         }
         #endregion
@@ -190,38 +191,14 @@ namespace NightCity.ViewModels
         }
         #endregion
 
-        #region 对话框打开状态
-        private bool dialogOpen = false;
-        public bool DialogOpen
+        #region 对话框设置
+        private DialogSetting messageHost = new DialogSetting();
+        public DialogSetting MessageHost
         {
-            get => dialogOpen;
+            get => messageHost;
             set
             {
-                SetProperty(ref dialogOpen, value);
-            }
-        }
-        #endregion
-
-        #region 对话框类型
-        private string dialogCategory = "Syncing";
-        public string DialogCategory
-        {
-            get => dialogCategory;
-            set
-            {
-                SetProperty(ref dialogCategory, value);
-            }
-        }
-        #endregion
-
-        #region 对话框通用信息
-        private string dialogMessage = string.Empty;
-        public string DialogMessage
-        {
-            get => dialogMessage;
-            set
-            {
-                SetProperty(ref dialogMessage, value);
+                SetProperty(ref messageHost, value);
             }
         }
         #endregion

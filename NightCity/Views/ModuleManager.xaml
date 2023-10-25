@@ -32,7 +32,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <materialDesign:DialogHost IsOpen="{Binding DialogOpen}" Style="{StaticResource MaterialDesignEmbeddedDialogHost}">
+    <materialDesign:DialogHost IsOpen="{Binding MessageHost.DialogOpen}" Style="{StaticResource MaterialDesignEmbeddedDialogHost}">
         <materialDesign:DialogHost.DialogContent>
             <Border CornerRadius="8">
                 <Border.Effect>
@@ -45,23 +45,23 @@
                             <TextBlock Text="Syncing data"></TextBlock>
                             <StackPanel.Visibility>
                                 <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
-                                    <Binding Path="DialogCategory"></Binding>
+                                    <Binding Path="MessageHost.DialogCategory"></Binding>
                                     <MultiBinding.ConverterParameter>Syncing</MultiBinding.ConverterParameter>
                                 </MultiBinding>
                             </StackPanel.Visibility>
                         </StackPanel>
                         <StackPanel Margin="16">
-                            <TextBlock Text="{Binding DialogMessage}" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding MessageHost.DialogMessage}" TextWrapping="Wrap"/>
                             <Button Margin="0,8,8,0" Command="{Binding CleanMessageCommand}" Content="I Know" Style="{StaticResource MaterialDesignFlatButton}"/>
                             <StackPanel.Visibility>
                                 <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
-                                    <Binding Path="DialogCategory"></Binding>
+                                    <Binding Path="MessageHost.DialogCategory"></Binding>
                                     <MultiBinding.ConverterParameter>Message</MultiBinding.ConverterParameter>
                                 </MultiBinding>
                             </StackPanel.Visibility>
                         </StackPanel>
                         <StackPanel Margin="16">
-                            <TextBlock Text="{Binding DialogMessage}"/>
+                            <TextBlock Text="{Binding MessageHost.DialogMessage}"/>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
@@ -73,7 +73,7 @@
                             </Grid>
                             <StackPanel.Visibility>
                                 <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
-                                    <Binding Path="DialogCategory"></Binding>
+                                    <Binding Path="MessageHost.DialogCategory"></Binding>
                                     <MultiBinding.ConverterParameter>Uninstall</MultiBinding.ConverterParameter>
                                 </MultiBinding>
                             </StackPanel.Visibility>
@@ -85,7 +85,7 @@
                             <Button Margin="0,8,8,0" Command="{Binding ClearMessageAndCopyManifestCommand}" CommandParameter="Installed" Content="Got It and Copy to Clipboard" Style="{StaticResource MaterialDesignFlatButton}"/>
                             <StackPanel.Visibility>
                                 <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
-                                    <Binding Path="DialogCategory"></Binding>
+                                    <Binding Path="MessageHost.DialogCategory"></Binding>
                                     <MultiBinding.ConverterParameter>Manifest Installed</MultiBinding.ConverterParameter>
                                 </MultiBinding>
                             </StackPanel.Visibility>
@@ -97,7 +97,7 @@
                             <Button Margin="0,8,8,0" Command="{Binding ClearMessageAndCopyManifestCommand}" CommandParameter="Browse" Content="Got It and Copy to Clipboard" Style="{StaticResource MaterialDesignFlatButton}"/>
                             <StackPanel.Visibility>
                                 <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
-                                    <Binding Path="DialogCategory"></Binding>
+                                    <Binding Path="MessageHost.DialogCategory"></Binding>
                                     <MultiBinding.ConverterParameter>Manifest Browse</MultiBinding.ConverterParameter>
                                 </MultiBinding>
                             </StackPanel.Visibility>

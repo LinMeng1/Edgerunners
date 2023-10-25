@@ -105,10 +105,12 @@
     <Compile Include="Models\Account_GetUserInformation_Result.cs" />
     <Compile Include="Models\Product_GetProductList_Result.cs" />
     <Compile Include="Models\Standard\BannerMessage.cs" />
+    <Compile Include="Models\Standard\DialogSetting.cs" />
     <Compile Include="Models\Standard\ModuleVersionInfo.cs" />
     <Compile Include="Models\Standard\MqttMessage.cs" />
     <Compile Include="Models\Standard\MqttTopic.cs" />
     <Compile Include="Models\Standard\MqttTopicCollection.cs" />
+    <Compile Include="Services\ActionOptimizingService.cs" />
     <Compile Include="Services\HttpService.cs" />
     <Compile Include="Services\MqttService.cs" />
     <Compile Include="Services\SftpService.cs" />

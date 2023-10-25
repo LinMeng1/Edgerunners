@@ -11,7 +11,6 @@ using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TestEngAuthorization.Views;
@@ -20,8 +19,6 @@ namespace TestEngAuthorization.ViewModels
 {
     public class MainViewModel : BindableBase, IDisposable, IAuthorizable
     {
-        //内置延迟
-        private readonly int internalDelay = 500;
         //事件聚合器
         private IEventAggregator eventAggregator;
         //属性服务
@@ -65,9 +62,9 @@ namespace TestEngAuthorization.ViewModels
         {
             try
             {
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/basic/account/GetUserInformation"));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
@@ -79,13 +76,13 @@ namespace TestEngAuthorization.ViewModels
                 Email = content.Email;
                 Contact = content.Contact;
                 Organization = content.Organization;
-                DialogOpen = false;
+                MessageHost.Hide();
             }
             catch (Exception ex)
             {
                 Global.Log($"[TestEngAuthorization]:[MainViewModel]:[GetUserInfoAsync]:exception:{ex.Message}", true);
-                DialogMessage = ex.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = ex.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -97,21 +94,21 @@ namespace TestEngAuthorization.ViewModels
         {
             try
             {
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/basic/account/GetRolesAndAuthorizations"));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
                 List<Account_GetRolesAndAuthorizations_Result> content = JsonConvert.DeserializeObject<List<Account_GetRolesAndAuthorizations_Result>>(result.Content.ToString());
                 Roles = content;
-                DialogOpen = false;
+                MessageHost.Hide();
             }
             catch (Exception ex)
             {
                 Global.Log($"[TestEngAuthorization]:[MainViewModel]:[SyncRolesAndAuthorizationsAsync]:exception:{ex.Message}", true);
-                DialogMessage = ex.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = ex.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -123,20 +120,20 @@ namespace TestEngAuthorization.ViewModels
         {
             try
             {
-                DialogCategory = "Syncing";
-                DialogOpen = true;
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/basic/account/SetContact", new { Contact = EditingContact }));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
-                DialogOpen = false;
+                MessageHost.Hide();
                 Contact = EditingContact;
             }
             catch (Exception ex)
             {
                 Global.Log($"[TestEngAuthorization]:[MainViewModel]:[SetContactAsync]:exception:{ex.Message}", true);
-                DialogMessage = ex.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = ex.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -152,24 +149,24 @@ namespace TestEngAuthorization.ViewModels
                     throw new Exception("Your new and confirm password are different. Please enter your password again");
                 if (EditingNewPassword == EditingOldPassword)
                     throw new Exception("Your old and new password are the same. Please enter your password again");
-                DialogCategory = "Syncing";
-                DialogOpen = true;
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/basic/account/SetPassword", new { OldPassword = EditingOldPassword, NewPassword = EditingNewPassword }));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
                 else
                 {
-                    DialogMessage = "The password has been changed, please log in again";
-                    DialogCategory = "Message";
-                    DialogCategoryCallback = "Logout";
+                    MessageHost.DialogMessage = "The password has been changed, please log in again";
+                    MessageHost.DialogCategory = "Message";
+                    MessageHost.DialogCategoryCallback = "Logout";
                 }
             }
             catch (Exception ex)
             {
                 Global.Log($"[TestEngAuthorization]:[MainViewModel]:[ChangePasswordAsync]:exception:{ex.Message}", true);
-                DialogMessage = ex.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = ex.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -220,9 +217,9 @@ namespace TestEngAuthorization.ViewModels
         }
         private void TrySetContact()
         {
-            DialogCategory = "Editing Contact";
-            DialogCategoryCallback = "Editing Contact";
-            DialogOpen = true;
+            MessageHost.DialogCategory = "Editing Contact";
+            MessageHost.DialogCategoryCallback = "Editing Contact";
+            MessageHost.Show();
             EditingContact = Contact;
         }
         #endregion
@@ -245,16 +242,16 @@ namespace TestEngAuthorization.ViewModels
         }
         private void CleanMessage()
         {
-            if (DialogCategoryCallback == "Logout")
+            if (MessageHost.DialogCategoryCallback == "Logout")
                 Disauthorize();
-            else if (DialogCategoryCallback == null)
+            else if (MessageHost.DialogCategoryCallback == null)
             {
-                DialogOpen = false;
-                DialogCategory = "Syncing";
+                MessageHost.HideImmediately();
+                MessageHost.DialogCategory = "Syncing";
             }
             else
-                DialogCategory = DialogCategoryCallback;
-            DialogMessage = string.Empty;
+                MessageHost.DialogCategory = MessageHost.DialogCategoryCallback;
+            MessageHost.DialogMessage = string.Empty;
         }
         #endregion
 
@@ -265,9 +262,9 @@ namespace TestEngAuthorization.ViewModels
         }
         private void TryChangePassword()
         {
-            DialogCategory = "Change Password";
-            DialogCategoryCallback = "Change Password";
-            DialogOpen = true;
+            MessageHost.DialogCategory = "Change Password";
+            MessageHost.DialogCategoryCallback = "Change Password";
+            MessageHost.Show();
             EditingOldPassword = string.Empty;
             EditingNewPassword = string.Empty;
             EditingNewPasswordAgain = string.Empty;
@@ -292,8 +289,8 @@ namespace TestEngAuthorization.ViewModels
         }
         public void Cancel()
         {
-            DialogCategoryCallback = null;
-            DialogOpen = false;
+            MessageHost.DialogCategoryCallback = null;
+            MessageHost.HideImmediately();
         }
         #endregion
 
@@ -315,7 +312,7 @@ namespace TestEngAuthorization.ViewModels
 
         #endregion
 
-        #region EmployeeId
+        #region 雇员编号
         private string employeeId;
         public string EmployeeId
         {
@@ -327,7 +324,7 @@ namespace TestEngAuthorization.ViewModels
         }
         #endregion
 
-        #region Name
+        #region 姓名
         private string name;
         public string Name
         {
@@ -351,7 +348,7 @@ namespace TestEngAuthorization.ViewModels
         }
         #endregion
 
-        #region Position
+        #region 职位
         private string position;
         public string Position
         {
@@ -363,7 +360,7 @@ namespace TestEngAuthorization.ViewModels
         }
         #endregion
 
-        #region Email
+        #region 电子邮箱
         private string email;
         public string Email
         {
@@ -375,7 +372,7 @@ namespace TestEngAuthorization.ViewModels
         }
         #endregion
 
-        #region Contact
+        #region 联系方式
         private string contact;
         public string Contact
         {
@@ -387,7 +384,7 @@ namespace TestEngAuthorization.ViewModels
         }
         #endregion
 
-        #region Organization
+        #region 组织
         private string organization;
         public string Organization
         {
@@ -399,55 +396,7 @@ namespace TestEngAuthorization.ViewModels
         }
         #endregion
 
-        #region DialogOpen
-        private bool dialogOpen = false;
-        public bool DialogOpen
-        {
-            get => dialogOpen;
-            set
-            {
-                SetProperty(ref dialogOpen, value);
-            }
-        }
-        #endregion
-
-        #region DialogCategory
-        private string dialogCategory = "Syncing";
-        public string DialogCategory
-        {
-            get => dialogCategory;
-            set
-            {
-                SetProperty(ref dialogCategory, value);
-            }
-        }
-        #endregion
-
-        #region DialogCategoryCallback
-        private string dialogCategoryCallback;
-        public string DialogCategoryCallback
-        {
-            get => dialogCategoryCallback;
-            set
-            {
-                SetProperty(ref dialogCategoryCallback, value);
-            }
-        }
-        #endregion
-
-        #region DialogMessage
-        private string dialogMessage = string.Empty;
-        public string DialogMessage
-        {
-            get => dialogMessage;
-            set
-            {
-                SetProperty(ref dialogMessage, value);
-            }
-        }
-        #endregion
-
-        #region EditingContact
+        #region 编辑中联系方式
         private string editingContact;
         public string EditingContact
         {
@@ -459,7 +408,7 @@ namespace TestEngAuthorization.ViewModels
         }
         #endregion
 
-        #region Roles
+        #region 权限角色
         private List<Account_GetRolesAndAuthorizations_Result> roles;
         public List<Account_GetRolesAndAuthorizations_Result> Roles
         {
@@ -471,7 +420,7 @@ namespace TestEngAuthorization.ViewModels
         }
         #endregion
 
-        #region EditingOldPassword
+        #region 编辑中旧密码
         private string editingOldPassword;
         public string EditingOldPassword
         {
@@ -483,7 +432,7 @@ namespace TestEngAuthorization.ViewModels
         }
         #endregion
 
-        #region EditingNewPassword
+        #region 编辑中新密码
         private string editingNewPassword;
         public string EditingNewPassword
         {
@@ -495,7 +444,7 @@ namespace TestEngAuthorization.ViewModels
         }
         #endregion
 
-        #region EditingNewPasswordAgain
+        #region 编辑中再次输入新密码
         private string editingNewPasswordAgain;
         public string EditingNewPasswordAgain
         {
@@ -503,6 +452,18 @@ namespace TestEngAuthorization.ViewModels
             set
             {
                 SetProperty(ref editingNewPasswordAgain, value);
+            }
+        }
+        #endregion
+
+        #region 对话框设置
+        private DialogSetting messageHost = new DialogSetting();
+        public DialogSetting MessageHost
+        {
+            get => messageHost;
+            set
+            {
+                SetProperty(ref messageHost, value);
             }
         }
         #endregion

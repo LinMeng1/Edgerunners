@@ -19,8 +19,6 @@ namespace OnCall.ViewModels
 {
     public class ShortcutViewModel : BindableBase, IDisposable
     {
-        //内置延迟
-        private readonly int internalDelay = 500;
         //事件聚合器
         private IEventAggregator eventAggregator;
         //属性服务
@@ -67,9 +65,9 @@ namespace OnCall.ViewModels
         {
             try
             {
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 object mainboard = propertyService.GetProperty("Mainboard") ?? throw new Exception("Mainboard is null");
                 ControllersResult resultLocation = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/connection/GetJurisdictionalClusterOwner", new { Mainboard = mainboard.ToString() }));
                 Connection_GetJurisdictionalClusterOwner_Result jurisdictionalClusterOwner = null;
@@ -83,13 +81,13 @@ namespace OnCall.ViewModels
                     Leader = jurisdictionalClusterOwner.Leader;
                     LeaderContact = jurisdictionalClusterOwner.LeaderContact;
                 }
-                DialogOpen = false;
+                MessageHost.Hide();
             }
             catch (Exception e)
             {
                 Global.Log($"[OnCall]:[Shortcut]:[SyncOwnerAsync] exception:{e.Message}", true);
-                DialogMessage = e.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -102,9 +100,9 @@ namespace OnCall.ViewModels
             try
             {
                 await SyncJurisdictionalClusterOwnerAsync();
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 object mainboard = propertyService.GetProperty("Mainboard") ?? throw new Exception("Mainboard is null");
                 object hostname = propertyService.GetProperty("HostName") ?? throw new Exception("HostName is null");
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/CallReport", new { Mainboard = mainboard.ToString(), HostName = hostname.ToString() }));
@@ -116,13 +114,13 @@ namespace OnCall.ViewModels
                     IsMastermind = true,
                     Content = "system sync banner messages"
                 }));
-                DialogOpen = false;
+                MessageHost.Hide();
             }
             catch (Exception e)
             {
                 Global.Log($"[OnCall]:[Shortcut]:[CallRepairAsync] exception:{e.Message}", true);
-                DialogMessage = e.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -135,8 +133,8 @@ namespace OnCall.ViewModels
         }
         private void SyncOwner()
         {
-            DialogOpen = true;
-            DialogCategory = "Syncing";
+            MessageHost.Show();
+            MessageHost.DialogCategory = "Syncing";
             Owner = null;
             Contact = null;
             Organization = null;
@@ -157,9 +155,9 @@ namespace OnCall.ViewModels
         }
         public async void CleanMessage()
         {
-            DialogOpen = false;
+            MessageHost.HideImmediately();
             await Task.Delay(500);
-            DialogMessage = string.Empty;
+            MessageHost.Hide();
         }
         #endregion
 
@@ -239,38 +237,14 @@ namespace OnCall.ViewModels
 
         #endregion
 
-        #region 对话框打开状态
-        private bool dialogOpen = false;
-        public bool DialogOpen
+        #region 对话框设置
+        private DialogSetting messageHost = new DialogSetting();
+        public DialogSetting MessageHost
         {
-            get => dialogOpen;
+            get => messageHost;
             set
             {
-                SetProperty(ref dialogOpen, value);
-            }
-        }
-        #endregion
-
-        #region 对话框类型
-        private string dialogCategory = "Syncing";
-        public string DialogCategory
-        {
-            get => dialogCategory;
-            set
-            {
-                SetProperty(ref dialogCategory, value);
-            }
-        }
-        #endregion
-
-        #region 对话框通用信息
-        private string dialogMessage = string.Empty;
-        public string DialogMessage
-        {
-            get => dialogMessage;
-            set
-            {
-                SetProperty(ref dialogMessage, value);
+                SetProperty(ref messageHost, value);
             }
         }
         #endregion

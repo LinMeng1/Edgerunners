@@ -29,8 +29,6 @@ namespace NightCity.ViewModels
 {
     public class ModuleManagerViewModel : BindableBase
     {
-        //内置延迟
-        private readonly int internalDelay = 500;
         //事件聚合器
         private readonly IEventAggregator eventAggregator;
         //区域管理器
@@ -116,9 +114,9 @@ namespace NightCity.ViewModels
         {
             try
             {
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 if (mainboard == string.Empty)
                     mainboard = propertyService.GetProperty("Mainboard").ToString();
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/module-manager/GetModules", new { Mainboard = mainboard }));
@@ -155,13 +153,13 @@ namespace NightCity.ViewModels
                     await SyncModuleVersionsAsync(InstalledSelectedModule.Name, "Installed");
                 await DisposeExpireModuleAsyncBack();
                 await OpenModuleAsyncBack();
-                DialogOpen = false;
+                MessageHost.Hide();
             }
             catch (Exception e)
             {
                 Global.Log($"[ModuleManager]:[SyncModules] exception:{e.Message}", true);
-                DialogMessage = e.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -173,9 +171,9 @@ namespace NightCity.ViewModels
         {
             try
             {
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/application/night-city/module-manager/GetAllModules"));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
@@ -202,13 +200,13 @@ namespace NightCity.ViewModels
                 });
                 if (BrowseSelectedModule != null && BrowseSelectedModule.Name != null)
                     BrowseSelectedModule = BrowseModules.FirstOrDefault(it => it.Name == BrowseSelectedModule.Name);
-                DialogOpen = false;
+                MessageHost.Hide();
             }
             catch (Exception e)
             {
                 Global.Log($"[ModuleManager]:[SyncModules] exception:{e.Message}", true);
-                DialogMessage = e.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -220,9 +218,9 @@ namespace NightCity.ViewModels
         {
             try
             {
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 await Task.Run(() =>
                 {
                     DirectoryInfo directory = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Modules"));
@@ -252,13 +250,13 @@ namespace NightCity.ViewModels
                         SyncFiles(mainfest, $"/NightCity.Modules/{mod.Name}/{mod.Version}", string.Empty, $"{directory}/{mod.Name}/{mod.Version}");
                     }
                 });
-                DialogOpen = false;
+                MessageHost.Hide();
             }
             catch (Exception e)
             {
                 Global.Log($"[ModuleManager]:[SyncLocalModulesAsync] exception:{e.Message}", true);
-                DialogMessage = e.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -272,22 +270,24 @@ namespace NightCity.ViewModels
         {
             try
             {
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 string mainboard = propertyService.GetProperty("Mainboard").ToString();
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/module-manager/UninstallModule", new { Mainboard = mainboard, ModuleName = moduleName }));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
                 await SyncInstalledModulesAsync();
                 await SyncBrowseModulesAsync();
-                DialogOpen = false;
+                InstalledSelectedModule = null;
+                InstalledSelectedModuleVersions.Clear();
+                MessageHost.Hide();
             }
             catch (Exception e)
             {
                 Global.Log($"[ModuleManager]:[UninstallModulesAsync] exception:{e.Message}", true);
-                DialogMessage = e.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -302,9 +302,9 @@ namespace NightCity.ViewModels
         {
             try
             {
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/module-manager/GetModuleVersions", new { Module = moduleName }));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
@@ -353,13 +353,13 @@ namespace NightCity.ViewModels
                             break;
                     }
                 });
-                DialogOpen = false;
+                MessageHost.Hide();
             }
             catch (Exception e)
             {
                 Global.Log($"[ModuleManager]:[SyncModuleVersionsAsync] exception:{e.Message}", true);
-                DialogMessage = e.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -373,9 +373,9 @@ namespace NightCity.ViewModels
         {
             try
             {
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 string mainboard = propertyService.GetProperty("Mainboard").ToString();
                 ControllersResult result = null;
                 if (isAuthorize)
@@ -392,13 +392,13 @@ namespace NightCity.ViewModels
                 await SyncModuleVersionsAsync(moduleName, "Installed");
                 CheckLoadedModuleVersion(moduleName, moduleVersion);
                 await SyncBrowseModulesAsync();
-                DialogOpen = false;
+                MessageHost.Hide();
             }
             catch (Exception e)
             {
                 Global.Log($"[ModuleManager]:[UpdateModuleAsync] exception:{e.Message}", true);
-                DialogMessage = e.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -522,7 +522,7 @@ namespace NightCity.ViewModels
         /// <exception cref="Exception"></exception>
         private void CheckLoadedModuleVersion(string moduleName, string moduleVersion)
         {
-            DialogOpen = true;
+            MessageHost.Show();
             ModuleInfo mod = LoadedModules.FirstOrDefault(it => it.Name == moduleName);
             if (mod == null) return;
             if (mod.Version != moduleVersion)
@@ -622,7 +622,7 @@ namespace NightCity.ViewModels
         }
         private async void InstalledModuleClick(ModuleInfo mod)
         {
-            if (DialogOpen) return;
+            if (MessageHost.DialogOpen) return;
             InstalledSelectedModule = mod;
             await SyncModuleVersionsAsync(mod.Name, "Installed");
         }
@@ -675,9 +675,9 @@ namespace NightCity.ViewModels
         }
         private void TryUninstallModule()
         {
-            DialogOpen = true;
-            DialogMessage = "Are you sure you want to uninstall the module";
-            DialogCategory = "Uninstall";
+            MessageHost.Show();
+            MessageHost.DialogMessage = "Are you sure you want to uninstall the module";
+            MessageHost.DialogCategory = "Uninstall";
         }
         #endregion
 
@@ -699,14 +699,14 @@ namespace NightCity.ViewModels
         }
         private void ShowModuleManifest(string category)
         {
-            DialogOpen = true;
+            MessageHost.Show();
             switch (category)
             {
                 case "Installed":
-                    DialogCategory = "Manifest Installed";
+                    MessageHost.DialogCategory = "Manifest Installed";
                     break;
                 case "Browse":
-                    DialogCategory = "Manifest Browse";
+                    MessageHost.DialogCategory = "Manifest Browse";
                     break;
                 default:
                     break;
@@ -725,11 +725,11 @@ namespace NightCity.ViewModels
             {
                 case "Installed":
                     if (InstalledSelectedModuleSelectedVersion.Manifest != null)
-                        System.Windows.Clipboard.SetText(InstalledSelectedModuleSelectedVersion.Manifest);
+                        Clipboard.SetText(InstalledSelectedModuleSelectedVersion.Manifest);
                     break;
                 case "Browse":
                     if (BrowseSelectedModuleSelectedVersion.Manifest != null)
-                        System.Windows.Clipboard.SetText(BrowseSelectedModuleSelectedVersion.Manifest);
+                        Clipboard.SetText(BrowseSelectedModuleSelectedVersion.Manifest);
                     break;
                 default:
                     break;
@@ -745,9 +745,9 @@ namespace NightCity.ViewModels
         }
         public async void CleanMessage()
         {
-            DialogOpen = false;
+            MessageHost.HideImmediately();
             await Task.Delay(500);
-            DialogMessage = string.Empty;
+            MessageHost.DialogMessage = string.Empty;
         }
         #endregion
 
@@ -877,42 +877,6 @@ namespace NightCity.ViewModels
 
         #endregion
 
-        #region 对话框打开状态
-        private bool dialogOpen = false;
-        public bool DialogOpen
-        {
-            get => dialogOpen;
-            set
-            {
-                SetProperty(ref dialogOpen, value);
-            }
-        }
-        #endregion
-
-        #region 对话框类型
-        private string dialogCategory = "Syncing";
-        public string DialogCategory
-        {
-            get => dialogCategory;
-            set
-            {
-                SetProperty(ref dialogCategory, value);
-            }
-        }
-        #endregion
-
-        #region 对话框通用信息
-        private string dialogMessage = string.Empty;
-        public string DialogMessage
-        {
-            get => dialogMessage;
-            set
-            {
-                SetProperty(ref dialogMessage, value);
-            }
-        }
-        #endregion
-
         #region 标签选中索引
         private int tabSelectedIndex = 0;
         public int TabSelectedIndex
@@ -921,6 +885,18 @@ namespace NightCity.ViewModels
             set
             {
                 SetProperty(ref tabSelectedIndex, value);
+            }
+        }
+        #endregion
+
+        #region 对话框设置
+        private DialogSetting messageHost = new DialogSetting();
+        public DialogSetting MessageHost
+        {
+            get => messageHost;
+            set
+            {
+                SetProperty(ref messageHost, value);
             }
         }
         #endregion

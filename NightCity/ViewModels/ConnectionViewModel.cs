@@ -20,8 +20,6 @@ namespace NightCity.ViewModels
 {
     public class ConnectionViewModel : BindableBase
     {
-        //内置延迟
-        private readonly int internalDelay = 500;
         //事件聚合器
         private readonly IEventAggregator eventAggregator;
         //属性服务
@@ -68,7 +66,7 @@ namespace NightCity.ViewModels
                 while (mainboard == null)
                 {
                     mainboard = propertyService.GetProperty("Mainboard");
-                    await Task.Delay(internalDelay);
+                    await Task.Delay(MessageHost.InternalDelay);
                 }
                 mqttService = new MqttService(mainboard.ToString(), "10.114.113.101", 1883);
                 mqttService.ConnectionChanged += (IsConnected) =>
@@ -95,9 +93,9 @@ namespace NightCity.ViewModels
         {
             try
             {
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 string mainboard = propertyService.GetProperty("Mainboard").ToString();
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/connection/GetClusters", new { Mainboard = mainboard }));
                 if (!result.Result)
@@ -108,14 +106,14 @@ namespace NightCity.ViewModels
                 {
                     await mqttService.AddTopic(cluster.Cluster, cluster.Category);
                 }
-                DialogOpen = false;
+                MessageHost.Hide();
                 eventAggregator.GetEvent<ClustersSyncedEvent>().Publish(clusters);
             }
             catch (Exception e)
             {
                 Global.Log($"[Connection]:[SyncClustersAsync] exception:{e.Message}", true);
-                DialogMessage = e.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
                 eventAggregator.GetEvent<ClustersSyncedEvent>().Publish(null);
             }
         }
@@ -130,9 +128,9 @@ namespace NightCity.ViewModels
         {
             try
             {
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 string mainboard = propertyService.GetProperty("Mainboard").ToString();
                 if (cluster == string.Empty)
                     throw new Exception("Cluster name can not be empty");
@@ -140,13 +138,13 @@ namespace NightCity.ViewModels
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
                 await SyncClustersAsync();
-                DialogOpen = false;
+                MessageHost.Hide();
             }
             catch (Exception e)
             {
                 Global.Log($"[Connection]:[AddToClusterAsync] exception:{e.Message}", true);
-                DialogMessage = e.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -159,9 +157,9 @@ namespace NightCity.ViewModels
         {
             try
             {
-                DialogOpen = true;
-                DialogCategory = "Syncing";
-                await Task.Delay(internalDelay);
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
                 string mainboard = propertyService.GetProperty("Mainboard").ToString();
                 if (cluster == string.Empty)
                     throw new Exception("Cluster name can not be empty");
@@ -169,13 +167,13 @@ namespace NightCity.ViewModels
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
                 await SyncClustersAsync();
-                DialogOpen = false;
+                MessageHost.Hide();
             }
             catch (Exception e)
             {
                 Global.Log($"[Connection]:[RemoveFromClusterAsync] exception:{e.Message}", true);
-                DialogMessage = e.Message;
-                DialogCategory = "Message";
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -239,8 +237,8 @@ namespace NightCity.ViewModels
         }
         private void TryAddToCluster()
         {
-            DialogOpen = true;
-            DialogCategory = "AddToCluster";
+            MessageHost.Show();
+            MessageHost.DialogCategory = "AddToCluster";
             EditingCluster = string.Empty;
             IsEditingClusterWithCategory = false;
             EditingClusterCategory = string.Empty;
@@ -255,9 +253,9 @@ namespace NightCity.ViewModels
         }
         public async void CleanMessage()
         {
-            DialogOpen = false;
+            MessageHost.HideImmediately();
             await Task.Delay(500);
-            DialogMessage = string.Empty;
+            MessageHost.DialogMessage = string.Empty;
         }
         #endregion
 
@@ -282,9 +280,9 @@ namespace NightCity.ViewModels
         }
         private void TryRemoveFromCluster()
         {
-            DialogOpen = true;
-            DialogMessage = "Are you sure you want to remove this PC from this cluster";
-            DialogCategory = "RemoveFromCluster";
+            MessageHost.Show();
+            MessageHost.DialogMessage = "Are you sure you want to remove this PC from this cluster";
+            MessageHost.DialogCategory = "RemoveFromCluster";
         }
         #endregion
 
@@ -381,42 +379,6 @@ namespace NightCity.ViewModels
         }
         #endregion
 
-        #region 对话框打开状态
-        private bool dialogOpen = false;
-        public bool DialogOpen
-        {
-            get => dialogOpen;
-            set
-            {
-                SetProperty(ref dialogOpen, value);
-            }
-        }
-        #endregion
-
-        #region 对话框类型
-        private string dialogCategory = "Syncing";
-        public string DialogCategory
-        {
-            get => dialogCategory;
-            set
-            {
-                SetProperty(ref dialogCategory, value);
-            }
-        }
-        #endregion
-
-        #region 对话框通用信息
-        private string dialogMessage = string.Empty;
-        public string DialogMessage
-        {
-            get => dialogMessage;
-            set
-            {
-                SetProperty(ref dialogMessage, value);
-            }
-        }
-        #endregion
-
         #region 编辑中集群
         private string editingCluster;
         public string EditingCluster
@@ -449,6 +411,18 @@ namespace NightCity.ViewModels
             set
             {
                 SetProperty(ref editingClusterCategory, value);
+            }
+        }
+        #endregion
+
+        #region 对话框设置
+        private DialogSetting messageHost = new DialogSetting();
+        public DialogSetting MessageHost
+        {
+            get => messageHost;
+            set
+            {
+                SetProperty(ref messageHost, value);
             }
         }
         #endregion
