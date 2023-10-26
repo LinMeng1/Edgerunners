@@ -76,6 +76,13 @@ namespace TestEngAuthorization.ViewModels
                 Email = content.Email;
                 Contact = content.Contact;
                 Organization = content.Organization;
+                object mainboard = propertyService.GetProperty("Mainboard") ?? throw new Exception("Mainboard is null"); ;
+                if (content.OfficeComputer == null)
+                    LinkState = "No Link";
+                else if (content.OfficeComputer == mainboard.ToString())
+                    LinkState = "Linked";
+                else
+                    LinkState = "Link Change";
                 MessageHost.Hide();
             }
             catch (Exception ex)
@@ -165,6 +172,39 @@ namespace TestEngAuthorization.ViewModels
             catch (Exception ex)
             {
                 Global.Log($"[TestEngAuthorization]:[MainViewModel]:[ChangePasswordAsync]:exception:{ex.Message}", true);
+                MessageHost.DialogMessage = ex.Message;
+                MessageHost.DialogCategory = "Message";
+            }
+        }
+
+        /// <summary>
+        /// 链接办公电脑
+        /// </summary>
+        /// <returns></returns>
+        private async Task LinkOfficeComputerAsync()
+        {
+            try
+            {
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
+                object mainboard = propertyService.GetProperty("Mainboard") ?? throw new Exception("Mainboard is null"); ;
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/basic/account/LinkOfficeComputer", new { Mainboard = mainboard.ToString() }));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                MessageHost.Hide();
+                await SyncUserInfoAsync();
+                List<string> clusters = new List<string>() { mainboard.ToString() };
+                if (result.Content != null) clusters.Add(result.Content.ToString());
+                eventAggregator.GetEvent<MqttMessageSendingEvent>().Publish(new Tuple<List<string>, MqttMessage>(clusters, new MqttMessage()
+                {
+                    IsMastermind = true,
+                    Content = "system sync banner messages"
+                }));
+            }
+            catch (Exception ex)
+            {
+                Global.Log($"[TestEngAuthorization]:[MainViewModel]:[LinkOfficeComputerAsync]:exception:{ex.Message}", true);
                 MessageHost.DialogMessage = ex.Message;
                 MessageHost.DialogCategory = "Message";
             }
@@ -276,7 +316,7 @@ namespace TestEngAuthorization.ViewModels
         {
             get => new DelegateCommand(ChangePassword);
         }
-        public async void ChangePassword()
+        private async void ChangePassword()
         {
             await ChangePasswordAsync();
         }
@@ -287,10 +327,40 @@ namespace TestEngAuthorization.ViewModels
         {
             get => new DelegateCommand(Cancel);
         }
-        public void Cancel()
+        private void Cancel()
         {
             MessageHost.DialogCategoryCallback = null;
             MessageHost.HideImmediately();
+        }
+        #endregion
+
+        #region 命令：链接办公电脑询问
+        public ICommand TryLinkOfficeComputerCommand
+        {
+            get => new DelegateCommand(TryLinkOfficeComputer);
+        }
+        private async void TryLinkOfficeComputer()
+        {
+            await SyncUserInfoAsync();
+            if (LinkState == "No Link")
+                await LinkOfficeComputerAsync();
+            else if (LinkState == "Link Change")
+            {
+                MessageHost.DialogMessage = "This account is already linked to another computer. Are you sure you want to change it?";
+                MessageHost.DialogCategory = "MessageAsk";
+                MessageHost.Show();
+            }
+        }
+        #endregion
+
+        #region 命令：链接办公电脑
+        public ICommand LinkOfficeComputerCommand
+        {
+            get => new DelegateCommand(LinkOfficeComputer);
+        }
+        private async void LinkOfficeComputer()
+        {
+            await LinkOfficeComputerAsync();
         }
         #endregion
 
@@ -380,6 +450,18 @@ namespace TestEngAuthorization.ViewModels
             set
             {
                 SetProperty(ref contact, value);
+            }
+        }
+        #endregion
+
+        #region 链接状态
+        private string linkState = "No Link";
+        public string LinkState
+        {
+            get => linkState;
+            set
+            {
+                SetProperty(ref linkState, value);
             }
         }
         #endregion

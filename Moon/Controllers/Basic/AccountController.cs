@@ -127,7 +127,7 @@ namespace Moon.Controllers.Basic
             try
             {
                 string employeeID = Request.HttpContext.User.Claims.FirstOrDefault(it => it.Type == "EmployeeID").Value;
-                Account_GetUserInformation_Result user = Database.Edgerunners.Queryable<Users>().LeftJoin<Organizations>((u, o) => u.Organization == o.Id).Select((u, o) => new Account_GetUserInformation_Result
+                Account_GetUserInformation_Result user = Database.Edgerunners.Queryable<Users>().LeftJoin<Organizations>((u, o) => u.Organization == o.Id).LeftJoin<Users_OfficePCs>((u, o, uo) => u.EmployeeId == uo.EmployeeId).Select((u, o, uo) => new Account_GetUserInformation_Result
                 {
                     EmployeeId = u.EmployeeId,
                     ItCode = u.ItCode,
@@ -135,7 +135,8 @@ namespace Moon.Controllers.Basic
                     Position = u.Position,
                     Email = u.Email,
                     Contact = u.Contact,
-                    Organization = o.Name
+                    Organization = o.Name,
+                    OfficeComputer = uo.Mainboard
                 }).First(u => u.EmployeeId == employeeID);
                 result.Content = user;
                 result.Result = true;
@@ -149,6 +150,43 @@ namespace Moon.Controllers.Basic
         }
         #endregion
 
+        #region 链接办公电脑
+        [AuthorizeCheck(Authorization.AuthorizationEnum.Basic_Account_LinkOfficeComputer)]
+        [HttpPost]
+        public ControllersResult LinkOfficeComputer([FromBody] Account_LinkOfficeComputer_Parameter parameter)
+        {
+            ControllersResult result = new();
+            try
+            {
+                string employeeID = Request.HttpContext.User.Claims.FirstOrDefault(it => it.Type == "EmployeeID").Value;
+                Users_OfficePCs? officePC = Database.Edgerunners.Queryable<Users_OfficePCs>().First(it => it.EmployeeId == employeeID);
+                if (officePC == null)
+                    Database.Edgerunners.Insertable(new Users_OfficePCs()
+                    {
+                        EmployeeId = employeeID,
+                        Mainboard = parameter.Mainboard,
+                    }).IgnoreColumns("LinkTime").ExecuteCommand();
+                else if (officePC.Mainboard != parameter.Mainboard)
+                {
+                    Database.Edgerunners.Updateable(new Users_OfficePCs()
+                    {
+                        EmployeeId = employeeID,
+                        Mainboard = parameter.Mainboard,
+                        LinkTime = DateTime.Now
+                    }).ExecuteCommand();
+                    Database.Edgerunners.Updateable<IPCBanners>().SetColumns(it => it.Mainboard == parameter.Mainboard).Where(it => it.Extensible && it.Mainboard == officePC.Mainboard).ExecuteCommand();
+                }
+                result.Result = true;
+                result.Content = officePC?.Mainboard;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
 
         #region GetRolesAndAuthorizations
         public class Account_GetRolesAndAuthorizations_Result
@@ -191,6 +229,14 @@ namespace Moon.Controllers.Basic
             public string? Email { get; set; }
             public string? Contact { get; set; }
             public string? Organization { get; set; }
+            public string? OfficeComputer { get; set; }
+        }
+        #endregion
+
+        #region Account_LinkOfficeComputer_Parameter
+        public class Account_LinkOfficeComputer_Parameter
+        {
+            public string Mainboard { get; set; }
         }
         #endregion
     }

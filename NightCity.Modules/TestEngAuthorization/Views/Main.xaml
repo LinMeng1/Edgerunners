@@ -61,6 +61,24 @@
                         </MultiBinding>
                     </StackPanel.Visibility>
                 </StackPanel>
+                <StackPanel Margin="16">
+                    <TextBlock Text="{Binding MessageHost.DialogMessage}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Margin="0,16,0,0" Command="{Binding LinkOfficeComputerCommand}" Content="ACCEPT" Style="{StaticResource MaterialDesignFlatButton}"/>
+                        <Button Grid.Column="2" Margin="0,16,0,0" Command="{Binding CancelCommand}" Content="CANCEL"  Style="{StaticResource MaterialDesignFlatButton}"/>
+                    </Grid>
+                    <StackPanel.Visibility>
+                        <MultiBinding Converter="{StaticResource DialogHostVisibilityConverter}">
+                            <Binding Path="MessageHost.DialogCategory"></Binding>
+                            <MultiBinding.ConverterParameter>MessageAsk</MultiBinding.ConverterParameter>
+                        </MultiBinding>
+                    </StackPanel.Visibility>
+                </StackPanel>
                 <StackPanel Margin="32,32,32,16">
                     <TextBlock Text="Input new phone number" FontWeight="Bold"/>
                     <TextBox Width="300" Margin="0,8,0,0" HorizontalAlignment="Stretch" Text="{Binding EditingContact}"/>
@@ -215,6 +233,48 @@
                                 <TextBlock Text="{Binding Organization}" Margin="0,2,0,0"/>
                             </StackPanel>
                         </Grid>
+
+                        <Button  Foreground="white" BorderBrush="{x:Null}" Margin="5" Height="20" Command="{Binding LinkOfficeComputerCommand}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <materialDesign:PackIcon Kind="LinkBoxVariant" Grid.Column="0" Width="14" Height="14"/>
+                                <TextBlock Text="{Binding LinkState}" Grid.Column="1" HorizontalAlignment="Center" Margin="5,0,0,0" FontSize="10"/>
+                            </Grid>
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatDarkBgButton}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding LinkState}" Value="No Link">
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                                                        <GradientStop Color="#000000" Offset="0"/>
+                                                        <GradientStop Color="#7B1FA2" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding LinkState}" Value="Linked">
+                                            <Setter Property="Background" Value="Black"/>
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding LinkState}" Value="Link Change">
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                                                        <GradientStop Color="#000000" Offset="0"/>
+                                                        <GradientStop Color="#F57C00" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+
                     </ItemsControl>
                 </materialDesign:Card>
             </Grid>

@@ -14,6 +14,7 @@ namespace Moon.Core.Models.Edgerunners
         public string Content { get; set; }
         public string? LinkCommand { get; set; }
         public string? LinkInformation { get; set; }
+        public bool Extensible { get; set; }
         public DateTime CreateTime { get; set; }
     }
 }

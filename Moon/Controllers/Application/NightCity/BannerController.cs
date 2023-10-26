@@ -65,9 +65,10 @@ namespace Moon.Controllers.Application.NightCity
                     Urgency = parameter.Urgency,
                     Priority = parameter.Priority,
                     Category = parameter.Category,
-                    Content = parameter.Content,
+                    Content = parameter.Content,                  
                     LinkCommand = parameter.LinkCommand,
                     LinkInformation = parameter.LinkInfomation,
+                    Extensible = parameter.Extensible,
                 };
                 Database.Edgerunners.Insertable(banners).IgnoreColumns("CreateTime").ExecuteCommand();
                 result.Result = true;
@@ -128,6 +129,7 @@ namespace Moon.Controllers.Application.NightCity
             public string Content { get; set; }
             public string? LinkCommand { get; set; }
             public string? LinkInfomation { get; set; }
+            public bool Extensible { get; set; }
         }
         #endregion
 

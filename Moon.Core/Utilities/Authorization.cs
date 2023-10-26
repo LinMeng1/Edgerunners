@@ -24,6 +24,7 @@
             Application_NightCity_Connection_SetCluster,
             Application_NightCity_Connection_RemoveCluster,
             Application_NightCity_Modules_OnCall_HandleReport,
+            Basic_Account_LinkOfficeComputer,
         }
         #endregion
     }

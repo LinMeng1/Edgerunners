@@ -9,5 +9,6 @@
         public string Email { get; set; }
         public string Contact { get; set; }
         public string Organization { get; set; }
+        public string OfficeComputer { get; set; }
     }
 }
