@@ -11,6 +11,7 @@ namespace NightCity.Core.Models
         public string Content { get; set; }
         public string LinkCommand { get; set; }
         public string LinkInfomation { get; set; }
+        public bool Extensible { get; set; }
         public DateTime CreateTime { get; set; }
     }
 }

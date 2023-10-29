@@ -101,6 +101,7 @@ namespace NightCity.ViewModels
                                 Content = message.Content,
                                 LinkCommand = message.LinkCommand,
                                 LinkInfomation = message.LinkInfomation,
+                                Extensible = message.Extensible,
                                 CreateTime = message.CreateTime,
                             });
                         }

@@ -37,6 +37,7 @@ namespace Moon.Controllers.Application.NightCity
                     Content = it.Content,
                     LinkCommand = it.LinkCommand,
                     LinkInfomation = it.LinkInformation,
+                    Extensible = it.Extensible,
                     CreateTime = it.CreateTime,
                 }).ToList();
                 result.Content = messages;
@@ -65,7 +66,7 @@ namespace Moon.Controllers.Application.NightCity
                     Urgency = parameter.Urgency,
                     Priority = parameter.Priority,
                     Category = parameter.Category,
-                    Content = parameter.Content,                  
+                    Content = parameter.Content,
                     LinkCommand = parameter.LinkCommand,
                     LinkInformation = parameter.LinkInfomation,
                     Extensible = parameter.Extensible,
@@ -115,6 +116,7 @@ namespace Moon.Controllers.Application.NightCity
             public string Content { get; set; }
             public string LinkCommand { get; set; }
             public string LinkInfomation { get; set; }
+            public bool Extensible { get; set; }
             public DateTime CreateTime { get; set; }
         }
         #endregion
