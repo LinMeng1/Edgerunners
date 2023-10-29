@@ -71,9 +71,19 @@ namespace NightCity.Core.Models.Standard
         }
         #endregion        
 
+        private bool dialogOpenCache = false;
+
         public void Hide()
         {
-            _actionService.Debounce(3 * InternalDelay, null, HideImmediately);
+            dialogOpenCache = false;
+            _actionService.Debounce(3 * InternalDelay, null, HideSubmit);
+        }
+        public void HideSubmit()
+        {
+            if(!dialogOpenCache)
+            {
+                DialogOpen = false;
+            }
         }
         public void HideImmediately()
         {
@@ -81,6 +91,7 @@ namespace NightCity.Core.Models.Standard
         }
         public void Show()
         {
+            dialogOpenCache = true;
             DialogOpen = true;
         }
     }

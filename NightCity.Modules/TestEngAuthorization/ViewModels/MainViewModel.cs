@@ -455,7 +455,7 @@ namespace TestEngAuthorization.ViewModels
         #endregion
 
         #region 链接状态
-        private string linkState = "No Link";
+        private string linkState = "Link";
         public string LinkState
         {
             get => linkState;

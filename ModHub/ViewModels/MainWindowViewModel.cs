@@ -9,6 +9,8 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.IO;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ModHub.ViewModels
@@ -49,7 +51,7 @@ namespace ModHub.ViewModels
                 Filter = ".dll|*.dll"
             };
             if (dialog.ShowDialog() == false) return;
-            string path = dialog.FileName;
+            string path = dialog.FileName;           
             Template template = new Template(manager, moduleCatalog, path, true);
             template.Show();
         }

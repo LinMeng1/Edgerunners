@@ -390,7 +390,7 @@ namespace NightCity.ViewModels
                     InstalledSelectedModule = InstalledModules.FirstOrDefault(it => it.Name == moduleName);
                 });
                 await SyncModuleVersionsAsync(moduleName, "Installed");
-                CheckLoadedModuleVersion(moduleName, moduleVersion);
+                CheckLoadedModuleVersionAsync(moduleName, moduleVersion);
                 await SyncBrowseModulesAsync();
                 MessageHost.Hide();
             }
@@ -520,7 +520,7 @@ namespace NightCity.ViewModels
         /// <param name="moduleName">模块名</param>
         /// <param name="moduleVersion">模块版本</param>
         /// <exception cref="Exception"></exception>
-        private void CheckLoadedModuleVersion(string moduleName, string moduleVersion)
+        private void CheckLoadedModuleVersionAsync(string moduleName, string moduleVersion)
         {
             MessageHost.Show();
             ModuleInfo mod = LoadedModules.FirstOrDefault(it => it.Name == moduleName);

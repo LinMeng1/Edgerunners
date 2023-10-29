@@ -487,7 +487,7 @@
                                         </MultiBinding>
                                     </Button.Visibility>
                                 </Button>
-                                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="60" Content="Launch" FontSize="10" Grid.Column="1" Padding="5" Margin="5" Command="{Binding LaunchModuleCommand}" CommandParameter="{Binding InstalledSelectedModule.Name}" Cursor="Hand">
+                                <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="60" Content="Launch" FontSize="10" Grid.Column="1" Padding="5" Margin="5" Command="{Binding LaunchModuleCommand}" CommandParameter="{Binding BrowseSelectedModule.Name}" Cursor="Hand">
                                     <Button.Visibility>
                                         <MultiBinding Converter="{StaticResource ModuleManagerConverter}">
                                             <Binding>
