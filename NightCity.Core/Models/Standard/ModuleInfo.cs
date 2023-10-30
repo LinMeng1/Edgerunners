@@ -20,5 +20,12 @@ namespace NightCity.Core.Models.Standard
         public string Description { get; set; }
         public string Manifest { get; set; }
         public string Version { get; set; }
+
+        private bool isVisible;
+        public bool IsVisible
+        {
+            get => isVisible;
+            set => SetProperty(ref isVisible, value);
+        }
     }
 }

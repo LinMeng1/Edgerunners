@@ -41,6 +41,8 @@ namespace NightCity.ViewModels
         private readonly SftpService sftpService;
         //Http服务
         private readonly HttpService httpService;
+        //活动优化服务
+        private readonly ActionOptimizingService actionOptimizingService;
         //活动窗口集合
         private readonly ConcurrentDictionary<string, Template> windows = new ConcurrentDictionary<string, Template>();
         public ModuleManagerViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, IModuleCatalog moduleCatalog, IPropertyService propertyService)
@@ -53,6 +55,7 @@ namespace NightCity.ViewModels
             //propertyService.SetProperty("ModuleWindows", windows);
             sftpService = new SftpService("10.114.113.101", 2022, "NightCity", "nightcity");
             httpService = new HttpService();
+            actionOptimizingService = new ActionOptimizingService();
             //监听事件 Mqtt连接/断开
             eventAggregator.GetEvent<MqttConnectedEvent>().Subscribe(async (isConnected) =>
             {
@@ -141,8 +144,10 @@ namespace NightCity.ViewModels
                                 Description = mod.Description,
                                 Manifest = mod.Manifest,
                                 Version = mod.Version,
+                                IsVisible = true
                             });
                         }
+                        FilterInstalledModulesImmediately();
                     }
                 });
                 eventAggregator.GetEvent<ModulesChangedEvent>().Publish(InstalledModules);
@@ -194,8 +199,10 @@ namespace NightCity.ViewModels
                                 AuthorItCode = mod.AuthorItCode,
                                 IsOfficial = mod.IsOfficial,
                                 Description = mod.Description,
+                                IsVisible = true
                             });
                         }
+                        FilterBrowseModulesImmediately();
                     }
                 });
                 if (BrowseSelectedModule != null && BrowseSelectedModule.Name != null)
@@ -591,6 +598,37 @@ namespace NightCity.ViewModels
             eventAggregator.GetEvent<BannerMessageLinkingEvent>().Publish(linkCommand);
         }
 
+        /// <summary>
+        /// 筛选已安装模块列表
+        /// </summary>
+        /// <param name="category"></param>
+        private void FilterInstalledModulesImmediately()
+        {
+            foreach (var module in InstalledModules)
+            {
+                if (!module.Name.ToUpper().Contains(InstalledModulesFilterText == null ? string.Empty : InstalledModulesFilterText.Trim().ToUpper()))
+                    module.IsVisible = false;
+                else
+                    module.IsVisible = true;
+            }
+        }
+
+        /// <summary>
+        /// 筛选模块库模块列表
+        /// </summary>
+        private void FilterBrowseModulesImmediately()
+        {
+            foreach (var module in BrowseModules)
+            {
+                if (!module.Name.ToUpper().Contains(BrowseModulesFilterText == null ? string.Empty : BrowseModulesFilterText.Trim().ToUpper()))
+                    module.IsVisible = false;
+                else if (!module.IsOfficial && BrowseModulesFilterIsOfficial)
+                    module.IsVisible = false;
+                else
+                    module.IsVisible = true;
+            }
+        }
+
         #region 命令集合 
 
         #region 命令：同步已安装模块列表
@@ -604,6 +642,17 @@ namespace NightCity.ViewModels
         }
         #endregion
 
+        #region 命令：筛选已安装模块列表
+        public ICommand FilterInstalledModulesCommand
+        {
+            get => new DelegateCommand(FilterInstalledModules);
+        }
+        private void FilterInstalledModules()
+        {
+            actionOptimizingService.Debounce(200, null, FilterInstalledModulesImmediately);
+        }
+        #endregion
+
         #region 命令：同步模块库模块列表
         public ICommand SyncBrowseModulesCommand
         {
@@ -612,6 +661,29 @@ namespace NightCity.ViewModels
         private async void SyncBrowseModules()
         {
             await SyncBrowseModulesAsync();
+        }
+        #endregion
+
+        #region 命令：筛选模块库模块列表
+        public ICommand FilterBrowseModulesCommand
+        {
+            get => new DelegateCommand(FilterBrowseModules);
+        }
+        private void FilterBrowseModules()
+        {
+            actionOptimizingService.Debounce(200, null, FilterBrowseModulesImmediately);
+        }
+        #endregion
+
+        #region 命令：模块库模块列表切换只显示官方模块
+        public ICommand SwitchBrowseModulesOfficialOnlyCommand
+        {
+            get => new DelegateCommand(SwitchBrowseModulesOfficialOnly);
+        }
+        private void SwitchBrowseModulesOfficialOnly()
+        {
+            BrowseModulesFilterIsOfficial = !BrowseModulesFilterIsOfficial;
+            FilterBrowseModulesImmediately();
         }
         #endregion
 
@@ -791,6 +863,18 @@ namespace NightCity.ViewModels
         }
         #endregion
 
+        #region 已安装模块筛选文本
+        private string installedModulesFilterText;
+        public string InstalledModulesFilterText
+        {
+            get => installedModulesFilterText;
+            set
+            {
+                SetProperty(ref installedModulesFilterText, value);
+            }
+        }
+        #endregion
+
         #region 模块库模块列表
         private ObservableCollection<ModuleInfo> browseModules = new ObservableCollection<ModuleInfo>();
         public ObservableCollection<ModuleInfo> BrowseModules
@@ -799,6 +883,30 @@ namespace NightCity.ViewModels
             set
             {
                 SetProperty(ref browseModules, value);
+            }
+        }
+        #endregion
+
+        #region 模块库模块筛选文本
+        private string browseModulesFilterText;
+        public string BrowseModulesFilterText
+        {
+            get => browseModulesFilterText;
+            set
+            {
+                SetProperty(ref browseModulesFilterText, value);
+            }
+        }
+        #endregion
+
+        #region 模块库模块官方模块筛选
+        private bool browseModulesFilterIsOfficial;
+        public bool BrowseModulesFilterIsOfficial
+        {
+            get => browseModulesFilterIsOfficial;
+            set
+            {
+                SetProperty(ref browseModulesFilterIsOfficial, value);
             }
         }
         #endregion

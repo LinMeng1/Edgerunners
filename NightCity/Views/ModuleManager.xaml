@@ -119,14 +119,27 @@
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <materialDesign:Card Grid.Row="0" Style="{StaticResource Card}">
-                                <materialDesign:PackIcon Kind="Sync" Cursor="Hand" Background="Transparent" HorizontalAlignment="Right">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseDown">
-                                            <i:InvokeCommandAction Command="{Binding SyncInstalledModulesCommand}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </materialDesign:PackIcon>
+                            <materialDesign:Card Grid.Row="0" Style="{StaticResource Card}" Padding="0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0" Style="{StaticResource MaterialDesignTextBox}" Text="{Binding InstalledModulesFilterText,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="5,10,0,5" Background="Transparent" GotFocus="Textbox_GotFocus" materialDesign:TextFieldAssist.HasClearButton="True">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="TextChanged">
+                                                <i:InvokeCommandAction Command="{Binding FilterInstalledModulesCommand}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
+                                    <materialDesign:PackIcon Grid.Column="1" Margin="7" Kind="Sync" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseDown">
+                                                <i:InvokeCommandAction Command="{Binding SyncInstalledModulesCommand}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </materialDesign:PackIcon>
+                                </Grid>
                             </materialDesign:Card>
                             <materialDesign:Card Grid.Row="1" Style="{StaticResource Card}">
                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -201,6 +214,9 @@
                                                     <DataTrigger Binding="{Binding IsOfficial}" Value="True">
                                                         <Setter TargetName="Official" Property="Visibility" Value="Visible" />
                                                     </DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                        <Setter TargetName="Border" Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
                                                 </DataTemplate.Triggers>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
@@ -243,7 +259,7 @@
                                             </MultiBinding>
                                         </Button.Visibility>
                                     </Button>
-                                    
+
                                     <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="60" Content="Launch" FontSize="10" Grid.Column="1" Padding="5" Margin="5" Command="{Binding LaunchModuleCommand}" CommandParameter="{Binding InstalledSelectedModule.Name}">
                                         <Button.Visibility>
                                             <MultiBinding Converter="{StaticResource ModuleManagerConverter}">
@@ -260,7 +276,7 @@
                                             </MultiBinding>
                                         </Button.Visibility>
                                     </Button>
-                                    
+
                                     <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Width="60" Foreground="Black" Background="#FFCA28" Content="Reload" FontSize="10" Grid.Column="1" Padding="5" Margin="5" Command="{Binding ReloadNightCityCommand}">
                                         <Button.Visibility>
                                             <MultiBinding Converter="{StaticResource ModuleManagerConverter}">
@@ -339,14 +355,45 @@
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <materialDesign:Card Grid.Row="0" Style="{StaticResource Card}">
-                                <materialDesign:PackIcon Kind="Sync" Style="{StaticResource PackIcon}" Cursor="Hand" Background="Transparent" HorizontalAlignment="Right">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseDown">
-                                            <i:InvokeCommandAction Command="{Binding SyncBrowseModulesCommand}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </materialDesign:PackIcon>
+                            <materialDesign:Card Grid.Row="0" Style="{StaticResource Card}" Padding="0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <materialDesign:PackIcon Kind="Seal" Grid.Column="0" Margin="7" Cursor="Hand" Background="Transparent">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseDown">
+                                                <i:InvokeCommandAction Command="{Binding SwitchBrowseModulesOfficialOnlyCommand}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        <materialDesign:PackIcon.Style>
+                                            <Style TargetType="materialDesign:PackIcon" BasedOn="{StaticResource PackIcon}">
+                                                <Setter Property="Foreground" Value="Black"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding BrowseModulesFilterIsOfficial}" Value="False">
+                                                        <Setter Property="Foreground" Value="Gray"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </materialDesign:PackIcon.Style>
+                                    </materialDesign:PackIcon>
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignTextBox}" Text="{Binding BrowseModulesFilterText,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="5,10,0,5" Background="Transparent" GotFocus="Textbox_GotFocus" materialDesign:TextFieldAssist.HasClearButton="True">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="TextChanged">
+                                                <i:InvokeCommandAction Command="{Binding FilterBrowseModulesCommand}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
+                                    <materialDesign:PackIcon Grid.Column="2" Margin="7" Kind="Sync" Style="{StaticResource PackIcon}" Cursor="Hand" Background="Transparent">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseDown">
+                                                <i:InvokeCommandAction Command="{Binding SyncBrowseModulesCommand}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </materialDesign:PackIcon>
+                                </Grid>
                             </materialDesign:Card>
                             <materialDesign:Card Grid.Row="1" Style="{StaticResource Card}">
                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -422,6 +469,9 @@
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding IsOfficial}" Value="True">
                                                         <Setter TargetName="Official" Property="Visibility" Value="Visible" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                        <Setter TargetName="Border" Property="Visibility" Value="Collapsed" />
                                                     </DataTrigger>
                                                 </DataTemplate.Triggers>
                                             </DataTemplate>
