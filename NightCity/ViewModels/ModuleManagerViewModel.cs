@@ -397,8 +397,8 @@ namespace NightCity.ViewModels
                     InstalledSelectedModule = InstalledModules.FirstOrDefault(it => it.Name == moduleName);
                 });
                 await SyncModuleVersionsAsync(moduleName, "Installed");
-                CheckLoadedModuleVersionAsync(moduleName, moduleVersion);
                 await SyncBrowseModulesAsync();
+                CheckLoadedModuleVersionAsync(moduleName, moduleVersion);               
                 MessageHost.Hide();
             }
             catch (Exception e)
@@ -459,7 +459,7 @@ namespace NightCity.ViewModels
                         {
                             Application.Current.Dispatcher.Invoke(() =>
                             {
-                                if (window.Value.IsActive)
+                                if (window.Value.IsVisible)
                                 {
                                     Views.MessageBox mb = new Views.MessageBox($"Module:{window.Value.module.Name} with version:{window.Value.module.Version} error detected, will close the module window", $"Module error detected", MessageBoxButton.OK, MessageBoxImage.Error);
                                     mb.ShowDialog();
@@ -533,7 +533,7 @@ namespace NightCity.ViewModels
             ModuleInfo mod = LoadedModules.FirstOrDefault(it => it.Name == moduleName);
             if (mod == null) return;
             if (mod.Version != moduleVersion)
-                throw new Exception($"The set version ({moduleVersion}) could not be applied due to an old version ({mod.Version}) of the module being loaded, please reload NightCity in due course to reload module");
+                throw new Exception($"The set version ({moduleVersion}) could not be applied due to an old version ({mod.Version}) of the module being loaded, please reload NightCity in due course to reload module");            
         }
 
         /// <summary>

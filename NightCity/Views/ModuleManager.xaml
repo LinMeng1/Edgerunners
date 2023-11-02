@@ -379,7 +379,7 @@
                                             </Style>
                                         </materialDesign:PackIcon.Style>
                                     </materialDesign:PackIcon>
-                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignTextBox}" Text="{Binding BrowseModulesFilterText,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="5,10,0,5" Background="Transparent" GotFocus="Textbox_GotFocus" materialDesign:TextFieldAssist.HasClearButton="True">
+                                    <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignTextBox}" Text="{Binding BrowseModulesFilterText,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="0,10,0,5" Background="Transparent" GotFocus="Textbox_GotFocus" materialDesign:TextFieldAssist.HasClearButton="True">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="TextChanged">
                                                 <i:InvokeCommandAction Command="{Binding FilterBrowseModulesCommand}"/>

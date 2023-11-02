@@ -128,7 +128,7 @@
                                         </StackPanel>
                                     </materialDesign:ColorZone>
                                     <TextBlock Grid.Column="1" Text="{Binding Content}" Margin="10,0,10,0" VerticalAlignment="Center"/>
-                                    <materialDesign:PackIcon Grid.Column="2" Margin="0,0,10,0" Kind="Play" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
+                                    <materialDesign:PackIcon Grid.Column="2" Margin="0,0,5,0" Kind="Play" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseDown">
                                                 <i:InvokeCommandAction Command="{Binding Path=DataContext.TryLinkCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
@@ -155,7 +155,7 @@
                                             </Style>
                                         </materialDesign:PackIcon.Style>
                                     </materialDesign:PackIcon>
-                                    <materialDesign:PackIcon Grid.Column="3"  Kind="Close" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
+                                    <materialDesign:PackIcon Grid.Column="3"  Margin="0,0,5,0" Kind="Close" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseDown">
                                                 <i:InvokeCommandAction Command="{Binding Path=DataContext.RemoveMessageCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" CommandParameter="{Binding .}"/>

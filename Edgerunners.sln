@@ -25,6 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectTemplates", "ProjectTemplates", "{A021FF4D-A150-41FD-A14E-6803FB21D17B}"
 	ProjectSection(SolutionItems) = preProject
+		Utilities\ProjectTemplates\NightCity Module Without Package.zip = Utilities\ProjectTemplates\NightCity Module Without Package.zip
 		Utilities\ProjectTemplates\NightCity Module.zip = Utilities\ProjectTemplates\NightCity Module.zip
 	EndProjectSection
 EndProject
