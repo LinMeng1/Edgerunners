@@ -1,5 +1,4 @@
 D:\Project\Edgerunners\NightCity.Core\bin\Release\NightCity.Core.dll
-D:\Project\Edgerunners\NightCity.Core\bin\Release\NightCity.Core.pdb
 D:\Project\Edgerunners\NightCity.Core\bin\Release\DryIoc.dll
 D:\Project\Edgerunners\NightCity.Core\bin\Release\MaterialDesignColors.dll
 D:\Project\Edgerunners\NightCity.Core\bin\Release\MaterialDesignThemes.Wpf.dll
@@ -31,4 +30,3 @@ D:\Project\Edgerunners\NightCity.Core\obj\Release\NightCity.Core.csproj.Assembly
 D:\Project\Edgerunners\NightCity.Core\obj\Release\NightCity.Core.csproj.CoreCompileInputs.cache
 D:\Project\Edgerunners\NightCity.Core\obj\Release\NightCity.Core.csproj.CopyComplete
 D:\Project\Edgerunners\NightCity.Core\obj\Release\NightCity.Core.dll
-D:\Project\Edgerunners\NightCity.Core\obj\Release\NightCity.Core.pdb

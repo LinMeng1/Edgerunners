@@ -2,6 +2,7 @@ D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\Moon.exe
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\NLog.config
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\appsettings.Development.json
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\appsettings.json
+D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\libman.json
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\Moon.dll
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\Moon.deps.json
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\Moon.runtimeconfig.json
@@ -38,6 +39,8 @@ D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\SQLitePCLRaw.provider.
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\SqlSugar.dll
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\DmProvider.dll
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\Kdbndp.dll
+D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\Renci.SshNet.dll
+D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\SshNet.Security.Cryptography.dll
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll

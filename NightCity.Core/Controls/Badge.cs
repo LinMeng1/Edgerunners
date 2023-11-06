@@ -23,7 +23,6 @@ namespace NightCity.Core.Controls
             DependencyProperty.RegisterAttached("IsShow", typeof(bool), typeof(Badge),
                 new PropertyMetadata(false, OnIsBadgeChanged));
 
-        private static FrameworkElement oldFrameworkElement;
         private readonly double _size;
 
         private readonly string _text;

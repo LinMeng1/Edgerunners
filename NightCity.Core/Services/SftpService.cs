@@ -48,9 +48,7 @@ namespace NightCity.Core.Services
                             }
                         }
                     }
-                }
-                sftp.Disconnect();
-                sftp.Dispose();
+                }            
             }
             catch (Exception e)
             {

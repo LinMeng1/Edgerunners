@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectTemplates", "Project
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calibration", "NightCity.Modules\Calibration\Calibration.csproj", "{9A28A4B3-BFA7-4EA5-8840-B4FCD1567565}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NightCity.Launcher", "NightCity.Launcher\NightCity.Launcher.csproj", "{9C7F5867-AD1E-4010-8229-8C7CDF2AFC29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,14 @@ Global
 		{9A28A4B3-BFA7-4EA5-8840-B4FCD1567565}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9A28A4B3-BFA7-4EA5-8840-B4FCD1567565}.Release|x64.ActiveCfg = Release|Any CPU
 		{9A28A4B3-BFA7-4EA5-8840-B4FCD1567565}.Release|x64.Build.0 = Release|Any CPU
+		{9C7F5867-AD1E-4010-8229-8C7CDF2AFC29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C7F5867-AD1E-4010-8229-8C7CDF2AFC29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C7F5867-AD1E-4010-8229-8C7CDF2AFC29}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9C7F5867-AD1E-4010-8229-8C7CDF2AFC29}.Debug|x64.Build.0 = Debug|Any CPU
+		{9C7F5867-AD1E-4010-8229-8C7CDF2AFC29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C7F5867-AD1E-4010-8229-8C7CDF2AFC29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C7F5867-AD1E-4010-8229-8C7CDF2AFC29}.Release|x64.ActiveCfg = Release|Any CPU
+		{9C7F5867-AD1E-4010-8229-8C7CDF2AFC29}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

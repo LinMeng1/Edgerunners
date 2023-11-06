@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="SqlSugarCore" Version="5.1.4.88" />
+    <PackageReference Include="SSH.NET" Version="2023.0.0" />
   </ItemGroup>
 
 </Project>
