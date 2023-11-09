@@ -16,11 +16,12 @@ namespace NightCity.Launcher.Views
         public MainWindow()
         {
             InitializeComponent();
-            Bitmap favicon = Properties.Resources.favicon;
+            Version.Text = $"NightCity Launcher v{System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}";
+            Bitmap favicon = Properties.Resources.faviconx;
             Bitmap avatar = Properties.Resources.Avatar;
             using (var memory = new MemoryStream())
             {
-                favicon.Save(memory, ImageFormat.Png);              
+                favicon.Save(memory, ImageFormat.Png);
                 memory.Position = 0;
                 var bitmapImage = new BitmapImage();
                 bitmapImage.BeginInit();

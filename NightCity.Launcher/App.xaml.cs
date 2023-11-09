@@ -33,7 +33,7 @@ namespace NightCity.Launcher
         protected override void OnStartup(StartupEventArgs e)
         {
             #region 防止复数实例
-            const string appName = "NightCity.Launcher";
+            const string appName = "NightCity Launcher";
             _mutex = new Mutex(true, appName, out bool createdNew);
             if (!createdNew)
                 Current.Shutdown();

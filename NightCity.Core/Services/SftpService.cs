@@ -1,6 +1,9 @@
-﻿using Renci.SshNet;
+﻿using Newtonsoft.Json.Linq;
+using Renci.SshNet;
 using System;
 using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Xml.Linq;
 
 namespace NightCity.Core.Services
@@ -71,6 +74,37 @@ namespace NightCity.Core.Services
             catch (Exception e)
             {
                 Global.Log($"[SftpService]:[PullFile] exception:{e.Message}", true);
+            }
+        }
+        public void SyncFiles(JToken manifest, string publishDirectory, string relativeDirectory, string distDirectory)
+        {
+            foreach (JProperty file in manifest.Cast<JProperty>())
+            {
+                JToken _file = manifest[file.Name];
+                if (_file.Type == JTokenType.Object)
+                {
+                    SyncFiles(_file, publishDirectory, $"/{file.Name}", distDirectory);
+                }
+                else if (_file.Type == JTokenType.String)
+                {
+                    if (File.Exists($"{distDirectory}{relativeDirectory}/{file.Name}"))
+                    {
+                        FileStream fsLocal = new FileStream($"{distDirectory}{relativeDirectory}/{file.Name}", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                        byte[] hashLocal = new MD5CryptoServiceProvider().ComputeHash(fsLocal);
+                        fsLocal.Close();
+                        string hashLocalStr = BitConverter.ToString(hashLocal).Replace("-", string.Empty);
+                        string hashSourceStr = _file.ToString();
+                        if (hashLocalStr != hashSourceStr)
+                        {
+                            PullFile($"{publishDirectory}{relativeDirectory}/{file.Name}", $"{distDirectory}{relativeDirectory}/{file.Name}");
+                        }
+                    }
+                    else
+                    {
+                        Directory.CreateDirectory($"{distDirectory}{relativeDirectory}");
+                        PullFile($"{publishDirectory}{relativeDirectory}/{file.Name}", $"{distDirectory}{relativeDirectory}/{file.Name}");
+                    }
+                }
             }
         }
     }

@@ -95,25 +95,25 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Data Source：" Foreground="Yellow" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                            <TextBox Text="{Binding Config.DataSource,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Foreground="Yellow" CaretBrush="Yellow" Margin="10,0,10,0" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignTextBox}" />
+                            <TextBox Text="{Binding Config.DataSource,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Foreground="Yellow" CaretBrush="Yellow" Margin="10,0,10,0" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignTextBox}" FontFamily="Poppins"/>
                         </Grid>
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0" Margin="5">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
-
                                 <Grid Grid.Row="0">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Foreground="Yellow" Text="Local Information"/>
+                                    <TextBlock Grid.Column="0" Foreground="Yellow" Text="Components" Margin="0,0,10,0"/>
                                     <materialDesign:PackIcon Cursor="Hand" Grid.Column="1" Foreground="Yellow" Background="Transparent" Kind="Sync" >
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseDown">
@@ -122,10 +122,145 @@
                                         </i:Interaction.Triggers>
                                     </materialDesign:PackIcon>
                                 </Grid>
-
-                                <Border Grid.Row="1" BorderBrush="Yellow" BorderThickness="2">
-
-                                </Border>
+                                <Grid  Grid.Row="1">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <ItemsControl ItemsSource="{Binding LocalInstallInformationList}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border x:Name="Border" BorderBrush="Yellow" BorderThickness="2" Margin="0,0,0,5" Padding="2">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="auto"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="auto"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <Image Grid.Column="0" x:Name="Icon" Source="{Binding IconImage}" Stretch="Uniform" Margin="5,5,10,5" Height="30" Width="30"/>
+                                                                <Grid Grid.Column="1">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition />
+                                                                        <RowDefinition />
+                                                                    </Grid.RowDefinitions>
+                                                                    <Grid Grid.Row="0">
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="auto"/>
+                                                                            <ColumnDefinition/>
+                                                                        </Grid.ColumnDefinitions>
+                                                                        <TextBlock x:Name="DisplayName" Grid.Column="0" Text="{Binding DisplayName}" TextTrimming="WordEllipsis" Foreground="Yellow" FontSize="10" VerticalAlignment="Bottom"/>
+                                                                        <materialDesign:PackIcon x:Name="IsInstallIcon" Foreground="Yellow" Grid.Column="1" Kind="CheckCircle" VerticalAlignment="Bottom" Margin="5,0,0,0">
+                                                                            <materialDesign:PackIcon.Style>
+                                                                                <Style TargetType="materialDesign:PackIcon">
+                                                                                    <Style.Triggers>
+                                                                                        <DataTrigger Binding="{Binding IsInstalled}" Value="False">
+                                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                        </DataTrigger>
+                                                                                    </Style.Triggers>
+                                                                                </Style>
+                                                                            </materialDesign:PackIcon.Style>
+                                                                        </materialDesign:PackIcon>
+                                                                    </Grid>
+                                                                    <Grid Grid.Row="1">
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="75"/>
+                                                                            <ColumnDefinition/>
+                                                                        </Grid.ColumnDefinitions>
+                                                                        <TextBlock x:Name="Version" Grid.Column="0" Text="{Binding DisplayVersion}" TextTrimming="WordEllipsis" Foreground="Yellow" FontSize="10" VerticalAlignment="Top"/>
+                                                                        <TextBlock x:Name="LatestVersion" Grid.Column="1" Text="{Binding LatestVersion,StringFormat=Latest：{0}}" TextTrimming="WordEllipsis" Foreground="Yellow" FontSize="10" VerticalAlignment="Top"/>
+                                                                    </Grid>
+                                                                </Grid>
+                                                            </Grid>
+                                                            <Grid Grid.Column="1">
+                                                                <Grid>
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition/>
+                                                                        <RowDefinition/>
+                                                                    </Grid.RowDefinitions>
+                                                                    <TextBlock Grid.Row="0" x:Name="Update" Foreground="Yellow" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Right" Cursor="Hand" Margin="5,0,5,0">
+                                                                         <i:Interaction.Triggers>
+                                                                            <i:EventTrigger EventName="MouseDown">
+                                                                                <i:InvokeCommandAction Command="{Binding Path=DataContext.UpdateProductCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" CommandParameter="{Binding .}"/>
+                                                                            </i:EventTrigger>
+                                                                         </i:Interaction.Triggers>
+                                                                        <TextBlock.Style>
+                                                                            <Style TargetType="TextBlock">
+                                                                                <Setter Property="Text" Value="Install"/>
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding IsInstalled}" Value="True">
+                                                                                        <Setter Property="Text" Value="Update"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </TextBlock.Style>
+                                                                    </TextBlock>
+                                                                    <Grid Grid.Row="1">
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition/>
+                                                                            <ColumnDefinition/>
+                                                                        </Grid.ColumnDefinitions>
+                                                                        <TextBlock Grid.Column="0" x:Name="Launch" Text="Launch" Foreground="Yellow" FontSize="10" VerticalAlignment="Center" Cursor="Hand" Margin="5,0,5,0">
+                                                                            <i:Interaction.Triggers>
+                                                                                <i:EventTrigger EventName="MouseDown">
+                                                                                    <i:InvokeCommandAction  Command="{Binding Path=DataContext.LaunchProductCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" CommandParameter="{Binding .}"/>
+                                                                                </i:EventTrigger>
+                                                                            </i:Interaction.Triggers>
+                                                                            <TextBlock.Style>
+                                                                                <Style TargetType="TextBlock">
+                                                                                    <Style.Triggers>
+                                                                                        <DataTrigger Binding="{Binding IsInstalled}" Value="False">
+                                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                        </DataTrigger>
+                                                                                    </Style.Triggers>
+                                                                                </Style>
+                                                                            </TextBlock.Style>
+                                                                        </TextBlock>
+                                                                        <TextBlock Grid.Column="1" x:Name="Remove" Text="Remove" Foreground="Red" FontSize="10" VerticalAlignment="Center" Cursor="Hand" Margin="5,0,5,0">
+                                                                            <i:Interaction.Triggers>
+                                                                                <i:EventTrigger EventName="MouseDown">
+                                                                                    <i:InvokeCommandAction  Command="{Binding Path=DataContext.RemoveProductCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}" CommandParameter="{Binding .}"/>
+                                                                                </i:EventTrigger>
+                                                                            </i:Interaction.Triggers>
+                                                                            <TextBlock.Style>
+                                                                                <Style TargetType="TextBlock">
+                                                                                    <Style.Triggers>
+                                                                                        <DataTrigger Binding="{Binding IsInstalled}" Value="False">
+                                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                        </DataTrigger>
+                                                                                    </Style.Triggers>
+                                                                                </Style>
+                                                                            </TextBlock.Style>
+                                                                        </TextBlock>
+                                                                    </Grid>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Border>
+                                                    <DataTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="Border" Property="Background" Value="Yellow" />
+                                                            <Setter TargetName="DisplayName" Property="Foreground" Value="Black" />
+                                                            <Setter TargetName="IsInstallIcon" Property="Foreground" Value="Black" />
+                                                            <Setter TargetName="Version" Property="Foreground" Value="Black" />
+                                                            <Setter TargetName="LatestVersion" Property="Foreground" Value="Black" />
+                                                            <Setter TargetName="Update" Property="Foreground" Value="Black" />
+                                                            <Setter TargetName="Launch" Property="Foreground" Value="Black" />
+                                                        </Trigger>
+                                                    </DataTemplate.Triggers>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </Grid>
+                                <Grid Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Install Path：" Foreground="Yellow" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Text="{Binding Config.InstallPath,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Foreground="Yellow" CaretBrush="Yellow" Margin="10,0,10,0" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignTextBox}" FontFamily="Poppins"/>
+                                </Grid>
                             </Grid>
                             <Grid Grid.Column="1" Margin="5">
                                 <Grid.RowDefinitions>
@@ -134,10 +269,10 @@
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Foreground="Yellow" Text="Developer News"/>
+                                    <TextBlock Grid.Column="0" Foreground="Yellow" Text="Developer News" Margin="0,0,10,0"/>
                                     <materialDesign:PackIcon Cursor="Hand" Grid.Column="1" Foreground="Yellow" Background="Transparent" Kind="WebSync" >
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="MouseDown">
@@ -151,18 +286,26 @@
                                         <ItemsControl ItemsSource="{Binding DeveloperNewsList}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Border BorderBrush="Yellow" BorderThickness="2" Margin="0,0,0,5" Padding="2">
+                                                    <Border x:Name="Border" BorderBrush="Yellow" BorderThickness="2" Margin="0,0,0,5" Padding="2">
                                                         <Grid>
                                                             <Grid.RowDefinitions>
                                                                 <RowDefinition Height="auto"/>
                                                                 <RowDefinition Height="auto"/>
                                                                 <RowDefinition Height="auto"/>
                                                             </Grid.RowDefinitions>
-                                                            <TextBlock Grid.Row="0" Text="{Binding Title}" TextTrimming="WordEllipsis" Foreground="Yellow" FontSize="10"/>
-                                                            <TextBlock Grid.Row="1" Text="{Binding Text}" TextTrimming="WordEllipsis" Foreground="Yellow" FontSize="10"/>
-                                                            <TextBlock Grid.Row="2" Text="{Binding Time,StringFormat='yyyy-MM-dd HH:mm:ss'}" Foreground="Yellow" FontSize="10" HorizontalAlignment="Right"/>
+                                                            <TextBlock x:Name="Text1" Grid.Row="0" Text="{Binding Title}" TextTrimming="WordEllipsis" Foreground="Yellow" FontSize="10"/>
+                                                            <TextBlock x:Name="Text2" Grid.Row="1" Text="{Binding Text}" TextTrimming="WordEllipsis" Foreground="Yellow" FontSize="10"/>
+                                                            <TextBlock x:Name="Text3" Grid.Row="2" Text="{Binding Time,StringFormat='yyyy-MM-dd HH:mm:ss'}" Foreground="Yellow" FontSize="10" HorizontalAlignment="Right"/>
                                                         </Grid>
                                                     </Border>
+                                                    <DataTemplate.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="Border" Property="Background" Value="Yellow" />
+                                                            <Setter TargetName="Text1" Property="Foreground" Value="Black" />
+                                                            <Setter TargetName="Text2" Property="Foreground" Value="Black" />
+                                                            <Setter TargetName="Text3" Property="Foreground" Value="Black" />
+                                                        </Trigger>
+                                                    </DataTemplate.Triggers>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
@@ -172,7 +315,7 @@
                         </Grid>
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="3*"/>
                                 <ColumnDefinition Width="5*"/>
                             </Grid.ColumnDefinitions>
                             <materialDesign:ColorZone Grid.Column="0" Margin="5" Mode="SecondaryDark" CornerRadius="5" VerticalAlignment="Stretch" Background="Black">
@@ -184,54 +327,124 @@
                                         </Grid.ColumnDefinitions>
                                         <Image Grid.Column="0" x:Name="Avatar" Stretch="Uniform" Margin="5" Height="50" Width="50"/>
                                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Text="NightCity Launcher" Foreground="Yellow"/>
-                                            <TextBlock Text="© 2023 TestEng. LinMeng" Foreground="Yellow"/>
-                                            <TextBlock Text="All rights reserved" Foreground="Yellow"/>
+                                            <TextBlock x:Name="Version" Text="NightCity Launcher" FontFamily="Poppins" FontSize="10"/>
+                                            <TextBlock Text="LME MCMFC Test Eng Product Testing" FontFamily="Poppins" FontSize="10"/>
+                                            <TextBlock Text="© 2023 All rights reserved" FontFamily="Poppins" FontSize="10"/>
                                         </StackPanel>
-
                                     </Grid>
-
-
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="Yellow" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                            <Style.Resources>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Foreground" Value="Yellow"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsMouseOver,RelativeSource={RelativeSource AncestorType={x:Type Border}}}" Value="True">
+                                                            <Setter Property="Foreground" Value="Black" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Style.Resources>
+                                        </Style>
+                                    </Border.Style>
                                 </Border>
                             </materialDesign:ColorZone>
-
                             <Grid Grid.Column="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <Button Grid.Row="0" Foreground="white" BorderBrush="{x:Null}" Height="30" Margin="5,5,5,0" Style="{StaticResource MaterialDesignFlatAccentBgButton}">
-                                    <Button.Background>
-                                        <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
-                                            <GradientStop Color="#000000" Offset="0"/>
-                                            <GradientStop Color="Yellow" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Button.Background>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <materialDesign:PackIcon Kind="PlayCircle" Grid.Column="0" Width="18" Height="18"/>
-                                        <TextBlock Text="Start as Production line computer" Grid.Column="1" HorizontalAlignment="Center" Margin="10,0,0,0"/>
-                                    </Grid>
-                                </Button>
-                                <Button Grid.Row="1" Foreground="white" BorderBrush="{x:Null}"  Height="30" Margin="5" Style="{StaticResource MaterialDesignFlatAccentBgButton}">
-                                    <Button.Background>
-                                        <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
-                                            <GradientStop Color="#000000" Offset="0"/>
-                                            <GradientStop Color="#E040FB" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Button.Background>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <materialDesign:PackIcon Kind="PlayCircleOutline" Grid.Column="0" Width="18" Height="18"/>
-                                        <TextBlock Text="Start as Office computer" Grid.Column="1" HorizontalAlignment="Center" Margin="10,0,0,0"/>
-                                    </Grid>
-                                </Button>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0" BorderBrush="Yellow" BorderThickness="2" Margin="5" Cursor="Hand">
+                                        <TextBlock Text="Launch (Office)" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="Yellow" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                                <Style.Resources>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Foreground" Value="Yellow"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsMouseOver,RelativeSource={RelativeSource AncestorType={x:Type Border}}}" Value="True">
+                                                                <Setter Property="Foreground" Value="Black" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Style.Resources>
+                                            </Style>
+                                        </Border.Style>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseDown">
+                                                <i:InvokeCommandAction Command="{Binding IntegratedLaunchCommand}" CommandParameter="Office"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Border>
+                                    <Border Grid.Column="1" BorderBrush="Yellow" BorderThickness="2" Margin="5" Cursor="Hand">
+                                        <TextBlock Text="Launch (Production Line)" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="Yellow" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                                <Style.Resources>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Foreground" Value="Yellow"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsMouseOver,RelativeSource={RelativeSource AncestorType={x:Type Border}}}" Value="True">
+                                                                <Setter Property="Foreground" Value="Black" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Style.Resources>
+                                            </Style>
+                                        </Border.Style>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseDown">
+                                                <i:InvokeCommandAction Command="{Binding IntegratedLaunchCommand}" CommandParameter="Production Line"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Border>
+                                </Grid>
+                                <Border Grid.Row="1" BorderBrush="Red" BorderThickness="2" Margin="5" Cursor="Hand">
+                                    <TextBlock Text="Remove All Components" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="red" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                            <Style.Resources>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Foreground" Value="Red"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsMouseOver,RelativeSource={RelativeSource AncestorType={x:Type Border}}}" Value="True">
+                                                            <Setter Property="Foreground" Value="Black" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Style.Resources>
+                                        </Style>
+                                    </Border.Style>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseDown">
+                                            <i:InvokeCommandAction Command="{Binding IntegratedRemoveCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Border>
                             </Grid>
                         </Grid>
                     </Grid>

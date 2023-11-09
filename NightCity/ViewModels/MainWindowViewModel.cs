@@ -8,6 +8,7 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 
@@ -24,6 +25,19 @@ namespace NightCity.ViewModels
             eventAggregator.GetEvent<MqttConnectedEvent>().Subscribe((isConnected) =>
             {
                 IsMqttConnected = isConnected;
+            }, ThreadOption.UIThread);
+            //监听事件 Mqtt信息接收
+            eventAggregator.GetEvent<MqttMessageReceivedEvent>().Subscribe((message) =>
+            {
+                if (!message.IsMastermind) return;
+                string command = message.Content;
+                if (command == "system exit when protected")
+                {
+                    Process[] processes = Process.GetProcesses();
+                    var daemon = processes.FirstOrDefault(p => p.ProcessName.StartsWith("NightCity.Daemon"));
+                    if (daemon != null)
+                        Environment.Exit(0);
+                }
             }, ThreadOption.UIThread);
             //监听事件 模块列表改变
             eventAggregator.GetEvent<ModulesChangedEvent>().Subscribe((modules) =>
@@ -69,8 +83,8 @@ namespace NightCity.ViewModels
             {
                 TopBannerMessage = bannerMessages.Item1;
                 BannerMessageCount = bannerMessages.Item2;
-                Syncing = false;          
-            },ThreadOption.UIThread);
+                Syncing = false;
+            }, ThreadOption.UIThread);
             //监听事件 固定/接触固定连接界面
             eventAggregator.GetEvent<IsConnectionFixChangedEvent>().Subscribe((isConnectionFix) =>
             {

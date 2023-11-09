@@ -254,7 +254,7 @@ namespace NightCity.ViewModels
                             continue;
                         }
                         JToken mainfest = JToken.Parse(mod.Manifest);
-                        SyncFiles(mainfest, $"/NightCity.Modules/{mod.Name}/{mod.Version}", string.Empty, $"{directory}/{mod.Name}/{mod.Version}");
+                        sftpService.SyncFiles(mainfest, $"/NightCity.Modules/{mod.Name}/{mod.Version}", string.Empty, $"{directory}/{mod.Name}/{mod.Version}");
                     }
                 });
                 MessageHost.Hide();
@@ -476,47 +476,6 @@ namespace NightCity.ViewModels
             catch (Exception e)
             {
                 Global.Log($"[ModuleManager]:[DisposeExpireModuleAsync] exception:{e.Message}", true);
-            }
-        }
-
-        /// <summary>
-        /// 同步文件
-        /// 指定文件清单，递归进行文件校对，更新不正确的文件
-        /// </summary>
-        /// <param name="mainfest">文件清单</param>
-        /// <param name="publishDirectory">发布路径</param>
-        /// <param name="relativeDirectory">相对路径</param>
-        /// <param name="distDirectory">目的路径</param>
-        private void SyncFiles(JToken manifest, string publishDirectory, string relativeDirectory, string distDirectory)
-        {
-            foreach (JProperty file in manifest.Cast<JProperty>())
-            {
-                JToken _file = manifest[file.Name];
-                if (_file.Type == JTokenType.Object)
-                {
-                    SyncFiles(_file, publishDirectory, $"/{file.Name}", distDirectory);
-                }
-                else if (_file.Type == JTokenType.String)
-                {
-                    if (File.Exists($"{distDirectory}{relativeDirectory}/{file.Name}"))
-                    {
-                        FileStream fsLocal = new FileStream($"{distDirectory}{relativeDirectory}/{file.Name}", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                        byte[] hashLocal = new MD5CryptoServiceProvider().ComputeHash(fsLocal);
-                        fsLocal.Close();
-                        string hashLocalStr = BitConverter.ToString(hashLocal).Replace("-", string.Empty);
-                        string hashSourceStr = _file.ToString();
-                        Global.Log($"[ModuleManager]:[UpdateFile]:hashLocal:{hashLocalStr} hashSource：{hashSourceStr}");
-                        if (hashLocalStr != hashSourceStr)
-                        {
-                            sftpService.PullFile($"{publishDirectory}{relativeDirectory}/{file.Name}", $"{distDirectory}{relativeDirectory}/{file.Name}");
-                        }
-                    }
-                    else
-                    {
-                        Directory.CreateDirectory($"{distDirectory}{relativeDirectory}");
-                        sftpService.PullFile($"{publishDirectory}{relativeDirectory}/{file.Name}", $"{distDirectory}{relativeDirectory}/{file.Name}");
-                    }
-                }
             }
         }
 

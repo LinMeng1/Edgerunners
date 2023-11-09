@@ -60,6 +60,17 @@ namespace NightCity.Launcher.Utilities
             }
         }
 
+        private string installPath;
+        public string InstallPath
+        {
+            get => installPath;
+            set
+            {
+                SetProperty(ref installPath, value);
+                ConfigChanged?.Invoke();
+            }
+        }
+
         public delegate void ConfigChangedDelegate();
         public event ConfigChangedDelegate ConfigChanged;
     }
