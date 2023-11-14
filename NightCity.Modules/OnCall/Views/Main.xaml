@@ -131,6 +131,7 @@
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
                                     <TextBlock Grid.Row="0" Text="Report Feedback" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center"/>
                                     <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="3">
@@ -139,16 +140,16 @@
                                     </StackPanel>
                                     <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="3">
                                         <TextBlock Text="Product:" FontSize="13" VerticalAlignment="Center"/>
-                                        <ComboBox MinWidth="150" ItemsSource="{Binding ProductList}" SelectedItem="{Binding SolvedProduct}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                        <ComboBox MinWidth="150" ItemsSource="{Binding ProductList}" DisplayMemberPath="InternalName" SelectedItem="{Binding SolvedProduct}" Margin="10,0,0,0" VerticalAlignment="Center"/>
                                         <Grid Margin="10,0,0,0" Background="#FFECB3">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="auto"/>
                                                 <RowDefinition/>
                                             </Grid.RowDefinitions>
-                                            <TextBlock Grid.Row="0" FontSize="10" Margin="5,2,5,0">Possible options</TextBlock>
+                                            <TextBlock Grid.Row="0" FontSize="10" Margin="5,2,5,0">Possible options (Click to fill)</TextBlock>
                                             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5,0,5,2">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <materialDesign:PackIcon Kind="MathLog" Height="10" Width="10" VerticalAlignment="Center" Margin="0,0,1,0"/>
+                                                    <materialDesign:PackIcon Kind="MathLog" Height="16" Width="16" VerticalAlignment="Center" Margin="0,0,2,0"/>
                                                     <TextBlock TextDecorations="Underline" FontSize="10" Foreground="#2A1EB1" Cursor="Hand" Margin="0,0,5,0" Text="{Binding SolveProductFromFile}">
                                                         <i:Interaction.Triggers>
                                                             <i:EventTrigger EventName="MouseDown">
@@ -164,7 +165,7 @@
                                                     </StackPanel.Visibility>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <materialDesign:PackIcon Kind="Broadcast" Height="10" Width="10" VerticalAlignment="Center" Margin="0,0,1,0"/>
+                                                    <materialDesign:PackIcon Kind="Broadcast" Height="16" Width="16" VerticalAlignment="Center" Margin="0,0,2,0"/>
                                                     <TextBlock TextDecorations="Underline" FontSize="10" Foreground="#2A1EB1" Cursor="Hand" Text="{Binding SolveProductFromCluster}">
                                                         <i:Interaction.Triggers>
                                                         <i:EventTrigger EventName="MouseDown">
@@ -191,42 +192,42 @@
                                     </StackPanel>
                                     <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="3">
                                         <TextBlock Text="Process:" FontSize="13" VerticalAlignment="Center"/>
-                                        <TextBox MinWidth="150" Text="{Binding SolvedProcess}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                        <ComboBox MinWidth="150" ItemsSource="{Binding ProductProcessList}" SelectedItem="{Binding SolvedProductProcess}" Margin="10,0,0,0" VerticalAlignment="Center"/>
                                         <Grid Margin="10,0,0,0" Background="#FFECB3">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="auto"/>
                                                 <RowDefinition/>
                                             </Grid.RowDefinitions>
-                                            <TextBlock Grid.Row="0" FontSize="10" Margin="5,2,5,0">Possible options</TextBlock>
+                                            <TextBlock Grid.Row="0" FontSize="10" Margin="5,2,5,0">Possible options (Click to fill)</TextBlock>
                                             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5,0,5,2">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <materialDesign:PackIcon Kind="MathLog" Height="10" Width="10" VerticalAlignment="Center" Margin="0,0,1,0"/>
-                                                    <TextBlock TextDecorations="Underline" FontSize="10" Foreground="#2A1EB1" Cursor="Hand" Margin="0,0,5,0" Text="{Binding SolveProcessFromFile}">
+                                                    <materialDesign:PackIcon Kind="MathLog" Height="16" Width="16" VerticalAlignment="Center" Margin="0,0,2,0"/>
+                                                    <TextBlock TextDecorations="Underline" FontSize="10" Foreground="#2A1EB1" Cursor="Hand" Margin="0,0,5,0" Text="{Binding SolveProductProcessFromFile}">
                                                         <i:Interaction.Triggers>
                                                             <i:EventTrigger EventName="MouseDown">
-                                                                <i:InvokeCommandAction Command="{Binding FillSolvedFieldCommand}" CommandParameter="SolveProcessFromFile"/>
+                                                                <i:InvokeCommandAction Command="{Binding FillSolvedFieldCommand}" CommandParameter="SolveProductProcessFromFile"/>
                                                             </i:EventTrigger>
                                                         </i:Interaction.Triggers>
                                                     </TextBlock>
                                                     <StackPanel.Visibility>
                                                         <MultiBinding Converter="{StaticResource FillSolvedFieldConverter}">
-                                                            <Binding Path="SolveProcessFromFile"></Binding>
+                                                            <Binding Path="SolveProductProcessFromFile"></Binding>
                                                             <MultiBinding.ConverterParameter>Label</MultiBinding.ConverterParameter>
                                                         </MultiBinding>
                                                     </StackPanel.Visibility>
                                                 </StackPanel>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <materialDesign:PackIcon Kind="Broadcast" Height="10" Width="10" VerticalAlignment="Center" Margin="0,0,1,0"/>
-                                                    <TextBlock TextDecorations="Underline" FontSize="10" Foreground="#2A1EB1" Cursor="Hand" Text="{Binding SolveProcessFromCluster}">
+                                                    <materialDesign:PackIcon Kind="Broadcast" Height="16" Width="16" VerticalAlignment="Center" Margin="0,0,2,0"/>
+                                                    <TextBlock TextDecorations="Underline" FontSize="10" Foreground="#2A1EB1" Cursor="Hand" Text="{Binding SolveProductProcessFromCluster}">
                                                         <i:Interaction.Triggers>
                                                             <i:EventTrigger EventName="MouseDown">
-                                                                <i:InvokeCommandAction Command="{Binding FillSolvedFieldCommand}" CommandParameter="SolveProcessFromCluster"/>
+                                                                <i:InvokeCommandAction Command="{Binding FillSolvedFieldCommand}" CommandParameter="SolveProductProcessFromCluster"/>
                                                             </i:EventTrigger>
                                                         </i:Interaction.Triggers>
                                                     </TextBlock>
                                                     <StackPanel.Visibility>
                                                         <MultiBinding Converter="{StaticResource FillSolvedFieldConverter}">
-                                                            <Binding Path="SolveProcessFromCluster"></Binding>
+                                                            <Binding Path="SolveProductProcessFromCluster"></Binding>
                                                             <MultiBinding.ConverterParameter>Label</MultiBinding.ConverterParameter>
                                                         </MultiBinding>
                                                     </StackPanel.Visibility>
@@ -234,8 +235,8 @@
                                             </StackPanel>
                                             <Grid.Visibility>
                                                 <MultiBinding Converter="{StaticResource FillSolvedFieldConverter}">
-                                                    <Binding Path="SolveProcessFromCluster"></Binding>
-                                                    <Binding Path="SolveProcessFromFile"></Binding>
+                                                    <Binding Path="SolveProductProcessFromCluster"></Binding>
+                                                    <Binding Path="SolveProductProcessFromFile"></Binding>
                                                     <MultiBinding.ConverterParameter>Collection</MultiBinding.ConverterParameter>
                                                 </MultiBinding>
                                             </Grid.Visibility>
@@ -243,17 +244,54 @@
                                     </StackPanel>
                                     <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="3">
                                         <TextBlock Text="Failure Category:" FontSize="13" VerticalAlignment="Center"/>
-                                        <TextBox MinWidth="150" Text="{Binding SolvedFailureCategory}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                        <ComboBox MinWidth="150" ItemsSource="{Binding FailureCategoryList}" SelectedItem="{Binding SolvedFailureCategory}" Margin="10,0,0,0" VerticalAlignment="Center"/>
                                     </StackPanel>
-                                    <StackPanel Grid.Row="5" Margin="5">
+                                    <StackPanel Grid.Row="5" Orientation="Vertical" Margin="3">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Attachment Submission:" FontSize="13" VerticalAlignment="Center"/>
+                                            <materialDesign:PackIcon Kind="LinkPlus" Margin="5,0,0,0" VerticalAlignment="Center" Background="Transparent" Cursor="Hand">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseDown">
+                                                        <i:InvokeCommandAction Command="{Binding AddPreCommittedAttachmentCommand}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </materialDesign:PackIcon>
+                                            <TextBlock Text="{Binding AttachmentsError}" Margin="5,0,0,0" Foreground="#B71C1C" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                        <ItemsControl ItemsSource="{Binding Attachments}" Margin="20,0,0,0" HorizontalAlignment="Left">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid Width="350" Background="#F5F5F5">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <materialDesign:PackIcon Kind="{Binding Icon}" Grid.Column="0" Margin="10,0,10,0" VerticalAlignment="Center"/>
+                                                        <TextBlock Text="{Binding Name}" Grid.Column="1" TextTrimming="WordEllipsis"/>
+                                                        <TextBlock Text="{Binding SizeStr}" Grid.Column="2" Margin="10,0,0,0"/>
+                                                        <materialDesign:PackIcon Kind="CloseOctagon" Grid.Column="3" Margin="10,0,10,0" VerticalAlignment="Center" Background="Transparent" Cursor="Hand">
+                                                            <i:Interaction.Triggers>
+                                                                <i:EventTrigger EventName="MouseDown">
+                                                                    <i:InvokeCommandAction  Command="{Binding Path=DataContext.RemovePreCommittedAttachmentCommand,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" CommandParameter="{Binding .}"/>
+                                                                </i:EventTrigger>
+                                                            </i:Interaction.Triggers>
+                                                        </materialDesign:PackIcon>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                    <StackPanel Grid.Row="6" Margin="5">
                                         <TextBlock Text="Failure Reason" FontSize="13"/>
                                         <TextBox Padding="5" Text="{Binding SolvedFailureReason}" Height="75" VerticalAlignment="Top" AcceptsReturn="True" Style="{StaticResource MaterialDesignOutlinedTextBox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
                                     </StackPanel>
-                                    <StackPanel Grid.Row="6" Margin="3">
+                                    <StackPanel Grid.Row="7" Margin="3">
                                         <TextBlock Text="Solution" FontSize="13"/>
                                         <TextBox Padding="5" Text="{Binding SolvedSolution}" Height="75" VerticalAlignment="Top" AcceptsReturn="True" Style="{StaticResource MaterialDesignOutlinedTextBox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
                                     </StackPanel>
-                                    <Grid Grid.Row="7">
+                                    <Grid Grid.Row="8">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto"/>
                                             <ColumnDefinition Width="*"/>
@@ -654,6 +692,7 @@
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
                                 <Grid.ColumnDefinitions>
@@ -761,6 +800,19 @@
                                     </ItemsControl>
                                 </StackPanel>
                             </ScrollViewer>
+                            <Grid Grid.Row="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <materialDesign:PackIcon Grid.Column="1" Kind="MicrosoftExcel" Cursor="Hand" Background="Transparent" HorizontalAlignment="Right">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseDown">
+                                            <i:InvokeCommandAction Command="{Binding ExportReportsToExcelCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </materialDesign:PackIcon>
+                            </Grid>
                         </Grid>
                     </materialDesign:Card>
                 </Grid>

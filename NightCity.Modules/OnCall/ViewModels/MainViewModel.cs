@@ -14,8 +14,10 @@ using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -393,6 +395,8 @@ namespace OnCall.ViewModels
                     IsMastermind = true,
                     Content = "system sync banner messages"
                 }));
+                if (Attachments.Count > 0)
+                    await SendAttachmentsToProductOwnerAsync(Attachments, ProductList.First(it => it.InternalName == product).EngineerEmail);
                 await SyncOpenReportsAsync();
                 await GetAllReportsAsync();
                 MessageHost.Hide();
@@ -405,6 +409,11 @@ namespace OnCall.ViewModels
             }
         }
 
+        /// <summary>
+        /// 误报提交
+        /// </summary>
+        /// <param name="reportId"></param>
+        /// <returns></returns>
         private async Task MisReportAsync(string reportId)
         {
             try
@@ -434,6 +443,66 @@ namespace OnCall.ViewModels
         }
 
         /// <summary>
+        /// 异常报告导出至Excel
+        /// </summary>
+        /// <returns></returns>
+        private async Task ExportReportsToExcelAsync(List<GetAllReports_C1> reports, string ExcelFilePath = null)
+        {
+            try
+            {
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
+                await Task.Run(() =>
+                {
+                    Microsoft.Office.Interop.Excel.Application Excel = new Microsoft.Office.Interop.Excel.Application();
+                    Excel.Workbooks.Add();
+                    Microsoft.Office.Interop.Excel._Worksheet Worksheet = Excel.ActiveSheet;
+                    var columns = new GetAllReports_C1().GetType().GetProperties();
+                    var columnsCount = columns.Count();
+                    object[] Header = new object[columnsCount];
+                    for (int i = 0; i < columnsCount; i++)
+                        Header[i] = columns[i].Name;
+                    Microsoft.Office.Interop.Excel.Range HeaderRange = Worksheet.get_Range((Microsoft.Office.Interop.Excel.Range)Worksheet.Cells[1, 1], (Microsoft.Office.Interop.Excel.Range)(Worksheet.Cells[1, columnsCount]));
+                    HeaderRange.Value = Header;
+                    HeaderRange.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.LightGray);
+                    HeaderRange.Font.Bold = true;
+                    int rowsCount = reports.Count;
+                    object[,] Cells = new object[rowsCount, columnsCount];
+                    for (int j = 0; j < rowsCount; j++)
+                        for (int i = 0; i < columnsCount; i++)
+                            Cells[j, i] = columns[i].GetValue(reports[j]);
+                    Worksheet.get_Range((Microsoft.Office.Interop.Excel.Range)(Worksheet.Cells[2, 1]), (Microsoft.Office.Interop.Excel.Range)(Worksheet.Cells[rowsCount + 1, columnsCount])).Value = Cells;
+                    Worksheet.Columns.AutoFit();
+                    if (ExcelFilePath != null && ExcelFilePath != "")
+                    {
+                        try
+                        {
+                            Worksheet.SaveAs(ExcelFilePath);
+                            Excel.Quit();
+                            throw new Exception("Excel file saved!");
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception($"ExportToExcel: Excel file could not be saved! Check filepath: {ex.Message}");
+                        }
+                    }
+                    else
+                    {
+                        Excel.Visible = true;
+                    }
+                });
+                MessageHost.Hide();
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[ExportReportsToExcelAsync]:exception:{e.Message}", true);
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
+            }
+        }
+
+        /// <summary>
         /// 查询产品列表
         /// </summary>
         /// <returns></returns>
@@ -446,11 +515,53 @@ namespace OnCall.ViewModels
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
                 List<Product_GetProductList_Result> list = JsonConvert.DeserializeObject<List<Product_GetProductList_Result>>(result.Content.ToString());
-                ProductList = list.Select(it => it.InternalName).ToList();
+                ProductList = list;
             }
             catch (Exception e)
             {
                 Global.Log($"[OnCall]:[MainViewModel]:[GetProductListAsyncBack]:exception:{e.Message}", true);
+            }
+        }
+
+        /// <summary>
+        /// 查询故障类型列表
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetFailureCategoryListAsyncBack()
+        {
+            try
+            {
+                await Task.Delay(MessageHost.InternalDelay);
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/application/night-city/modules/on-call/GetFailureCategoryList"));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                List<OnCall_GetFailureCategoryList_Result> list = JsonConvert.DeserializeObject<List<OnCall_GetFailureCategoryList_Result>>(result.Content.ToString());
+                FailureCategoryList = list.Select(it => it.Name).ToList();
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[GetFailureCategoryListAsyncBack]:exception:{e.Message}", true);
+            }
+        }
+
+        /// <summary>
+        /// 查询产品流程列表
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetProductProcessListAsyncBack()
+        {
+            try
+            {
+                await Task.Delay(MessageHost.InternalDelay);
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/application/night-city/modules/product/GetProductProcessList"));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                List<Product_GetProductProcessList_Result> list = JsonConvert.DeserializeObject<List<Product_GetProductProcessList_Result>>(result.Content.ToString());
+                ProductProcessList = list.Select(it => it.Name).ToList();
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[GetProductProcessListAsyncBack]:exception:{e.Message}", true);
             }
         }
 
@@ -473,12 +584,69 @@ namespace OnCall.ViewModels
                     if (cluster.Category == "Product")
                         SolveProductFromCluster = cluster.Cluster;
                     if (cluster.Category == "Process")
-                        SolveProcessFromCluster = cluster.Cluster;
+                        SolveProductProcessFromCluster = cluster.Cluster;
                 }
             }
             catch (Exception e)
             {
                 Global.Log($"[OnCall]:[MainViewModel]:[GetClustersAsyncBack]:exception:{e.Message}", true);
+            }
+        }
+
+        /// <summary>
+        /// 获取MQS测试Log
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetMQSLogAsyncBack()
+        {
+            try
+            {
+                await Task.Run(() =>
+                {
+                    string productProcess = string.Empty;
+                    string product = string.Empty;
+                    FileInfo[] files = new DirectoryInfo(@"D:\Lenovo log").GetFiles();
+                    foreach (FileInfo file in files.OrderBy(it => it.CreationTime))
+                    {
+                        if (file.Extension != ".csv") continue;
+                        StreamReader sr = new StreamReader(file.FullName, Encoding.UTF8);
+                        string line = sr.ReadLine();
+                        FileStream fs = new FileStream(file.FullName, FileMode.Open, FileAccess.Read);
+                        int n = (int)fs.Length;
+                        byte[] b = new byte[n];
+                        int r = fs.Read(b, 0, n);
+                        fs.Close();
+                        string body = Encoding.UTF8.GetString(b, 0, n);
+                        try
+                        {
+                            var rows = body.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                            product = rows[9].Substring(rows[9].IndexOf(",") + 1).Trim();
+                            if (product.StartsWith("ANDROID_"))
+                                product = product.Substring(product.IndexOf("_") + 1);
+                            else if (product.StartsWith("TABLET_"))
+                                product = product.Substring(product.IndexOf("_") + 1);
+                            productProcess = rows[12].Substring(rows[12].IndexOf(",") + 1).Trim();
+                        }
+                        catch { }
+                        if (ProductProcessList.Contains(productProcess) && ProductList.Select(it => it.InternalName).ToList().Contains(product))
+                            goto Found;
+                        else
+                        {
+                            product = string.Empty;
+                            productProcess = string.Empty;
+                        }
+                    }
+                Found:
+                    if (productProcess != string.Empty && product != string.Empty)
+                    {
+                        SolveProductProcessFromFile = productProcess;
+                        SolveProductFromFile = product;
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[GetMQSLogAsyncBack]:exception:{e.Message}", true);
             }
         }
 
@@ -492,12 +660,101 @@ namespace OnCall.ViewModels
             {
                 await Task.Run(() =>
                 {
-
+                    string productProcess = string.Empty;
+                    string product = string.Empty;
+                    FileInfo[] files = new DirectoryInfo(@"C:\prod\log").GetFiles();
+                    foreach (FileInfo file in files.OrderBy(it => it.CreationTime))
+                    {
+                        foreach (string pp in ProductProcessList)
+                        {
+                            foreach (string p in ProductList.Select(it => it.InternalName).ToList())
+                            {
+                                if (file.Name.StartsWith($"NexTestLogs_{pp}_{p}"))
+                                {
+                                    productProcess = pp;
+                                    product = p;
+                                    goto Found;
+                                }
+                            }
+                        }
+                    }
+                Found:
+                    if (productProcess != string.Empty && product != string.Empty)
+                    {
+                        SolveProductProcessFromFile = productProcess;
+                        SolveProductFromFile = product;
+                    }
                 });
             }
             catch (Exception e)
             {
                 Global.Log($"[OnCall]:[MainViewModel]:[GetNextestLogAsyncBack]:exception:{e.Message}", true);
+            }
+        }
+
+        /// <summary>
+        /// 添加待提交附件
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        private void AddPreCommittedAttachment(string filename)
+        {
+            try
+            {
+                AttachmentsError = string.Empty;
+                FileInfo fileinfo = new FileInfo(filename);
+                if (Attachments.FirstOrDefault(it => it.Name == fileinfo.Name) != null)
+                    throw new Exception("Attachment with the same name");
+                Attachment attachment = new Attachment
+                {
+                    Name = fileinfo.Name,
+                    Extension = fileinfo.Extension,
+                    Directory = fileinfo.DirectoryName,
+                    Size = fileinfo.Length
+                };
+                long sizeTotal = 0;
+                foreach (var at in Attachments)
+                {
+                    sizeTotal += at.Size;
+                }
+                sizeTotal += attachment.Size;
+                if (sizeTotal > 15 * 1024 * 1024)
+                    throw new Exception("The attachments is too large");
+                FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
+                byte[] bytes = new byte[stream.Length];
+                stream.Read(bytes, 0, bytes.Length);
+                attachment.Base64Str = Convert.ToBase64String(bytes);
+                stream.Close();
+                Attachments.Add(attachment);
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[AddPreCommittedAttachment]:exception:{e.Message}", true);
+                AttachmentsError = e.Message;
+            }
+        }
+
+        /// <summary>
+        /// 发送附加至产品负责人
+        /// </summary>
+        private async Task SendAttachmentsToProductOwnerAsync(ObservableCollection<Attachment> attachments, string receiver)
+        {
+            try
+            {
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
+                await Task.Run(() =>
+                {
+
+                });
+                MessageHost.Hide();
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[SendAttachmentsToProductOwnerAsync]:exception:{e.Message}", true);
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -533,6 +790,17 @@ namespace OnCall.ViewModels
         private async void GetAllReports()
         {
             await GetAllReportsAsync();
+        }
+        #endregion
+
+        #region 命令：生成异常报告EXCEL
+        public ICommand ExportReportsToExcelCommand
+        {
+            get => new DelegateCommand(ExportReportsToExcel);
+        }
+        private async void ExportReportsToExcel()
+        {
+            await ExportReportsToExcelAsync(AllReportList);
         }
         #endregion
 
@@ -573,14 +841,17 @@ namespace OnCall.ViewModels
         private async void TrySolveReport()
         {
             SolvedProduct = null;
-            SolvedProcess = string.Empty;
-            SolvedFailureCategory = string.Empty;
+            SolvedProductProcess = string.Empty;
+            SolvedFailureCategory = null;
             SolvedFailureReason = string.Empty;
             SolvedSolution = string.Empty;
             MessageHost.Show();
             MessageHost.DialogCategory = "Syncing";
             await GetProductListAsyncBack();
+            await GetProductProcessListAsyncBack();
+            await GetFailureCategoryListAsyncBack();
             await GetClustersAsyncBack();
+            await GetMQSLogAsyncBack();
             await GetNextestLogAsyncBack();
             MessageHost.DialogCategory = "Solve Report";
         }
@@ -593,7 +864,7 @@ namespace OnCall.ViewModels
         }
         private async void SolveReport()
         {
-            await SolveReportAsync(SolvedReportId, SolvedProduct, SolvedProcess, SolvedFailureCategory, SolvedFailureReason, SolvedSolution);
+            await SolveReportAsync(SolvedReportId, SolvedProduct.InternalName, SolvedProductProcess, SolvedFailureCategory, SolvedFailureReason, SolvedSolution);
         }
         #endregion
 
@@ -615,7 +886,7 @@ namespace OnCall.ViewModels
         }
         public void Cancel()
         {
-            MessageHost.Hide();
+            MessageHost.HideImmediately();
         }
         #endregion
 
@@ -629,20 +900,50 @@ namespace OnCall.ViewModels
             switch (field)
             {
                 case "SolveProductFromFile":
-                    SolvedProduct = SolveProductFromFile;
+                    SolvedProduct = ProductList.FirstOrDefault(it => it.InternalName == SolveProductFromFile);
                     break;
                 case "SolveProductFromCluster":
-                    SolvedProduct = SolveProductFromCluster;
+                    SolvedProduct = ProductList.FirstOrDefault(it => it.InternalName == SolveProductFromCluster);
                     break;
-                case "SolveProcessFromFile":
-                    SolvedProcess = SolveProcessFromFile;
+                case "SolveProductProcessFromFile":
+                    SolvedProductProcess = SolveProductProcessFromFile;
                     break;
-                case "SolveProcessFromCluster":
-                    SolvedProcess = SolveProcessFromCluster;
+                case "SolveProductProcessFromCluster":
+                    SolvedProductProcess = SolveProductProcessFromCluster;
                     break;
                 default:
                     break;
             }
+        }
+        #endregion
+
+        #region 命令：回执添加待提交附件
+        public ICommand AddPreCommittedAttachmentCommand
+        {
+            get => new DelegateCommand(AddPreCommittedAttachment);
+        }
+        public void AddPreCommittedAttachment()
+        {
+            System.Windows.Forms.OpenFileDialog op = new System.Windows.Forms.OpenFileDialog
+            {
+                Title = "Please select the file to upload"
+            };
+            if (op.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                AddPreCommittedAttachment(op.FileName);
+            }
+        }
+        #endregion
+
+        #region 命令：回执取消待提交附件
+        public ICommand RemovePreCommittedAttachmentCommand
+        {
+            get => new DelegateCommand<Attachment>(RemovePreCommittedAttachment);
+        }
+        public void RemovePreCommittedAttachment(Attachment attachment)
+        {
+            Attachments.Remove(attachment);
+            AttachmentsError = string.Empty;
         }
         #endregion
 
@@ -675,8 +976,8 @@ namespace OnCall.ViewModels
         #endregion
 
         #region 异常解决回执：产品
-        private string solvedProduct;
-        public string SolvedProduct
+        private Product_GetProductList_Result solvedProduct;
+        public Product_GetProductList_Result SolvedProduct
         {
             get => solvedProduct;
             set
@@ -711,37 +1012,37 @@ namespace OnCall.ViewModels
         #endregion
 
         #region 异常解决回执：可能的流程 来源：文件
-        private string solveProcessFromFile;
-        public string SolveProcessFromFile
+        private string solveProductProcessFromFile;
+        public string SolveProductProcessFromFile
         {
-            get => solveProcessFromFile;
+            get => solveProductProcessFromFile;
             set
             {
-                SetProperty(ref solveProcessFromFile, value);
+                SetProperty(ref solveProductProcessFromFile, value);
             }
         }
         #endregion
 
         #region 异常解决回执：可能的流程 来源：集群
-        private string solveProcessFromCluster;
-        public string SolveProcessFromCluster
+        private string solveProductProcessFromCluster;
+        public string SolveProductProcessFromCluster
         {
-            get => solveProcessFromCluster;
+            get => solveProductProcessFromCluster;
             set
             {
-                SetProperty(ref solveProcessFromCluster, value);
+                SetProperty(ref solveProductProcessFromCluster, value);
             }
         }
         #endregion
 
         #region 异常解决回执：流程
-        private string solvedProcess;
-        public string SolvedProcess
+        private string solvedProductProcess;
+        public string SolvedProductProcess
         {
-            get => solvedProcess;
+            get => solvedProductProcess;
             set
             {
-                SetProperty(ref solvedProcess, value);
+                SetProperty(ref solvedProductProcess, value);
             }
         }
         #endregion
@@ -783,8 +1084,8 @@ namespace OnCall.ViewModels
         #endregion
 
         #region 产品列表
-        private List<string> productList;
-        public List<string> ProductList
+        private List<Product_GetProductList_Result> productList;
+        public List<Product_GetProductList_Result> ProductList
         {
             get => productList;
             set
@@ -794,9 +1095,21 @@ namespace OnCall.ViewModels
         }
         #endregion
 
+        #region 产品流程列表
+        private List<string> productProcessList;
+        public List<string> ProductProcessList
+        {
+            get => productProcessList;
+            set
+            {
+                SetProperty(ref productProcessList, value);
+            }
+        }
+        #endregion
+
         #region 故障类型列表
-        private string failureCategoryList;
-        public string FailureCategoryList
+        private List<string> failureCategoryList;
+        public List<string> FailureCategoryList
         {
             get => failureCategoryList;
             set
@@ -850,6 +1163,30 @@ namespace OnCall.ViewModels
             set
             {
                 SetProperty(ref messageHost, value);
+            }
+        }
+        #endregion
+
+        #region 待提交附件列表
+        private ObservableCollection<Attachment> attachments = new ObservableCollection<Attachment>();
+        public ObservableCollection<Attachment> Attachments
+        {
+            get => attachments;
+            set
+            {
+                SetProperty(ref attachments, value);
+            }
+        }
+        #endregion
+
+        #region 待提交附件错误信息
+        private string attachmentsError;
+        public string AttachmentsError
+        {
+            get => attachmentsError;
+            set
+            {
+                SetProperty(ref attachmentsError, value);
             }
         }
         #endregion

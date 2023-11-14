@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Moon.Core.Models;
 using Moon.Core.Models.Edgerunners;
 using Moon.Core.Standard;
@@ -23,7 +22,14 @@ namespace Moon.Controllers.Application.NightCity.Modules
             ControllersResult result = new();
             try
             {
-                List<Product> products = Database.Edgerunners.Queryable<Product>().ToList();
+                List<Product_GetProductList_Result> products = Database.Edgerunners.Queryable<Product>().LeftJoin<Users>((p, u) => p.Engineer == u.EmployeeId)
+                    .OrderBy((p, u) => p.InternalName).Select((p, u) => new Product_GetProductList_Result()
+                    {
+                        InternalName = p.InternalName,
+                        ExternalName = p.ExternalName,
+                        Engineer = u.Name,
+                        EngineerEmail = u.Email
+                    }).ToList();
                 result.Content = products;
                 result.Result = true;
             }
@@ -36,5 +42,34 @@ namespace Moon.Controllers.Application.NightCity.Modules
         }
         #endregion
 
+        #region 获取产品流程
+        [HttpGet]
+        public ControllersResult GetProductProcessList()
+        {
+            ControllersResult result = new();
+            try
+            {
+                List<ProductProcess> productProcesses = Database.Edgerunners.Queryable<ProductProcess>().OrderBy(it => it.Name).ToList();
+                result.Content = productProcesses;
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
+
+        #region GetProductList
+        public class Product_GetProductList_Result
+        {
+            public string InternalName { get; set; }
+            public string ExternalName { get; set; }
+            public string Engineer { get; set; }
+            public string? EngineerEmail { get; set; }
+        }
+        #endregion
     }
 }

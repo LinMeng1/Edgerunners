@@ -1,6 +1,4 @@
-﻿using Dm.Config;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Moon.Attributes;
 using Moon.Core.Models;
@@ -142,7 +140,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
                         {
                             report.State = "aborted";
                             report.Solution = parameter.AbortReason;
-                        }           
+                        }
                         Database.Edgerunners.Updateable(report).UpdateColumns("SolveTime", "Solver", "State", "Product", "Process", "FailureCategory", "FailureReason", "Solution").ExecuteCommand();
                         Database.Edgerunners.Deleteable<IPCBanners>().Where(it => it.LinkInformation == parameter.ReportId).ExecuteCommand();
                         break;
@@ -294,6 +292,26 @@ namespace Moon.Controllers.Application.NightCity.Modules
                           ExternalId = i.ExternalId,
                       }).ToList();
                 result.Content = reports;
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
+
+        #region 查询故障类型列表
+        [HttpGet]
+        public ControllersResult GetFailureCategoryList()
+        {
+            ControllersResult result = new();
+            try
+            {
+                List<IPCIssueFailureCategories> failureCategories = Database.Edgerunners.Queryable<IPCIssueFailureCategories>().OrderBy(it => it.Id).ToList();
+                result.Content = failureCategories;
                 result.Result = true;
             }
             catch (Exception e)
