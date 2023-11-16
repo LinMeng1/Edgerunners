@@ -140,7 +140,7 @@
                                     </StackPanel>
                                     <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="3">
                                         <TextBlock Text="Product:" FontSize="13" VerticalAlignment="Center"/>
-                                        <ComboBox MinWidth="150" ItemsSource="{Binding ProductList}" DisplayMemberPath="InternalName" SelectedItem="{Binding SolvedProduct}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                        <ComboBox MinWidth="150" ItemsSource="{Binding ProductList}" SelectedItem="{Binding SolvedProduct}" Margin="10,0,0,0" VerticalAlignment="Center"/>
                                         <Grid Margin="10,0,0,0" Background="#FFECB3">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="auto"/>

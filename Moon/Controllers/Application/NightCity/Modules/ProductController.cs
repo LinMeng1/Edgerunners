@@ -22,14 +22,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
             ControllersResult result = new();
             try
             {
-                List<Product_GetProductList_Result> products = Database.Edgerunners.Queryable<Product>().LeftJoin<Users>((p, u) => p.Engineer == u.EmployeeId)
-                    .OrderBy((p, u) => p.InternalName).Select((p, u) => new Product_GetProductList_Result()
-                    {
-                        InternalName = p.InternalName,
-                        ExternalName = p.ExternalName,
-                        Engineer = u.Name,
-                        EngineerEmail = u.Email
-                    }).ToList();
+                List<string> products = Database.Edgerunners.Queryable<Product>().OrderBy(it => it.InternalName).Select(it => it.InternalName).ToList();
                 result.Content = products;
                 result.Result = true;
             }
@@ -49,7 +42,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
             ControllersResult result = new();
             try
             {
-                List<ProductProcess> productProcesses = Database.Edgerunners.Queryable<ProductProcess>().OrderBy(it => it.Name).ToList();
+                List<string> productProcesses = Database.Edgerunners.Queryable<ProductProcess>().OrderBy(it => it.Name).Select(it => it.Name).ToList();
                 result.Content = productProcesses;
                 result.Result = true;
             }
@@ -59,16 +52,6 @@ namespace Moon.Controllers.Application.NightCity.Modules
                 log.LogError(result.ErrorMessage);
             }
             return result;
-        }
-        #endregion
-
-        #region GetProductList
-        public class Product_GetProductList_Result
-        {
-            public string InternalName { get; set; }
-            public string ExternalName { get; set; }
-            public string Engineer { get; set; }
-            public string? EngineerEmail { get; set; }
         }
         #endregion
     }

@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -386,7 +387,17 @@ namespace OnCall.ViewModels
                     throw new Exception("Process is empty");
                 if (failureCategory == null || failureCategory == string.Empty)
                     throw new Exception("FailureCategory is empty");
-                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, Product = product, Process = process, FailureCategory = failureCategory, FailureReason = failureReason, Solution = solution }));
+                List<object> attachements = new List<object>();
+                foreach (var attachment in Attachments)
+                {
+                    attachements.Add(new
+                    {
+                        attachment.Name,
+                        attachment.Extension,
+                        attachment.Base64Str
+                    });
+                }
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, Product = product, Process = process, FailureCategory = failureCategory, FailureReason = failureReason, Solution = solution, Attachments = attachements }));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
                 List<string> jurisdictionalClusters = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
@@ -395,8 +406,6 @@ namespace OnCall.ViewModels
                     IsMastermind = true,
                     Content = "system sync banner messages"
                 }));
-                if (Attachments.Count > 0)
-                    await SendAttachmentsToProductOwnerAsync(Attachments, ProductList.First(it => it.InternalName == product).EngineerEmail);
                 await SyncOpenReportsAsync();
                 await GetAllReportsAsync();
                 MessageHost.Hide();
@@ -514,7 +523,7 @@ namespace OnCall.ViewModels
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/application/night-city/modules/product/GetProductList"));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
-                List<Product_GetProductList_Result> list = JsonConvert.DeserializeObject<List<Product_GetProductList_Result>>(result.Content.ToString());
+                List<string> list = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
                 ProductList = list;
             }
             catch (Exception e)
@@ -535,8 +544,8 @@ namespace OnCall.ViewModels
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/application/night-city/modules/on-call/GetFailureCategoryList"));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
-                List<OnCall_GetFailureCategoryList_Result> list = JsonConvert.DeserializeObject<List<OnCall_GetFailureCategoryList_Result>>(result.Content.ToString());
-                FailureCategoryList = list.Select(it => it.Name).ToList();
+                List<string> list = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
+                FailureCategoryList = list;
             }
             catch (Exception e)
             {
@@ -556,8 +565,8 @@ namespace OnCall.ViewModels
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/application/night-city/modules/product/GetProductProcessList"));
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
-                List<Product_GetProductProcessList_Result> list = JsonConvert.DeserializeObject<List<Product_GetProductProcessList_Result>>(result.Content.ToString());
-                ProductProcessList = list.Select(it => it.Name).ToList();
+                List<string> list = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
+                ProductProcessList = list;
             }
             catch (Exception e)
             {
@@ -628,7 +637,7 @@ namespace OnCall.ViewModels
                             productProcess = rows[12].Substring(rows[12].IndexOf(",") + 1).Trim();
                         }
                         catch { }
-                        if (ProductProcessList.Contains(productProcess) && ProductList.Select(it => it.InternalName).ToList().Contains(product))
+                        if (ProductProcessList.Contains(productProcess) && ProductList.Contains(product))
                             goto Found;
                         else
                         {
@@ -667,7 +676,7 @@ namespace OnCall.ViewModels
                     {
                         foreach (string pp in ProductProcessList)
                         {
-                            foreach (string p in ProductList.Select(it => it.InternalName).ToList())
+                            foreach (string p in ProductList)
                             {
                                 if (file.Name.StartsWith($"NexTestLogs_{pp}_{p}"))
                                 {
@@ -731,30 +740,6 @@ namespace OnCall.ViewModels
             {
                 Global.Log($"[OnCall]:[MainViewModel]:[AddPreCommittedAttachment]:exception:{e.Message}", true);
                 AttachmentsError = e.Message;
-            }
-        }
-
-        /// <summary>
-        /// 发送附加至产品负责人
-        /// </summary>
-        private async Task SendAttachmentsToProductOwnerAsync(ObservableCollection<Attachment> attachments, string receiver)
-        {
-            try
-            {
-                MessageHost.Show();
-                MessageHost.DialogCategory = "Syncing";
-                await Task.Delay(MessageHost.InternalDelay);
-                await Task.Run(() =>
-                {
-
-                });
-                MessageHost.Hide();
-            }
-            catch (Exception e)
-            {
-                Global.Log($"[OnCall]:[MainViewModel]:[SendAttachmentsToProductOwnerAsync]:exception:{e.Message}", true);
-                MessageHost.DialogMessage = e.Message;
-                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -864,7 +849,7 @@ namespace OnCall.ViewModels
         }
         private async void SolveReport()
         {
-            await SolveReportAsync(SolvedReportId, SolvedProduct.InternalName, SolvedProductProcess, SolvedFailureCategory, SolvedFailureReason, SolvedSolution);
+            await SolveReportAsync(SolvedReportId, SolvedProduct, SolvedProductProcess, SolvedFailureCategory, SolvedFailureReason, SolvedSolution);
         }
         #endregion
 
@@ -900,10 +885,10 @@ namespace OnCall.ViewModels
             switch (field)
             {
                 case "SolveProductFromFile":
-                    SolvedProduct = ProductList.FirstOrDefault(it => it.InternalName == SolveProductFromFile);
+                    SolvedProduct = SolveProductFromFile;
                     break;
                 case "SolveProductFromCluster":
-                    SolvedProduct = ProductList.FirstOrDefault(it => it.InternalName == SolveProductFromCluster);
+                    SolvedProduct = SolveProductFromCluster;
                     break;
                 case "SolveProductProcessFromFile":
                     SolvedProductProcess = SolveProductProcessFromFile;
@@ -976,8 +961,8 @@ namespace OnCall.ViewModels
         #endregion
 
         #region 异常解决回执：产品
-        private Product_GetProductList_Result solvedProduct;
-        public Product_GetProductList_Result SolvedProduct
+        private string solvedProduct;
+        public string SolvedProduct
         {
             get => solvedProduct;
             set
@@ -1084,8 +1069,8 @@ namespace OnCall.ViewModels
         #endregion
 
         #region 产品列表
-        private List<Product_GetProductList_Result> productList;
-        public List<Product_GetProductList_Result> ProductList
+        private List<string> productList;
+        public List<string> ProductList
         {
             get => productList;
             set

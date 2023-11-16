@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Linq;
 using Renci.SshNet;
 using System.Security.Cryptography;
-using static System.Net.WebRequestMethods;
 
 namespace Moon.Core.Utilities
 {

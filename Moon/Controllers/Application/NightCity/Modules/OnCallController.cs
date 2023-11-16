@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Moon.Attributes;
 using Moon.Core.Models;
+using Moon.Core.Models._Imaginary;
 using Moon.Core.Models.Edgerunners;
 using Moon.Core.Standard;
 using Moon.Core.Utilities;
@@ -143,6 +144,25 @@ namespace Moon.Controllers.Application.NightCity.Modules
                         }
                         Database.Edgerunners.Updateable(report).UpdateColumns("SolveTime", "Solver", "State", "Product", "Process", "FailureCategory", "FailureReason", "Solution").ExecuteCommand();
                         Database.Edgerunners.Deleteable<IPCBanners>().Where(it => it.LinkInformation == parameter.ReportId).ExecuteCommand();
+                        try
+                        {
+                            if (parameter.Attachments != null && parameter.Attachments.Count > 0)
+                            {
+                                string category = "TECC.NightCity.OnCall";
+                                string subject = "OnCall Attachments";
+                                string context = $"ID：{report.Id}<br/> " +
+                                                 $"Computer：{report.HostName} ({report.Mainboard})<br/>" +
+                                                 $"Product:{report.Product}<br/>" +
+                                                 $"Process:{report.Process}<br/>" +
+                                                 $"Sender：{user.Name}<br/>" +
+                                                 $"FailureCategory:{report.FailureCategory}<br/>" +
+                                                 $"FailureReason:{report.FailureReason}<br/>" +
+                                                 $"Solution:{report.Solution}<br/>";
+                                var receivers = Database.Edgerunners.Queryable<Product>().LeftJoin<Users>((p, u) => p.Engineer == u.EmployeeId).Where(p => p.InternalName == parameter.Product).Select((p, u) => u.Email).ToList();
+                                Mail.Send(category, subject, context, receivers, new List<string>(), parameter.Attachments);
+                            }
+                        }
+                        catch { }
                         break;
                     case "solved":
                         throw new Exception($"This issue has been solved, please refresh the banner message");
@@ -310,7 +330,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
             ControllersResult result = new();
             try
             {
-                List<IPCIssueFailureCategories> failureCategories = Database.Edgerunners.Queryable<IPCIssueFailureCategories>().OrderBy(it => it.Id).ToList();
+                List<string> failureCategories = Database.Edgerunners.Queryable<IPCIssueFailureCategories>().OrderBy(it => it.Id).Select(it => it.Name).ToList();
                 result.Content = failureCategories;
                 result.Result = true;
             }
@@ -347,6 +367,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
             public string? FailureReason { get; set; }
             public string? Solution { get; set; }
             public string? AbortReason { get; set; }
+            public List<_Attachment>? Attachments { get; set; }
         }
         #endregion
 
