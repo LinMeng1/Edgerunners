@@ -109,10 +109,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\DeveloperNews.cs" />
+    <Compile Include="Models\LocalInstallInformation.cs" />
+    <Compile Include="Models\PublishInformation.cs" />
     <Compile Include="Utilities\ConfigHelper.cs" />
     <Compile Include="Utilities\InstalledPrograms.cs" />
-    <Compile Include="Utilities\LocalInstallInformation.cs" />
-    <Compile Include="Utilities\PublishInformation.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

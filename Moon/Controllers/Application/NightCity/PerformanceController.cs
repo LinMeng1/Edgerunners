@@ -45,8 +45,31 @@ namespace Moon.Controllers.Application.NightCity
         }
         #endregion
 
+        #region 上传本机NightCity版本
+        [HttpPost]
+        public ControllersResult UploadNightCityVersion([FromBody] Performance_UploadNightCityVersion_Parameter parameter)
+        {
+            ControllersResult result = new();
+            try
+            {
+                NightCityLaunchHistories history = new()
+                {
+                    Mainboard = parameter.Mainboard,
+                    Version = parameter.Version,
+                };
+                Database.Edgerunners.Insertable(history).IgnoreColumns("Id").IgnoreColumns("Time").ExecuteCommand();
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
 
-        #region Upload
+        #region UploadBasicInformation
         public class Performance_UploadBasicInformation_Parameter
         {
             public string Mainboard { get; set; }
@@ -59,5 +82,13 @@ namespace Moon.Controllers.Application.NightCity
             public string? Memory { get; set; }
         }
         #endregion
+
+        #region UploadNightCityVersion
+        public class Performance_UploadNightCityVersion_Parameter
+        {
+            public string Mainboard { get; set; }
+            public string Version { get; set; }
+        }
+        #endregion 
     }
 }

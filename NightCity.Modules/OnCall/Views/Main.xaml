@@ -329,6 +329,8 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="{Binding View}" FontWeight="Bold"/>
                     <materialDesign:PackIcon Grid.Column="2" Kind="ChartBarStacked" Cursor="Hand">
@@ -365,6 +367,29 @@
                                 <Setter Property="Background" Value="Transparent"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding View}" Value="Workshop">
+                                        <Setter Property="Background" Value="Black"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </materialDesign:PackIcon.Style>
+                    </materialDesign:PackIcon>
+                    <Separator Grid.Column="5" BorderBrush="Gray" Margin="5,0,5,0" BorderThickness="1">
+                        <Separator.LayoutTransform>
+                            <RotateTransform Angle="90"/>
+                        </Separator.LayoutTransform>
+                    </Separator>
+                    <materialDesign:PackIcon Grid.Column="6" Kind="AccountSwitch" Cursor="Hand">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction Command="{Binding SwitchViewCommand}" CommandParameter="Assign"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <materialDesign:PackIcon.Style>
+                            <Style TargetType="materialDesign:PackIcon">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding View}" Value="Assign">
                                         <Setter Property="Background" Value="Black"/>
                                         <Setter Property="Foreground" Value="White"/>
                                     </DataTrigger>
@@ -821,6 +846,69 @@
                         <Setter Property="Visibility" Value="Collapsed"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding View}" Value="Workshop">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <materialDesign:Card Grid.Row="0" Style="{StaticResource Card}" Padding="0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon Grid.Column="0" Margin="7,7,0,7" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <i:InvokeCommandAction Command="{Binding SwitchAssignFilterCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <materialDesign:PackIcon.Style>
+                                    <Style TargetType="materialDesign:PackIcon">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding AssignFilter}" Value="All">
+                                                <Setter Property="Kind" Value="AlphaABox"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding AssignFilter}" Value="Product">
+                                                <Setter Property="Kind" Value="AlphaP"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding AssignFilter}" Value="Location">
+                                                <Setter Property="Kind" Value="AlphaL"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </materialDesign:PackIcon.Style>
+                            </materialDesign:PackIcon>
+                            <TextBox Grid.Column="1" Style="{StaticResource MaterialDesignTextBox}" Text="{Binding AssignFilterText,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="5,10,0,5" Background="Transparent" GotFocus="Textbox_GotFocus" materialDesign:TextFieldAssist.HasClearButton="True">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding FilterAssignListCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                            <materialDesign:PackIcon Grid.Column="2" Margin="7" Kind="Sync" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <i:InvokeCommandAction Command="{Binding SyncInstalledModulesCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </materialDesign:PackIcon>
+                        </Grid>
+                    </materialDesign:Card>
+                </Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding View}" Value="Assign">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>

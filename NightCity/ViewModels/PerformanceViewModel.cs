@@ -1,4 +1,6 @@
-﻿using NightCity.Core.Models.Standard;
+﻿using Newtonsoft.Json;
+using NightCity.Core;
+using NightCity.Core.Models.Standard;
 using NightCity.Core.Services;
 using NightCity.Core.Services.Prism;
 using Prism.Commands;
@@ -11,15 +13,18 @@ namespace NightCity.ViewModels
 {
     public class PerformanceViewModel : BindableBase
     {
-        //内置延迟
-        private readonly int internalDelay = 500;
         //属性服务
         private readonly IPropertyService propertyService;
+        //Http服务
+        private readonly HttpService httpService;
         //基础信息服务
         private readonly BasicInfomationService basicInfomationService;
         public PerformanceViewModel(IPropertyService propertyService)
         {
+            Version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            //依赖注入及初始化
             this.propertyService = propertyService;
+            httpService = new HttpService();
             basicInfomationService = new BasicInfomationService(30, 2 * 60 * 60);
             basicInfomationService.MainboardChanged += (mainboard) =>
             {
@@ -57,6 +62,37 @@ namespace NightCity.ViewModels
             {
                 LastUploadTime = lastUploadTime;
             };
+            //等待设备SN获取后
+            Task.Run(async () =>
+            {
+                object mainboard = null;
+                while (mainboard == null)
+                {
+                    mainboard = propertyService.GetProperty("Mainboard");
+                    await Task.Delay(MessageHost.InternalDelay);
+                }
+                await UploadLaunchHistoryAsyncBack();
+            });
+        }
+
+        /// <summary>
+        /// 上传启动记录
+        /// </summary>
+        /// <returns></returns>
+        private async Task UploadLaunchHistoryAsyncBack()
+        {
+            try
+            {
+                await Task.Delay(MessageHost.InternalDelay);
+                string mainboard = propertyService.GetProperty("Mainboard").ToString();
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/performance/UploadNightCityVersion", new { Mainboard = mainboard, Version }));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[UploadLaunchHistoryAsyncBack]:exception:{e.Message}", true);
+            }
         }
 
         #region 命令集合
@@ -70,10 +106,9 @@ namespace NightCity.ViewModels
         {
             MessageHost.Show();
             MessageHost.DialogCategory = "Syncing";
-            await Task.Delay(internalDelay);
+            await Task.Delay(MessageHost.InternalDelay);
             await basicInfomationService.UploadAsync();
             MessageHost.Hide();
-
         }
         #endregion
 
@@ -187,6 +222,18 @@ namespace NightCity.ViewModels
             set
             {
                 SetProperty(ref lastUploadTime, value);
+            }
+        }
+        #endregion
+
+        #region 版本信息      
+        private string version;
+        public string Version
+        {
+            get => version;
+            set
+            {
+                SetProperty(ref version, value);
             }
         }
         #endregion

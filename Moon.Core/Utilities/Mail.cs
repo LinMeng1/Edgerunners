@@ -7,7 +7,7 @@ namespace Moon.Core.Utilities
 {
     public class Mail
     {
-        private static string address = "linmeng2@lenovo.com";
+        private static string address = "whptecc@lenovo.com";
         public static void Send(string category, string subject, string context, List<string> receivers, List<string> ccReceivers, List<_Attachment> attachments)
         {
             MailMessage msg = new()

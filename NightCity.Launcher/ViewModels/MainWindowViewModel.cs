@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using NightCity.Core;
 using NightCity.Core.Models.Standard;
 using NightCity.Core.Services;
+using NightCity.Launcher.Models;
 using NightCity.Launcher.Utilities;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -138,6 +139,59 @@ namespace NightCity.Launcher.ViewModels
             }
         }
         /// <summary>
+        /// 扫描本地安装信息(后台)
+        /// </summary>
+        /// <returns></returns>
+        private async Task ScanLocalInstallInformationAsyncBack()
+        {
+            try
+            {
+                await Task.Delay(MessageHost.InternalDelay);
+                List<string> productList = LocalInstallInformationList.Select(it => it.DisplayName).ToList();
+                List<LocalInstallInformation> localInstallInformationList = new List<LocalInstallInformation>();
+                await Task.Run(() =>
+                {
+                    List<LocalInstallInformation> apps = InstalledPrograms.GetInstalledPrograms();
+                    foreach (var app in apps)
+                    {
+                        if (productList.Contains(app.DisplayName))
+                        {
+                            localInstallInformationList.Add(app);
+                        }
+                    }
+                });
+                foreach (var localInstallInformation in localInstallInformationList)
+                {
+                    var info = LocalInstallInformationList.FirstOrDefault(it => it.DisplayName == localInstallInformation.DisplayName);
+                    if (info != null)
+                    {
+                        info.DisplayIcon = localInstallInformation.DisplayIcon;
+                        info.IconImage = localInstallInformation.IconImage ?? info.IconImage;
+                        info.DisplayVersion = localInstallInformation.DisplayVersion;
+                        info.Publisher = localInstallInformation.Publisher;
+                        info.UninstallString = localInstallInformation.UninstallString;
+                        info.LatestVersion = localInstallInformation.LatestVersion ?? info.LatestVersion;
+                        info.IsInstalled = true;
+                    }
+                }
+                foreach (var app in LocalInstallInformationList)
+                {
+                    ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post($"{Config.DataSource}/api/application/max-tac/publish/GetLatestRelease", new { Project = app.DisplayName }));
+                    if (!result.Result) continue;
+                    PublishInformation publish = JsonConvert.DeserializeObject<PublishInformation>(result.Content.ToString());
+                    app.LatestVersion = publish.Version;
+                    if (localInstallInformationList.FirstOrDefault(it => it.DisplayName == app.DisplayName) == null)
+                    {
+                        app.IsInstalled = false;
+                        app.DisplayIcon = null;
+                    }
+
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
         /// 启动产品
         /// </summary>
         /// <param name="information"></param>
@@ -229,7 +283,7 @@ namespace NightCity.Launcher.ViewModels
                 InstalledPrograms.RemoveUninstallInRegistry(information);
                 if (information.DisplayName == "NightCity.Daemon")
                     DeleteDaemonTaskScheduler();
-                await ScanLocalInstallInformationAsync();
+                await ScanLocalInstallInformationAsyncBack();
                 MessageHost.Hide();
             }
             catch (Exception e)
@@ -293,7 +347,7 @@ namespace NightCity.Launcher.ViewModels
                 MessageHost.Show();
                 MessageHost.DialogCategory = "Syncing";
                 await Task.Delay(MessageHost.InternalDelay);
-                await ScanLocalInstallInformationAsync();
+                await ScanLocalInstallInformationAsyncBack();
                 foreach (var info in LocalInstallInformationList)
                 {
                     if (info.IsInstalled)

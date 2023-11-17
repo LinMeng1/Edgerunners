@@ -9,6 +9,7 @@ using NightCity.Core.Models.Standard;
 using NightCity.Core.Services;
 using NightCity.Core.Services.Prism;
 using OnCall.Models;
+using OnCall.Models.Standard;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -17,7 +18,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -34,6 +34,8 @@ namespace OnCall.ViewModels
         private IPropertyService propertyService;
         //Http服务
         private HttpService httpService;
+        //活动优化服务
+        private readonly ActionOptimizingService actionOptimizingService;
         //监听token列表
         List<SubscriptionToken> eventTokens = new List<SubscriptionToken>();
         public MainViewModel(IEventAggregator eventAggregator, IPropertyService propertyService)
@@ -42,6 +44,7 @@ namespace OnCall.ViewModels
             this.eventAggregator = eventAggregator;
             this.propertyService = propertyService;
             httpService = new HttpService();
+            actionOptimizingService = new ActionOptimizingService();
             //获取Token   
             httpService.AddToken(propertyService.GetProperty("TestEngAuthorizationInfo")?.ToString());
             //监听事件 权限信息变更
@@ -743,6 +746,45 @@ namespace OnCall.ViewModels
             }
         }
 
+        /// <summary>
+        /// 获取分配信息列表
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetAssignListAsync()
+        {
+            try
+            {
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
+
+                MessageHost.Hide();
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[GetAssignListAsync]:exception:{e.Message}", true);
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
+            }
+        }
+
+        /// <summary>
+        /// 筛选分配信息列表
+        /// </summary>
+        /// <param name="category"></param>
+        private void FilterAssignListImmediately()
+        {
+            foreach (var assignInfo in AssignInfoList)
+            {
+                if (!assignInfo.Cluster.ToUpper().Contains(AssignFilterText == null ? string.Empty : AssignFilterText.Trim().ToUpper()))
+                    assignInfo.IsVisible = false;
+                else if (assignInfo.Category != AssignFilter && AssignFilter != "All")
+                    assignInfo.IsVisible = false;
+                else
+                    assignInfo.IsVisible = true;
+            }
+        }
+
         #region 命令集合
 
         #region 命令：同步横幅信息
@@ -929,6 +971,41 @@ namespace OnCall.ViewModels
         {
             Attachments.Remove(attachment);
             AttachmentsError = string.Empty;
+        }
+        #endregion
+
+        #region 命令：切换分配筛选
+        public ICommand SwitchAssignFilterCommand
+        {
+            get => new DelegateCommand(SwitchAssignFilter);
+        }
+        private void SwitchAssignFilter()
+        {
+            switch (AssignFilter)
+            {
+                case "All":
+                    AssignFilter = "Product";
+                    break;
+                case "Product":
+                    AssignFilter = "Location";
+                    break;
+                case "Location":
+                    AssignFilter = "All";
+                    break;
+                default:
+                    break;
+            }
+        }
+        #endregion
+
+        #region 命令：筛选分配列表
+        public ICommand FilterAssignListCommand
+        {
+            get => new DelegateCommand(FilterAssignList);
+        }
+        private void FilterAssignList()
+        {
+            actionOptimizingService.Debounce(200, null, FilterAssignListImmediately);
         }
         #endregion
 
@@ -1172,6 +1249,42 @@ namespace OnCall.ViewModels
             set
             {
                 SetProperty(ref attachmentsError, value);
+            }
+        }
+        #endregion
+
+        #region 分配筛选类型
+        private string assignFilter = "All";
+        public string AssignFilter
+        {
+            get => assignFilter;
+            set
+            {
+                SetProperty(ref assignFilter, value);
+            }
+        }
+        #endregion
+
+        #region 分配筛选文本
+        private string assignFilterText;
+        public string AssignFilterText
+        {
+            get => assignFilterText;
+            set
+            {
+                SetProperty(ref assignFilterText, value);
+            }
+        }
+        #endregion
+
+        #region 分配信息列表
+        private ObservableCollection<AssignInfo> assignInfoList = new ObservableCollection<AssignInfo>();
+        public ObservableCollection<AssignInfo> AssignInfoList
+        {
+            get => assignInfoList;
+            set
+            {
+                SetProperty(ref assignInfoList, value);
             }
         }
         #endregion

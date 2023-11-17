@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using NightCity.Launcher.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

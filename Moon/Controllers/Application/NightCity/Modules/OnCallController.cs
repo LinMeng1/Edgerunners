@@ -343,6 +343,24 @@ namespace Moon.Controllers.Application.NightCity.Modules
         }
         #endregion
 
+        #region 查询分配信息列表
+        [HttpGet]
+        public ControllersResult GetAssignInfoList()
+        {
+            ControllersResult result = new();
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
+
         #region CallReport
         public class OnCall_CallReport_Parameter
         {
