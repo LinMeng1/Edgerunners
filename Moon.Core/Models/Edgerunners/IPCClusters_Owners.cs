@@ -10,5 +10,6 @@ namespace Moon.Core.Models.Edgerunners
         [SugarColumn(IsPrimaryKey = true)]
         public string Category { get; set; }
         public string Owner { get; set; }
+        public string Creator { get; set; }
     }
 }

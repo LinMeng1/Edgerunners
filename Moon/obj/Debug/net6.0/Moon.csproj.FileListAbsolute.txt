@@ -114,3 +114,4 @@ D:\Project\Edgerunners\Moon\obj\Debug\net6.0\refint\Moon.dll
 D:\Project\Edgerunners\Moon\obj\Debug\net6.0\Moon.pdb
 D:\Project\Edgerunners\Moon\obj\Debug\net6.0\Moon.genruntimeconfig.cache
 D:\Project\Edgerunners\Moon\obj\Debug\net6.0\ref\Moon.dll
+D:\Project\Edgerunners\Moon\bin\Debug\net6.0\MQTTnet.dll

@@ -22,6 +22,7 @@ D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\Microsoft.IdentityMode
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\Microsoft.IdentityModel.Tokens.dll
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\Microsoft.OpenApi.dll
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
+D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\MQTTnet.dll
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\MySql.Data.dll
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\MySqlConnector.dll
 D:\Project\Edgerunners\Moon\obj\Release\net6.0\PubTmp\Out\Newtonsoft.Json.dll

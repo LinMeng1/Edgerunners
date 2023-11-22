@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using NightCity.Core.Models.Standard;
 using NightCity.Core.Services;
+using NightCity.Core.Utilities;
 using NightCity.Daemon.Utilities;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace NightCity.Daemon
         static void Main(string[] args)
         {
             httpService = new HttpService();
-            sftpService = new SftpService("10.114.113.101", 2022, "NightCity", "nightcity");
+            sftpService = new SftpService("10.114.113.101", 2022, Encryption.DecryptString("tonxrWIi+Dq/73qTwIQEKQ=="), Encryption.DecryptString("fxUxc7Rrk3op/6F1bBdmLw=="));
 
             #region 防止复数实例
             const string appName = "NightCity Daemon";

@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -48,10 +49,11 @@ namespace OnCall.ViewModels
             //获取Token   
             httpService.AddToken(propertyService.GetProperty("TestEngAuthorizationInfo")?.ToString());
             //监听事件 权限信息变更
-            eventTokens.Add(eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Subscribe((authorizationInfo) =>
+            eventTokens.Add(eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Subscribe(async (authorizationInfo) =>
             {
                 object token = propertyService.GetProperty(authorizationInfo.Item2);
                 httpService.AddToken(token?.ToString());
+                await SyncAssignInfoListAsync();
             }, ThreadOption.UIThread, true));
             //监听事件 链接命令发布
             eventTokens.Add(eventAggregator.GetEvent<BannerMessageLinkingEvent>().Subscribe(async message =>
@@ -80,8 +82,13 @@ namespace OnCall.ViewModels
                     TrySolveReport();
                 }
             }, ThreadOption.UIThread, true));
-            SyncOpenReports();
-            GetAllReports();
+            Task.Run(async () =>
+            {
+                await SyncAssignInfoListAsync();
+                await SyncOpenReportsAsync();
+                await GetAllReportsAsync();
+            });
+
 
             #region P1
             SeriesCollection1 = new SeriesCollection
@@ -578,6 +585,48 @@ namespace OnCall.ViewModels
         }
 
         /// <summary>
+        /// 获取所有用户
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetUsersAsyncBack()
+        {
+            try
+            {
+                await Task.Delay(MessageHost.InternalDelay);
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/application/max-tac/user/GetUsers"));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                List<Users> list = JsonConvert.DeserializeObject<List<Users>>(result.Content.ToString());
+                Users = list;
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[GetUserNamesAsyncBack]:exception:{e.Message}", true);
+            }
+        }
+
+        /// <summary>
+        /// 获取所有下属
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetSubordinatesAsyncBack()
+        {
+            try
+            {
+                await Task.Delay(MessageHost.InternalDelay);
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/application/max-tac/organization/GetSubordinates"));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                List<Users> list = JsonConvert.DeserializeObject<List<Users>>(result.Content.ToString());
+                Subordinates = list;
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[GetUserNamesAsyncBack]:exception:{e.Message}", true);
+            }
+        }
+
+        /// <summary>
         /// 查询集群
         /// </summary>
         /// <returns></returns>
@@ -750,14 +799,37 @@ namespace OnCall.ViewModels
         /// 获取分配信息列表
         /// </summary>
         /// <returns></returns>
-        private async Task GetAssignListAsync()
+        private async Task SyncAssignInfoListAsync()
         {
             try
             {
                 MessageHost.Show();
                 MessageHost.DialogCategory = "Syncing";
                 await Task.Delay(MessageHost.InternalDelay);
-
+                await GetUsersAsyncBack();
+                await GetSubordinatesAsyncBack();
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Get("https://10.114.113.101/api/application/night-city/modules/on-call/GetAssignInfoList"));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                List<AssignInfo> list = JsonConvert.DeserializeObject<List<AssignInfo>>(result.Content.ToString());
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    AssignInfoList.Clear();
+                    foreach (AssignInfo info in list)
+                    {
+                        Users owner = Users.FirstOrDefault(it => it.EmployeeId == info.Owner);
+                        Users creator = Users.FirstOrDefault(it => it.EmployeeId == info.Creator);
+                        if (owner != null && creator != null)
+                        {
+                            info.OwnerInfo = owner;
+                            info.OwnerInfoDisplay = Subordinates.FirstOrDefault(it => it.EmployeeId == owner.EmployeeId);
+                            info.CreatorInfo = creator;
+                            info.IsVisible = true;
+                            AssignInfoList.Add(info);
+                        }
+                    }
+                    FilterAssignListImmediately();
+                });
                 MessageHost.Hide();
             }
             catch (Exception e)
@@ -776,12 +848,120 @@ namespace OnCall.ViewModels
         {
             foreach (var assignInfo in AssignInfoList)
             {
-                if (!assignInfo.Cluster.ToUpper().Contains(AssignFilterText == null ? string.Empty : AssignFilterText.Trim().ToUpper()))
+                if (AssingFilterCreatedByMe && !assignInfo.IsControllable)
+                    assignInfo.IsVisible = false;
+                else if (!assignInfo.Cluster.ToUpper().Contains(AssignFilterText == null ? string.Empty : AssignFilterText.Trim().ToUpper()))
                     assignInfo.IsVisible = false;
                 else if (assignInfo.Category != AssignFilter && AssignFilter != "All")
                     assignInfo.IsVisible = false;
                 else
                     assignInfo.IsVisible = true;
+            }
+        }
+
+        /// <summary>
+        /// 删除集群负责人
+        /// </summary>
+        /// <param name="assignInfo"></param>
+        /// <returns></returns>
+        private async Task RemoveClusterOwnerAsync(AssignInfo assignInfo)
+        {
+            try
+            {
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/connection/RemoveClusterOwner", new { assignInfo.Cluster, assignInfo.Category }));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                AssignInfoList.Remove(assignInfo);
+                MessageHost.Hide();
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[RemoveClusterOwnerAsync]:exception:{e.Message}", true);
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
+            }
+        }
+
+        /// <summary>
+        /// 新增集群负责人
+        /// </summary>
+        /// <returns></returns>
+        private async Task AddClusterOwnerAsync()
+        {
+            try
+            {
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                if (EditingCluster.Trim() == string.Empty)
+                    throw new Exception("The Cluster Name is Empty");
+                if (EditClusterOwner == null)
+                    throw new Exception("The Cluster Owner is Empty");
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/connection/SetClusterOwner", new { Cluster = EditingCluster.Trim(), Category = EditingClusterCategory.Trim(), Owner = EditClusterOwner.EmployeeId }));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                MessageHost.DialogCategoryCallback = string.Empty;
+                await SyncAssignInfoListAsync();
+                MessageHost.Hide();
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[AddClusterOwnerAsync]:exception:{e.Message}", true);
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
+            }
+        }
+
+        /// <summary>
+        /// 更新集群负责人
+        /// </summary>
+        /// <returns></returns>
+        private async Task UpdateClusterOwnerAsync(AssignInfo assignInfo)
+        {
+            try
+            {
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/connection/SetClusterOwner", new { assignInfo.Cluster, assignInfo.Category, Owner = assignInfo.OwnerInfoDisplay.EmployeeId }));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                assignInfo.Owner = assignInfo.OwnerInfoDisplay.EmployeeId;
+                assignInfo.OwnerInfo = JsonConvert.DeserializeObject<Users>(JsonConvert.SerializeObject(assignInfo.OwnerInfoDisplay));
+                MessageHost.Hide();
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[UpdateClusterOwnerAsync]:exception:{e.Message}", true);
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "SyncAfterMessage";
+            }
+        }
+
+        /// <summary>
+        /// 借调
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        private async Task SecondmentAsync()
+        {
+            try
+            {
+                MessageHost.Show();
+                MessageHost.DialogCategory = "Syncing";
+                await Task.Delay(MessageHost.InternalDelay);
+                Users user = EditSecondmentUser;
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/max-tac/organization/Secondment", new { EmployeeID = user.EmployeeId }));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                MessageHost.DialogCategory = "SyncAfterMessage";
+                MessageHost.DialogMessage = $"{user.Name} has been seconded to your team";
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[SecondmentAsync]:exception:{e.Message}", true);
+                MessageHost.DialogMessage = e.Message;
+                MessageHost.DialogCategory = "Message";
             }
         }
 
@@ -906,6 +1086,24 @@ namespace OnCall.ViewModels
         }
         #endregion
 
+        #region 命令：清除信息框
+        public ICommand CleanMessageCommand
+        {
+            get => new DelegateCommand(CleanMessage);
+        }
+        private void CleanMessage()
+        {
+            if (MessageHost.DialogCategoryCallback == null)
+            {
+                MessageHost.HideImmediately();
+                MessageHost.DialogCategory = "Syncing";
+            }
+            else
+                MessageHost.DialogCategory = MessageHost.DialogCategoryCallback;
+            MessageHost.DialogMessage = string.Empty;
+        }
+        #endregion
+
         #region 命令：取消操作
         public ICommand CancelCommand
         {
@@ -995,6 +1193,19 @@ namespace OnCall.ViewModels
                 default:
                     break;
             }
+            FilterAssignListImmediately();
+        }
+        #endregion
+
+        #region 命令：切换分配筛选只看本人
+        public ICommand SwitchAssignFilterCreatedByMeCommand
+        {
+            get => new DelegateCommand(SwitchAssignFilterCreatedByMe);
+        }
+        private void SwitchAssignFilterCreatedByMe()
+        {
+            AssingFilterCreatedByMe = !AssingFilterCreatedByMe;
+            FilterAssignListImmediately();
         }
         #endregion
 
@@ -1008,6 +1219,108 @@ namespace OnCall.ViewModels
             actionOptimizingService.Debounce(200, null, FilterAssignListImmediately);
         }
         #endregion
+
+        #region 命令：同步分配信息列表
+        public ICommand SyncAssignInfoListCommand
+        {
+            get => new DelegateCommand(SyncAssignInfoList);
+        }
+        private async void SyncAssignInfoList()
+        {
+            await SyncAssignInfoListAsync();
+        }
+        #endregion
+
+        #region 命令：删除集群负责人询问
+        public ICommand TryRemoveClusterOwnerCommand
+        {
+            get => new DelegateCommand<AssignInfo>(TryRemoveClusterOwner);
+        }
+        private void TryRemoveClusterOwner(AssignInfo assignInfo)
+        {
+            RemovingClusterOwner = assignInfo;
+            MessageHost.DialogCategory = "RemoveClusterOwnerAsk";
+            MessageHost.DialogMessage = $"Confirm delete this Data：Cluster({assignInfo.Cluster})  Category({assignInfo.Category})";
+            MessageHost.Show();
+        }
+        #endregion
+
+        #region 命令：删除集群负责人
+        public ICommand RemoveClusterOwnerCommand
+        {
+            get => new DelegateCommand(RemoveClusterOwner);
+        }
+        private async void RemoveClusterOwner()
+        {
+            AssignInfo info = RemovingClusterOwner;
+            RemovingClusterOwner = null;
+            await RemoveClusterOwnerAsync(info);
+        }
+        #endregion
+
+        #region 命令：新增集群负责人询问
+        public ICommand TryAddClusterOwnerCommand
+        {
+            get => new DelegateCommand(TryAddClusterOwner);
+        }
+        private void TryAddClusterOwner()
+        {
+            MessageHost.DialogCategory = "Add Cluster Owner";
+            MessageHost.DialogCategoryCallback = "Add Cluster Owner";
+            MessageHost.Show();
+            EditingCluster = string.Empty;
+            EditingClusterCategory = "Location";
+            EditClusterOwner = null;
+        }
+        #endregion
+
+        #region 命令：新增集群负责人
+        public ICommand AddClusterOwnerCommand
+        {
+            get => new DelegateCommand(AddClusterOwner);
+        }
+        private async void AddClusterOwner()
+        {
+            await AddClusterOwnerAsync();
+        }
+        #endregion
+
+        #region 命令：更新集群负责人
+        public ICommand UpdateClusterOwnerCommand
+        {
+            get => new DelegateCommand<AssignInfo>(UpdateClusterOwner);
+        }
+        private async void UpdateClusterOwner(AssignInfo assignInfo)
+        {
+            if (assignInfo.OwnerInfoDisplay == null) return;
+            await UpdateClusterOwnerAsync(assignInfo);
+        }
+        #endregion
+
+        #region 命令：借调
+        public ICommand SecondmentCommand
+        {
+            get => new DelegateCommand(Secondment);
+        }
+        private async void Secondment()
+        {
+            await SecondmentAsync();
+        }
+        #endregion
+
+        #region 命令：借调询问
+        public ICommand TrySecondmentCommand
+        {
+            get => new DelegateCommand(TrySecondment);
+        }
+        private void TrySecondment()
+        {
+            MessageHost.DialogCategory = "SecondmentAsk";
+            MessageHost.DialogMessage = $"Confirm the secondment of this person:{EditSecondmentUser.Name} to your team";
+            MessageHost.Show();
+        }
+        #endregion
+
 
         #endregion
 
@@ -1265,6 +1578,18 @@ namespace OnCall.ViewModels
         }
         #endregion
 
+        #region 分配筛选只看本人
+        private bool assingFilterCreatedByMe;
+        public bool AssingFilterCreatedByMe
+        {
+            get => assingFilterCreatedByMe;
+            set
+            {
+                SetProperty(ref assingFilterCreatedByMe, value);
+            }
+        }
+        #endregion
+
         #region 分配筛选文本
         private string assignFilterText;
         public string AssignFilterText
@@ -1285,6 +1610,90 @@ namespace OnCall.ViewModels
             set
             {
                 SetProperty(ref assignInfoList, value);
+            }
+        }
+        #endregion
+
+        #region 所有用户列表
+        private List<Users> users = new List<Users>();
+        public List<Users> Users
+        {
+            get => users;
+            set
+            {
+                SetProperty(ref users, value);
+            }
+        }
+        #endregion
+
+        #region 可分配用户列表
+        private List<Users> subordinates = new List<Users>();
+        public List<Users> Subordinates
+        {
+            get => subordinates;
+            set
+            {
+                SetProperty(ref subordinates, value);
+            }
+        }
+        #endregion
+
+        #region 编辑中集群
+        private string editingCluster;
+        public string EditingCluster
+        {
+            get => editingCluster;
+            set
+            {
+                SetProperty(ref editingCluster, value);
+            }
+        }
+        #endregion
+
+        #region 编辑中集群类型
+        private string editingClusterCategory;
+        public string EditingClusterCategory
+        {
+            get => editingClusterCategory;
+            set
+            {
+                SetProperty(ref editingClusterCategory, value);
+            }
+        }
+        #endregion
+
+        #region 编辑中负责人
+        private Users editClusterOwner;
+        public Users EditClusterOwner
+        {
+            get => editClusterOwner;
+            set
+            {
+                SetProperty(ref editClusterOwner, value);
+            }
+        }
+        #endregion
+
+        #region 编辑中借调人员
+        private Users editSecondmentUser;
+        public Users EditSecondmentUser
+        {
+            get => editSecondmentUser;
+            set
+            {
+                SetProperty(ref editSecondmentUser, value);
+            }
+        }
+        #endregion
+
+        #region 删除中集群负责人
+        private AssignInfo removingClusterOwner;
+        public AssignInfo RemovingClusterOwner
+        {
+            get => removingClusterOwner;
+            set
+            {
+                SetProperty(ref removingClusterOwner, value);
             }
         }
         #endregion

@@ -26,6 +26,10 @@
             Application_NightCity_Modules_OnCall_HandleReport,
             Basic_Account_LinkOfficeComputer,
             Application_MaxTac_Publish_ReleaseProject,
+            Application_MaxTac_Organization_Secondment,
+            Application_NightCity_Connection_SetClusterOwner,
+            Application_NightCity_Connection_RemoveClusterOwner,
+            Application_MaxTac_Publish_UpdateNightCityModule,
         }
         #endregion
     }

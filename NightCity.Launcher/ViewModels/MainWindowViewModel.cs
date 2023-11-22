@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using NightCity.Core;
 using NightCity.Core.Models.Standard;
 using NightCity.Core.Services;
+using NightCity.Core.Utilities;
 using NightCity.Launcher.Models;
 using NightCity.Launcher.Utilities;
 using Prism.Commands;
@@ -35,7 +36,7 @@ namespace NightCity.Launcher.ViewModels
         {
             //依赖注入及初始化
             httpService = new HttpService();
-            sftpService = new SftpService("10.114.113.101", 2022, "NightCity", "nightcity");
+            sftpService = new SftpService("10.114.113.101", 2022, Encryption.DecryptString("tonxrWIi+Dq/73qTwIQEKQ=="), Encryption.DecryptString("fxUxc7Rrk3op/6F1bBdmLw=="));
             actionOptimizingService = new ActionOptimizingService();
             Config = ConfigHelper.GetConfig(config);
             Config.ConfigChanged += ConfigChanged;

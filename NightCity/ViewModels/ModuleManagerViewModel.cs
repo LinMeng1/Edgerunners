@@ -7,6 +7,7 @@ using NightCity.Core.Models;
 using NightCity.Core.Models.Standard;
 using NightCity.Core.Services;
 using NightCity.Core.Services.Prism;
+using NightCity.Core.Utilities;
 using NightCity.Views;
 using Prism.Commands;
 using Prism.Events;
@@ -52,7 +53,7 @@ namespace NightCity.ViewModels
             this.moduleCatalog = (DynamicDirectoryModuleCatalog)moduleCatalog;
             this.propertyService = propertyService;
             //propertyService.SetProperty("ModuleWindows", windows);
-            sftpService = new SftpService("10.114.113.101", 2022, "NightCity", "nightcity");
+            sftpService = new SftpService("10.114.113.101", 2022, Encryption.DecryptString("tonxrWIi+Dq/73qTwIQEKQ=="), Encryption.DecryptString("fxUxc7Rrk3op/6F1bBdmLw=="));
             httpService = new HttpService();
             actionOptimizingService = new ActionOptimizingService();
             //监听事件 Mqtt连接/断开

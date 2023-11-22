@@ -10,8 +10,8 @@ namespace Moon.Core.Utilities
         #region GetManifest
         private static string host = "10.114.113.101";
         private static int port = 2022;
-        private static string username = "NightCity";
-        private static string password = "nightcity";
+        private static string username = "tonxrWIi+Dq/73qTwIQEKQ==";
+        private static string password = "fxUxc7Rrk3op/6F1bBdmLw==";
 
         public static string GetManifest(string source, SftpClient? sftp = null)
         {
@@ -20,7 +20,7 @@ namespace Moon.Core.Utilities
             {
                 if (sftp == null)
                 {
-                    sftp = new SftpClient(host, port, username, password);
+                    sftp = new SftpClient(host, port, Encryption.DecryptString(username), Encryption.DecryptString(password));
                     sftp.Connect();
                 }
                 using (sftp)

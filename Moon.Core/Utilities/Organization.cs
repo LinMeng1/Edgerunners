@@ -82,37 +82,6 @@ namespace Moon.Core.Utilities
             public string? Organization { get; set; }
             public string? ParentId { get; set; }
         }
-        public static OrganizationChart GetOrganizationChart(string startPoint, int maxLayer)
-        {
-            return GetOrganizationChart(startPoint, 0, maxLayer);
-        }
-        private static OrganizationChart GetOrganizationChart(string startPoint, int layer, int maxLayer)
-        {
-            if (layer == maxLayer)
-                return null;
-            layer++;
-            OrganizationChart orgChart = new OrganizationChart();
-            Users user = Database.Edgerunners.Queryable<Users>().First(it => it.EmployeeId == startPoint);
-            if (user == null)
-                throw new Exception($"[Recursion] Invalid Owner ({startPoint}) , please check and try again");
-            orgChart.EmployeeId = user.EmployeeId;
-            orgChart.Name = user.Name;
-            orgChart.ItCode = user.ItCode;
-            orgChart.Position = user.Position;
-            Organizations childrenOrganization = Database.Edgerunners.Queryable<Organizations>().First(it => it.Owner == startPoint);
-            if (childrenOrganization != null)
-            {
-                orgChart.Organization = childrenOrganization.Name;
-                List<Users> children = Database.Edgerunners.Queryable<Users>().Where(it => it.Organization == childrenOrganization.Id).ToList();
-                foreach (Users child in children)
-                {
-                    OrganizationChart childOrgChart = GetOrganizationChart(child.EmployeeId, layer, maxLayer);
-                    if (childOrgChart != null)
-                        orgChart.Children.Add(childOrgChart);
-                }
-            }
-            return orgChart;
-        }
         public static List<OrganizationChartFlat> GetOrganizationChartFlat()
         {
             List<OrganizationChartFlat> orgCharts = Database.Edgerunners.Queryable<Users>().LeftJoin<Organizations>((u, o) => u.Organization == o.Id).Select((u, o) => new OrganizationChartFlat
@@ -138,6 +107,37 @@ namespace Moon.Core.Utilities
                 ParentId = null
             });
             return orgCharts;
+        }
+        #endregion
+
+        #region GetSubordinates
+
+        public static List<Users> GetSubordinates(string startPoint)
+        {
+            Users user = Database.Edgerunners.Queryable<Users>().First(it => it.EmployeeId == startPoint);
+            if (user == null)
+                throw new Exception($"Invalid employeeId ({startPoint}) , please re login");
+            List<Users> subordinates = GetSubordinates(startPoint, new List<Users>(), 0, 100);
+            subordinates.Add(user);
+            return subordinates;
+        }
+        private static List<Users> GetSubordinates(string startPoint, List<Users> subordinat, int layer, int maxLayer)
+        {
+            if (layer == maxLayer)
+                throw new Exception($"[Recursion] Reached maximum recursion count ({maxLayer})");
+            layer++;
+            Organizations org = Database.Edgerunners.Queryable<Organizations>().First(it => it.Owner == startPoint);
+            if (org != null)
+            {
+                List<Users> users = Database.Edgerunners.Queryable<Users>().Where(it => it.Organization == org.Id).ToList();
+                foreach (var user in users)
+                {
+                    subordinat.Add(user);
+                    GetSubordinates(user.EmployeeId, subordinat, layer, maxLayer);
+                }
+
+            }
+            return subordinat;
         }
         #endregion
     }

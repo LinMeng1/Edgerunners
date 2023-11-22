@@ -114,3 +114,4 @@ D:\Project\Edgerunners\Moon\obj\Release\net6.0\ref\Moon.dll
 D:\Project\Edgerunners\Moon\bin\Release\net6.0\libman.json
 D:\Project\Edgerunners\Moon\bin\Release\net6.0\Renci.SshNet.dll
 D:\Project\Edgerunners\Moon\bin\Release\net6.0\SshNet.Security.Cryptography.dll
+D:\Project\Edgerunners\Moon\bin\Release\net6.0\MQTTnet.dll

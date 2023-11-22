@@ -14,25 +14,27 @@ namespace OnCall.Models.Standard
             set => SetProperty(ref owner, value);
         }
 
-        private string ownerName;
-        public string OwnerName
+        public string Creator { get; set; }
+
+        private Users ownerInfo;
+        public Users OwnerInfo
         {
-            get => ownerName;
-            set => SetProperty(ref ownerName, value);
+            get => ownerInfo;
+            set => SetProperty(ref ownerInfo, value);
         }
 
-        private string secondmentOwner;
-        public string SecondmentOwner
+        private Users ownerInfoDisplay;
+        public Users OwnerInfoDisplay
         {
-            get => secondmentOwner;
-            set => SetProperty(ref secondmentOwner, value);
+            get => ownerInfoDisplay;
+            set => SetProperty(ref ownerInfoDisplay, value);
         }
 
-        private string secondmentOwnerName;
-        public string SecondmentOwnerName
+        private Users creatorInfo;
+        public Users CreatorInfo
         {
-            get => secondmentOwnerName;
-            set => SetProperty(ref secondmentOwnerName, value);
+            get => creatorInfo;
+            set => SetProperty(ref creatorInfo, value);
         }
 
         private bool isVisible;
@@ -41,5 +43,6 @@ namespace OnCall.Models.Standard
             get => isVisible;
             set => SetProperty(ref isVisible, value);
         }
+        public bool IsControllable { get; set; }       
     }
 }

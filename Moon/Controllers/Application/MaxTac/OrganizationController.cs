@@ -100,6 +100,67 @@ namespace Moon.Controllers.Application.MaxTac
         }
         #endregion
 
+        #region 人员借调
+        [Authorize]
+        [PasswordCheck]
+        [AuthorizeCheck(Authorization.AuthorizationEnum.Application_MaxTac_Organization_Secondment)]
+        [HttpPost]
+        public ControllersResult Secondment(Organization_Secondment_Parameter parameter)
+        {
+            ControllersResult result = new();
+            try
+            {
+                string employeeID = Request.HttpContext.User.Claims.FirstOrDefault(it => it.Type == "EmployeeID").Value;
+                Organizations org = Database.Edgerunners.Queryable<Organizations>().First(it => it.Owner == employeeID);
+                if (org == null)
+                    throw new Exception($"No organization belongs to employeeId ({employeeID})");
+                Users user = Database.Edgerunners.Queryable<Users>().First(it => it.EmployeeId == employeeID);
+                if (user == null)
+                    throw new Exception($"Invalid employeeId ({employeeID}) , please re login");
+                Users secondmentUser = Database.Edgerunners.Queryable<Users>().First(it => it.EmployeeId == parameter.EmployeeID);
+                if (secondmentUser == null)
+                    throw new Exception($"Invalid secondment employeeId ({parameter.EmployeeID}) , please check again");
+                Organizations secondmentOrg = Database.Edgerunners.Queryable<Organizations>().First(it => it.Owner == parameter.EmployeeID);
+                if (secondmentOrg != null)
+                {
+                    List<Users> usersBelongsSecondmentUser = Database.Edgerunners.Queryable<Users>().Where(it => it.Organization == secondmentOrg.Id).ToList();
+                    if (usersBelongsSecondmentUser.Count > 0)
+                        throw new Exception("You cannot second a user who has subordinates");
+                }
+                secondmentUser.Organization = org.Id;
+                Database.Edgerunners.Updateable(secondmentUser).UpdateColumns("Organization").ExecuteCommand();
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
+
+        #region 获取所有下属
+        [Authorize]
+        [PasswordCheck]
+        [HttpGet]
+        public ControllersResult GetSubordinates()
+        {
+            ControllersResult result = new();
+            try
+            {
+                string employeeID = Request.HttpContext.User.Claims.FirstOrDefault(it => it.Type == "EmployeeID").Value;
+                result.Content = Organization.GetSubordinates(employeeID);
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
 
 
         #region AddOrganization
@@ -116,6 +177,13 @@ namespace Moon.Controllers.Application.MaxTac
             public int Id { get; set; }
             public string? Name { get; set; }
             public string? Owner { get; set; }
+        }
+        #endregion
+
+        #region Secondment
+        public class Organization_Secondment_Parameter
+        {
+            public string EmployeeID { get; set; }
         }
         #endregion
     }

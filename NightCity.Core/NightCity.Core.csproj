@@ -119,6 +119,7 @@
     <Compile Include="Models\Standard\ControllersResult.cs" />
     <Compile Include="Models\Standard\ModuleInfo.cs" />
     <Compile Include="Services\BasicInfomationService.cs" />
+    <Compile Include="Utilities\Encryption.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -5,6 +5,8 @@ using Moon.Core.Models;
 using Moon.Core.Models.Edgerunners;
 using Moon.Core.Standard;
 using Moon.Core.Utilities;
+using System.Security.Policy;
+using System.Text.RegularExpressions;
 
 namespace Moon.Controllers.Application.MaxTac
 {
@@ -90,6 +92,44 @@ namespace Moon.Controllers.Application.MaxTac
         }
         #endregion
 
+        #region 更新模块
+        [Authorize]
+        [PasswordCheck]
+        [AuthorizeCheck(Authorization.AuthorizationEnum.Application_MaxTac_Publish_UpdateNightCityModule)]
+        [HttpPost]
+        public ControllersResult UpdateNightCityModule([FromBody] Publish_UpdateNightCityModule_Parameter parameter)
+        {
+            ControllersResult result = new();
+            try
+            {
+                Modules module = Database.Edgerunners.Queryable<Modules>().First(it => it.Name == parameter.Module);
+                if (module == null) throw new Exception("Invalid module name");
+                string pattern = @"([0-9]*)\.([0-9]*)\.([0-9]*)\.([0-9]*)";
+                Regex r = new(pattern, RegexOptions.IgnoreCase);
+                Match m1 = r.Match(parameter.Version);
+                if (!m1.Success)
+                    throw new Exception("Invalid version , please check and try again");
+                Modules_Versions version = new()
+                {
+                    ModuleId = module.Id,
+                    Version = parameter.Version,
+                    ReleaseNotes = parameter.ReleaseNotes,
+                    Manifest = Manifest.GetManifest($"/NightCity.Modules/{parameter.Module}/{parameter.Version}"),
+                };
+                var storage = Database.Edgerunners.Storageable(version).ToStorage();
+                storage.AsInsertable.IgnoreColumns("ReleaseTime").ExecuteCommand();
+                storage.AsUpdateable.IgnoreColumns("ReleaseTime").ExecuteCommand();
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
+
         #region GetLatestRelease
         public class Publish_GetLatestRelease_Parameter
         {
@@ -104,6 +144,15 @@ namespace Moon.Controllers.Application.MaxTac
             public string Version { get; set; }
             public string ReleaseNotes { get; set; }
             public string ReleaseAddress { get; set; }
+        }
+        #endregion
+
+        #region UpdateNightCityModule 
+        public class Publish_UpdateNightCityModule_Parameter
+        {
+            public string Module { get; set; }
+            public string Version { get; set; }
+            public string ReleaseNotes { get; set; }
         }
         #endregion
     }

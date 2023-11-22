@@ -350,7 +350,26 @@ namespace Moon.Controllers.Application.NightCity.Modules
             ControllersResult result = new();
             try
             {
-
+                string employeeID = string.Empty;
+                try
+                {
+                    employeeID = Request.HttpContext.User.Claims.FirstOrDefault(it => it.Type == "EmployeeID").Value;
+                }
+                catch { }           
+                List<OnCall_GetAssignInfoList_Result> assignInfoList = Database.Edgerunners.Queryable<IPCClusters_Owners>().Where(it => it.Category == "Location" || it.Category == "Product").Select(it => new OnCall_GetAssignInfoList_Result()
+                {
+                    Category = it.Category,
+                    Cluster = it.Cluster,
+                    Creator = it.Creator,
+                    Owner = it.Owner,
+                }).ToList();
+                foreach (var assignInfo in assignInfoList)
+                {
+                    if (employeeID != null && employeeID == assignInfo.Creator)
+                        assignInfo.IsControllable = true;
+                }
+                result.Content = assignInfoList;
+                result.Result = true;
             }
             catch (Exception e)
             {
@@ -360,6 +379,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
             return result;
         }
         #endregion
+
 
         #region CallReport
         public class OnCall_CallReport_Parameter
@@ -423,6 +443,13 @@ namespace Moon.Controllers.Application.NightCity.Modules
             public string? TransferOwnerName { get; set; }
             public string? ResponserName { get; set; }
             public string? SolverName { get; set; }
+        }
+        #endregion
+
+        #region GetAssignInfoList
+        public class OnCall_GetAssignInfoList_Result : IPCClusters_Owners
+        {
+            public bool IsControllable { get; set; }
         }
         #endregion
 

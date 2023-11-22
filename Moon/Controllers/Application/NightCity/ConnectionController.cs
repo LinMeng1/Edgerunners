@@ -171,6 +171,99 @@ namespace Moon.Controllers.Application.NightCity
         }
         #endregion
 
+        #region 设置集群负责人
+        [Authorize]
+        [PasswordCheck]
+        [AuthorizeCheck(Authorization.AuthorizationEnum.Application_NightCity_Connection_SetClusterOwner)]
+        [HttpPost]
+        public ControllersResult SetClusterOwner([FromBody] Connection_SetClusterOwner_Parameter parameter)
+        {
+            ControllersResult result = new();
+            try
+            {
+                string employeeID = Request.HttpContext.User.Claims.FirstOrDefault(it => it.Type == "EmployeeID").Value;
+                IPCClusters_Owners clustersOwners = Database.Edgerunners.Queryable<IPCClusters_Owners>().First(it => it.Cluster == parameter.Cluster && it.Category == parameter.Category);
+                if (clustersOwners != null)
+                {
+                    if (clustersOwners.Creator != employeeID)
+                        throw new Exception("You cannot change a cluster created by someone else");
+                    clustersOwners.Owner = parameter.Owner;
+                    Database.Edgerunners.Updateable(clustersOwners).ExecuteCommand();
+                }
+                else
+                {
+                    clustersOwners = new IPCClusters_Owners()
+                    {
+                        Cluster = parameter.Cluster,
+                        Category = parameter.Category,
+                        Owner = parameter.Owner,
+                        Creator = employeeID
+                    };
+                    Database.Edgerunners.Insertable(clustersOwners).ExecuteCommand();
+                }
+                try
+                {
+                    Mqtt.Publish($"{parameter.Category}/{parameter.Cluster}", new Core.Models._Imaginary._MqttMessage()
+                    {
+                        IsMastermind = true,
+                        Address = "Moon",
+                        Sender = "Lucy",
+                        Content = "system sync clusters"
+                    });
+                }
+                catch { }
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
+
+        #region 删除集群负责人
+        [Authorize]
+        [PasswordCheck]
+        [AuthorizeCheck(Authorization.AuthorizationEnum.Application_NightCity_Connection_RemoveClusterOwner)]
+        [HttpPost]
+        public ControllersResult RemoveClusterOwner([FromBody] Connection_RemoveClusterOwner_Parameter parameter)
+        {
+            ControllersResult result = new();
+            try
+            {
+                string employeeID = Request.HttpContext.User.Claims.FirstOrDefault(it => it.Type == "EmployeeID").Value;
+                IPCClusters_Owners clustersOwners = Database.Edgerunners.Queryable<IPCClusters_Owners>().First(it => it.Cluster == parameter.Cluster && it.Category == parameter.Category);
+                if (clustersOwners != null)
+                {
+                    if (clustersOwners.Creator != employeeID)
+                        throw new Exception("You cannot remove a cluster created by someone else");
+                    Database.Edgerunners.Deleteable(clustersOwners).ExecuteCommand();
+                }
+                try
+                {
+                    Mqtt.Publish($"{parameter.Category}/{parameter.Cluster}", new Core.Models._Imaginary._MqttMessage()
+                    {
+                        IsMastermind = true,
+                        Address = "Moon",
+                        Sender = "Lucy",
+                        Content = "system sync clusters"
+                    });
+                }
+                catch { }
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
+
+
         #region GetClusters
         public class Connection_GetClusters_Parameter
         {
@@ -220,6 +313,23 @@ namespace Moon.Controllers.Application.NightCity
         public class Connection_GetJurisdictionalClusterOwnersClusters_Parameter
         {
             public string Mainboard { get; set; }
+        }
+        #endregion
+
+        #region SetClusterOwner
+        public class Connection_SetClusterOwner_Parameter
+        {
+            public string Cluster { get; set; }
+            public string Category { get; set; }
+            public string Owner { get; set; }
+        }
+        #endregion
+
+        #region RemoveClusterOwner
+        public class Connection_RemoveClusterOwner_Parameter
+        {
+            public string Cluster { get; set; }
+            public string Category { get; set; }
         }
         #endregion
 
