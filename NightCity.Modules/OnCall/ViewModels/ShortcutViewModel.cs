@@ -41,7 +41,6 @@ namespace OnCall.ViewModels
                     clustersCache = clusters;
                     await SyncJurisdictionalClusterOwnerAsync();
                 }
-
             }, ThreadOption.UIThread));
             //监听事件 Mqtt信息接收
             eventTokens.Add(eventAggregator.GetEvent<MqttMessageReceivedEvent>().Subscribe(async (message) =>
@@ -65,6 +64,11 @@ namespace OnCall.ViewModels
             {
                 MessageHost.Show();
                 MessageHost.DialogCategory = "Syncing";
+                Owner = null;
+                Contact = null;
+                Organization = null;
+                Leader = null;
+                LeaderContact = null;
                 await Task.Delay(MessageHost.InternalDelay);
                 object mainboard = propertyService.GetProperty("Mainboard") ?? throw new Exception("Mainboard is null");
                 ControllersResult resultLocation = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/connection/GetJurisdictionalClusterOwner", new { Mainboard = mainboard.ToString() }));
@@ -132,12 +136,7 @@ namespace OnCall.ViewModels
         private void SyncOwner()
         {
             MessageHost.Show();
-            MessageHost.DialogCategory = "Syncing";
-            Owner = null;
-            Contact = null;
-            Organization = null;
-            Leader = null;
-            LeaderContact = null;
+            MessageHost.DialogCategory = "Syncing";            
             eventAggregator.GetEvent<MqttMessageReceivedEvent>().Publish(new MqttMessage()
             {
                 IsMastermind = true,

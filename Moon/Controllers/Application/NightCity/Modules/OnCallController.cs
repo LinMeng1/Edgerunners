@@ -41,6 +41,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
                 int index = 0;
                 List<IPCBanners> banners = new();
                 List<string> syncClusters = new();
+                bool orderCreated = false;
                 foreach (var cluster in jurisdictionalClusters)
                 {
                     string syncCluster = $"{cluster.Category}/{cluster.Cluster}";
@@ -69,6 +70,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
                             LinkInformation = id,
                         };
                         Database.Edgerunners.Insertable(report).InsertColumns("Id", "Mainboard", "HostName", "InitialOwner", "ExternalSystem", "ExternalId").ExecuteCommand();
+                        orderCreated = true;
                         banners.Add(banner);
                     }
                     else
@@ -89,6 +91,8 @@ namespace Moon.Controllers.Application.NightCity.Modules
                     }
                 }
                 Database.Edgerunners.Insertable(banners).IgnoreColumns("CreateTime").ExecuteCommand();
+                if (!orderCreated)
+                    throw new Exception("The order was not created successfully. Please check whether owner is displayed on the panel.");
                 result.Content = syncClusters;
                 result.Result = true;
             }
@@ -355,7 +359,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
                 {
                     employeeID = Request.HttpContext.User.Claims.FirstOrDefault(it => it.Type == "EmployeeID").Value;
                 }
-                catch { }           
+                catch { }
                 List<OnCall_GetAssignInfoList_Result> assignInfoList = Database.Edgerunners.Queryable<IPCClusters_Owners>().Where(it => it.Category == "Location" || it.Category == "Product").Select(it => new OnCall_GetAssignInfoList_Result()
                 {
                     Category = it.Category,
@@ -369,6 +373,46 @@ namespace Moon.Controllers.Application.NightCity.Modules
                         assignInfo.IsControllable = true;
                 }
                 result.Content = assignInfoList;
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
+
+        #region 查询故障原因列表
+        [HttpPost]
+        public ControllersResult GetFailureReasonList([FromBody] OnCall_GetFailureReasonList_Parameter parameter)
+        {
+            ControllersResult result = new();
+            try
+            {
+                List<string> failureReasonList = Database.Edgerunners.Queryable<ProductProcess_FailureReasons>().Where(it => it.ProductProcess == parameter.Process).Select(it => it.FailureReason).ToList();
+                result.Content = failureReasonList;
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
+
+        #region 查询解决方案列表
+        [HttpPost]
+        public ControllersResult GetSolutionList([FromBody] OnCall_GetSolutionList_Parameter parameter)
+        {
+            ControllersResult result = new();
+            try
+            {
+                List<string> failureReasonList = Database.Edgerunners.Queryable<ProductProcess_Solutions>().Where(it => it.ProductProcess == parameter.Process).Select(it => it.Solution).ToList();
+                result.Content = failureReasonList;
                 result.Result = true;
             }
             catch (Exception e)
@@ -450,6 +494,20 @@ namespace Moon.Controllers.Application.NightCity.Modules
         public class OnCall_GetAssignInfoList_Result : IPCClusters_Owners
         {
             public bool IsControllable { get; set; }
+        }
+        #endregion
+
+        #region GetFailureReasonList
+        public class OnCall_GetFailureReasonList_Parameter
+        {
+            public string Process { get; set; }
+        }
+        #endregion
+
+        #region GetSolutionList
+        public class OnCall_GetSolutionList_Parameter
+        {
+            public string Process { get; set; }
         }
         #endregion
 

@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NightCity.Launcher", "Night
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NightCity.Daemon", "NightCity.Daemon\NightCity.Daemon.csproj", "{6B61F063-0163-4A2B-98FC-F61C7CE54A6D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProgramLauncher", "NightCity.Modules\TestProgramLauncher\TestProgramLauncher.csproj", "{0D04BC33-A520-4BC4-8B7F-42E5790F4552}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,14 @@ Global
 		{6B61F063-0163-4A2B-98FC-F61C7CE54A6D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6B61F063-0163-4A2B-98FC-F61C7CE54A6D}.Release|x64.ActiveCfg = Release|Any CPU
 		{6B61F063-0163-4A2B-98FC-F61C7CE54A6D}.Release|x64.Build.0 = Release|Any CPU
+		{0D04BC33-A520-4BC4-8B7F-42E5790F4552}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D04BC33-A520-4BC4-8B7F-42E5790F4552}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D04BC33-A520-4BC4-8B7F-42E5790F4552}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0D04BC33-A520-4BC4-8B7F-42E5790F4552}.Debug|x64.Build.0 = Debug|Any CPU
+		{0D04BC33-A520-4BC4-8B7F-42E5790F4552}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D04BC33-A520-4BC4-8B7F-42E5790F4552}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D04BC33-A520-4BC4-8B7F-42E5790F4552}.Release|x64.ActiveCfg = Release|Any CPU
+		{0D04BC33-A520-4BC4-8B7F-42E5790F4552}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -141,6 +151,7 @@ Global
 		{E065050F-9BF5-431C-8DA6-49A114ECF3BA} = {1A0CC76C-579E-4F81-A0F2-1911D9DC2C85}
 		{A021FF4D-A150-41FD-A14E-6803FB21D17B} = {CADF3E7B-5A0B-43C1-8458-785411D8F0C4}
 		{9A28A4B3-BFA7-4EA5-8840-B4FCD1567565} = {1A0CC76C-579E-4F81-A0F2-1911D9DC2C85}
+		{0D04BC33-A520-4BC4-8B7F-42E5790F4552} = {1A0CC76C-579E-4F81-A0F2-1911D9DC2C85}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {43CBD770-F7AE-49DF-8A40-819B8F142B75}

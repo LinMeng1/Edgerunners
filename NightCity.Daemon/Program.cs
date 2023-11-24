@@ -9,10 +9,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
+using System.Net.Security;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows.Forms;
 
 namespace NightCity.Daemon
 {
@@ -26,6 +30,11 @@ namespace NightCity.Daemon
         private static System.Timers.Timer ProcessTimer;
         static void Main(string[] args)
         {
+            ServicePointManager.ServerCertificateValidationCallback = delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+            {
+                return true;
+            };
+
             httpService = new HttpService();
             sftpService = new SftpService("10.114.113.101", 2022, Encryption.DecryptString("tonxrWIi+Dq/73qTwIQEKQ=="), Encryption.DecryptString("fxUxc7Rrk3op/6F1bBdmLw=="));
 
@@ -46,25 +55,34 @@ namespace NightCity.Daemon
             #endregion
 
             new ManualResetEvent(false).WaitOne();
+
         }
         private static async void ProcessMethod(object sender, ElapsedEventArgs e)
         {
-            if (ProcessTimer.Interval != 3000)
-                ProcessTimer.Interval = 3000;
-            ProcessTimer.Stop();
-            bool runFlag = false;
-            foreach (Process p in Process.GetProcesses())
+            try
             {
-                if (p.ProcessName == "NightCity")
+                if (ProcessTimer.Interval != 3000)
+                    ProcessTimer.Interval = 3000;
+                ProcessTimer.Stop();
+                bool runFlag = false;
+                foreach (Process p in Process.GetProcesses())
                 {
-                    runFlag = true;
+                    if (p.ProcessName == "NightCity")
+                    {
+                        runFlag = true;
+                    }
                 }
+                if (!runFlag)
+                {
+                    await LaunchAsync();
+                }
+                ProcessTimer.Start();
             }
-            if (!runFlag)
+            catch (Exception ex)
             {
-                await LaunchAsync();
+                Console.WriteLine(ex.ToString());              
             }
-            ProcessTimer.Start();
+
         }
 
         /// <summary>
@@ -74,43 +92,54 @@ namespace NightCity.Daemon
         /// <exception cref="Exception"></exception>
         private static async Task LaunchAsync()
         {
-            string installPath = string.Empty;
             try
             {
-                List<LocalInstallInformation> infoList = InstalledPrograms.GetInstalledPrograms();
-                foreach (var info in infoList)
+                string installPath = string.Empty;
+                try
                 {
-                    if (info.DisplayName == "NightCity")
-                        installPath = Path.GetDirectoryName(info.DisplayIcon);
-                }
-            }
-            catch { }
-            if (installPath == string.Empty)
-            {
-                installPath = Path.GetDirectoryName(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory));
-                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post($"https://10.114.113.101/api/application/max-tac/publish/GetLatestRelease", new { Project = "NightCity" }));
-                if (!result.Result)
-                    throw new Exception(result.ErrorMessage);
-                PublishInformation publish = JsonConvert.DeserializeObject<PublishInformation>(result.Content.ToString());
-                installPath = Path.Combine(installPath, "NightCity");
-                await Task.Run(() =>
-                {
-                    LocalInstallInformation information = new LocalInstallInformation()
+                    List<LocalInstallInformation> infoList = InstalledPrograms.GetInstalledPrograms();
+                    foreach (var info in infoList)
                     {
-                        DisplayName = "NightCity"
-                    };
-                    KillProduct(information);
-                    Directory.CreateDirectory(installPath);
-                    JToken mainfest = JToken.Parse(publish.Manifest);
-                    sftpService.SyncFiles(mainfest, publish.ReleaseAddress, string.Empty, installPath);
-                    information.DisplayVersion = publish.Version;
-                    information.Publisher = "LinMeng";
-                    information.DisplayIcon = Path.Combine(installPath, $"{information.DisplayName}.exe");
-                    information.UninstallString = Path.Combine(Path.Combine(Path.Combine(Path.GetDirectoryName(installPath), "NightCity Launcher"), "NightCity Launcher.exe"));
-                    InstalledPrograms.CreateUninstallInRegistry(information);
-                });
+                        if (info.DisplayName == "NightCity")
+                            installPath = Path.GetDirectoryName(info.DisplayIcon);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.ToString());
+                }
+                if (installPath == string.Empty)
+                {                   
+                    installPath = Path.GetDirectoryName(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory));
+                    ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post($"https://10.114.113.101/api/application/max-tac/publish/GetLatestRelease", new { Project = "NightCity" }));
+                    if (!result.Result)
+                        throw new Exception(result.ErrorMessage);
+                    PublishInformation publish = JsonConvert.DeserializeObject<PublishInformation>(result.Content.ToString());
+                    installPath = Path.Combine(installPath, "NightCity");
+                    await Task.Run(() =>
+                    {
+                        LocalInstallInformation information = new LocalInstallInformation()
+                        {
+                            DisplayName = "NightCity"
+                        };
+                        KillProduct(information);
+                        Directory.CreateDirectory(installPath);
+                        JToken mainfest = JToken.Parse(publish.Manifest);
+                        sftpService.SyncFiles(mainfest, publish.ReleaseAddress, string.Empty, installPath);
+                        information.DisplayVersion = publish.Version;
+                        information.Publisher = "LinMeng";
+                        information.DisplayIcon = Path.Combine(installPath, $"{information.DisplayName}.exe");
+                        information.UninstallString = Path.Combine(Path.Combine(Path.Combine(Path.GetDirectoryName(installPath), "NightCity Launcher"), "NightCity Launcher.exe"));
+                        InstalledPrograms.CreateUninstallInRegistry(information);
+                    });
+                }
+                Process.Start(Path.Combine(installPath, "NightCity.exe"));
             }
-            Process.Start(Path.Combine(installPath, "NightCity.exe"));
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+
         }
         private async static void KillProduct(LocalInstallInformation information)
         {

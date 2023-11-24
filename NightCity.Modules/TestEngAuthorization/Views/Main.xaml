@@ -14,6 +14,14 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Purple" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml">
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <FontFamily x:Key="Poppins">pack://application:,,,/Resources/Font/Poppins-Regular.ttf#Poppins Regular</FontFamily>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
             <converter:DialogHostVisibilityConverter x:Key="DialogHostVisibilityConverter"></converter:DialogHostVisibilityConverter>
             <Style x:Key="Card" TargetType="materialDesign:Card">
                 <Setter Property="UniformCornerRadius" Value="5" />
@@ -27,14 +35,80 @@
                 <Setter Property="HorizontalAlignment" Value="Center"/>
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
-            <ResourceDictionary.MergedDictionaries>
-                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Purple" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml">
-                </ResourceDictionary>
-                <ResourceDictionary>
-                    <FontFamily x:Key="Poppins">pack://application:,,,/Resources/Font/Poppins-Regular.ttf#Poppins Regular</FontFamily>
-                </ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Thumb}">
+                            <Grid x:Name="Grid">
+                                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Fill="Transparent" />
+                                <Border x:Name="Rectangle1" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Background="{TemplateBinding Background}" />
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Tag" Value="Horizontal">
+                                    <Setter TargetName="Rectangle1" Property="Width" Value="Auto" />
+                                    <Setter TargetName="Rectangle1" Property="Height" Value="7" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+                <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+                <Setter Property="Foreground" Value="#8C8C8C" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Width" Value="8" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Grid x:Name="GridRoot" Width="8" Background="{TemplateBinding Background}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.00001*" />
+                                </Grid.RowDefinitions>
+                                <Track x:Name="PART_Track" Grid.Row="0" IsDirectionReversed="true" Focusable="false">
+                                    <Track.Thumb>
+                                        <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" Style="{DynamicResource ScrollThumbs}" />
+                                    </Track.Thumb>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton x:Name="PageUp" Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="false" />
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton x:Name="PageDown" Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="false" />
+                                    </Track.DecreaseRepeatButton>
+                                </Track>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger SourceName="Thumb" Property="IsMouseOver" Value="true">
+                                    <Setter Value="{DynamicResource ButtonSelectBrush}" TargetName="Thumb" Property="Background" />
+                                </Trigger>
+                                <Trigger SourceName="Thumb" Property="IsDragging" Value="true">
+                                    <Setter Value="{DynamicResource DarkBrush}" TargetName="Thumb" Property="Background" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed" />
+                                </Trigger>
+                                <Trigger Property="Orientation" Value="Horizontal">
+                                    <Setter TargetName="GridRoot" Property="LayoutTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="-90" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="-90" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Width" Value="Auto" />
+                                    <Setter Property="Height" Value="8" />
+                                    <Setter TargetName="Thumb" Property="Tag" Value="Horizontal" />
+                                    <Setter TargetName="PageDown" Property="Command" Value="ScrollBar.PageLeftCommand" />
+                                    <Setter TargetName="PageUp" Property="Command" Value="ScrollBar.PageRightCommand" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -325,42 +399,44 @@
                 </Grid>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
                         <ColumnDefinition/>
+                        <!--<ColumnDefinition/>-->
                     </Grid.ColumnDefinitions>
                     <materialDesign:Card Grid.Column="0" Style="{StaticResource Card}">
-                        <ItemsControl Focusable="False">
-                            <Grid Margin="0,0,0,10">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="Roles and Authorizations" FontWeight="Bold"/>
-                                <materialDesign:PackIcon Grid.Column="1" Margin="20,0,0,0" Kind="CloudSyncOutline" Style="{StaticResource PackIcon}" Background="#00000000">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseDown">
-                                            <i:InvokeCommandAction Command="{Binding SyncRolesAndAuthorizationsCommand}"/>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </materialDesign:PackIcon>
-                            </Grid>
-                            <TreeView ItemsSource="{Binding Roles}">
-                                <TreeView.ItemTemplate>
-                                    <HierarchicalDataTemplate ItemsSource="{Binding Authorizations}">
-                                        <TextBlock Text="{Binding Role}" />
-                                        <HierarchicalDataTemplate.ItemTemplate>
-                                            <HierarchicalDataTemplate ItemsSource="{Binding Authorizations}">
-                                                <TextBlock Text="{Binding}" />
-                                            </HierarchicalDataTemplate>
-                                        </HierarchicalDataTemplate.ItemTemplate>
-                                    </HierarchicalDataTemplate>
-                                </TreeView.ItemTemplate>
-                            </TreeView>
-                        </ItemsControl>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <ItemsControl Focusable="False">
+                                <Grid Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Roles and Authorizations" FontWeight="Bold"/>
+                                    <materialDesign:PackIcon Grid.Column="1" Margin="20,0,0,0" Kind="CloudSyncOutline" Style="{StaticResource PackIcon}" Background="#00000000">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseDown">
+                                                <i:InvokeCommandAction Command="{Binding SyncRolesAndAuthorizationsCommand}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </materialDesign:PackIcon>
+                                </Grid>
+                                <TreeView ItemsSource="{Binding Roles}">
+                                    <TreeView.ItemTemplate>
+                                        <HierarchicalDataTemplate ItemsSource="{Binding Authorizations}">
+                                            <TextBlock Text="{Binding Role}" />
+                                            <HierarchicalDataTemplate.ItemTemplate>
+                                                <HierarchicalDataTemplate ItemsSource="{Binding Authorizations}">
+                                                    <TextBlock Text="{Binding}" />
+                                                </HierarchicalDataTemplate>
+                                            </HierarchicalDataTemplate.ItemTemplate>
+                                        </HierarchicalDataTemplate>
+                                    </TreeView.ItemTemplate>
+                                </TreeView>
+                            </ItemsControl>
+                        </ScrollViewer>
                     </materialDesign:Card>
-                    <materialDesign:ColorZone Grid.Column="1" Margin="5" Mode="Dark" CornerRadius="5" VerticalAlignment="Stretch">
+                    <!--<materialDesign:ColorZone Grid.Column="1" Margin="5" Mode="Dark" CornerRadius="5" VerticalAlignment="Stretch">
                         <TextBlock Text="Other Infomation" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </materialDesign:ColorZone>
+                    </materialDesign:ColorZone>-->
                 </Grid>
             </Grid>
         </Grid>

@@ -115,6 +115,7 @@
     <ProjectReference Include="..\..\NightCity.Core\NightCity.Core.csproj">
       <Project>{2acd5d9f-097c-4356-9227-15c702dcf1af}</Project>
       <Name>NightCity.Core</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

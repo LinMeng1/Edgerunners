@@ -278,10 +278,10 @@ namespace NightCity.Launcher.ViewModels
                     throw new Exception("Installation path not found");
                 else
                     installPath = Path.GetDirectoryName(information.DisplayIcon);
+                InstalledPrograms.RemoveUninstallInRegistry(information);
                 await KillProductAsync(information.DisplayName);
                 await Task.Delay(1000);
-                Directory.Delete(installPath, true);
-                InstalledPrograms.RemoveUninstallInRegistry(information);
+                Directory.Delete(installPath, true);              
                 if (information.DisplayName == "NightCity.Daemon")
                     DeleteDaemonTaskScheduler();
                 await ScanLocalInstallInformationAsyncBack();

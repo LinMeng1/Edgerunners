@@ -564,6 +564,50 @@ namespace OnCall.ViewModels
         }
 
         /// <summary>
+        /// 查询可能故障原因列表
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetFailureReasonListAsyncBack()
+        {
+            try
+            {
+                if (SolvedProductProcess == null || SolvedProductProcess == string.Empty) return;
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/GetFailureReasonList", new { Process = SolvedProductProcess }));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                List<string> list = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
+                SolveFailureReasonList = list;
+                SolveFailureReasonVisibility = SolveFailureReasonList.Count > 0;
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[GetFailureReasonListAsyncBack]:exception:{e.Message}", true);
+            }
+        }
+
+        /// <summary>
+        /// 查询可能解决方案列表
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetSolutionListAsyncBack()
+        {
+            try
+            {
+                if (SolvedProductProcess == null || SolvedProductProcess == string.Empty) return;
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/GetSolutionList", new { Process = SolvedProductProcess }));
+                if (!result.Result)
+                    throw new Exception(result.ErrorMessage);
+                List<string> list = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
+                SolveSolutionList = list;
+                SolveSolutionVisibility = SolveSolutionList.Count > 0;
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[GetSolutionListAsyncBack]:exception:{e.Message}", true);
+            }
+        }
+
+        /// <summary>
         /// 查询产品流程列表
         /// </summary>
         /// <returns></returns>
@@ -1048,10 +1092,16 @@ namespace OnCall.ViewModels
         private async void TrySolveReport()
         {
             SolvedProduct = null;
-            SolvedProductProcess = string.Empty;
+            SolvedProductProcess = null;
             SolvedFailureCategory = null;
             SolvedFailureReason = string.Empty;
             SolvedSolution = string.Empty;
+            SolveFailureReason = null;
+            SolveFailureReasonList = new List<string>();
+            SolveFailureReasonVisibility = false;
+            SolveSolution = null;
+            SolveSolutionList = new List<string>();
+            SolveSolutionVisibility = false;
             MessageHost.Show();
             MessageHost.DialogCategory = "Syncing";
             await GetProductListAsyncBack();
@@ -1231,6 +1281,30 @@ namespace OnCall.ViewModels
         }
         #endregion
 
+        #region 命令：填充异常解决回执：故障原因
+        public ICommand FillSolvedFailureReasonCommand
+        {
+            get => new DelegateCommand(FillSolvedFailureReason);
+        }
+        private void FillSolvedFailureReason()
+        {
+            if (SolveFailureReason == null || SolveFailureReason == string.Empty) return;
+            SolvedFailureReason += $"{SolveFailureReason}\r\n";
+        }
+        #endregion
+
+        #region 命令：填充异常解决回执：解决方案
+        public ICommand FillSolvedSolutionCommand
+        {
+            get => new DelegateCommand(FillSolvedSolution);
+        }
+        private void FillSolvedSolution()
+        {
+            if (SolveSolution == null || SolveSolution == string.Empty) return;
+            SolvedSolution += $"{SolveSolution}\r\n";
+        }
+        #endregion
+
         #region 命令：删除集群负责人询问
         public ICommand TryRemoveClusterOwnerCommand
         {
@@ -1321,6 +1395,17 @@ namespace OnCall.ViewModels
         }
         #endregion
 
+        #region 命令：更新可能故障原因和解决方案列表
+        public ICommand SyncSolveFailureReasonAndSolutionListCommand
+        {
+            get => new DelegateCommand(SyncSolveFailureReasonAndSolutionList);
+        }
+        private async void SyncSolveFailureReasonAndSolutionList()
+        {
+            await GetFailureReasonListAsyncBack();
+            await GetSolutionListAsyncBack();
+        }
+        #endregion
 
         #endregion
 
@@ -1694,6 +1779,78 @@ namespace OnCall.ViewModels
             set
             {
                 SetProperty(ref removingClusterOwner, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：可能的故障原因
+        private string solveFailureReason;
+        public string SolveFailureReason
+        {
+            get => solveFailureReason;
+            set
+            {
+                SetProperty(ref solveFailureReason, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：可能的故障原因列表
+        private List<string> solveFailureReasonList;
+        public List<string> SolveFailureReasonList
+        {
+            get => solveFailureReasonList;
+            set
+            {
+                SetProperty(ref solveFailureReasonList, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：可能的故障原因可见
+        private bool solveFailureReasonVisibility;
+        public bool SolveFailureReasonVisibility
+        {
+            get => solveFailureReasonVisibility;
+            set
+            {
+                SetProperty(ref solveFailureReasonVisibility, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：可能的解决方案
+        private string solveSolution;
+        public string SolveSolution
+        {
+            get => solveSolution;
+            set
+            {
+                SetProperty(ref solveSolution, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：可能的解决方案列表
+        private List<string> solveSolutionList;
+        public List<string> SolveSolutionList
+        {
+            get => solveSolutionList;
+            set
+            {
+                SetProperty(ref solveSolutionList, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：可能的解决方案可见
+        private bool solveSolutionVisibility;
+        public bool SolveSolutionVisibility
+        {
+            get => solveSolutionVisibility;
+            set
+            {
+                SetProperty(ref solveSolutionVisibility, value);
             }
         }
         #endregion

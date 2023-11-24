@@ -30,6 +30,24 @@
                 <Setter Property="Margin" Value="5" />
                 <Setter Property="Background" Value="#EEEEEE"/>
             </Style>
+            <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Thumb}">
+                            <Grid x:Name="Grid">
+                                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Fill="Transparent" />
+                                <Border x:Name="Rectangle1" CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Background="{TemplateBinding Background}" />
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Tag" Value="Horizontal">
+                                    <Setter TargetName="Rectangle1" Property="Width" Value="Auto" />
+                                    <Setter TargetName="Rectangle1" Property="Height" Value="7" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
                 <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
                 <Setter Property="Foreground" Value="#8C8C8C" />
@@ -202,7 +220,13 @@
                                     </StackPanel>
                                     <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="3">
                                         <TextBlock Text="Process:" FontSize="13" VerticalAlignment="Center"/>
-                                        <ComboBox MinWidth="150" ItemsSource="{Binding ProductProcessList}" SelectedItem="{Binding SolvedProductProcess}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                        <ComboBox MinWidth="150" ItemsSource="{Binding ProductProcessList}" SelectedItem="{Binding SolvedProductProcess}" Margin="10,0,0,0" VerticalAlignment="Center">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="SelectionChanged">
+                                                    <i:InvokeCommandAction Command="{Binding SyncSolveFailureReasonAndSolutionListCommand}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </ComboBox>
                                         <Grid Margin="10,0,0,0" Background="#FFECB3">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="auto"/>
@@ -295,11 +319,61 @@
                                     </StackPanel>
                                     <StackPanel Grid.Row="6" Margin="5">
                                         <TextBlock Text="Failure Reason" FontSize="13"/>
-                                        <TextBox Padding="5" Text="{Binding SolvedFailureReason}" Height="75" VerticalAlignment="Top" AcceptsReturn="True" Style="{StaticResource MaterialDesignOutlinedTextBox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                                        <Grid Margin="0,0,0,10" Background="#FFECB3">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="0" FontSize="10" Margin="5,2,5,0">Possible options</TextBlock>
+                                            <ComboBox Grid.Row="1" Padding="6" Margin="10,5,10,5" Style="{StaticResource MaterialDesignOutlinedComboBox}" ItemsSource="{Binding SolveFailureReasonList}" SelectedItem="{Binding SolveFailureReason}"/>
+                                            <TextBlock Grid.Row="2" HorizontalAlignment="Right" TextDecorations="Underline" FontSize="10" Foreground="#2A1EB1" Cursor="Hand" Margin="5" Text="Click to Add in your selection">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseDown">
+                                                        <i:InvokeCommandAction Command="{Binding FillSolvedFailureReasonCommand}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </TextBlock>
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding SolveFailureReasonVisibility}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                        </Grid>
+                                        <TextBox Padding="5" Text="{Binding SolvedFailureReason, UpdateSourceTrigger=PropertyChanged}" Height="75" VerticalAlignment="Top" AcceptsReturn="True" Style="{StaticResource MaterialDesignOutlinedTextBox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
                                     </StackPanel>
                                     <StackPanel Grid.Row="7" Margin="3">
                                         <TextBlock Text="Solution" FontSize="13"/>
-                                        <TextBox Padding="5" Text="{Binding SolvedSolution}" Height="75" VerticalAlignment="Top" AcceptsReturn="True" Style="{StaticResource MaterialDesignOutlinedTextBox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                                        <Grid Margin="0,0,0,10" Background="#FFECB3">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                            <TextBlock Grid.Row="0" FontSize="10" Margin="5,2,5,0">Possible options</TextBlock>
+                                            <ComboBox Grid.Row="1" Padding="6" Margin="10,5,10,5" Style="{StaticResource MaterialDesignOutlinedComboBox}" ItemsSource="{Binding SolveSolutionList}" SelectedItem="{Binding SolveSolution}"/>
+                                            <TextBlock Grid.Row="2" HorizontalAlignment="Right" TextDecorations="Underline" FontSize="10" Foreground="#2A1EB1" Cursor="Hand" Margin="5" Text="Click to Add in your selection">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseDown">
+                                                        <i:InvokeCommandAction Command="{Binding FillSolvedSolutionCommand}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </TextBlock>
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding SolveSolutionVisibility}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                        </Grid>
+                                        <TextBox Padding="5" Text="{Binding SolvedSolution, UpdateSourceTrigger=PropertyChanged}" Height="75" VerticalAlignment="Top" AcceptsReturn="True" Style="{StaticResource MaterialDesignOutlinedTextBox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
                                     </StackPanel>
                                     <Grid Grid.Row="8">
                                         <Grid.ColumnDefinitions>
@@ -991,7 +1065,7 @@
                                     </Style>
                                 </materialDesign:PackIcon.Style>
                             </materialDesign:PackIcon>
-                            
+
                             <TextBox Grid.Column="2" Style="{StaticResource MaterialDesignTextBox}" Text="{Binding AssignFilterText,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="5,10,0,5" Background="Transparent" GotFocus="Textbox_GotFocus" materialDesign:TextFieldAssist.HasClearButton="True">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="TextChanged">
@@ -999,7 +1073,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </TextBox>
-                           
+
                             <materialDesign:PackIcon Grid.Column="3" Margin="7" Kind="Sync" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseDown">
@@ -1007,7 +1081,7 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </materialDesign:PackIcon>
-                            
+
                             <materialDesign:PackIcon Grid.Column="4" Margin="7" Kind="Plus" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseDown">
