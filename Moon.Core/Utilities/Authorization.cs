@@ -30,6 +30,7 @@
             Application_NightCity_Connection_SetClusterOwner,//设置集群负责人
             Application_NightCity_Connection_RemoveClusterOwner,//删除集群负责人
             Application_MaxTac_Publish_UpdateNightCityModule,//更新NightCity模块
+            Application_NightCity_Modules_TCN_TransformTCNOrder,//TCN转单
         }
         #endregion
     }

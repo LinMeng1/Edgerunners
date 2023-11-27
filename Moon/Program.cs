@@ -6,7 +6,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//var xx = Authentication.ToMD5("68722");
+//var xx = Authentication.ToMD5("90311258");
 //var xx = Manifest.GetManifest(@"/NightCity.Runtime/1.0.0.0");
 
 // Add services to the container.

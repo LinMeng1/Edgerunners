@@ -409,19 +409,19 @@ namespace NightCity.Launcher.ViewModels
         {
             try
             {
-
-
                 Microsoft.Win32.TaskScheduler.TaskFolder tf = Microsoft.Win32.TaskScheduler.TaskService.Instance.RootFolder;
                 var localTask = tf.Tasks.FirstOrDefault(it => it.Name == "NightCity.Daemon Protection");
                 if (localTask == null)
                 {
                     Microsoft.Win32.TaskScheduler.TaskDefinition td = Microsoft.Win32.TaskScheduler.TaskService.Instance.NewTask();
                     td.RegistrationInfo.Description = "Please make sure you are using the latest version of NightCity software. If you disable or interrupt this task, your NightCity software won't be updated, which means potential security vulnerabilities won't be fixed and some features won't work properly. If no NightCity software uses this task, the task will uninstall itself.";
-                    Microsoft.Win32.TaskScheduler.DailyTrigger dt = new Microsoft.Win32.TaskScheduler.DailyTrigger();
+                    Microsoft.Win32.TaskScheduler.DailyTrigger dt = new Microsoft.Win32.TaskScheduler.DailyTrigger();                    
                     dt.StartBoundary = DateTime.Today;
                     dt.Repetition.Interval = TimeSpan.FromMinutes(1);
                     td.Triggers.Add(dt);
                     td.Actions.Add(information.DisplayIcon);
+                    Microsoft.Win32.TaskScheduler.BootTrigger bootTrigger = new Microsoft.Win32.TaskScheduler.BootTrigger();
+                    td.Triggers.Add(bootTrigger);
                     Microsoft.Win32.TaskScheduler.TaskService.Instance.RootFolder.RegisterTaskDefinition("NightCity.Daemon Protection", td);
                 }
             }

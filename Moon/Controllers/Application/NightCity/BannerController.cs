@@ -1,13 +1,7 @@
-﻿using Dm.Config;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Moon.Attributes;
+﻿using Microsoft.AspNetCore.Mvc;
 using Moon.Core.Models;
 using Moon.Core.Models.Edgerunners;
 using Moon.Core.Standard;
-using Moon.Core.Utilities;
-using static Moon.Controllers.Application.NightCity.BannerController;
-using static Moon.Controllers.Application.NightCity.ConnectionController;
 
 namespace Moon.Controllers.Application.NightCity
 {
