@@ -10,8 +10,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Lock.ViewModels
 {
@@ -36,11 +38,13 @@ namespace Lock.ViewModels
             {
                 TaskManagerEnabled = true;
                 ExplorerEnabled = true;
+                RegeditEnabled = true;
             }
             else
             {
                 TaskManagerEnabled = false;
                 ExplorerEnabled = false;
+                RegeditEnabled = false;
             }
             //监听事件 权限信息变更
             eventTokens.Add(eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Subscribe((AuthorizationInfo) =>
@@ -51,11 +55,13 @@ namespace Lock.ViewModels
                 {
                     TaskManagerEnabled = true;
                     ExplorerEnabled = true;
+                    RegeditEnabled = true;
                 }
                 else
                 {
                     TaskManagerEnabled = false;
                     ExplorerEnabled = false;
+                    RegeditEnabled = false;
                 }
 
             }, ThreadOption.UIThread, true));
@@ -183,6 +189,73 @@ namespace Lock.ViewModels
                 }
             });
         }
+        /// <summary>
+        /// 设置可用磁盘
+        /// </summary>
+        /// <returns></returns>
+        private async Task SetAvailableDriveAsyncBack()
+        {
+            try
+            {
+                await Task.Run(() =>
+                {
+                    if (ExplorerEnabled)
+                    {
+                        Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer");
+                        Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer", true).SetValue("NoViewOnDrive", 0, RegistryValueKind.DWord);
+                    }
+                    else
+                    {
+                        Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer");
+                        Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer", true).SetValue("NoViewOnDrive", 1073741763, RegistryValueKind.DWord);
+                    }
+                    SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, IntPtr.Zero, null, SMTO_ABORTIFHUNG, 100, IntPtr.Zero);
+                });
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[Lock]:[MainViewModel]:[SetAvailableDriveAsyncBack]:exception:{e.Message}", true);
+            }
+        }
+        /// <summary>
+        /// 设置注册表编辑器状态
+        /// </summary>
+        /// <returns></returns>
+        private async Task SetRegeditAsyncBack()
+        {
+            try
+            {
+                await Task.Run(() =>
+                {
+                    if (RegeditEnabled)
+                    {
+                        Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System");
+                        Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System");
+                        Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", true).SetValue("DisableRegistryTools", 0, RegistryValueKind.DWord);
+                        Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", true).SetValue("DisableRegistryTools", 0, RegistryValueKind.DWord);
+                    }
+                    else
+                    {
+                        Registry.CurrentUser.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System");
+                        Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System");
+                        Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", true).SetValue("DisableRegistryTools", 1, RegistryValueKind.DWord);
+                        Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", true).SetValue("DisableRegistryTools", 1, RegistryValueKind.DWord);
+                        foreach (Process p in Process.GetProcesses())
+                        {
+                            if (p.ProcessName.CompareTo("regedit") == 0)
+                            {
+                                p.Kill();
+                                break;
+                            }
+                        }
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[Lock]:[MainViewModel]:[SetRegeditAsyncBack]:exception:{e.Message}", true);
+            }
+        }
 
         #region 可视化属性集合
 
@@ -207,6 +280,20 @@ namespace Lock.ViewModels
             set
             {
                 SetProperty(ref explorerEnabled, value);
+                _ = SetAvailableDriveAsyncBack();
+            }
+        }
+        #endregion
+
+        #region 注册表编辑器是否可用
+        private bool regeditEnabled;
+        public bool RegeditEnabled
+        {
+            get => regeditEnabled;
+            set
+            {
+                SetProperty(ref regeditEnabled, value);
+                _ = SetRegeditAsyncBack();
             }
         }
         #endregion
@@ -255,6 +342,15 @@ namespace Lock.ViewModels
             }
         }
         #endregion
+
+        #endregion
+
+        #region Windows API：刷新explorer
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr SendMessageTimeout(IntPtr hWnd, int Msg, IntPtr wParam, string lParam, uint fuFlags, uint uTimeout, IntPtr lpdwResult);
+        public static readonly IntPtr HWND_BROADCAST = new IntPtr(0xffff);
+        public const int WM_SETTINGCHANGE = 0x1a;
+        public const int SMTO_ABORTIFHUNG = 0x0002;
 
         #endregion
 

@@ -2,8 +2,8 @@
 
 namespace Moon.Core.Models.Edgerunners
 {
-    [SugarTable("product-process_solutions")]
-    public class ProductProcess_Solutions
+    [SugarTable("product-processes_solutions")]
+    public class ProductProcesses_Solutions
     {
         [SugarColumn(IsPrimaryKey = true)]
         public string ProductProcess { get; set; }

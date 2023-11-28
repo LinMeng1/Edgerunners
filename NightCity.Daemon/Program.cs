@@ -28,6 +28,7 @@ namespace NightCity.Daemon
         private static SftpService sftpService;
         private static Mutex _mutex = null;
         private static System.Timers.Timer ProcessTimer;
+        private static DateTime lastVersionCheck;
         static void Main(string[] args)
         {
             ServicePointManager.ServerCertificateValidationCallback = delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
@@ -72,7 +73,7 @@ namespace NightCity.Daemon
                         runFlag = true;
                     }
                 }
-                if (!runFlag)
+                if (!runFlag || (DateTime.Now - lastVersionCheck).TotalHours > 24)
                 {
                     await LaunchAsync();
                 }
@@ -80,9 +81,8 @@ namespace NightCity.Daemon
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());              
+                Console.WriteLine(ex.ToString());
             }
-
         }
 
         /// <summary>
@@ -94,6 +94,16 @@ namespace NightCity.Daemon
         {
             try
             {
+                lastVersionCheck = DateTime.Now;
+                PublishInformation publish = null;
+                try
+                {
+                    ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post($"https://10.114.113.101/api/application/max-tac/publish/GetLatestRelease", new { Project = "NightCity" }));
+                    if (!result.Result)
+                        throw new Exception(result.ErrorMessage);
+                    publish = JsonConvert.DeserializeObject<PublishInformation>(result.Content.ToString());
+                }
+                catch { }
                 string installPath = string.Empty;
                 try
                 {
@@ -101,7 +111,16 @@ namespace NightCity.Daemon
                     foreach (var info in infoList)
                     {
                         if (info.DisplayName == "NightCity")
-                            installPath = Path.GetDirectoryName(info.DisplayIcon);
+                        {
+                            if (publish == null || info.DisplayVersion == publish.Version)
+                                installPath = Path.GetDirectoryName(info.DisplayIcon);
+                            else
+                            {
+                                InstalledPrograms.RemoveUninstallInRegistry(info);
+                                Directory.Delete(Path.GetDirectoryName(info.DisplayIcon), true);
+                            }
+                            break;
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -109,12 +128,8 @@ namespace NightCity.Daemon
                     throw new Exception(ex.ToString());
                 }
                 if (installPath == string.Empty)
-                {                   
+                {
                     installPath = Path.GetDirectoryName(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory));
-                    ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post($"https://10.114.113.101/api/application/max-tac/publish/GetLatestRelease", new { Project = "NightCity" }));
-                    if (!result.Result)
-                        throw new Exception(result.ErrorMessage);
-                    PublishInformation publish = JsonConvert.DeserializeObject<PublishInformation>(result.Content.ToString());
                     installPath = Path.Combine(installPath, "NightCity");
                     await Task.Run(() =>
                     {
@@ -139,7 +154,6 @@ namespace NightCity.Daemon
             {
                 throw new Exception(ex.ToString());
             }
-
         }
         private async static void KillProduct(LocalInstallInformation information)
         {

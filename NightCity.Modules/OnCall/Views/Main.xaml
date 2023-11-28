@@ -282,7 +282,7 @@
                                     </StackPanel>
                                     <StackPanel Grid.Row="5" Orientation="Vertical" Margin="3">
                                         <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Attachment Submission:" FontSize="13" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding SolvedProductOwner,StringFormat=Attachment Submission (Will Send to {0}):}" FontSize="13" VerticalAlignment="Center"/>
                                             <materialDesign:PackIcon Kind="LinkPlus" Margin="5,0,0,0" VerticalAlignment="Center" Background="Transparent" Cursor="Hand">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="MouseDown">

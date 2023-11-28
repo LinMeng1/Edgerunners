@@ -2,8 +2,8 @@
 
 namespace Moon.Core.Models.Edgerunners
 {
-    [SugarTable("product-process_failure-reasons")]
-    public class ProductProcess_FailureReasons
+    [SugarTable("product-processes_failure-reasons")]
+    public class ProductProcesses_FailureReasons
     {
         [SugarColumn(IsPrimaryKey = true)]
         public string ProductProcess { get; set; }

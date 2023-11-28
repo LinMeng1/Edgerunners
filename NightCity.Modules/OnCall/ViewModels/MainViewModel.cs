@@ -1008,6 +1008,26 @@ namespace OnCall.ViewModels
                 MessageHost.DialogCategory = "Message";
             }
         }
+        /// <summary>
+        /// 获取产品负责人
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetProductOwnerAsyncBack()
+        {
+            try
+            {
+                ControllersResult resultProductOwner = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/product/GetProductOwner", new { Product = SolvedProduct }));
+                Users productOwner = null;
+                if (resultProductOwner.Result)
+                    productOwner = JsonConvert.DeserializeObject<Users>(resultProductOwner.Content.ToString());
+                SolvedProductOwner = productOwner.Name;
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[GetProductOwnerAsyncBack]:exception:{e.Message}", true);
+            }
+        }
+
 
         #region 命令集合
 
@@ -1443,6 +1463,7 @@ namespace OnCall.ViewModels
             set
             {
                 SetProperty(ref solvedProduct, value);
+                _ = GetProductOwnerAsyncBack();
             }
         }
         #endregion
@@ -1851,6 +1872,18 @@ namespace OnCall.ViewModels
             set
             {
                 SetProperty(ref solveSolutionVisibility, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：产品负责人
+        private string solvedProductOwner;
+        public string SolvedProductOwner
+        {
+            get => solvedProductOwner;
+            set
+            {
+                SetProperty(ref solvedProductOwner, value);
             }
         }
         #endregion

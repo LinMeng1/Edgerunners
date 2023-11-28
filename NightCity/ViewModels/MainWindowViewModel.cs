@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace NightCity.ViewModels
@@ -37,6 +38,11 @@ namespace NightCity.ViewModels
                     var daemon = processes.FirstOrDefault(p => p.ProcessName.StartsWith("NightCity.Daemon"));
                     if (daemon != null)
                         Environment.Exit(0);
+                }
+                else if (command == "system reload")
+                {
+                    System.Windows.Forms.Application.Restart();
+                    Application.Current.Shutdown();
                 }
             }, ThreadOption.UIThread);
             //监听事件 模块列表改变

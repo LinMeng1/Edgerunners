@@ -2,8 +2,8 @@
 
 namespace Moon.Core.Models.Edgerunners
 {
-    [SugarTable("publish")]
-    public class Publish
+    [SugarTable("publications")]
+    public class Publications
     {
         [SugarColumn(IsPrimaryKey = true)]
         public string Project { get; set; }

@@ -5,11 +5,13 @@ using NightCity.Core.Models;
 using NightCity.Core.Models.Standard;
 using NightCity.Core.Services;
 using NightCity.Core.Services.Prism;
+using OnCall.Models.Standard;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -69,6 +71,8 @@ namespace OnCall.ViewModels
                 Organization = null;
                 Leader = null;
                 LeaderContact = null;
+                ProductOwner = null;
+                ProductOwnerContact = null;
                 await Task.Delay(MessageHost.InternalDelay);
                 object mainboard = propertyService.GetProperty("Mainboard") ?? throw new Exception("Mainboard is null");
                 ControllersResult resultLocation = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/connection/GetJurisdictionalClusterOwner", new { Mainboard = mainboard.ToString() }));
@@ -82,6 +86,19 @@ namespace OnCall.ViewModels
                     Organization = jurisdictionalClusterOwner.Organization;
                     Leader = jurisdictionalClusterOwner.Leader;
                     LeaderContact = jurisdictionalClusterOwner.LeaderContact;
+                }
+                Connection_GetClusters_Result productCluster = clustersCache.FirstOrDefault(it => it.Category == "Product");
+                if (productCluster != null)
+                {
+                    ControllersResult resultProductOwner = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/product/GetProductOwner", new { Product = productCluster.Cluster }));
+                    Users productOwner = null;
+                    if (resultProductOwner.Result)
+                        productOwner = JsonConvert.DeserializeObject<Users>(resultProductOwner.Content.ToString());
+                    if (productOwner != null)
+                    {
+                        ProductOwner = productOwner.Name;
+                        ProductOwnerContact = productOwner.Contact;
+                    }
                 }
                 MessageHost.Hide();
             }
@@ -136,7 +153,7 @@ namespace OnCall.ViewModels
         private void SyncOwner()
         {
             MessageHost.Show();
-            MessageHost.DialogCategory = "Syncing";            
+            MessageHost.DialogCategory = "Syncing";
             eventAggregator.GetEvent<MqttMessageReceivedEvent>().Publish(new MqttMessage()
             {
                 IsMastermind = true,
@@ -231,7 +248,30 @@ namespace OnCall.ViewModels
                 SetProperty(ref leaderContact, value);
             }
         }
+        #endregion
 
+        #region 产品工程师
+        private string productOwner;
+        public string ProductOwner
+        {
+            get => productOwner;
+            set
+            {
+                SetProperty(ref productOwner, value);
+            }
+        }
+        #endregion
+
+        #region 产品工程师联系方式
+        private string productOwnerContact;
+        public string ProductOwnerContact
+        {
+            get => productOwnerContact;
+            set
+            {
+                SetProperty(ref productOwnerContact, value);
+            }
+        }
         #endregion
 
         #region 对话框设置

@@ -89,7 +89,7 @@
                 </Grid.ColumnDefinitions>
                 <materialDesign:PackIcon  Grid.Column="0" Kind="AccountCircle" Height="100" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" />
                 <ItemsControl Grid.Column="1" Margin="5,0,5,0" >
-                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                    <Grid HorizontalAlignment="Stretch" Margin="0,0,0,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
@@ -97,7 +97,7 @@
                         <materialDesign:PackIcon  Grid.Column="0" Kind="AccountStar" FontSize="10" />
                         <TextBlock Grid.Column="1" Margin="5,0,0,0" Text="{Binding Owner}"/>
                     </Grid>
-                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                    <Grid HorizontalAlignment="Stretch" Margin="0,0,0,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
@@ -105,7 +105,7 @@
                         <materialDesign:PackIcon  Grid.Column="0" Kind="CellphoneBasic" FontSize="10" />
                         <TextBlock Grid.Column="1" Margin="5,0,0,0" Text="{Binding Contact}"/>
                     </Grid>
-                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                    <Grid HorizontalAlignment="Stretch" Margin="0,0,0,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
@@ -113,7 +113,7 @@
                         <materialDesign:PackIcon  Grid.Column="0" Kind="SitemapOutline" FontSize="10" />
                         <TextBlock Grid.Column="1" Margin="5,0,0,0" Text="{Binding Organization}"/>
                     </Grid>
-                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                    <Grid HorizontalAlignment="Stretch" Margin="0,0,0,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
@@ -121,7 +121,7 @@
                         <materialDesign:PackIcon  Grid.Column="0" Kind="AccountNetwork" FontSize="10" />
                         <TextBlock Grid.Column="1" Margin="5,0,0,0" Text="{Binding Leader}"/>
                     </Grid>
-                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                    <Grid HorizontalAlignment="Stretch" Margin="0,0,0,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
@@ -129,6 +129,34 @@
                         <materialDesign:PackIcon  Grid.Column="0" Kind="CellphoneBasic" FontSize="10" />
                         <TextBlock Grid.Column="1" Margin="5,0,0,0" Text="{Binding LeaderContact}"/>
                     </Grid>
+                    <StackPanel Orientation="Vertical">
+                        <Separator Margin="8,0,8,0" Style="{StaticResource MaterialDesignDarkSeparator}" />
+                        <Grid HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon  Grid.Column="0" Kind="AccountStar" FontSize="10" />
+                            <TextBlock Grid.Column="1" Margin="5,0,0,0" Text="{Binding ProductOwner,StringFormat={}{0}(产品工程师)}"/>
+                        </Grid>
+                        <Grid HorizontalAlignment="Stretch" Margin="0,0,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <materialDesign:PackIcon  Grid.Column="0" Kind="CellphoneBasic" FontSize="10" />
+                            <TextBlock Grid.Column="1" Margin="5,0,0,0" Text="{Binding ProductOwnerContact}"/>
+                        </Grid>
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ProductOwner}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                    </StackPanel>
                 </ItemsControl>
                 <Grid.Style>
                     <Style TargetType="Grid">

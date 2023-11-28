@@ -39,12 +39,7 @@ namespace NightCity.Launcher.ViewModels
             sftpService = new SftpService("10.114.113.101", 2022, Encryption.DecryptString("tonxrWIi+Dq/73qTwIQEKQ=="), Encryption.DecryptString("fxUxc7Rrk3op/6F1bBdmLw=="));
             actionOptimizingService = new ActionOptimizingService();
             Config = ConfigHelper.GetConfig(config);
-            Config.ConfigChanged += ConfigChanged;
-            Task.Run(async () =>
-            {
-                await ScanLocalInstallInformationAsync();
-                await SyncDeveloperNewsAsync();
-            });
+            Config.ConfigChanged += ConfigChanged;         
         }
         /// <summary>
         /// 同步开发者新闻
@@ -281,7 +276,7 @@ namespace NightCity.Launcher.ViewModels
                 InstalledPrograms.RemoveUninstallInRegistry(information);
                 await KillProductAsync(information.DisplayName);
                 await Task.Delay(1000);
-                Directory.Delete(installPath, true);              
+                Directory.Delete(installPath, true);
                 if (information.DisplayName == "NightCity.Daemon")
                     DeleteDaemonTaskScheduler();
                 await ScanLocalInstallInformationAsyncBack();
@@ -415,13 +410,15 @@ namespace NightCity.Launcher.ViewModels
                 {
                     Microsoft.Win32.TaskScheduler.TaskDefinition td = Microsoft.Win32.TaskScheduler.TaskService.Instance.NewTask();
                     td.RegistrationInfo.Description = "Please make sure you are using the latest version of NightCity software. If you disable or interrupt this task, your NightCity software won't be updated, which means potential security vulnerabilities won't be fixed and some features won't work properly. If no NightCity software uses this task, the task will uninstall itself.";
-                    Microsoft.Win32.TaskScheduler.DailyTrigger dt = new Microsoft.Win32.TaskScheduler.DailyTrigger();                    
-                    dt.StartBoundary = DateTime.Today;
-                    dt.Repetition.Interval = TimeSpan.FromMinutes(1);
-                    td.Triggers.Add(dt);
                     td.Actions.Add(information.DisplayIcon);
-                    Microsoft.Win32.TaskScheduler.BootTrigger bootTrigger = new Microsoft.Win32.TaskScheduler.BootTrigger();
-                    td.Triggers.Add(bootTrigger);
+                    //Microsoft.Win32.TaskScheduler.BootTrigger bootTrigger = new Microsoft.Win32.TaskScheduler.BootTrigger();
+                    //td.Triggers.Add(bootTrigger);
+                    td.Triggers.Add(new Microsoft.Win32.TaskScheduler.LogonTrigger());
+                    td.Triggers.Add(new Microsoft.Win32.TaskScheduler.TimeTrigger()
+                    {
+                        StartBoundary = DateTime.Now,
+                        Repetition = new Microsoft.Win32.TaskScheduler.RepetitionPattern(TimeSpan.FromMinutes(1), TimeSpan.Zero)
+                    });
                     Microsoft.Win32.TaskScheduler.TaskService.Instance.RootFolder.RegisterTaskDefinition("NightCity.Daemon Protection", td);
                 }
             }
@@ -550,6 +547,18 @@ namespace NightCity.Launcher.ViewModels
             MessageHost.HideImmediately();
             await Task.Delay(500);
             MessageHost.DialogMessage = string.Empty;
+        }
+        #endregion
+
+        #region 命令：Loaded
+        public ICommand LoadedCommand
+        {
+            get => new DelegateCommand(Loaded);
+        }
+        public async void Loaded()
+        {
+            await ScanLocalInstallInformationAsync();
+            await SyncDeveloperNewsAsync();
         }
         #endregion
 

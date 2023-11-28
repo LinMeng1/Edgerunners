@@ -46,7 +46,7 @@ namespace Moon.Controllers.Application.MaxTac
             ControllersResult result = new();
             try
             {
-                Publish publish = Database.Edgerunners.Queryable<Publish>().OrderBy(it => it.Version, SqlSugar.OrderByType.Desc).First(it => it.Project == parameter.Project);
+                Publications publish = Database.Edgerunners.Queryable<Publications>().OrderBy(it => it.Version, SqlSugar.OrderByType.Desc).First(it => it.Project == parameter.Project);
                 if (publish == null) throw new Exception($"No release information for the Project ({parameter.Project}) found");
                 result.Content = publish;
                 result.Result = true;
@@ -70,7 +70,7 @@ namespace Moon.Controllers.Application.MaxTac
             ControllersResult result = new();
             try
             {
-                Publish publish = new()
+                Publications publish = new()
                 {
                     Project = parameter.Project,
                     Version = parameter.Version,

@@ -162,7 +162,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
                                                  $"FailureCategory:{report.FailureCategory}<br/>" +
                                                  $"FailureReason:{report.FailureReason}<br/>" +
                                                  $"Solution:{report.Solution}<br/>";
-                                var receivers = Database.Edgerunners.Queryable<Product>().LeftJoin<Users>((p, u) => p.Engineer == u.EmployeeId).Where(p => p.InternalName == parameter.Product).Select((p, u) => u.Email).ToList();
+                                var receivers = Database.Edgerunners.Queryable<Products>().LeftJoin<Users>((p, u) => p.Engineer == u.EmployeeId).Where(p => p.InternalName == parameter.Product).Select((p, u) => u.Email).ToList();
                                 Mail.Send(category, subject, context, receivers, new List<string>(), parameter.Attachments);
                             }
                         }
@@ -391,7 +391,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
             ControllersResult result = new();
             try
             {
-                List<string> failureReasonList = Database.Edgerunners.Queryable<ProductProcess_FailureReasons>().Where(it => it.ProductProcess == parameter.Process).Select(it => it.FailureReason).ToList();
+                List<string> failureReasonList = Database.Edgerunners.Queryable<ProductProcesses_FailureReasons>().Where(it => it.ProductProcess == parameter.Process).Select(it => it.FailureReason).ToList();
                 result.Content = failureReasonList;
                 result.Result = true;
             }
@@ -411,7 +411,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
             ControllersResult result = new();
             try
             {
-                List<string> failureReasonList = Database.Edgerunners.Queryable<ProductProcess_Solutions>().Where(it => it.ProductProcess == parameter.Process).Select(it => it.Solution).ToList();
+                List<string> failureReasonList = Database.Edgerunners.Queryable<ProductProcesses_Solutions>().Where(it => it.ProductProcess == parameter.Process).Select(it => it.Solution).ToList();
                 result.Content = failureReasonList;
                 result.Result = true;
             }

@@ -117,7 +117,8 @@
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
-                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <materialDesign:Card Grid.Row="0" Style="{StaticResource Card}">
                 <Grid>
@@ -237,6 +238,34 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </StackPanel>
+                </StackPanel>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Row="2" Style="{StaticResource Card}">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Grid.Column="0" Kind="Cube"/>
+                        <TextBlock Grid.Column="1" Text="Regedit" Margin="10,0,0,0"/>
+                        <TextBlock Grid.Column="3" FontWeight="Bold">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="#D32F2F"/>
+                                    <Setter Property="Text" Value="Disabled"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RegeditEnabled}" Value="True">
+                                            <Setter Property="Foreground" Value="#388E3C"/>
+                                            <Setter Property="Text" Value="Enabled"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
                 </StackPanel>
             </materialDesign:Card>
         </Grid>

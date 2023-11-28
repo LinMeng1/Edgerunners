@@ -28,6 +28,12 @@
         </ResourceDictionary>
     </Window.Resources>
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <prism:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
     <Grid Margin="5">
         <materialDesign:Card Grid.Row="0" UniformCornerRadius="5" Background="Black">
             <Grid>
