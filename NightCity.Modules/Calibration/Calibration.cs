@@ -16,6 +16,7 @@ namespace Calibration
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();
             regionManager.RegisterViewWithRegion("CalibrationRegion", typeof(Main));
+            regionManager.RegisterViewWithRegion("CalibrationRegionShortcut", typeof(Shortcut));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

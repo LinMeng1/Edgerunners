@@ -347,13 +347,7 @@ namespace OnCall.ViewModels
                 await Task.Delay(MessageHost.InternalDelay);
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, }));
                 if (!result.Result)
-                    throw new Exception(result.ErrorMessage);
-                List<string> jurisdictionalClusterOwner = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
-                eventAggregator.GetEvent<MqttMessageSendingEvent>().Publish(new Tuple<List<string>, MqttMessage>(jurisdictionalClusterOwner, new MqttMessage()
-                {
-                    IsMastermind = true,
-                    Content = "system sync banner messages"
-                }));
+                    throw new Exception(result.ErrorMessage);               
                 await SyncOpenReportsAsync();
                 await GetAllReportsAsync();
                 MessageHost.Hide();
@@ -409,13 +403,7 @@ namespace OnCall.ViewModels
                 }
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, Product = product, Process = process, FailureCategory = failureCategory, FailureReason = failureReason, Solution = solution, Attachments = attachements }));
                 if (!result.Result)
-                    throw new Exception(result.ErrorMessage);
-                List<string> jurisdictionalClusters = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
-                eventAggregator.GetEvent<MqttMessageSendingEvent>().Publish(new Tuple<List<string>, MqttMessage>(jurisdictionalClusters, new MqttMessage()
-                {
-                    IsMastermind = true,
-                    Content = "system sync banner messages"
-                }));
+                    throw new Exception(result.ErrorMessage);               
                 await SyncOpenReportsAsync();
                 await GetAllReportsAsync();
                 MessageHost.Hide();
@@ -442,13 +430,7 @@ namespace OnCall.ViewModels
                 await Task.Delay(MessageHost.InternalDelay);
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, AbortReason = "MisReport" }));
                 if (!result.Result)
-                    throw new Exception(result.ErrorMessage);
-                List<string> jurisdictionalClusters = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
-                eventAggregator.GetEvent<MqttMessageSendingEvent>().Publish(new Tuple<List<string>, MqttMessage>(jurisdictionalClusters, new MqttMessage()
-                {
-                    IsMastermind = true,
-                    Content = "system sync banner messages"
-                }));
+                    throw new Exception(result.ErrorMessage);            
                 await SyncOpenReportsAsync();
                 await GetAllReportsAsync();
                 MessageHost.Hide();
@@ -1016,6 +998,7 @@ namespace OnCall.ViewModels
         {
             try
             {
+                if (SolvedProduct == null) return;
                 ControllersResult resultProductOwner = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/product/GetProductOwner", new { Product = SolvedProduct }));
                 Users productOwner = null;
                 if (resultProductOwner.Result)
@@ -1114,6 +1097,7 @@ namespace OnCall.ViewModels
             SolvedProduct = null;
             SolvedProductProcess = null;
             SolvedFailureCategory = null;
+            SolvedProductOwner = null;
             SolvedFailureReason = string.Empty;
             SolvedSolution = string.Empty;
             SolveFailureReason = null;

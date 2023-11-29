@@ -6,6 +6,7 @@ using Moon.Core.Models;
 using Moon.Core.Standard;
 using Moon.Core.Utilities;
 using System.Text.RegularExpressions;
+using Moon.Core.Models._Imaginary;
 
 namespace Moon.Controllers.Basic
 {
@@ -176,8 +177,23 @@ namespace Moon.Controllers.Basic
                     }).ExecuteCommand();
                     Database.Edgerunners.Updateable<IPCBanners>().SetColumns(it => it.Mainboard == parameter.Mainboard).Where(it => it.Extensible && it.Mainboard == officePC.Mainboard).ExecuteCommand();
                 }
+                List<string> syncClusters = new() { parameter.Mainboard };
+                if (officePC != null) syncClusters.Add(officePC.Mainboard);
+                foreach (string syncCluster in syncClusters)
+                {
+                    try
+                    {
+                        Mqtt.Publish(syncCluster, new _MqttMessage()
+                        {
+                            IsMastermind = true,
+                            Address = "Moon",
+                            Sender = "Lucy",
+                            Content = "system sync banner messages"
+                        });
+                    }
+                    catch { }
+                }
                 result.Result = true;
-                result.Content = officePC?.Mainboard;
             }
             catch (Exception e)
             {

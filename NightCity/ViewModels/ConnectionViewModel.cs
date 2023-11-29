@@ -33,18 +33,7 @@ namespace NightCity.ViewModels
             //依赖注入及初始化
             this.eventAggregator = eventAggregator;
             this.propertyService = propertyService;
-            httpService = new HttpService();
-            //监听事件 同辖信息发送
-            eventAggregator.GetEvent<MqttMessageSendingEvent>().Subscribe(async (message) =>
-            {
-                if (mqttService != null)
-                {
-                    foreach (string topic in message.Item1)
-                    {
-                        await mqttService.Publish(message.Item2.IsMastermind, topic, message.Item2.Sender, message.Item2.Content);
-                    }
-                }
-            }, ThreadOption.UIThread);
+            httpService = new HttpService();          
             //监听事件 Mqtt信息接受
             eventAggregator.GetEvent<MqttMessageReceivedEvent>().Subscribe(async (message) =>
             {

@@ -128,15 +128,9 @@ namespace NightCity.ViewModels
                 MessageHost.DialogCategory = "Syncing";
                 await Task.Delay(MessageHost.InternalDelay);
                 string mainboard = propertyService.GetProperty("Mainboard").ToString();
-                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/connection/GetJurisdictionalClusterOwnersClusters", new { Mainboard = mainboard }));
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/connection/SyncJurisdictionalClustersMessage", new { Mainboard = mainboard }));
                 if (!result.Result)
-                    throw new Exception(result.ErrorMessage);
-                List<string> jurisdictionalClusters = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
-                eventAggregator.GetEvent<MqttMessageSendingEvent>().Publish(new Tuple<List<string>, MqttMessage>(jurisdictionalClusters, new MqttMessage()
-                {
-                    IsMastermind = true,
-                    Content = "system sync banner messages"
-                }));
+                    throw new Exception(result.ErrorMessage);               
             }
             catch (Exception e)
             {

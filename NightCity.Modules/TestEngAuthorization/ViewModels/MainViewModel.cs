@@ -193,14 +193,7 @@ namespace TestEngAuthorization.ViewModels
                 if (!result.Result)
                     throw new Exception(result.ErrorMessage);
                 MessageHost.Hide();
-                await SyncUserInfoAsync();
-                List<string> clusters = new List<string>() { mainboard.ToString() };
-                if (result.Content != null) clusters.Add(result.Content.ToString());
-                eventAggregator.GetEvent<MqttMessageSendingEvent>().Publish(new Tuple<List<string>, MqttMessage>(clusters, new MqttMessage()
-                {
-                    IsMastermind = true,
-                    Content = "system sync banner messages"
-                }));
+                await SyncUserInfoAsync();             
             }
             catch (Exception ex)
             {

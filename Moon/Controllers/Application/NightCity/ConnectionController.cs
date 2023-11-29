@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Moon.Attributes;
 using Moon.Core.Utilities;
 using System;
+using Moon.Core.Models._Imaginary;
 
 namespace Moon.Controllers.Application.NightCity
 {
@@ -143,10 +144,10 @@ namespace Moon.Controllers.Application.NightCity
         }
         #endregion
 
-        #region 获取管辖集群负责人管辖集群
+        #region 同步同辖管理集群消息
         [Authorize]
         [HttpPost]
-        public ControllersResult GetJurisdictionalClusterOwnersClusters([FromBody] Connection_GetJurisdictionalClusterOwnersClusters_Parameter parameter)
+        public ControllersResult SyncJurisdictionalClustersMessage([FromBody] Connection_SyncJurisdictionalClustersMessage_Parameter parameter)
         {
             ControllersResult result = new();
             try
@@ -159,7 +160,20 @@ namespace Moon.Controllers.Application.NightCity
                     if (!syncClusters.Contains(syncCluster))
                         syncClusters.Add(syncCluster);
                 }
-                result.Content = syncClusters;
+                foreach (string syncCluster in syncClusters)
+                {
+                    try
+                    {
+                        Mqtt.Publish(syncCluster, new _MqttMessage()
+                        {
+                            IsMastermind = true,
+                            Address = "Moon",
+                            Sender = "Lucy",
+                            Content = "system sync banner messages"
+                        });
+                    }
+                    catch { }
+                }
                 result.Result = true;
             }
             catch (Exception e)
@@ -309,8 +323,8 @@ namespace Moon.Controllers.Application.NightCity
         }
         #endregion
 
-        #region GetJurisdictionalClusterOwnersClusters
-        public class Connection_GetJurisdictionalClusterOwnersClusters_Parameter
+        #region SyncJurisdictionalClustersMessage
+        public class Connection_SyncJurisdictionalClustersMessage_Parameter
         {
             public string Mainboard { get; set; }
         }

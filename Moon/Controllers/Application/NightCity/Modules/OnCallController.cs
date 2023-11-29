@@ -93,7 +93,20 @@ namespace Moon.Controllers.Application.NightCity.Modules
                 Database.Edgerunners.Insertable(banners).IgnoreColumns("CreateTime").ExecuteCommand();
                 if (!orderCreated)
                     throw new Exception("The order was not created successfully. Please check whether owner is displayed on the panel.");
-                result.Content = syncClusters;
+                foreach (string syncCluster in syncClusters)
+                {
+                    try
+                    {
+                        Mqtt.Publish(syncCluster, new _MqttMessage()
+                        {
+                            IsMastermind = true,
+                            Address = "Moon",
+                            Sender = "Lucy",
+                            Content = "system sync banner messages"
+                        });
+                    }
+                    catch { }
+                }
                 result.Result = true;
             }
             catch (Exception e)
@@ -190,7 +203,20 @@ namespace Moon.Controllers.Application.NightCity.Modules
                     if (!syncClusters.Contains(syncCluster))
                         syncClusters.Add(syncCluster);
                 }
-                result.Content = syncClusters;
+                foreach (string syncCluster in syncClusters)
+                {
+                    try
+                    {
+                        Mqtt.Publish(syncCluster, new _MqttMessage()
+                        {
+                            IsMastermind = true,
+                            Address = "Moon",
+                            Sender = "Lucy",
+                            Content = "system sync banner messages"
+                        });
+                    }
+                    catch { }
+                }              
                 result.Result = true;
             }
             catch (Exception e)

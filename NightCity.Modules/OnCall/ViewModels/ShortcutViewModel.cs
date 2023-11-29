@@ -126,13 +126,7 @@ namespace OnCall.ViewModels
                 object hostname = propertyService.GetProperty("HostName") ?? throw new Exception("HostName is null");
                 ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/CallReport", new { Mainboard = mainboard.ToString(), HostName = hostname.ToString() }));
                 if (!result.Result)
-                    throw new Exception(result.ErrorMessage);
-                List<string> jurisdictionalClusterOwner = JsonConvert.DeserializeObject<List<string>>(result.Content.ToString());
-                eventAggregator.GetEvent<MqttMessageSendingEvent>().Publish(new Tuple<List<string>, MqttMessage>(jurisdictionalClusterOwner, new MqttMessage()
-                {
-                    IsMastermind = true,
-                    Content = "system sync banner messages"
-                }));
+                    throw new Exception(result.ErrorMessage);              
                 MessageHost.Hide();
             }
             catch (Exception e)

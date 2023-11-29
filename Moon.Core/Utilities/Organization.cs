@@ -101,9 +101,9 @@ namespace Moon.Core.Utilities
             orgCharts.Add(new OrganizationChartFlat
             {
                 Id = "root",
-                ItCode = "jinxj2",
-                Name = "Eric Jin",
-                Position = "Sr ME Manager",
+                ItCode = string.Empty,
+                Name = "TECC",
+                Position = "Test Engineering Control Center",
                 ParentId = null
             });
             return orgCharts;

@@ -10,7 +10,6 @@ namespace NightCity.Core.Events
     public class MqttConnectedEvent : PubSubEvent<bool> { }
     public class MqttMessageReceivedEvent : PubSubEvent<MqttMessage> { }
     public class MqttNoReadMessageCountChangedEvent : PubSubEvent<int> { }
-    public class MqttMessageSendingEvent : PubSubEvent<Tuple<List<string>, MqttMessage>> { }
     public class BannerMessagesChangedEvent : PubSubEvent<Tuple<BannerMessage, int>> { }
     public class BannerMessageRemovingEvent : PubSubEvent<BannerMessage> { }
     public class BannerMessageTryLinkingEvent : PubSubEvent<Tuple<string, string>> { }
