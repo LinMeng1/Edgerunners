@@ -183,7 +183,7 @@ namespace Moon.Controllers.Basic
                 {
                     try
                     {
-                        Mqtt.Publish(syncCluster, new _MqttMessage()
+                        _ = Mqtt.Publish(syncCluster, new _MqttMessage()
                         {
                             IsMastermind = true,
                             Address = "Moon",
@@ -249,7 +249,7 @@ namespace Moon.Controllers.Basic
         }
         #endregion
 
-        #region Account_LinkOfficeComputer_Parameter
+        #region LinkOfficeComputer
         public class Account_LinkOfficeComputer_Parameter
         {
             public string Mainboard { get; set; }

@@ -164,7 +164,7 @@ namespace Moon.Controllers.Application.NightCity
                 {
                     try
                     {
-                        Mqtt.Publish(syncCluster, new _MqttMessage()
+                        _ = Mqtt.Publish(syncCluster, new _MqttMessage()
                         {
                             IsMastermind = true,
                             Address = "Moon",
@@ -217,7 +217,7 @@ namespace Moon.Controllers.Application.NightCity
                 }
                 try
                 {
-                    Mqtt.Publish($"{parameter.Category}/{parameter.Cluster}", new Core.Models._Imaginary._MqttMessage()
+                    _ = Mqtt.Publish($"{parameter.Category}/{parameter.Cluster}", new Core.Models._Imaginary._MqttMessage()
                     {
                         IsMastermind = true,
                         Address = "Moon",
@@ -257,7 +257,7 @@ namespace Moon.Controllers.Application.NightCity
                 }
                 try
                 {
-                    Mqtt.Publish($"{parameter.Category}/{parameter.Cluster}", new Core.Models._Imaginary._MqttMessage()
+                    _ = Mqtt.Publish($"{parameter.Category}/{parameter.Cluster}", new Core.Models._Imaginary._MqttMessage()
                     {
                         IsMastermind = true,
                         Address = "Moon",

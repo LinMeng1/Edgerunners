@@ -7,7 +7,7 @@ namespace Moon.Core.Utilities
 {
     public static class Mqtt
     {
-        public static async void Publish(string topic, _MqttMessage message)
+        public static async Task Publish(string topic, _MqttMessage message)
         {
             IMqttClient mqttClient = new MqttFactory().CreateMqttClient();
             MqttClientOptions mqttClientOptions = new MqttClientOptionsBuilder()

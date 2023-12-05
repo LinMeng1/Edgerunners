@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -132,11 +133,15 @@ namespace NightCity.ViewModels
         {
             get => new DelegateCommand<object>(TryLink);
         }
-        private void TryLink(object parameter)
+        private async void TryLink(object parameter)
         {
+            Syncing = true;
             string category = ((object[])parameter)[0]?.ToString();
             string linkCommand = ((object[])parameter)[1]?.ToString();
             eventAggregator.GetEvent<BannerMessageTryLinkingEvent>().Publish(new Tuple<string, string>(category, linkCommand));
+            await Task.Delay(1500);
+            Syncing = false;
+
         }
         #endregion
 

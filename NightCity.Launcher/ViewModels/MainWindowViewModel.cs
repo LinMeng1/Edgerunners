@@ -39,7 +39,7 @@ namespace NightCity.Launcher.ViewModels
             sftpService = new SftpService("10.114.113.101", 2022, Encryption.DecryptString("tonxrWIi+Dq/73qTwIQEKQ=="), Encryption.DecryptString("fxUxc7Rrk3op/6F1bBdmLw=="));
             actionOptimizingService = new ActionOptimizingService();
             Config = ConfigHelper.GetConfig(config);
-            Config.ConfigChanged += ConfigChanged;         
+            Config.ConfigChanged += ConfigChanged;
         }
         /// <summary>
         /// 同步开发者新闻
@@ -119,8 +119,9 @@ namespace NightCity.Launcher.ViewModels
                     if (!result.Result) continue;
                     PublishInformation publish = JsonConvert.DeserializeObject<PublishInformation>(result.Content.ToString());
                     app.LatestVersion = publish.Version;
-                    if (localInstallInformationList.FirstOrDefault(it => it.DisplayName == app.DisplayName) == null)
+                    if (LocalInstallInformationList.FirstOrDefault(it => it.DisplayName == app.DisplayName) == null)
                     {
+                        app.DisplayVersion = null;
                         app.IsInstalled = false;
                         app.DisplayIcon = null;
                     }
@@ -178,6 +179,7 @@ namespace NightCity.Launcher.ViewModels
                     app.LatestVersion = publish.Version;
                     if (localInstallInformationList.FirstOrDefault(it => it.DisplayName == app.DisplayName) == null)
                     {
+                        app.DisplayVersion = null;
                         app.IsInstalled = false;
                         app.DisplayIcon = null;
                     }
@@ -186,7 +188,6 @@ namespace NightCity.Launcher.ViewModels
             }
             catch { }
         }
-
         /// <summary>
         /// 启动产品
         /// </summary>
@@ -343,6 +344,25 @@ namespace NightCity.Launcher.ViewModels
                 MessageHost.Show();
                 MessageHost.DialogCategory = "Syncing";
                 await Task.Delay(MessageHost.InternalDelay);
+                DeleteDeprecatedTaskScheduler();
+                foreach (Process p in Process.GetProcesses())
+                {
+                    if (p.ProcessName.CompareTo("Guard2 Updater") == 0)
+                    {
+                        p.Kill();
+                        break;
+                    }
+                }
+                foreach (Process p in Process.GetProcesses())
+                {
+                    if (p.ProcessName.CompareTo("Guard2") == 0)
+                    {
+                        p.Kill();
+                        break;
+                    }
+                }
+
+
                 await ScanLocalInstallInformationAsyncBack();
                 foreach (var info in LocalInstallInformationList)
                 {

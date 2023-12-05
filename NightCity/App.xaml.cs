@@ -21,9 +21,9 @@ namespace NightCity
         protected override Window CreateShell()
         {
             ServicePointManager.ServerCertificateValidationCallback = delegate (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-               {
-                   return true;
-               };
+            {
+                return true;
+            };
             return Container.Resolve<MainWindow>();
         }
         protected override void RegisterTypes(IContainerRegistry containerRegistry)

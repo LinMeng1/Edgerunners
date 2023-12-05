@@ -345,9 +345,9 @@ namespace OnCall.ViewModels
                 MessageHost.Show();
                 MessageHost.DialogCategory = "Syncing";
                 await Task.Delay(MessageHost.InternalDelay);
-                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, }));
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, State = "triggered" }));
                 if (!result.Result)
-                    throw new Exception(result.ErrorMessage);               
+                    throw new Exception(result.ErrorMessage);
                 await SyncOpenReportsAsync();
                 await GetAllReportsAsync();
                 MessageHost.Hide();
@@ -401,9 +401,9 @@ namespace OnCall.ViewModels
                         attachment.Base64Str
                     });
                 }
-                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, Product = product, Process = process, FailureCategory = failureCategory, FailureReason = failureReason, Solution = solution, Attachments = attachements }));
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, State = "responsed", Product = product, Process = process, FailureCategory = failureCategory, FailureReason = failureReason, Solution = solution, Attachments = attachements }));
                 if (!result.Result)
-                    throw new Exception(result.ErrorMessage);               
+                    throw new Exception(result.ErrorMessage);
                 await SyncOpenReportsAsync();
                 await GetAllReportsAsync();
                 MessageHost.Hide();
@@ -428,9 +428,9 @@ namespace OnCall.ViewModels
                 MessageHost.Show();
                 MessageHost.DialogCategory = "Syncing";
                 await Task.Delay(MessageHost.InternalDelay);
-                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, AbortReason = "MisReport" }));
+                ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/HandleReport", new { ReportId = reportId, State = "responsed", AbortReason = "MisReport" }));
                 if (!result.Result)
-                    throw new Exception(result.ErrorMessage);            
+                    throw new Exception(result.ErrorMessage);
                 await SyncOpenReportsAsync();
                 await GetAllReportsAsync();
                 MessageHost.Hide();
@@ -990,6 +990,7 @@ namespace OnCall.ViewModels
                 MessageHost.DialogCategory = "Message";
             }
         }
+
         /// <summary>
         /// 获取产品负责人
         /// </summary>
@@ -1008,6 +1009,30 @@ namespace OnCall.ViewModels
             catch (Exception e)
             {
                 Global.Log($"[OnCall]:[MainViewModel]:[GetProductOwnerAsyncBack]:exception:{e.Message}", true);
+            }
+        }
+
+        /// <summary>
+        /// 获取订单详情
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetReportDetailsAsyncBack()
+        {
+            try
+            {
+                ControllersResult reportDetails = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/application/night-city/modules/on-call/GetReportDetails", new { Id = SolvedReportId }));
+                if (reportDetails.Result)
+                {
+                    ReportDetails details = JsonConvert.DeserializeObject<ReportDetails>(reportDetails.Content.ToString());
+                    SolvedProduct = details.Product;
+                    SolvedProductProcess = details.Process;
+                    SolvedFailureReason = details.FailureReason;
+                    ExternalSystem = details.ExternalSystem;
+                }
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[OnCall]:[MainViewModel]:[GetReportDetailsAsyncBack]:exception:{e.Message}", true);
             }
         }
 
@@ -1094,6 +1119,7 @@ namespace OnCall.ViewModels
         }
         private async void TrySolveReport()
         {
+            ExternalSystem = null;
             SolvedProduct = null;
             SolvedProductProcess = null;
             SolvedFailureCategory = null;
@@ -1108,6 +1134,7 @@ namespace OnCall.ViewModels
             SolveSolutionVisibility = false;
             MessageHost.Show();
             MessageHost.DialogCategory = "Syncing";
+            await GetReportDetailsAsyncBack();
             await GetProductListAsyncBack();
             await GetProductProcessListAsyncBack();
             await GetFailureCategoryListAsyncBack();
@@ -1544,6 +1571,18 @@ namespace OnCall.ViewModels
             set
             {
                 SetProperty(ref solvedSolution, value);
+            }
+        }
+        #endregion
+
+        #region 异常解决回执：外部系统
+        private string externalSystem;
+        public string ExternalSystem
+        {
+            get => externalSystem;
+            set
+            {
+                SetProperty(ref externalSystem, value);
             }
         }
         #endregion

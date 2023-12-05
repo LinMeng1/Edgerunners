@@ -101,6 +101,7 @@
     <Compile Include="Models\GetOpenReports.cs" />
     <Compile Include="Models\Standard\AssignInfo.cs" />
     <Compile Include="Models\Standard\Attachment.cs" />
+    <Compile Include="Models\Standard\ReportDetails.cs" />
     <Compile Include="Models\Standard\Users.cs" />
     <Compile Include="OnCall.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

@@ -46,8 +46,6 @@ namespace Moon.Controllers.Basic
         #endregion
 
 
-
-
         #region GetToken
         public class Authorize_GetToken_Parameter
         {

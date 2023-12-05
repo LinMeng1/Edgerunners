@@ -161,10 +161,30 @@
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="Report Feedback" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center"/>
+
+                                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <TextBlock Text="{Binding ExternalSystem}" FontWeight="Bold" FontSize="14" Margin="0,0,10,0" Foreground="#00897B"/>
+                                        <TextBlock Text="Report Feedback" FontSize="14" FontWeight="Bold"/>
+                                    </StackPanel>
+
                                     <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="3">
                                         <TextBlock Text="Report id:" FontSize="13" VerticalAlignment="Center"/>
                                         <TextBlock Text="{Binding SolvedReportId}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="3">
+                                        <TextBlock Text="Product:" FontSize="13" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding SolvedProduct}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ExternalSystem}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
                                     </StackPanel>
                                     <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="3">
                                         <TextBlock Text="Product:" FontSize="13" VerticalAlignment="Center"/>
@@ -217,6 +237,31 @@
                                                 </MultiBinding>
                                             </Grid.Visibility>
                                         </Grid>
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ExternalSystem}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="3">
+                                        <TextBlock Text="Process:" FontSize="13" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding SolvedProductProcess}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ExternalSystem}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
                                     </StackPanel>
                                     <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="3">
                                         <TextBlock Text="Process:" FontSize="13" VerticalAlignment="Center"/>
@@ -275,11 +320,24 @@
                                                 </MultiBinding>
                                             </Grid.Visibility>
                                         </Grid>
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ExternalSystem}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
                                     </StackPanel>
+
+
                                     <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="3">
                                         <TextBlock Text="Failure Category:" FontSize="13" VerticalAlignment="Center"/>
                                         <ComboBox MinWidth="150" ItemsSource="{Binding FailureCategoryList}" SelectedItem="{Binding SolvedFailureCategory}" Margin="10,0,0,0" VerticalAlignment="Center"/>
                                     </StackPanel>
+
                                     <StackPanel Grid.Row="5" Orientation="Vertical" Margin="3">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding SolvedProductOwner,StringFormat=Attachment Submission (Will Send to {0}):}" FontSize="13" VerticalAlignment="Center"/>
@@ -317,6 +375,21 @@
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
                                     </StackPanel>
+
+                                    <StackPanel Grid.Row="6" Margin="5">
+                                        <TextBlock Text="Failure Reason" FontSize="13"/>
+                                        <TextBox Padding="5" IsReadOnly="True"  Text="{Binding SolvedFailureReason, UpdateSourceTrigger=PropertyChanged}" Height="75" VerticalAlignment="Top" AcceptsReturn="True" Style="{StaticResource MaterialDesignOutlinedTextBox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ExternalSystem}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+                                    </StackPanel>
                                     <StackPanel Grid.Row="6" Margin="5">
                                         <TextBlock Text="Failure Reason" FontSize="13"/>
                                         <Grid Margin="0,0,0,10" Background="#FFECB3">
@@ -345,7 +418,20 @@
                                             </Grid.Style>
                                         </Grid>
                                         <TextBox Padding="5" Text="{Binding SolvedFailureReason, UpdateSourceTrigger=PropertyChanged}" Height="75" VerticalAlignment="Top" AcceptsReturn="True" Style="{StaticResource MaterialDesignOutlinedTextBox}" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ExternalSystem}" Value="{x:Null}">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
                                     </StackPanel>
+
+
+
                                     <StackPanel Grid.Row="7" Margin="3">
                                         <TextBlock Text="Solution" FontSize="13"/>
                                         <Grid Margin="0,0,0,10" Background="#FFECB3">
@@ -396,7 +482,7 @@
                                 </StackPanel.Visibility>
                             </StackPanel>
                             <StackPanel Margin="10,5,5,5">
-                                <TextBlock Text="Input new phone number" FontWeight="Bold"/>
+                                <TextBlock Text="Add new cluster owner" FontWeight="Bold"/>
                                 <TextBox Width="300" Padding="8" Margin="0,8,0,5" HorizontalAlignment="Stretch" materialDesign:TextFieldAssist.HasClearButton="True" Text="{Binding EditingCluster}" materialDesign:HintAssist.Hint="Cluster" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
                                 <ComboBox Width="300" Padding="8" Margin="0,8,0,5" Text="{Binding EditingClusterCategory}" materialDesign:HintAssist.Hint="Cluster Category" Style="{StaticResource MaterialDesignOutlinedComboBox}">
                                     <ComboBoxItem Content="Location"/>

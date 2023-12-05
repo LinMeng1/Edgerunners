@@ -43,15 +43,7 @@ namespace OnCall.ViewModels
                     clustersCache = clusters;
                     await SyncJurisdictionalClusterOwnerAsync();
                 }
-            }, ThreadOption.UIThread));
-            //监听事件 Mqtt信息接收
-            eventTokens.Add(eventAggregator.GetEvent<MqttMessageReceivedEvent>().Subscribe(async (message) =>
-            {
-                if (!message.IsMastermind) return;
-                string command = message.Content;
-                if (command == "module on-call sync owner")
-                    await SyncJurisdictionalClusterOwnerAsync();
-            }, ThreadOption.UIThread, true));
+            }, ThreadOption.UIThread));           
             SyncOwner();
         }
 

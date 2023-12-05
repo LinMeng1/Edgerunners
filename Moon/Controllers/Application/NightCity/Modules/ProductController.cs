@@ -2,7 +2,6 @@
 using Moon.Core.Models;
 using Moon.Core.Models.Edgerunners;
 using Moon.Core.Standard;
-using static Moon.Controllers.Application.NightCity.Modules.OnCallController;
 
 namespace Moon.Controllers.Application.NightCity.Modules
 {

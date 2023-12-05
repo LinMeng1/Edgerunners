@@ -6,6 +6,7 @@ using Moon.Core.Models._Imaginary;
 using Moon.Core.Models.Edgerunners;
 using Moon.Core.Standard;
 using Moon.Core.Utilities;
+using Newtonsoft.Json;
 
 namespace Moon.Controllers.Application.NightCity.Modules
 {
@@ -28,9 +29,8 @@ namespace Moon.Controllers.Application.NightCity.Modules
             {
                 string id = Guid.NewGuid().ToString();
                 int inProgressCount = Database.Edgerunners.Queryable<IPCIssueReports>().Where(it => it.Mainboard == parameter.Mainboard && it.State != "solved" && it.State != "aborted").Count();
-                if (inProgressCount > 0 && parameter.ExternalId == null && parameter.ExternalSystem == null) throw new Exception("Please do not report for repair repeatedly");
-                string externalStr = parameter.ExternalSystem == null ? string.Empty : $"[External:{parameter.ExternalSystem}] ";
-                List<OnCall_CallRepor_Middleware> jurisdictionalClusters = Database.Edgerunners.Queryable<IPCs_JurisdictionalClusters>().RightJoin<IPCs_JurisdictionalClusters>((i, i2) => i.Owner == i2.Owner).Where((i, i2) => i.Mainboard == parameter.Mainboard).LeftJoin<Users>((i, i2, u) => i2.Owner == u.EmployeeId).Select((i, i2, u) => new OnCall_CallRepor_Middleware()
+                if (inProgressCount > 0) throw new Exception("Please do not report for repair repeatedly");
+                List<OnCall_CallReport_Middleware> jurisdictionalClusters = Database.Edgerunners.Queryable<IPCs_JurisdictionalClusters>().RightJoin<IPCs_JurisdictionalClusters>((i, i2) => i.Owner == i2.Owner).Where((i, i2) => i.Mainboard == parameter.Mainboard).LeftJoin<Users>((i, i2, u) => i2.Owner == u.EmployeeId).Select((i, i2, u) => new OnCall_CallReport_Middleware()
                 {
                     Mainboard = i2.Mainboard,
                     Category = i2.Category,
@@ -54,9 +54,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
                             Id = id,
                             Mainboard = parameter.Mainboard,
                             HostName = parameter.HostName,
-                            InitialOwner = cluster.Owner,
-                            ExternalSystem = parameter.ExternalSystem,
-                            ExternalId = parameter.ExternalId,
+                            InitialOwner = cluster.Owner
                         };
                         IPCBanners banner = new()
                         {
@@ -65,11 +63,11 @@ namespace Moon.Controllers.Application.NightCity.Modules
                             Urgency = "Execute",
                             Priority = 80,
                             Category = "OnCall",
-                            Content = $"{externalStr}An issue has been found on this site. Please ask a test technician to handle it. Owner is {cluster.OwnerName ?? "Nobody"}",
+                            Content = $"An issue has been found on this site. Please ask a test technician to handle it. Owner is {cluster.OwnerName ?? "Nobody"}",
                             LinkCommand = $"module on-call response issue {id}",
                             LinkInformation = id,
                         };
-                        Database.Edgerunners.Insertable(report).InsertColumns("Id", "Mainboard", "HostName", "InitialOwner", "ExternalSystem", "ExternalId").ExecuteCommand();
+                        Database.Edgerunners.Insertable(report).InsertColumns("Id", "Mainboard", "HostName", "InitialOwner").ExecuteCommand();
                         orderCreated = true;
                         banners.Add(banner);
                     }
@@ -83,7 +81,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
                             Urgency = "Plan",
                             Priority = 80,
                             Category = "OnCall",
-                            Content = $"{externalStr}An opening issue report has been found on site:{parameter.HostName}. Owner is {cluster.OwnerName ?? "Nobody"}",
+                            Content = $"An opening issue report has been found on site:{parameter.HostName}. Owner is {cluster.OwnerName ?? "Nobody"}",
                             LinkCommand = "module on-call sync issue",
                             LinkInformation = id,
                         };
@@ -97,7 +95,112 @@ namespace Moon.Controllers.Application.NightCity.Modules
                 {
                     try
                     {
-                        Mqtt.Publish(syncCluster, new _MqttMessage()
+                        _ = Mqtt.Publish(syncCluster, new _MqttMessage()
+                        {
+                            IsMastermind = true,
+                            Address = "Moon",
+                            Sender = "Lucy",
+                            Content = "system sync banner messages"
+                        });
+                    }
+                    catch { }
+                }
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
+
+        #region 从Gigaeye异常报修
+        [Authorize]
+        [PasswordCheck]
+        [AuthorizeCheck(Authorization.AuthorizationEnum.Application_NightCity_Modules_OnCall_CallReportFromGigaeye)]
+        [HttpPost]
+        public ControllersResult CallReportFromGigaeye([FromBody] OnCall_CallReportFromGigaeye_Paramter parameter)
+        {
+            ControllersResult result = new();
+            try
+            {
+                string id = Guid.NewGuid().ToString();
+                IPCs ipc = Database.Edgerunners.Queryable<IPCs>().First(it => it.HostName == parameter.HostName);
+                if (ipc == null)
+                    throw new Exception("Could not match computer entity");
+                List<OnCall_CallReport_Middleware> jurisdictionalClusters = Database.Edgerunners.Queryable<IPCs_JurisdictionalClusters>().RightJoin<IPCs_JurisdictionalClusters>((i, i2) => i.Owner == i2.Owner).Where((i, i2) => i.Mainboard == ipc.Mainboard).LeftJoin<Users>((i, i2, u) => i2.Owner == u.EmployeeId).Select((i, i2, u) => new OnCall_CallReport_Middleware()
+                {
+                    Mainboard = i2.Mainboard,
+                    Category = i2.Category,
+                    Cluster = i2.Cluster,
+                    Owner = i2.Owner,
+                    OwnerName = u.Name
+                }).ToList();
+                int index = 0;
+                List<IPCBanners> banners = new();
+                List<string> syncClusters = new();
+                bool orderCreated = false;
+                foreach (var cluster in jurisdictionalClusters)
+                {
+                    string syncCluster = $"{cluster.Category}/{cluster.Cluster}";
+                    if (!syncClusters.Contains(syncCluster))
+                        syncClusters.Add(syncCluster);
+                    if (cluster.Mainboard == ipc.Mainboard)
+                    {
+                        IPCIssueReports report = new()
+                        {
+                            Id = id,
+                            Mainboard = ipc.Mainboard,
+                            HostName = parameter.HostName,
+                            Product = parameter.Product,
+                            Process = parameter.Process,
+                            FailureReason = $"[{parameter.Type}] at {parameter.Station}\r\n{parameter.TestCode}\r\n{parameter.Reason}",
+                            InitialOwner = cluster.Owner,
+                            ExternalId = parameter.Id,
+                            ExternalSystem = "Gigaeye"
+                        };
+                        IPCBanners banner = new()
+                        {
+                            Id = id,
+                            Mainboard = ipc.Mainboard,
+                            Urgency = "Execute",
+                            Priority = 90,
+                            Category = "OnCall",
+                            Content = $"[External:Gigaeye] TestCode：{parameter.TestCode}",
+                            LinkCommand = $"module on-call response issue {id}",
+                            LinkInformation = id,
+                        };
+                        Database.Edgerunners.Insertable(report).InsertColumns("Id", "Mainboard", "HostName", "InitialOwner", "Product", "Process", "FailureReason", "ExternalSystem", "ExternalId").ExecuteCommand();
+                        orderCreated = true;
+                        banners.Add(banner);
+                    }
+                    else
+                    {
+                        index++;
+                        IPCBanners banner = new()
+                        {
+                            Id = $"{id}-{index}",
+                            Mainboard = cluster.Mainboard,
+                            Urgency = "Plan",
+                            Priority = 90,
+                            Category = "OnCall",
+                            Content = $"[External:Gigaeye] An opening issue report has been found on site:{parameter.HostName}. Owner is {cluster.OwnerName ?? "Nobody"}",
+                            LinkCommand = "module on-call sync issue",
+                            LinkInformation = id,
+                        };
+                        banners.Add(banner);
+                    }
+                }
+                Database.Edgerunners.Insertable(banners).IgnoreColumns("CreateTime").ExecuteCommand();
+                if (!orderCreated)
+                    throw new Exception("The order was not created successfully. Please check whether owner is displayed on the panel.");
+                foreach (string syncCluster in syncClusters)
+                {
+                    try
+                    {
+                        _ = Mqtt.Publish(syncCluster, new _MqttMessage()
                         {
                             IsMastermind = true,
                             Address = "Moon",
@@ -131,6 +234,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
                 string employeeID = Request.HttpContext.User.Claims.FirstOrDefault(it => it.Type == "EmployeeID").Value;
                 Users user = Database.Edgerunners.Queryable<Users>().First(it => it.EmployeeId == employeeID) ?? throw new Exception($"Invalid employeeId ({employeeID}) , please re login");
                 IPCIssueReports report = Database.Edgerunners.Queryable<IPCIssueReports>().First(it => it.Id == parameter.ReportId) ?? throw new Exception($"Cant find issue report (id：{parameter.ReportId})");
+                if (parameter.State != report.State) throw new Exception("Order state does not match server, Please try again later");
                 string externalStr = report.ExternalSystem == null ? string.Empty : $"[External:{report.ExternalSystem}] ";
                 switch (report.State)
                 {
@@ -139,8 +243,16 @@ namespace Moon.Controllers.Application.NightCity.Modules
                         report.Responser = employeeID;
                         report.State = "responsed";
                         Database.Edgerunners.Updateable(report).UpdateColumns("ResponseTime", "Responser", "State").ExecuteCommand();
-                        Database.Edgerunners.Updateable<IPCBanners>().SetColumns("Priority", 45).SetColumns("Content", $"{externalStr}{user.Name} is handling the issue").SetColumns("LinkCommand", $"module on-call solve issue {report.Id}").Where(it => it.Id == parameter.ReportId).ExecuteCommand();
-                        Database.Edgerunners.Updateable<IPCBanners>().SetColumns("Priority", 15).SetColumns("Content", $"{externalStr}An opening issue report has been found on site:{report.HostName}. {user.Name} is handling the issue").Where(it => it.Id != parameter.ReportId && it.LinkInformation == parameter.ReportId).ExecuteCommand();
+                        Database.Edgerunners.Updateable<IPCBanners>().SetColumns("Priority", 40).SetColumns("Content", $"{externalStr}{user.Name} is handling the issue").SetColumns("LinkCommand", $"module on-call solve issue {report.Id}").Where(it => it.Id == parameter.ReportId).ExecuteCommand();
+                        Database.Edgerunners.Updateable<IPCBanners>().SetColumns("Priority", 40).SetColumns("Content", $"{externalStr}An opening issue report has been found on site:{report.HostName}. {user.Name} is handling the issue").Where(it => it.Id != parameter.ReportId && it.LinkInformation == parameter.ReportId).ExecuteCommand();
+                        switch (report.ExternalSystem)
+                        {
+                            case "Gigaeye":
+                                _ = CloseGigaeyeOrderAsync(report);
+                                break;
+                            default:
+                                break;
+                        }
                         break;
                     case "responsed":
                         report.SolveTime = DateTime.Now;
@@ -161,6 +273,14 @@ namespace Moon.Controllers.Application.NightCity.Modules
                         }
                         Database.Edgerunners.Updateable(report).UpdateColumns("SolveTime", "Solver", "State", "Product", "Process", "FailureCategory", "FailureReason", "Solution").ExecuteCommand();
                         Database.Edgerunners.Deleteable<IPCBanners>().Where(it => it.LinkInformation == parameter.ReportId).ExecuteCommand();
+                        switch (report.ExternalSystem)
+                        {
+                            case "Gigaeye":
+                                _ = CloseGigaeyeOrderAsync(report);
+                                break;
+                            default:
+                                break;
+                        }
                         try
                         {
                             if (parameter.Attachments != null && parameter.Attachments.Count > 0)
@@ -188,7 +308,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
                     default:
                         throw new Exception($"Unexpected issue report state:{report.State}");
                 }
-                List<OnCall_CallRepor_Middleware> jurisdictionalClusters = Database.Edgerunners.Queryable<IPCs_JurisdictionalClusters>().RightJoin<IPCs_JurisdictionalClusters>((i, i2) => i.Owner == i2.Owner).Where((i, i2) => i.Mainboard == report.Mainboard).LeftJoin<Users>((i, i2, u) => i2.Owner == u.EmployeeId).Select((i, i2, u) => new OnCall_CallRepor_Middleware()
+                List<OnCall_CallReport_Middleware> jurisdictionalClusters = Database.Edgerunners.Queryable<IPCs_JurisdictionalClusters>().RightJoin<IPCs_JurisdictionalClusters>((i, i2) => i.Owner == i2.Owner).Where((i, i2) => i.Mainboard == report.Mainboard).LeftJoin<Users>((i, i2, u) => i2.Owner == u.EmployeeId).Select((i, i2, u) => new OnCall_CallReport_Middleware()
                 {
                     Mainboard = i2.Mainboard,
                     Category = i2.Category,
@@ -207,7 +327,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
                 {
                     try
                     {
-                        Mqtt.Publish(syncCluster, new _MqttMessage()
+                        _ = Mqtt.Publish(syncCluster, new _MqttMessage()
                         {
                             IsMastermind = true,
                             Address = "Moon",
@@ -216,7 +336,27 @@ namespace Moon.Controllers.Application.NightCity.Modules
                         });
                     }
                     catch { }
-                }              
+                }
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
+
+        #region 获取订单详情
+        [HttpPost]
+        public ControllersResult GetReportDetails([FromBody] OnCall_GetReportDetails_Parameter parameter)
+        {
+            ControllersResult result = new();
+            try
+            {
+                IPCIssueReports report = Database.Edgerunners.Queryable<IPCIssueReports>().First(it => it.Id == parameter.Id);
+                result.Content = report;
                 result.Result = true;
             }
             catch (Exception e)
@@ -456,12 +596,75 @@ namespace Moon.Controllers.Application.NightCity.Modules
         {
             public string Mainboard { get; set; }
             public string HostName { get; set; }
-            public string? ExternalSystem { get; set; }
-            public string? ExternalId { get; set; }
         }
-        public class OnCall_CallRepor_Middleware : IPCs_JurisdictionalClusters
+        public class OnCall_CallReport_Middleware : IPCs_JurisdictionalClusters
         {
             public string OwnerName { get; set; }
+        }
+        #endregion
+
+        #region CallReportFromGigaeye
+        public class OnCall_CallReportFromGigaeye_Paramter
+        {
+            public string Id { get; set; }
+            public string HostName { get; set; }
+            public string Product { get; set; }
+            public string Process { get; set; }
+            public string TestCode { get; set; }
+            public string Type { get; set; }
+            public string Station { get; set; }
+            public string Reason { get; set; }
+        }
+        private static async Task CloseGigaeyeOrderAsync(IPCIssueReports report)
+        {
+            string destination = string.Empty;
+            object parameter = null;
+            Dictionary<string, string> headers = null;
+            try
+            {
+                destination = "https://datashark.lenovo.com/api/sys/auth";
+                parameter = new { username = "guard", password = "WpJM-2178" };
+                DatasharkAPIResult auth = JsonConvert.DeserializeObject<DatasharkAPIResult>(await Http.Post(destination, parameter));
+                if (auth.code != 200) throw new Exception($"{auth}");
+                headers = new Dictionary<string, string>
+                {
+                    { "X-Access-Token", auth.result }
+                };
+                destination = "https://datashark.lenovo.com/api/keyItemWarn/updateStatus";
+                parameter = new
+                {
+                    gigaeyeID = report.ExternalId,
+                    mainboard = report.Mainboard,
+                    state = report.State,
+                    owner = string.Empty,
+                    solver = string.Empty,
+                    solution = report.Solution,
+                    responseTime = report.ResponseTime,
+                    solveTime = report.SolveTime,
+                };
+                DatasharkAPIResult updateStatus = JsonConvert.DeserializeObject<DatasharkAPIResult>(await Http.Post(destination, parameter, headers));
+                if (updateStatus.code != 200) throw new Exception(JsonConvert.SerializeObject(updateStatus));
+            }
+            catch (Exception e)
+            {
+                Database.Edgerunners.Insertable(new LegacyInformations()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Channel = "Http.Post",
+                    Destination = destination,
+                    Information = JsonConvert.SerializeObject(parameter),
+                    FeedBack = e.Message,
+                    Addition = headers == null ? null : JsonConvert.SerializeObject(headers),
+                }).IgnoreColumns("Time").ExecuteCommand();
+            }
+        }
+        private class DatasharkAPIResult
+        {
+            public bool success { get; set; }
+            public string message { get; set; }
+            public int code { get; set; }
+            public string result { get; set; }
+            public long timestamp { get; set; }
         }
         #endregion
 
@@ -469,6 +672,7 @@ namespace Moon.Controllers.Application.NightCity.Modules
         public class OnCall_HandleReport_Parameter
         {
             public string ReportId { get; set; }
+            public string State { get; set; }
             public string? Product { get; set; }
             public string? Process { get; set; }
             public string? FailureCategory { get; set; }
@@ -476,6 +680,13 @@ namespace Moon.Controllers.Application.NightCity.Modules
             public string? Solution { get; set; }
             public string? AbortReason { get; set; }
             public List<_Attachment>? Attachments { get; set; }
+        }
+        #endregion
+
+        #region GetReportDetails
+        public class OnCall_GetReportDetails_Parameter
+        {
+            public string Id { get; set; }
         }
         #endregion
 
