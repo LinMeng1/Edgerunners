@@ -32,6 +32,7 @@
             Application_MaxTac_Publish_UpdateNightCityModule,//更新NightCity模块
             Application_NightCity_Modules_TCN_TransformTCNOrder,//TCN转单
             Application_NightCity_Modules_OnCall_CallReportFromGigaeye,//从Gigaeye异常报修
+            Application_NightCity_Banner_SetMessage,//设置置顶信息
         }
         #endregion
     }

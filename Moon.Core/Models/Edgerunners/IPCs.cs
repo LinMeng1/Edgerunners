@@ -13,7 +13,7 @@ namespace Moon.Core.Models.Edgerunners
         public string Cpu { get; set; }
         public string Disk { get; set; }
         public string Memory { get; set; }
-        public DateTime UploadTime { get; set; }
         public string Version { get; set; }
+        public int IsConnected { get; set; }
     }
 }

@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Moon.Attributes;
 using Moon.Core.Models;
 using Moon.Core.Models.Edgerunners;
 using Moon.Core.Standard;
+using Moon.Core.Utilities;
 
 namespace Moon.Controllers.Application.NightCity
 {
@@ -47,6 +50,9 @@ namespace Moon.Controllers.Application.NightCity
         #endregion
 
         #region 设置置顶信息
+        [Authorize]
+        [PasswordCheck]
+        [AuthorizeCheck(Authorization.AuthorizationEnum.Application_NightCity_Banner_SetMessage)]
         [HttpPost]
         public ControllersResult SetMessage([FromBody] Banner_SetMessage_Parameter parameter)
         {
@@ -77,14 +83,17 @@ namespace Moon.Controllers.Application.NightCity
         }
         #endregion
 
-        #region 删除置顶信息
+        #region 删除置顶信息   
         [HttpPost]
         public ControllersResult RemoveMessage([FromBody] Banner_RemoveMessage_Parameter parameter)
         {
             ControllersResult result = new();
             try
             {
-                Database.Edgerunners.Deleteable<IPCBanners>().Where(it => it.Id == parameter.Id).ExecuteCommand();
+                var banner = Database.Edgerunners.Queryable<IPCBanners>().First(it => it.Id == parameter.Id);
+                if (banner.Urgency != "Inform")
+                    throw new Exception("Only messages with an urgency level of Inform are allowed to be deleted.");
+                Database.Edgerunners.Deleteable(banner).ExecuteCommand();
                 result.Result = true;
             }
             catch (Exception e)

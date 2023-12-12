@@ -111,9 +111,13 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <materialDesign:PopupBox Grid.Column="0" Style="{StaticResource PopupBox}" PopupVerticalOffset="5">
+                    <materialDesign:ColorZone Mode="Dark" CornerRadius="5" Margin="5,0,0,0" Padding="2" VerticalAlignment="Center" Cursor="Hand" MouseDown="ColorZone_MouseDown">
+                        <materialDesign:PackIcon Kind="EyeOff" Style="{StaticResource PackIcon}" Width="14" Height="14"/>
+                    </materialDesign:ColorZone>
+                    <materialDesign:PopupBox Grid.Column="1" Style="{StaticResource PopupBox}" PopupVerticalOffset="5">
                         <materialDesign:PopupBox.ToggleContent>
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:ColorZone Mode="SecondaryDark" CornerRadius="5" Margin="5">
@@ -131,7 +135,7 @@
                         </materialDesign:PopupBox.ToggleContent>
                         <local:Banner Focusable="True" Width="{Binding ElementName=Banners,Path=ActualWidth}"/>
                     </materialDesign:PopupBox>
-                    <Grid Grid.Column="1">
+                    <Grid Grid.Column="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>

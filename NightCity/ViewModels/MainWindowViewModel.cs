@@ -1,4 +1,5 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using Itp.WpfAppBar;
+using MaterialDesignThemes.Wpf;
 using NightCity.Core.Events;
 using NightCity.Core.Models.Standard;
 using NightCity.Core.Services.Prism;

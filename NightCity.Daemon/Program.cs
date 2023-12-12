@@ -16,7 +16,6 @@ using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
-using System.Windows.Forms;
 
 namespace NightCity.Daemon
 {
@@ -73,7 +72,7 @@ namespace NightCity.Daemon
                         runFlag = true;
                     }
                 }
-                if (!runFlag || (DateTime.Now - lastVersionCheck).TotalHours > 24)
+                if (!runFlag || (DateTime.Now - lastVersionCheck).TotalHours > 6)
                 {
                     await LaunchAsync();
                 }
@@ -92,10 +91,10 @@ namespace NightCity.Daemon
         /// <exception cref="Exception"></exception>
         private static async Task LaunchAsync()
         {
+            PublishInformation publish = null;
+            string installPath = string.Empty;
             try
             {
-                lastVersionCheck = DateTime.Now;
-                PublishInformation publish = null;
                 try
                 {
                     ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post($"https://10.114.113.101/api/application/max-tac/publish/GetLatestRelease", new { Project = "NightCity" }));
@@ -104,7 +103,6 @@ namespace NightCity.Daemon
                     publish = JsonConvert.DeserializeObject<PublishInformation>(result.Content.ToString());
                 }
                 catch { }
-                string installPath = string.Empty;
                 try
                 {
                     List<LocalInstallInformation> infoList = InstalledPrograms.GetInstalledPrograms();
@@ -116,6 +114,15 @@ namespace NightCity.Daemon
                                 installPath = Path.GetDirectoryName(info.DisplayIcon);
                             else
                             {
+                                foreach (Process p in Process.GetProcesses())
+                                {
+                                    if (p.ProcessName.CompareTo(info.DisplayName) == 0)
+                                    {
+                                        p.Kill();
+                                        break;
+                                    }
+                                }
+                                Thread.Sleep(2000);
                                 InstalledPrograms.RemoveUninstallInRegistry(info);
                                 Directory.Delete(Path.GetDirectoryName(info.DisplayIcon), true);
                             }
@@ -123,32 +130,34 @@ namespace NightCity.Daemon
                         }
                     }
                 }
-                catch (Exception ex)
+                catch { }
+                try
                 {
-                    throw new Exception(ex.ToString());
-                }
-                if (installPath == string.Empty)
-                {
-                    installPath = Path.GetDirectoryName(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory));
-                    installPath = Path.Combine(installPath, "NightCity");
-                    await Task.Run(() =>
+                    if (installPath == string.Empty)
                     {
-                        LocalInstallInformation information = new LocalInstallInformation()
+                        installPath = Path.GetDirectoryName(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory));
+                        installPath = Path.Combine(installPath, "NightCity");
+                        await Task.Run(() =>
                         {
-                            DisplayName = "NightCity"
-                        };
-                        KillProduct(information);
-                        Directory.CreateDirectory(installPath);
-                        JToken mainfest = JToken.Parse(publish.Manifest);
-                        sftpService.SyncFiles(mainfest, publish.ReleaseAddress, string.Empty, installPath);
-                        information.DisplayVersion = publish.Version;
-                        information.Publisher = "LinMeng";
-                        information.DisplayIcon = Path.Combine(installPath, $"{information.DisplayName}.exe");
-                        information.UninstallString = Path.Combine(Path.Combine(Path.Combine(Path.GetDirectoryName(installPath), "NightCity Launcher"), "NightCity Launcher.exe"));
-                        InstalledPrograms.CreateUninstallInRegistry(information);
-                    });
+                            LocalInstallInformation information = new LocalInstallInformation()
+                            {
+                                DisplayName = "NightCity"
+                            };
+                            KillProduct(information);
+                            Directory.CreateDirectory(installPath);
+                            JToken mainfest = JToken.Parse(publish.Manifest);
+                            sftpService.SyncFiles(mainfest, publish.ReleaseAddress, string.Empty, installPath);
+                            information.DisplayVersion = publish.Version;
+                            information.Publisher = "LinMeng";
+                            information.DisplayIcon = Path.Combine(installPath, $"{information.DisplayName}.exe");
+                            information.UninstallString = Path.Combine(Path.Combine(Path.Combine(Path.GetDirectoryName(installPath), "NightCity Launcher"), "NightCity Launcher.exe"));
+                            InstalledPrograms.CreateUninstallInRegistry(information);
+                        });
+                    }
                 }
+                catch { }
                 Process.Start(Path.Combine(installPath, "NightCity.exe"));
+                lastVersionCheck = DateTime.Now;
             }
             catch (Exception ex)
             {

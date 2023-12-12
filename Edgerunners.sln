@@ -37,7 +37,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NightCity.Daemon", "NightCi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assistants", "Assistants", "{52E675A9-3113-45AA-B1B6-5143AED8CDC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lucy", "Assistants\Lucy\Lucy.csproj", "{F0C3F932-57C9-4587-8690-1898B177AF73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lucy", "Assistants\Lucy\Lucy.csproj", "{F0C3F932-57C9-4587-8690-1898B177AF73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
