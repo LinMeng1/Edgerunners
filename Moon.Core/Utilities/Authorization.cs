@@ -33,6 +33,8 @@
             Application_NightCity_Modules_TCN_TransformTCNOrder,//TCN转单
             Application_NightCity_Modules_OnCall_CallReportFromGigaeye,//从Gigaeye异常报修
             Application_NightCity_Banner_SetMessage,//设置置顶信息
+            Application_NightCity_Connection_SetClusters,//设置复数集群
+            Application_NightCity_ModuleManager_InstallModules,//安装/更新复数模块
         }
         #endregion
     }

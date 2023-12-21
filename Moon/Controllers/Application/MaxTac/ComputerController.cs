@@ -2,9 +2,9 @@
 using Moon.Core.Models;
 using Moon.Core.Models.Edgerunners;
 using Moon.Core.Standard;
-using NetTaste;
+using Moon.Core.Utilities;
+using Newtonsoft.Json;
 using System.Reflection;
-using static Moon.Controllers.Application.MaxTac.OrganizationController;
 
 namespace Moon.Controllers.Application.MaxTac
 {
@@ -74,7 +74,7 @@ namespace Moon.Controllers.Application.MaxTac
                 resultx.Disk = Ipc.Disk;
                 resultx.Memory = Ipc.Memory;
                 resultx.Linker = Database.Edgerunners.Queryable<Users_OfficePCs>().LeftJoin<Users>((uo, u) => uo.EmployeeId == u.EmployeeId).Where((uo, u) => uo.Mainboard == parameter.Mainboard).Select((uo, u) => u.Name).First();
-                resultx.ConnectionHistories = Database.Edgerunners.Queryable<ConnectionHistories>().Where(it => it.Client == parameter.Mainboard).OrderBy(it => it.Time, SqlSugar.OrderByType.Desc).Take(20).Select(it => new Computer_GetComputerBasicInfomation_Result_ConnectionHistory
+                resultx.ConnectionHistories = Database.Edgerunners.Queryable<ConnectionHistories>().Where(it => it.Client == parameter.Mainboard).OrderBy(it => it.Time, SqlSugar.OrderByType.Desc).OrderBy(it => it.Id, SqlSugar.OrderByType.Desc).Take(20).Select(it => new Computer_GetComputerBasicInfomation_Result_ConnectionHistory
                 {
                     IsConnected = it.IsConnected,
                     Time = it.Time,
@@ -123,8 +123,6 @@ namespace Moon.Controllers.Application.MaxTac
                                 resultx.UploadHistories.Add(history);
                             }
                         }
-
-
                     }
                 }
                 result.Content = resultx;
@@ -139,6 +137,52 @@ namespace Moon.Controllers.Application.MaxTac
         }
         #endregion
 
+        #region 获取幽灵客户端
+        [HttpGet]
+        public async Task<ControllersResult> GetMissingComputersAsync()
+        {
+            ControllersResult result = new();
+            try
+            {
+                List<string> ipcs = Database.Edgerunners.Queryable<IPCs>().Where(it => it.IsConnected == 1).Select(it => it.Mainboard).ToList();
+                List<EMQXAPIResult_Client> missingIpcs = new();
+                List<string> missingIpcsx = new();
+                int limit = 1000;
+                int page = 1;
+                string destination = $"http://10.114.113.101:18083/api/v5/clients?limit={limit}&page={page}";
+                Dictionary<string, string> headers = new()
+                {
+                    { "Authorization", "Basic MTM1YTRmOWQ5OWI2ZWViZDp4dW1YRkJ6TklCNHBTbVlPNnNSWm1oRDJZUHNoTTZNdmxnZzVNdTFqQmRK" }
+                };
+                EMQXAPIResult clients = JsonConvert.DeserializeObject<EMQXAPIResult>(await Http.Get(destination, headers));
+                while (clients.meta.count > limit * page)
+                {
+                    page++;
+                    destination = $"http://10.114.113.101:18083/api/v5/clients?limit={limit}&page={page}";
+                    EMQXAPIResult clientsx = JsonConvert.DeserializeObject<EMQXAPIResult>(await Http.Get(destination, headers));
+                    clients.data.AddRange(clientsx.data);
+                }
+                foreach (var client in clients.data)
+                {
+                    if (!ipcs.Contains(client.clientid))
+                        missingIpcs.Add(client);
+                }
+                foreach (var ipc in ipcs)
+                {
+                    if (clients.data.FirstOrDefault(it => it.clientid == ipc) == null)
+                        missingIpcsx.Add(ipc);
+                }
+                result.Content = new { missingIpcs, missingIpcsx };
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
 
         #region GetComputerList
         public class Computer_GetComputerList_Parameter
@@ -191,6 +235,27 @@ namespace Moon.Controllers.Application.MaxTac
             public string Category { get; set; }
             public string Before { get; set; }
             public string After { get; set; }
+        }
+        #endregion
+
+        #region GetMissingComputers
+        private class EMQXAPIResult
+        {
+            public List<EMQXAPIResult_Client> data { get; set; }
+            public EMQXAPIResult_Meta meta { get; set; }
+        }
+        private class EMQXAPIResult_Client
+        {
+            public string clientid { get; set; }
+            public string ip_address { get; set; }
+            public bool connected { get; set; }
+        }
+        private class EMQXAPIResult_Meta
+        {
+            public int count { get; set; }
+            public bool hasnext { get; set; }
+            public int limit { get; set; }
+            public int page { get; set; }
         }
         #endregion
     }

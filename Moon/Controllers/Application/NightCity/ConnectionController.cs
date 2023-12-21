@@ -5,7 +5,6 @@ using Moon.Core.Standard;
 using Microsoft.AspNetCore.Authorization;
 using Moon.Attributes;
 using Moon.Core.Utilities;
-using System;
 using Moon.Core.Models._Imaginary;
 
 namespace Moon.Controllers.Application.NightCity
@@ -67,14 +66,72 @@ namespace Moon.Controllers.Application.NightCity
                         throw new Exception("Cluster contains illegal character");
                 }
                 string employeeID = Request.HttpContext.User.Claims.FirstOrDefault(it => it.Type == "EmployeeID").Value;
-                IPCClusters clusters = new()
+                IPCClusters cluster = new()
                 {
                     Mainboard = parameter.Mainboard,
                     Category = parameter.Category,
                     Cluster = parameter.Cluster,
                     Creator = employeeID
                 };
-                Database.Edgerunners.Insertable(clusters).IgnoreColumns("CreateTime").ExecuteCommand();
+                Database.Edgerunners.Insertable(cluster).IgnoreColumns("CreateTime").ExecuteCommand();
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
+
+        #region 设置复数集群
+        [Authorize]
+        [PasswordCheck]
+        [AuthorizeCheck(Authorization.AuthorizationEnum.Application_NightCity_Connection_SetClusters)]
+        [HttpPost]
+        public ControllersResult SetClusters([FromBody] Connection_SetClusters_Parameter parameter)
+        {
+            ControllersResult result = new();
+            try
+            {
+                string employeeID = Request.HttpContext.User.Claims.FirstOrDefault(it => it.Type == "EmployeeID").Value;
+                List<IPCClusters> clusters = new();
+                string[] wildcard = new string[] { "/", "#", "+", "$" };
+                foreach (var cluster in parameter.Clusters)
+                {
+                    if (cluster.Category != null)
+                    {
+                        bool illegal = wildcard.Any(wildcard => cluster.Category.Contains(wildcard));
+                        if (illegal)
+                            throw new Exception("Category contains illegal character");
+                    }
+                    {
+                        bool illegal = wildcard.Any(wildcard => cluster.Cluster.Contains(wildcard));
+                        if (illegal)
+                            throw new Exception("Cluster contains illegal character");
+                    }
+                    clusters.Add(new()
+                    {
+                        Mainboard = parameter.Mainboard,
+                        Category = cluster.Category,
+                        Cluster = cluster.Cluster,
+                        Creator = employeeID
+                    });
+                }
+                Database.Edgerunners.Deleteable<IPCClusters>().Where(it => it.Mainboard == parameter.Mainboard).ExecuteCommand();
+                Database.Edgerunners.Insertable(clusters).ExecuteCommand();
+                try
+                {
+                    _ = Mqtt.Publish(parameter.Mainboard, new _MqttMessage()
+                    {
+                        IsMastermind = true,
+                        Address = "Moon",
+                        Sender = "Lucy",
+                        Content = "system sync clusters"
+                    });
+                }
+                catch { }
                 result.Result = true;
             }
             catch (Exception e)
@@ -294,6 +351,19 @@ namespace Moon.Controllers.Application.NightCity
         public class Connection_SetCluster_Parameter
         {
             public string Mainboard { get; set; }
+            public string? Category { get; set; }
+            public string Cluster { get; set; }
+        }
+        #endregion
+
+        #region SetClusters
+        public class Connection_SetClusters_Parameter
+        {
+            public string Mainboard { get; set; }
+            public List<Connection_SetClusters_Parameter_Cluster> Clusters { get; set; }
+        }
+        public class Connection_SetClusters_Parameter_Cluster
+        {
             public string? Category { get; set; }
             public string Cluster { get; set; }
         }

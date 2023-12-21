@@ -1,7 +1,9 @@
-﻿using Itp.WpfAppBar;
-using MaterialDesignThemes.Wpf;
+﻿using MaterialDesignThemes.Wpf;
+using Newtonsoft.Json;
+using NightCity.Core;
 using NightCity.Core.Events;
 using NightCity.Core.Models.Standard;
+using NightCity.Core.Services;
 using NightCity.Core.Services.Prism;
 using Prism.Commands;
 using Prism.Events;
@@ -21,13 +23,23 @@ namespace NightCity.ViewModels
     {
         //事件聚合器
         private readonly IEventAggregator eventAggregator;
+        //属性服务
+        private readonly IPropertyService propertyService;
+        //Http服务
+        private readonly HttpService httpService;
         public MainWindowViewModel(IEventAggregator eventAggregator, IPropertyService propertyService)
         {
             this.eventAggregator = eventAggregator;
+            this.propertyService = propertyService;
+            httpService = new HttpService();
             //监听事件 Mqtt连接/断开
-            eventAggregator.GetEvent<MqttConnectedEvent>().Subscribe((isConnected) =>
+            eventAggregator.GetEvent<MqttConnectedEvent>().Subscribe(async (isConnected) =>
             {
                 IsMqttConnected = isConnected;
+                if (isConnected)
+                {
+                    await CleanTeAuthorizationInfoAsync();
+                }
             }, ThreadOption.UIThread);
             //监听事件 Mqtt信息接收
             eventAggregator.GetEvent<MqttMessageReceivedEvent>().Subscribe((message) =>
@@ -45,6 +57,14 @@ namespace NightCity.ViewModels
                 {
                     System.Windows.Forms.Application.Restart();
                     Application.Current.Shutdown();
+                }
+                else if (command == "system clean te authorization info")
+                {
+                    propertyService.SetProperty("TestEngAuthorizationInfo", null);
+                    propertyService.SetProperty("DisplayName", null);
+                    propertyService.SetProperty("TestEngAuthorizationUser", null);
+                    eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Publish(new Tuple<string, string>("TestEngAuthorization", "TestEngAuthorizationInfo"));
+                    eventAggregator.GetEvent<TemplateClosingEvent>().Publish("TestEngAuthorization");
                 }
             }, ThreadOption.UIThread);
             //监听事件 模块列表改变
@@ -80,6 +100,8 @@ namespace NightCity.ViewModels
                     module.Icon = PackIconKind.Fingerprint;
                 else
                     module.Icon = PackIconKind.FingerprintOff;
+                object token = propertyService.GetProperty(authorizationInfo.Item2);
+                httpService.AddToken(token?.ToString());
             }, ThreadOption.UIThread, true);
             //监听事件 Mqtt未读数量改变
             eventAggregator.GetEvent<MqttNoReadMessageCountChangedEvent>().Subscribe((noReadMessageCount) =>
@@ -98,6 +120,32 @@ namespace NightCity.ViewModels
             {
                 this.isConnectionFix = isConnectionFix;
             }, ThreadOption.UIThread);
+        }
+
+        private async Task CleanTeAuthorizationInfoAsync()
+        {
+            try
+            {
+                object TestEngAuthorizationInfo = propertyService.GetProperty("TestEngAuthorizationInfo");
+                if (TestEngAuthorizationInfo != null)
+                {
+                    string mainboard = propertyService.GetProperty("Mainboard").ToString();
+                    string user = propertyService.GetProperty("TestEngAuthorizationUser").ToString();
+                    ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/basic/account/CheckInvalidLogin", new { User = user, Client = mainboard }));
+                    if (!result.Result)
+                    {
+                        propertyService.SetProperty("TestEngAuthorizationInfo", null);
+                        propertyService.SetProperty("DisplayName", null);
+                        propertyService.SetProperty("TestEngAuthorizationUser", null);
+                        eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Publish(new Tuple<string, string>("TestEngAuthorization", "TestEngAuthorizationInfo"));
+                        eventAggregator.GetEvent<TemplateClosingEvent>().Publish("TestEngAuthorization");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Global.Log($"[MainWindow]:[CleanTeAuthorizationInfoAsync] exception:{e.Message}", true);
+            }
         }
 
         #region 命令集合

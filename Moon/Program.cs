@@ -2,9 +2,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Moon.Core.Utilities;
 using NLog.Web;
+using System.Collections;
 using System.Text;
 
 //var xx = Authentication.ToMD5("90311258");
+//string xxx = Convert.ToBase64String(Encoding.ASCII.GetBytes($"135a4f9d99b6eebd:xumXFBzNIB4pSmYO6sRZmhD2YPshM6Mvlgg5Mu1jBdJ"));
 
 var builder = WebApplication.CreateBuilder(args);
 

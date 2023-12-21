@@ -70,20 +70,22 @@ namespace TestEngAuthorization.Views
         }
         private async Task LoginCheck()
         {
-            LoginLoading.IsOpen = true;            
+            LoginLoading.IsOpen = true;
             try
             {
                 string username = UsernameText.Text;
                 string password = PasswordText.Password;
                 try
                 {
-                    ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/basic/authorize/GetToken", new { Username = username, Password = password }));
+                    string mainboard = propertyService.GetProperty("Mainboard").ToString();
+                    ControllersResult result = JsonConvert.DeserializeObject<ControllersResult>(await httpService.Post("https://10.114.113.101/api/basic/authorize/GetToken", new { Username = username, Password = password, Client = mainboard }));
                     if (result.Result)
                     {
                         Global.Log($"[TestEngAuthorization]:[Login]:[LoginCheck]:login success");
                         Authorize_GetToken_Result content = JsonConvert.DeserializeObject<Authorize_GetToken_Result>(result.Content.ToString());
                         propertyService.SetProperty("TestEngAuthorizationInfo", content.Token);
                         propertyService.SetProperty("DisplayName", content.Name);
+                        propertyService.SetProperty("TestEngAuthorizationUser", content.EmployeeId);
                         eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Publish(new Tuple<string, string>("TestEngAuthorization", "TestEngAuthorizationInfo"));
                         DialogResult = true;
                         Close();

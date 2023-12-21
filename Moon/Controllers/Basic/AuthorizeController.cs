@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Moon.Core.Models;
+using Moon.Core.Models._Imaginary;
 using Moon.Core.Models.Edgerunners;
 using Moon.Core.Standard;
 using Moon.Core.Utilities;
@@ -33,6 +33,30 @@ namespace Moon.Controllers.Basic
                 else if (user.Password != Authentication.ToMD5(password))
                     throw new Exception("Invalid password , please recheck");
                 token = Authentication.GetJWT(user.EmployeeId, user.Password);
+                if (parameter.Client != null)
+                {
+                    var lastLogin = Database.Edgerunners.Queryable<NightCityLoginHistories>().OrderBy(it => it.Time, SqlSugar.OrderByType.Desc).First();
+                    NightCityLoginHistories nightCityLoginHistories = new()
+                    {
+                        User = user.EmployeeId,
+                        Client = parameter.Client
+                    };
+                    Database.Edgerunners.Insertable(nightCityLoginHistories).IgnoreColumns("Id").IgnoreColumns("Time").ExecuteCommand();
+                    if (lastLogin != null)
+                    {
+                        try
+                        {
+                            _ = Mqtt.Publish(lastLogin.Client, new _MqttMessage()
+                            {
+                                IsMastermind = true,
+                                Address = "Moon",
+                                Sender = "Lucy",
+                                Content = "system clean te authorization info"
+                            });
+                        }
+                        catch { }
+                    }
+                }
                 result.Content = new { token, user.EmployeeId, user.Name };
                 result.Result = true;
             }
@@ -45,21 +69,13 @@ namespace Moon.Controllers.Basic
         }
         #endregion
 
-
         #region GetToken
         public class Authorize_GetToken_Parameter
         {
             public string Username { get; set; }
             public string Password { get; set; }
+            public string? Client { get; set; }
         }
-        #endregion
-
-        #region GetOfficeToken
-        public class Authorize_GetOfficeToken_Parameter
-        {
-            public string Mainboard { get; set; }
-        }
-
         #endregion
     }
 }

@@ -204,6 +204,27 @@ namespace Moon.Controllers.Basic
         }
         #endregion
 
+        #region 检查是否非法登录
+        [HttpPost]
+        public ControllersResult CheckInvalidLogin([FromBody] Account_CheckInvalidLogin_Parameter parameter)
+        {
+            ControllersResult result = new();
+            try
+            {
+                NightCityLoginHistories nightCityLoginHistories = Database.Edgerunners.Queryable<NightCityLoginHistories>().OrderBy(it => it.Time, SqlSugar.OrderByType.Desc).First(it => it.User == parameter.User);
+                if (nightCityLoginHistories != null && nightCityLoginHistories.Client != parameter.Client)
+                    throw new Exception("Invalid login");
+                result.Result = true;
+            }
+            catch (Exception e)
+            {
+                result.ErrorMessage = $"Exception : {e.Message}";
+                log.LogError(result.ErrorMessage);
+            }
+            return result;
+        }
+        #endregion
+
         #region GetRolesAndAuthorizations
         public class Account_GetRolesAndAuthorizations_Result
         {
@@ -253,6 +274,14 @@ namespace Moon.Controllers.Basic
         public class Account_LinkOfficeComputer_Parameter
         {
             public string Mainboard { get; set; }
+        }
+        #endregion
+
+        #region CheckInvalidLogin
+        public class Account_CheckInvalidLogin_Parameter
+        {
+            public string User { get; set; }
+            public string Client { get; set; }
         }
         #endregion
     }

@@ -214,6 +214,7 @@ namespace TestEngAuthorization.ViewModels
         {
             propertyService.SetProperty("TestEngAuthorizationInfo", null);
             propertyService.SetProperty("DisplayName", null);
+            propertyService.SetProperty("TestEngAuthorizationUser", null);
             Global.Log($"[TestEngAuthorization]:[MainViewModel]:[Logout]:logout");
             eventAggregator.GetEvent<AuthorizationInfoChangedEvent>().Publish(new Tuple<string, string>("TestEngAuthorization", "TestEngAuthorizationInfo"));
             eventAggregator.GetEvent<TemplateClosingEvent>().Publish("TestEngAuthorization");
@@ -547,6 +548,7 @@ namespace TestEngAuthorization.ViewModels
 
         public void Dispose()
         {
+            Disauthorize();
             eventAggregator = null;
             propertyService = null;
             httpService = null;
